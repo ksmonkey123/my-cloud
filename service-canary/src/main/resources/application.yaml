@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: ${db.cloud.url}
+    username: ${db.cloud.username}
+    password: ${db.cloud.password}
+    hikari:
+      schema: canary
+  flyway:
+    default-schema: canary
+  application:
+    name: canary-service
+server:
+  error:
+    include-message: always
+
+canary:
+  timer:
+    schedule: "0 */30 * * * *"
+  kafka:
+    topic: telegram-notifications

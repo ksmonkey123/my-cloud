@@ -10,6 +10,8 @@ spring:
               - uri: http://localhost:8002/
             shortener-service:
               - uri: http://localhost:8003/
+            canary-service:
+              - uri: http://localhost:8005/
 
   jpa:
     show-sql: true

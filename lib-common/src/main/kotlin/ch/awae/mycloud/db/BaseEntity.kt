@@ -38,6 +38,10 @@ abstract class BaseEntity {
         get() = _mutationTimestamp!!
 
     @PreUpdate
+    open fun preUpdate() {
+        updateManagementFields()
+    }
+
     @PrePersist
     open fun prePersist() {
         updateManagementFields()

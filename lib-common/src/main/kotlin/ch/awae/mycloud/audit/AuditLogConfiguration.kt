@@ -14,6 +14,7 @@ import org.springframework.kafka.support.serializer.*
 class AuditLogConfiguration(@Value("\${mycloud.kafka.url}") val server: String,
 ) {
 
+    @AuditKafkaTemplate
     @Bean
     fun jsonKafkaTemplate() = KafkaTemplate(
         DefaultKafkaProducerFactory<String, Any>(
@@ -26,3 +27,8 @@ class AuditLogConfiguration(@Value("\${mycloud.kafka.url}") val server: String,
     )
 
 }
+
+@Target(AnnotationTarget.FIELD, AnnotationTarget.VALUE_PARAMETER, AnnotationTarget.FUNCTION)
+@Retention(AnnotationRetention.RUNTIME)
+@Qualifier
+annotation class AuditKafkaTemplate

@@ -19,13 +19,16 @@
         <module>base-pom</module>
         <module>lib-base</module>
         <module>lib-common</module>
+
         <!-- frontend -->
         <module>gui</module>
         <module>service-gateway</module>
+
         <!-- business services -->
         <module>service-auth</module>
         <module>service-audit</module>
         <module>service-shortener</module>
+        <module>service-canary</module>
     </modules>
 
 </project>

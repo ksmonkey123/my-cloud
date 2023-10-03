@@ -21,6 +21,8 @@ spring:
               - uri: http://audit-service/
             shortener-service:
               - uri: http://shortener-service/
+            canary-service:
+              - uri: http://canary-service/
 
   jpa:
     show-sql: false

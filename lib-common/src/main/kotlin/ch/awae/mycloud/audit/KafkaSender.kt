@@ -7,6 +7,7 @@ import java.util.concurrent.*
 
 @Component
 class KafkaSender (
+    @AuditKafkaTemplate
     private val kafkaTemplate: KafkaTemplate<String, Any>,
     @Value("\${mycloud.audit.kafka.topic}") val kafkaTopic: String,
 ){
