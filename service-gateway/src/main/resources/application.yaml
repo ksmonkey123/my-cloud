@@ -24,8 +24,13 @@ spring:
           predicates:
             - Path=/rest/shortener/**
           uri: lb://shortener-service
-        # canary service
+        # bookkeeping service
+        - id: bookkeeping-service
+          predicates:
+            - Path=/rest/bookkeeping/**
+          uri: lb://bookkeeping-service
+          # canary service
         - id: canary-service
           predicates:
             - Path=/rest/canary/**
-          uri: lb://canary-service
+          uri: lb://canary-service# canary service

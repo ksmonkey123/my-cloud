@@ -23,6 +23,8 @@ spring:
               - uri: http://shortener-service/
             canary-service:
               - uri: http://canary-service/
+            bookkeeping-service:
+              - uri: http://bookkeeping-service/
 
   jpa:
     show-sql: false

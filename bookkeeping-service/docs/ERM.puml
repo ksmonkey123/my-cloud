@@ -1,0 +1,67 @@
+@startuml
+'https://plantuml.com/component-diagram
+skinparam linetype polyline
+skinparam linetype ortho
+
+entity Book {
+* id
+..
++ username
++ title
++ opening_date
++ closing_date
+}
+
+entity AccountGroup {
+* id
+- parent_id
+# book_id
+..
++ title
+}
+
+entity Account {
+* id
+# book_id
+# account_group_id
+..
++ title
++ account_type
++ initial_balance
+}
+
+enum AccountType {
+ * ASSET
+ * LIABILITY
+ * EXPENSE
+ * INCOME
+}
+
+entity BookingRecord {
+* id
+# book_id
+..
++ booking_text
+- description
++ invoice_date
++ booking_date
+}
+
+entity BookingMovement {
+# booking_record_id
+# account_id
+..
++ amount
+}
+
+AccountGroup }o--|| AccountGroup
+AccountGroup }o--|| Book
+Book ||--o{ Account
+AccountGroup |o--o{ Account
+Book ||--o{ BookingRecord
+BookingRecord ||--{ "2..n" BookingMovement
+
+Account ||--o{ BookingMovement
+AccountType <- Account
+
+@enduml

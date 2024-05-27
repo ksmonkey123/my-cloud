@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: ${db.cloud.url}
+    username: ${db.cloud.username}
+    password: ${db.cloud.password}
+    hikari:
+      schema: bookkeeping
+  flyway:
+    default-schema: bookkeeping
+  application:
+    name: bookkeeping-service
+server:
+  error:
+    include-message: always

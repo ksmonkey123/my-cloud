@@ -1,0 +1,6 @@
+server:
+  port: 8004
+
+management:
+  server:
+    port: 8804

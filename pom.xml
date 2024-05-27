@@ -29,6 +29,7 @@
         <module>service-audit</module>
         <module>service-shortener</module>
         <module>service-canary</module>
+        <module>bookkeeping-service</module>
     </modules>
 
 </project>
