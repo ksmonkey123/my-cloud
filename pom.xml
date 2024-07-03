@@ -16,16 +16,16 @@
 
     <modules>
         <!-- base libs -->
-        <module>base-lib</module>
         <module>base-pom</module>
-        <module>common-lib</module>
+        <module>lib-base</module>
+        <module>lib-common</module>
         <!-- frontend -->
         <module>gui</module>
-        <module>gateway-service</module>
+        <module>service-gateway</module>
         <!-- business services -->
-        <module>auth-service</module>
-        <module>audit-service</module>
-        <module>shortener-service</module>
+        <module>service-auth</module>
+        <module>service-audit</module>
+        <module>service-shortener</module>
     </modules>
 
 </project>
