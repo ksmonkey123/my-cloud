@@ -2,7 +2,7 @@ package ch.awae.mycloud.service.canary.model
 
 import ch.awae.mycloud.db.*
 import jakarta.persistence.*
-import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.*
 import org.springframework.data.jpa.repository.Query
 
 @Entity
@@ -26,4 +26,5 @@ interface TestRecordRepository : JpaRepository<TestRecord, Long> {
     @Query("select record from TestRecord record where record.site = :site order by record._creationTimestamp desc limit 1")
     fun findLastRecordBySite(site: MonitoredSite) : TestRecord?
 
+    fun deleteBySite(site: MonitoredSite)
 }

@@ -26,6 +26,9 @@ class MonitoredSite(
 
 interface MonitoredSiteRepository : JpaRepository<MonitoredSite, Long> {
 
+    @Query("select site from MonitoredSite site order by site.id asc")
+    fun listSorted(): List<MonitoredSite>
+
     @Query("select site.id from MonitoredSite site where site.enabled")
     fun findEnabledIds(): List<Long>
 

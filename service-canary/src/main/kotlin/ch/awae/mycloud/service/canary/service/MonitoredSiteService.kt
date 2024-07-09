@@ -4,16 +4,27 @@ import ch.awae.mycloud.*
 import ch.awae.mycloud.audit.*
 import ch.awae.mycloud.service.canary.dto.*
 import ch.awae.mycloud.service.canary.model.*
+import jakarta.persistence.OptimisticLockException
 import org.springframework.data.repository.*
+import org.springframework.jdbc.core.*
 import org.springframework.stereotype.*
 import org.springframework.transaction.annotation.*
+import javax.sql.*
 
 @Service
 @Transactional
 class MonitoredSiteService(
     private val monitoredSiteRepository: MonitoredSiteRepository,
     private val testRecordRepository: TestRecordRepository,
+    dataSource: DataSource,
 ) {
+
+    private val logger = createLogger()
+    private val sql = JdbcTemplate(dataSource)
+
+    fun listAll(): List<MonitoredSiteSummaryDto> {
+        return monitoredSiteRepository.listSorted().map(::buildSummaryDto)
+    }
 
     @AuditLog
     fun create(request: MonitoredSiteDto): MonitoredSiteSummaryDto {
@@ -47,6 +58,10 @@ class MonitoredSiteService(
 
         val savedEntity = monitoredSiteRepository.save(entity)
 
+        return buildSummaryDto(savedEntity)
+    }
+
+    private fun buildSummaryDto(savedEntity: MonitoredSite): MonitoredSiteSummaryDto {
         return MonitoredSiteSummaryDto(
             savedEntity.id,
             savedEntity.siteUrl,
@@ -58,4 +73,24 @@ class MonitoredSiteService(
         )
     }
 
+    @AuditLog
+    fun delete(id: Long) {
+        val site = monitoredSiteRepository.findByIdOrNull(id)
+            ?: throw ResourceNotFoundException("/monitored-site/$id")
+
+        /*
+          delete logic implemented natively. The element collections and relations in the JPA model lead to a
+          massive amount of queries if deletion were to be performed via JPA.
+         */
+        sql.update("delete from failed_test where record_id in (select id from test_record where site_id = ?)", id)
+        val deletedRecords = sql.update("delete from test_record where site_id = ?", id)
+        sql.update("delete from site_test where site_id = ?", id)
+        val deletedSites = sql.update("delete from monitored_site where id = ? and version = ?", id, site.version)
+
+        if (deletedSites != 1) {
+            throw OptimisticLockException("$deletedSites sites were deleted. expected 1")
+        }
+
+        logger.info("delted site $id with $deletedRecords test records")
+    }
 }
