@@ -38,3 +38,4 @@ mycloud:
 logging:
   level:
     org.apache.kafka.clients.producer.ProducerConfig: WARN
+    org.apache.kafka.clients.consumer.ConsumerConfig: WARN
