@@ -1,11 +1,9 @@
 import {Routes} from "@angular/router";
-import {HomeComponent} from "./home/home.component";
 import {ShortenerComponent} from "./shortener/shortener.component";
 import {ShortenerService} from "./shortener/shortener.service";
 import {CanaryComponent} from "./canary/canary.component";
 
-export const page_routes: Routes = [
-  {path: '', component: HomeComponent},
+export const app_routes: Routes = [
   {path: 'shortener', component: ShortenerComponent, providers: [ShortenerService]},
   {path: 'canary', component: CanaryComponent}
 ]

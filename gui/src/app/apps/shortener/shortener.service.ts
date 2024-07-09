@@ -1,5 +1,5 @@
 import {Injectable, OnDestroy} from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, Subject, takeUntil} from "rxjs";
 import {ToastrService} from "ngx-toastr";
 
@@ -57,5 +57,4 @@ export class ShortenerService implements OnDestroy {
 export interface Link {
   id : string,
   targetUrl: string,
-  creationTime: string,
 }

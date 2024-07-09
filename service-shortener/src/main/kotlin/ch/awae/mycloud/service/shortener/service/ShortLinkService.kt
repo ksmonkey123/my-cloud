@@ -3,6 +3,7 @@ package ch.awae.mycloud.service.shortener.service
 import ch.awae.mycloud.*
 import ch.awae.mycloud.audit.*
 import ch.awae.mycloud.auth.*
+import ch.awae.mycloud.service.shortener.dto.*
 import ch.awae.mycloud.service.shortener.model.*
 import jakarta.transaction.*
 import jakarta.validation.*
@@ -33,11 +34,11 @@ class ShortLinkService(private val repo: ShortLinkRepository) {
         throw RuntimeException("failed to obtain free short link within $LINK_GENERATION_ATTEMPTS attempts")
     }
 
-    fun listShortLinks(): List<ShortLink> = repo.findByUsername(AuthInfo.username!!)
+    fun listShortLinks(): List<ShortLinkDTO> = repo.findByUsername(AuthInfo.username!!).map(::ShortLinkDTO)
 
     @AuditLog
-    fun createShortLink(@Valid @URL targetUrl: String): ShortLink {
-        return repo.save(ShortLink(getUnusedShortLink(), AuthInfo.username!!, targetUrl))
+    fun createShortLink(@Valid @URL targetUrl: String): ShortLinkDTO {
+        return ShortLinkDTO(repo.save(ShortLink(getUnusedShortLink(), AuthInfo.username!!, targetUrl)))
     }
 
     @AuditLog

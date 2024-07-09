@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from "../../common/auth.service";
-import {primary_pages} from "../pages.overview";
+import {AuthService} from "../common/auth.service";
+import {primary_pages} from "../apps/apps.overview";
 import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from "@angular/material/card";
 import {MatIcon} from "@angular/material/icon";

@@ -7,7 +7,7 @@ import {MatIcon, MatIconRegistry} from "@angular/material/icon";
 import {AsyncPipe, NgIf} from "@angular/common";
 import {AuthService} from "./common/auth.service";
 import {ToastrService} from "ngx-toastr";
-import {HomeComponent} from "./pages/home/home.component";
+import {HomeComponent} from "./home/home.component";
 import {NavbarComponent} from "./navbar/navbar.component";
 
 @Component({
