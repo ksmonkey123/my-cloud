@@ -20,3 +20,4 @@ logging:
   level:
     org.apache.kafka.clients.producer.ProducerConfig: INFO
     org.apache.kafka.clients.consumer.ConsumerConfig: INFO
+    org.springframework.jdbc.core: DEBUG
