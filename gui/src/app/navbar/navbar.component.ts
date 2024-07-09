@@ -29,8 +29,6 @@ import {primary_pages} from "../pages/pages.overview";
 })
 export class NavbarComponent {
 
-  public navItems = primary_pages
-
   constructor(public auth: AuthService, private router: Router) {
   }
 

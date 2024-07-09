@@ -3,7 +3,7 @@ import {EventType, NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOu
 import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
 import {MatToolbar} from "@angular/material/toolbar";
 import {MatButton, MatIconButton} from "@angular/material/button";
-import {MatIcon} from "@angular/material/icon";
+import {MatIcon, MatIconRegistry} from "@angular/material/icon";
 import {AsyncPipe, NgIf} from "@angular/common";
 import {AuthService} from "./common/auth.service";
 import {ToastrService} from "ngx-toastr";
@@ -20,8 +20,8 @@ import {NavbarComponent} from "./navbar/navbar.component";
 export class AppComponent implements OnInit {
 
 
-
-  constructor(public auth: AuthService, private router: Router, private toastr: ToastrService) {
+  constructor(public auth: AuthService, private router: Router, private toastr: ToastrService, private iconRegistry: MatIconRegistry) {
+    iconRegistry.setDefaultFontSetClass('material-symbols-outlined')
   }
 
   ngOnInit() {

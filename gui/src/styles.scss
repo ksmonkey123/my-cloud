@@ -1,6 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 @import 'ngx-toastr/toastr';
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0,
+  'wght' 500,
+  'GRAD' 0,
+  'opsz' 24
+}
