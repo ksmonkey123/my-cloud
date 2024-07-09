@@ -4,16 +4,16 @@ import ch.awae.mycloud.service.canary.model.*
 import org.apache.kafka.clients.producer.*
 import org.apache.kafka.common.serialization.*
 import org.springframework.beans.factory.annotation.*
-import org.springframework.context.annotation.*
 import org.springframework.kafka.core.*
 import org.springframework.kafka.support.serializer.*
 import org.springframework.stereotype.*
 
-@Configuration
-class MessageSenderConfiguration(@Value("\${mycloud.kafka.url}") val server: String) {
-
-    @Bean
-    fun messageKafka() = KafkaTemplate<String, String>(
+@Service
+class MessageSender(
+    @Value("\${mycloud.kafka.url}") private val server: String,
+    @Value("\${canary.kafka.topic}") private val topic: String,
+) {
+    private val kafka = KafkaTemplate<String, String>(
         DefaultKafkaProducerFactory(
             mapOf(
                 ProducerConfig.BOOTSTRAP_SERVERS_CONFIG to server,
@@ -22,14 +22,6 @@ class MessageSenderConfiguration(@Value("\${mycloud.kafka.url}") val server: Str
             )
         )
     )
-}
-
-@Service
-class MessageSender(
-    private val kafka: KafkaTemplate<String, String>,
-    @Value("\${canary.kafka.topic}")
-    private val topic: String
-) {
 
     fun sendFailure(lastRecord: TestRecord?, currentRecord: TestRecord) {
         val message = "Website scan failed!\n\n" +

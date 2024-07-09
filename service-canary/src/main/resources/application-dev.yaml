@@ -4,3 +4,7 @@ server:
 management:
   server:
     port: 8805
+
+canary:
+  timer:
+    schedule: "*/30 * * * * *"

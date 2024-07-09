@@ -34,3 +34,7 @@ mycloud:
   audit:
     kafka:
       topic: mycloud-audit-log
+
+logging:
+  level:
+    org.apache.kafka.clients.producer.ProducerConfig: WARN
