@@ -1,28 +1,20 @@
 .page-body {
   max-width: 800px;
-  padding: 2em;
   margin: 0 auto;
-
-  mat-icon {
-    vertical-align: bottom;
-    margin-bottom: -2px;
-  }
-
-  mat-card {
-    margin-top: 1em;
-  }
-}
-
-table {
-  margin-top: 2em;
-}
-
-.editButton {
-  margin-top: -10px;
 }
 
 .mat-mdc-row:hover .mat-mdc-cell {
   background-color: #e0e0e0;
+}
+
+.mat-column-name {
+  &:hover {
+    cursor: pointer;
+  }
+
+  @media screen and (max-width: 500px) {
+    width: 100%;
+  }
 }
 
 .mat-column-description {
@@ -32,18 +24,26 @@ table {
   }
 }
 
-.mat-column-name {
-  &:hover {
-    cursor: pointer;
-  }
+.mat-column-enabled {
+  text-align: right;
 }
 
+table {
+  margin-top: 1em;
+}
 
 .createButton {
   text-align: right;
 
   button {
-    margin: 10px;
+    @media screen and (max-width: 500px) {
+      width: 100%;
+    }
   }
+}
 
+@media screen and (max-width: 500px) {
+  .hide-small {
+    display: none;
+  }
 }

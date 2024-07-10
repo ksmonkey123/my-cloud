@@ -23,7 +23,7 @@ import {MatChip} from "@angular/material/chips";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatIcon} from "@angular/material/icon";
 import {MatInput} from "@angular/material/input";
-import {MatIconButton, MatMiniFabButton} from "@angular/material/button";
+import {MatButton, MatIconButton, MatMiniFabButton} from "@angular/material/button";
 import {MatSlideToggle} from "@angular/material/slide-toggle";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogResult, RoleEditPopupDialog} from "./role-edit-popup/role-edit-popup.dialog";
@@ -62,7 +62,8 @@ import {SimpleModalService} from "../../common/simple-modal/simple-modal.service
     MatFooterCell,
     MatFooterCellDef,
     MatIconButton,
-    MatBadge
+    MatBadge,
+    MatButton
   ],
   providers: [RoleManagementService],
   templateUrl: './role-management.component.html',
