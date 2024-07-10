@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../common/auth.service";
-import {primary_pages} from "../apps/apps.overview";
 import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from "@angular/material/card";
 import {MatIcon} from "@angular/material/icon";
 import {RouterLink} from "@angular/router";
+import {apps} from "../apps/apps.overview";
 
 @Component({
   selector: 'app-home',
@@ -25,8 +25,6 @@ import {RouterLink} from "@angular/router";
 })
 export class HomeComponent implements OnInit {
 
-  public navItems = primary_pages
-
   constructor(public auth: AuthService) {
   }
 
@@ -35,5 +33,5 @@ export class HomeComponent implements OnInit {
   }
 
 
-  protected readonly primary_pages = primary_pages;
+  protected readonly appCards = apps.cards;
 }

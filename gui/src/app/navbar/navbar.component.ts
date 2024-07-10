@@ -6,7 +6,7 @@ import {MatButton, MatIconButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
 import {MatToolbar} from "@angular/material/toolbar";
-import {primary_pages} from "../apps/apps.overview";
+import {settings} from "../settings/settings.routes";
 
 @Component({
   selector: 'app-navbar',
@@ -38,4 +38,5 @@ export class NavbarComponent {
     })
   }
 
+  protected readonly settingsOptions = settings.options;
 }

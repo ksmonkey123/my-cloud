@@ -1,5 +1,5 @@
 <div class="nav-flexbox">
-@for (item of primary_pages; track item.path) {
+@for (item of appCards; track item.path) {
   <mat-card *ngIf="(auth.authInfo$ | async)?.roles?.includes(item.auth)" appearance="raised" class="nav-flex-item"
   [routerLink]="item.path"
   >

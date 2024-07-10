@@ -6,13 +6,32 @@ import {UserListComponent} from "./user-management/user-list/user-list.component
 import {UserDetailsComponent} from "./user-management/user-details/user-details.component";
 import {RoleManagementComponent} from "./role-management/role-management.component";
 
-export const settings_routes: Routes = [
-  {path: 'account', component: AccountSettingsComponent},
-  {
-    path: 'users', providers: [UserManagementService, RoleManagementService], children: [
-      {path: '', component: UserListComponent},
-      {path: ':username', component: UserDetailsComponent},
-    ]
-  },
-  {path: 'roles', component: RoleManagementComponent},
-]
+export const settings: SettingsInformation = {
+  routes: [
+    {path: 'account', component: AccountSettingsComponent},
+    {
+      path: 'users', providers: [UserManagementService, RoleManagementService], children: [
+        {path: '', component: UserListComponent},
+        {path: ':username', component: UserDetailsComponent},
+      ]
+    },
+    {path: 'roles', component: RoleManagementComponent},
+  ],
+  options: [
+    {path: '/account', title: 'Account Settings', auth: 'user', icon: 'person'},
+    {path: '/users', title: 'Manage Users', auth: 'admin', icon: 'manage_accounts'},
+    {path: '/roles', title: 'Manage Roles', auth: 'admin', icon: 'page_info'},
+  ]
+}
+
+export interface SettingsInformation {
+  routes: Routes,
+  options: SettingsOption[]
+}
+
+export interface SettingsOption {
+  path: string
+  title: string
+  auth: string
+  icon: string
+}

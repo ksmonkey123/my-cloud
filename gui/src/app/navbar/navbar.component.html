@@ -7,18 +7,13 @@
   </button>
 </mat-toolbar>
 <mat-menu #toolbarSettingsMenu="matMenu">
-  <button mat-menu-item routerLink="/account" routerLinkActive="settings-item-selected">
-    <mat-icon>person</mat-icon>
-    Account Settings
-  </button>
-  <button mat-menu-item *ngIf="(auth.authInfo$ | async)?.admin" routerLink="/users" routerLinkActive="settings-item-selected">
-    <mat-icon>manage_accounts</mat-icon>
-    Manage Users
-  </button>
-  <button mat-menu-item *ngIf="(auth.authInfo$ | async)?.admin" routerLink="/roles" routerLinkActive="settings-item-selected">
-    <mat-icon>tune</mat-icon>
-    Manage Roles
-  </button>
+  @for (item of settingsOptions; track item.path) {
+    <button mat-menu-item *ngIf="(auth.authInfo$ | async)?.roles?.includes(item.auth)" [routerLink]="item.path"
+            routerLinkActive="settings-item-selected">
+      <mat-icon>{{ item.icon }}</mat-icon>
+      {{ item.title }}
+    </button>
+  }
   <button mat-menu-item (click)="onLogout()">Log Out
     <mat-icon>logout</mat-icon>
   </button>
