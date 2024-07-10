@@ -2,41 +2,15 @@
   <h1>Manage Users</h1>
   <mat-card>
     <mat-card-content>
-      <div class="addUserForm">
-        <div>
-          <form *ngIf="showingForm" [formGroup]="form" (ngSubmit)="createUser()">
-            <div>
-              <mat-form-field>
-                <mat-label>Username</mat-label>
-                <input matInput formControlName="username" required>
-              </mat-form-field>
-
-              <mat-form-field>
-                <mat-label>Password</mat-label>
-                <input matInput type="password" formControlName="password" required>
-              </mat-form-field>
-              <button type="submit" color="primary" mat-mini-fab [disabled]="!form.valid">
-                <mat-icon>check</mat-icon>
-              </button>
-            </div>
-          </form>
-        </div>
-        <div class="showFormButton">
-          <button type="button" color="primary" mat-mini-fab *ngIf="!showingForm" (click)="showForm()">
-            <mat-icon>add</mat-icon>
-          </button>
-          <button type="button" color="primary" mat-mini-fab *ngIf="showingForm" (click)="hideForm()">
-            <mat-icon>close</mat-icon>
-          </button>
-        </div>
+      <div class="createButton">
+        <button mat-raised-button color="primary" (click)="openDialog()"><mat-icon>person_add</mat-icon>Add User</button>
       </div>
-
       <table mat-table [dataSource]="(list$ | async) || []">
 
         <!-- Admin Button -->
         <ng-container matColumnDef="admin">
-          <th mat-header-cell *matHeaderCellDef>&nbsp;</th>
-          <td mat-cell *matCellDef="let user">
+          <th mat-header-cell *matHeaderCellDef class="hide-small">&nbsp;</th>
+          <td mat-cell *matCellDef="let user" class="hide-small">
             <mat-chip role="listitem" color="warn" highlighted *ngIf="user.admin" class="adminMarker">admin</mat-chip>
           </td>
         </ng-container>
@@ -45,11 +19,13 @@
         <ng-container matColumnDef="username">
           <th mat-header-cell *matHeaderCellDef>Username</th>
           <td mat-cell *matCellDef="let user" (click)="selectUser(user)">
+            <span [class]="user.admin ? 'admin-username' : null">
             @if (user.username == auth.authInfo$.value?.username) {
               <i>{{ user.username }}</i>
             } @else {
               {{ user.username }}
             }
+            </span>
           </td>
         </ng-container>
 

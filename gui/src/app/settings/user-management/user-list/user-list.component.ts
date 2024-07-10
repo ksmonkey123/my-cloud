@@ -1,18 +1,21 @@
 import {Component, OnInit} from '@angular/core';
 import {Account, UserManagementService} from "../user-management.service";
 import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
-import {MatCard, MatCardContent} from "@angular/material/card";
+import {MatCard, MatCardContent, MatCardHeader} from "@angular/material/card";
 import {
   MatCell,
   MatCellDef,
   MatColumnDef,
   MatHeaderCell,
-  MatHeaderCellDef, MatHeaderRow, MatHeaderRowDef,
-  MatRow, MatRowDef,
+  MatHeaderCellDef,
+  MatHeaderRow,
+  MatHeaderRowDef,
+  MatRow,
+  MatRowDef,
   MatTable
 } from "@angular/material/table";
 import {MatSlideToggle} from "@angular/material/slide-toggle";
-import {FormBuilder, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AuthService} from "../../../common/auth.service";
 import {MatChip, MatChipOption, MatChipSet} from "@angular/material/chips";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -22,6 +25,8 @@ import {MatTooltip} from "@angular/material/tooltip";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {ToastrService} from "ngx-toastr";
+import {MatDialog} from "@angular/material/dialog";
+import {AddUserPopupDialog, DialogResult} from "./add-user-popup/add-user-popup.dialog";
 
 @Component({
   selector: 'app-user-management',
@@ -57,7 +62,8 @@ import {ToastrService} from "ngx-toastr";
     MatLabel,
     ReactiveFormsModule,
     MatButton,
-    MatAnchor
+    MatAnchor,
+    MatCardHeader
   ],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.scss'
@@ -67,21 +73,14 @@ export class UserListComponent implements OnInit {
   displayedColumns = ['admin', 'username', 'enabled']
   list$
 
-  showingForm = false
-
   constructor(public svc: UserManagementService,
               public auth: AuthService,
               public router: Router,
               public route: ActivatedRoute,
-              private formBuilder: FormBuilder,
-              private toastr: ToastrService) {
+              private toastr: ToastrService,
+              private dialog: MatDialog) {
     this.list$ = svc.accountList$
   }
-
-  form = this.formBuilder.group({
-    username: '',
-    password: ''
-  })
 
   ngOnInit() {
     this.svc.loadList()
@@ -105,27 +104,19 @@ export class UserListComponent implements OnInit {
     this.router.navigate([user.username], {relativeTo: this.route})
   }
 
-  showForm() {
-    this.showingForm = true;
-  }
-
-  hideForm() {
-    this.showingForm = false;
-  }
-
-  createUser() {
-    this.svc.createUser(this.form.value.username!!, this.form.value.password!!).subscribe(
-      {
-        next: () => {
-          this.form.reset()
-          this.showingForm = false
-          this.svc.loadList()
-        },
-        error: (error) => {
-          this.toastr.error(error?.error?.message, "could not create user")
+  openDialog() {
+    const dialogRef = this.dialog.open(AddUserPopupDialog)
+    dialogRef.afterClosed().subscribe((result: DialogResult) =>
+      this.svc.createUser(result.username, result.password).subscribe(
+        {
+          next: () => {
+            this.svc.loadList()
+          },
+          error: (error) => {
+            this.toastr.error(error?.error?.message, "could not create user")
+          }
         }
-      }
-    )
+    ))
   }
 
 }

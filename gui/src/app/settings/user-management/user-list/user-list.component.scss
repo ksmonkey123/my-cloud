@@ -1,17 +1,6 @@
 .page-body {
   max-width: 800px;
-  padding: 2em;
   margin: 0 auto;
-
-  mat-icon {
-    vertical-align: bottom;
-    margin-bottom: -2px;
-  }
-
-  mat-card {
-    margin-top: 1em;
-  }
-
 }
 
 .adminMarker {
@@ -34,33 +23,24 @@
 }
 
 table {
-  margin-top: 2em;
+  margin-top: 1em;
 }
 
-form > div {
-  display: flex;
-  align-items: flex-start;
+.createButton {
+  text-align: right;
 
   button {
-    margin-top: 6px;
-  }
-
-}
-
-mat-form-field {
-  margin-right: 16px;
-}
-
-.addUserForm {
-  display: flex;
-  justify-content: space-between;
-
-  .showFormButton {
-    text-align: right;
-
-    button {
-      margin: 10px;
+    @media screen and (max-width: 500px) {
+      width: 100%;
     }
+  }
+}
 
+@media screen and (max-width: 500px) {
+  .hide-small {
+    display: none;
+  }
+  .admin-username {
+    font-weight: bold;
   }
 }
