@@ -19,6 +19,7 @@ class AccountGroupController(
     }
 
     @PutMapping("/{groupId}")
+    @ResponseStatus(HttpStatus.CREATED)
     fun createGroup(
         @PathVariable bookId: Long,
         @PathVariable groupId: Int,

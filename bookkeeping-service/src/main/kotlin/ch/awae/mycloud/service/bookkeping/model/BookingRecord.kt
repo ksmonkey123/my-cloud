@@ -2,8 +2,10 @@ package ch.awae.mycloud.service.bookkeping.model
 
 import ch.awae.mycloud.db.*
 import jakarta.persistence.*
-import jakarta.validation.ValidationException
-import org.springframework.data.jpa.repository.JpaRepository
+import jakarta.validation.*
+import org.springframework.data.domain.*
+import org.springframework.data.jpa.repository.*
+import org.springframework.data.jpa.repository.Query
 import java.math.*
 import java.time.*
 
@@ -50,6 +52,7 @@ class BookingRecord(
 
 interface BookingRecordRepository : JpaRepository<BookingRecord, Long> {
 
-    fun existsByBook(book: Book): Boolean
+    @Query("select r from BookingRecord r where r.book = :book order by r.bookingDate desc, r._creationTimestamp desc")
+    fun listAllInBook(book: Book, pageable: Pageable): Page<BookingRecord>
 
 }
