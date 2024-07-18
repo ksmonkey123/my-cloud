@@ -9,7 +9,8 @@ import org.springframework.transaction.annotation.*
 
 @SpringBootApplication
 @EnableTransactionManagement
-@Import(ClientSecurityConfiguration::class, AuditLogConfiguration::class)
+@EnableAuditLog
+@EnableClientSecurity
 class BookkeepingServiceApplication
 
 fun main(args: Array<String>) {

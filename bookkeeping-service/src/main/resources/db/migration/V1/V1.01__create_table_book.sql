@@ -7,6 +7,7 @@ create table book
     title        varchar(50) not null,
     opening_date date        not null,
     closing_date date        not null,
+    description  text,
     -- management fields
     cre_user     varchar(30),
     mut_user     varchar(30),

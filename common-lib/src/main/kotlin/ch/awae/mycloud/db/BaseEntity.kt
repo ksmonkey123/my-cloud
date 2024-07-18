@@ -40,11 +40,17 @@ abstract class BaseEntity {
     @PreUpdate
     open fun preUpdate() {
         updateManagementFields()
+        validate()
     }
 
     @PrePersist
     open fun prePersist() {
         updateManagementFields()
+        validate()
+    }
+
+    open fun validate() {
+        // by default: no validation
     }
 
     private fun updateManagementFields() {

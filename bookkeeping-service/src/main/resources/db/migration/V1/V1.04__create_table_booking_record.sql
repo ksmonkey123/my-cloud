@@ -6,8 +6,8 @@ create table booking_record
     -- business columns
     booking_text varchar(50) not null,
     description  text,
-    invoice_date date        not null,
     booking_date date        not null,
+    tag          varchar(20),
     -- management fields
     cre_user     varchar(30),
     mut_user     varchar(30),
@@ -16,8 +16,7 @@ create table booking_record
     version      int         not null default 0,
     -- constraints
     constraint pk_booking_record primary key (id),
-    constraint fk_booking_record__book_id foreign key (book_id) references book (id),
-    constraint ck_booking_record__date_logic check ( invoice_date <= booking_date )
+    constraint fk_booking_record__book_id foreign key (book_id) references book (id)
 );
 
 create table booking_movement
@@ -30,12 +29,15 @@ create table booking_movement
     -- constraints
     constraint pk_booking_movement primary key (booking_record_id, account_id),
     constraint fk_booking_movement__booking_record_id foreign key (booking_record_id) references booking_record (id),
-    constraint fk_booking_movement__account_id foreign key (account_id) references account (id)
+    constraint fk_booking_movement__account_id foreign key (account_id) references account (id),
+    constraint ck_booking_movement__amount_not_zero check ( amount <> 0 )
 );
 
 create index idx_booking_record__book_id on booking_record (book_id);
+create index idx_booking_record__booking_date on booking_record (booking_date);
 create index idx_booking_record__cre_time on booking_record (cre_time);
 create index idx_booking_record__mut_time on booking_record (mut_time);
+create index idx_booking_record__tag_per_book on booking_record (book_id, tag);
 
 create index idx_booking_movement__booking_record_id on booking_movement (booking_record_id);
 create index idx_booking_movement__account_id on booking_movement (account_id);

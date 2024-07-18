@@ -8,3 +8,6 @@ class ResourceAlreadyExistsException(resource: String) :
 
 class ResourceNotFoundException(resource: String) :
     ResponseStatusException(HttpStatus.NOT_FOUND, "resource not found: $resource")
+
+class InvalidRequestException(reason: String) :
+    ResponseStatusException(HttpStatus.BAD_REQUEST, "invalid request: $reason")
