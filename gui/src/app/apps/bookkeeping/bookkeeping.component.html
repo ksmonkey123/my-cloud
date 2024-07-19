@@ -1,0 +1,25 @@
+<div class="nav-flexbox">
+
+  <mat-card appearance="raised" class="nav-flex-item" (click)="addBook()">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>add_box</mat-icon>
+        Add Book
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>&nbsp;</mat-card-content>
+  </mat-card>
+  <mat-card *ngFor="let item of list$ | async" appearance="raised" class="nav-flex-item" [routerLink]="'./' + item.id">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>book_2</mat-icon>
+        {{ item.title }}
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      {{ item.openingDate.toLocaleDateString() }} - {{ item.closingDate.toLocaleDateString() }}<br/>
+      {{ item.description }}
+    </mat-card-content>
+  </mat-card>
+
+</div>

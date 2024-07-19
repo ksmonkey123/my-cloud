@@ -1,0 +1,22 @@
+.nav-flexbox {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+
+.nav-flex-item {
+  margin: 10px;
+  width: 400px;
+  background-color: #f0f0f0;
+
+  &:hover {
+    cursor: pointer;
+    background-color: lightgray;
+  }
+}
+
+mat-icon {
+  vertical-align: text-bottom;
+  padding-right: 10px;
+}
+
