@@ -24,7 +24,16 @@ class BookService(
         ?: throw ResourceNotFoundException("/books/$bookId")
 
     fun getBooks(): List<BookSummaryDto> {
-        return bookRepository.findByUsername(AuthInfo.username!!).map(::BookSummaryDto)
+        return bookRepository.findByUsername(AuthInfo.username!!)
+            .map(::BookSummaryDto)
+            .sortedByDescending { it.openingDate }
+    }
+
+    fun getBookDetails(bookId: Long): BookDto {
+        return BookDto(
+            book = BookSummaryDto(getBook(bookId)),
+            groups = getAccountGroups(bookId)
+        )
     }
 
     @AuditLog
@@ -39,6 +48,16 @@ class BookService(
             )
         )
         return BookSummaryDto(createdBook)
+    }
+
+    @AuditLog
+    fun editBook(bookId: Long, request: EditBookRequest): BookSummaryDto {
+        val book = getBook(bookId)
+
+        book.title = request.title
+        book.description = request.description?.trim()?.takeIf { it.isNotBlank() }
+
+        return BookSummaryDto(book)
     }
 
     fun getAccountGroups(bookId: Long): List<AccountGroupDto> {

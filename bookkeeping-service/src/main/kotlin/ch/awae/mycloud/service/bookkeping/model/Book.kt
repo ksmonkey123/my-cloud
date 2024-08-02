@@ -10,8 +10,7 @@ import java.time.*
 class Book(
     @Column(updatable = false)
     val username: String,
-    @Column(updatable = false)
-    val title: String,
+    var title: String,
     @Column(updatable = false)
     val openingDate: LocalDate,
     @Column(updatable = false)

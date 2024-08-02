@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {AuthService} from "../common/auth.service";
 import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from "@angular/material/card";
@@ -23,15 +23,10 @@ import {apps} from "../apps/apps.overview";
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
 
   constructor(public auth: AuthService) {
   }
-
-  ngOnInit() {
-    console.log("hi")
-  }
-
 
   protected readonly appCards = apps.cards;
 }

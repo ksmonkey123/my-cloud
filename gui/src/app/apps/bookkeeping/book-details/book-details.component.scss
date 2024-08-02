@@ -1,0 +1,19 @@
+.page-body {
+  max-width: 800px;
+  padding: 2em;
+  margin: 0 auto;
+
+  mat-icon {
+    margin-bottom: -2px;
+  }
+
+  mat-card {
+    margin-top: 1em;
+
+    mat-card-actions {
+      button {
+        margin-right: 10px;
+      }
+    }
+  }
+}

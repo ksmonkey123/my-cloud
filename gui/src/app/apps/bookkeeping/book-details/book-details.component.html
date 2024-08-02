@@ -1,0 +1,82 @@
+<button mat-flat-button color="primary" routerLink="../">
+  <mat-icon>arrow_back</mat-icon>
+  Back
+</button>
+<div class="page-body">
+
+  <!-- SUMMARY -->
+  @if (!edit_mode) {
+    @if (book != null) {
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>book_2</mat-icon>
+            {{ book.summary.title }} &nbsp;
+            <button mat-raised-button color="primary" (click)="editBook()">
+              <mat-icon>edit</mat-icon>
+              Edit Book
+            </button>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>
+            <mat-chip color="secondary" highlighted>{{ book.summary.openingDate.toLocaleDateString() }}
+              - {{ book.summary.closingDate.toLocaleDateString() }}
+            </mat-chip>
+          </p>
+          @if (book.summary.description) {
+            <p>
+              {{ book.summary.description }}
+            </p>
+          }
+        </mat-card-content>
+      </mat-card>
+    }
+  } @else {
+    <!-- EDIT VIEW -->
+    <form [formGroup]="form">
+      <mat-card>
+        <mat-card-content style="width: 95%">
+          <div>
+            <mat-form-field style="width: 100%">
+              <mat-label>Title</mat-label>
+              <input matInput required [formControl]="form.controls.title">
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <mat-label>Date Range</mat-label>
+              <mat-date-range-input [rangePicker]="picker" [disabled]="book != null">
+                <input matStartDate formControlName="start" placeholder="Start date">
+                <input matEndDate formControlName="end" placeholder="End date">
+              </mat-date-range-input>
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field style="width: 100%">
+              <mat-label>Description</mat-label>
+              <textarea matInput [formControl]="form.controls.description"></textarea>
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          @if (book != null) {
+            <button mat-raised-button color="warn" (click)="cancelBookEdit()">
+              <mat-icon>close</mat-icon>
+              Cancel
+            </button>
+          }
+          <button mat-raised-button type="submit" color="primary" (click)="saveBookEdit()" [disabled]="!form.valid">
+            <mat-icon>check</mat-icon>
+            Save
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </form>
+  }
+
+  <!-- ACCOUNT GROUPS -->
+
+</div>

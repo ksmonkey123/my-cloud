@@ -21,6 +21,16 @@ class BookController(private val service: BookService) {
         return service.createBook(request)
     }
 
+    @GetMapping("/{bookId}")
+    fun get(@PathVariable bookId: Long): BookDto {
+        return service.getBookDetails(bookId)
+    }
+
+    @PutMapping("/{bookId}")
+    fun edit(@PathVariable bookId: Long, @RequestBody request: EditBookRequest): BookSummaryDto {
+        return service.editBook(bookId, request)
+    }
+
 }
 
 data class CreateBookRequest(
@@ -28,4 +38,9 @@ data class CreateBookRequest(
     val description: String?,
     val openingDate: LocalDate,
     val closingDate: LocalDate,
+)
+
+data class EditBookRequest(
+    val title: String,
+    val description: String?
 )
