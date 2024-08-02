@@ -73,6 +73,8 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     }
   )
 
+  selectedTabIndex = new FormControl(0)
+
   private bookSubscription
 
   constructor(
@@ -93,6 +95,12 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
         this.book = null
       } else {
         this.service.loadBook(bookId)
+      }
+    })
+    this.route.queryParams.subscribe((params: Params) => {
+      let tabName = params['tab']
+      if (tabName) {
+        this.onTabChange(tabNameToIndex(tabName))
       }
     })
   }
@@ -142,4 +150,36 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   }
 
   protected readonly AccountType = AccountType;
+
+  onTabChange(index: number) {
+    this.selectedTabIndex.setValue(index)
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {tab: tabIndexToName(index)},
+    })
+  }
+}
+
+function tabNameToIndex(name: string): number {
+  switch (name) {
+    case 'transactions':
+      return 1
+    case 'reports' :
+      return 2
+    default:
+      return 0
+  }
+}
+
+function tabIndexToName(index: number): string | undefined {
+  switch (index) {
+    case 0:
+      return 'accounts'
+    case 1:
+      return 'transactions'
+    case 2:
+      return 'reports'
+    default:
+      return undefined
+  }
 }
