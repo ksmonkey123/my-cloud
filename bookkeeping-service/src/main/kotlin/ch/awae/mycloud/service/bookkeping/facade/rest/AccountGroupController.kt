@@ -25,7 +25,7 @@ class AccountGroupController(
         @PathVariable groupId: Int,
         @RequestBody request: CreateGroupRequest
     ): AccountGroupDto {
-        return service.createAccountGroup(bookId, groupId, request)
+        return service.createOrEditAccountGroup(bookId, groupId, request)
     }
 
     @DeleteMapping("/{groupId}")

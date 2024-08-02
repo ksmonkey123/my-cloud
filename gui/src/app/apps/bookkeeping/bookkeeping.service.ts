@@ -2,8 +2,6 @@ import {Injectable, OnDestroy} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {ToastrService} from "ngx-toastr";
 import {BehaviorSubject, Subject, takeUntil} from "rxjs";
-import {Account} from "../../settings/user-management/user-management.service";
-import {Link} from "../shortener/shortener.service";
 
 @Injectable()
 export class BookkeepingService implements OnDestroy {
@@ -101,7 +99,72 @@ export class BookkeepingService implements OnDestroy {
     return createdBookId$
   }
 
+  saveAccountGroup(bookId: number, number: number, title: string) {
+    this.http.put<AccountGroup>('/rest/bookkeeping/books/' + bookId + '/groups/' + number, {
+      title: title
+    }).pipe(takeUntil(this.closer$))
+      .subscribe({
+        next: (group) => {
+          this.toastr.success("Group Saved", "Account Group " + number + " was saved successfully")
+          this.loadBook(bookId)
+        },
+        error: error => {
+          this.toastr.error(error?.error?.message, "could not save account group")
+          this.loadBook(bookId)
+        }
+      })
+  }
+
+  deleteGroup(bookId: number, groupNumber: number) {
+    this.http.delete<any>('/rest/bookkeeping/books/' + bookId + '/groups/' + groupNumber)
+      .pipe(takeUntil(this.closer$))
+      .subscribe({
+        next: (_) => {
+          this.toastr.success("Group Deleted", "Account Group " + groupNumber + " was successfully deleted")
+          this.loadBook(bookId)
+        },
+        error: error => {
+          this.toastr.error(error?.error?.message, "could not delete account group")
+          this.loadBook(bookId)
+        }
+      })
+  }
+
+  saveAccount(bookId: number, accountId: string, title: string, description: string | undefined, type: AccountType) {
+    this.http.put<AccountSummary>('/rest/bookkeeping/books/' + bookId + '/accounts/' + accountId, {
+        title: title,
+        description: description,
+        accountType: type
+      }
+    ).pipe(takeUntil(this.closer$))
+      .subscribe({
+        next: (account) => {
+          this.toastr.success("Account Saved", "Account " + accountId + " was saved successfully")
+          this.loadBook(bookId)
+        },
+        error: error => {
+          this.toastr.error(error?.error?.message, "could not save account ")
+          this.loadBook(bookId)
+        }
+      })
+  }
+
+  deleteAccount(bookId: number, accountId: String) {
+    this.http.delete<any>('/rest/bookkeeping/books/' + bookId + '/accounts/' + accountId)
+      .pipe(takeUntil(this.closer$))
+      .subscribe({
+        next: (_) => {
+          this.toastr.success("Account Deleted", "Account " + accountId + " was successfully deleted")
+          this.loadBook(bookId)
+        },
+        error: error => {
+          this.toastr.error(error?.error?.message, "could not delete account")
+          this.loadBook(bookId)
+        }
+      })
+  }
 }
+
 
 export interface CreateBookRequest {
   title: string,
@@ -145,7 +208,7 @@ export interface AccountGroup {
 }
 
 export interface AccountSummary {
-  id: String,
+  id: string,
   title: string,
   description?: string,
   accountType: AccountType
@@ -156,4 +219,19 @@ export enum AccountType {
   LIABILITY = "LIABILITY",
   EXPENSE = "EXPENSE",
   INCOME = "INCOME",
+}
+
+export class AccountTypeUtil {
+  public static iconForType(type: AccountType): string {
+    switch (type) {
+      case AccountType.ASSET:
+        return 'savings'
+      case AccountType.LIABILITY:
+        return 'credit_card'
+      case AccountType.INCOME:
+        return 'trending_up'
+      case AccountType.EXPENSE:
+        return 'trending_down'
+    }
+  }
 }

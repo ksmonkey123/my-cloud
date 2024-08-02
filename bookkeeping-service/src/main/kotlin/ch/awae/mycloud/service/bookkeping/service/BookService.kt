@@ -66,9 +66,12 @@ class BookService(
     }
 
     @AuditLog
-    fun createAccountGroup(bookId: Long, groupId: Int, dto: CreateGroupRequest): AccountGroupDto {
+    fun createOrEditAccountGroup(bookId: Long, groupId: Int, dto: CreateGroupRequest): AccountGroupDto {
         val book = getBook(bookId)
-        val createdGroup = groupRepository.save(AccountGroup(book, groupId, dto.title))
+        val createdGroup = groupRepository.getByBookAndGroupNumber(book, groupId)
+            ?.apply { this.title = dto.title }
+            ?: groupRepository.save(AccountGroup(book, groupId, dto.title))
+
         return AccountGroupDto(createdGroup)
     }
 

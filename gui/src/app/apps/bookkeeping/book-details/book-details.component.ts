@@ -17,6 +17,11 @@ import {
 } from "@angular/material/datepicker";
 import {provideNativeDateAdapter} from "@angular/material/core";
 import {MatChip} from "@angular/material/chips";
+import {MatDivider} from "@angular/material/divider";
+import {MatTab, MatTabContent, MatTabGroup} from "@angular/material/tabs";
+import {AccountGroupListComponent} from "./account-group-list/account-group-list.component";
+import {TransactionsListComponent} from "./transactions-list/transactions-list.component";
+import {ReportsComponent} from "./reports/reports.component";
 
 @Component({
   selector: 'app-book-details',
@@ -44,6 +49,13 @@ import {MatChip} from "@angular/material/chips";
     MatEndDate,
     MatCardActions,
     MatChip,
+    MatDivider,
+    MatTabGroup,
+    MatTab,
+    MatTabContent,
+    AccountGroupListComponent,
+    TransactionsListComponent,
+    ReportsComponent,
   ],
   templateUrl: './book-details.component.html',
   styleUrl: './book-details.component.scss'

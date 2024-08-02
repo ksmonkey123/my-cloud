@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>{{ createMode ? "Create" : "Edit" }} Account Group</h2>
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <div>
+      <mat-form-field>
+        <mat-label>Group Number</mat-label>
+        <input type="number" matInput [formControl]="form.controls.number" required>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Group Name</mat-label>
+        <input matInput [formControl]="form.controls.title" required>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" [mat-dialog-close]="collectData()" [disabled]="!form.valid">Ok</button>
+</mat-dialog-actions>

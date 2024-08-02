@@ -1,0 +1,40 @@
+<h2 mat-dialog-title>{{ createMode ? "Create" : "Edit" }} Account</h2>
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <div>
+      <mat-form-field>
+        <mat-label>Account Number</mat-label>
+        <input type="number" matInput [formControl]="form.controls.number" required>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Account Name</mat-label>
+        <input matInput [formControl]="form.controls.title" required>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Account Type</mat-label>
+        <mat-select [formControl]="form.controls.type" required>
+          <mat-option>--</mat-option>
+          @for (type of types; track type) {
+            <mat-option [value]="type">
+              <mat-icon>{{ AccountTypeUtil.iconForType(type) }}</mat-icon>
+              {{ type }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Description</mat-label>
+        <textarea matInput [formControl]="form.controls.description"></textarea>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" [mat-dialog-close]="collectData()" [disabled]="!form">Ok</button>
+</mat-dialog-actions>
