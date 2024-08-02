@@ -1,0 +1,52 @@
+<div>{{ booking.description }}</div>
+<div>
+  <table>
+    <tr>
+      <th class="header-row">&nbsp;</th>
+      <th class="header-row">Account</th>
+      <th class="header-row amount">Credit</th>
+      <th class="header-row amount">Debit</th>
+    </tr>
+    @for (credit of booking.credits; track credit.accountId) {
+      <tr class="body-row">
+        <td class="icon">
+          <mat-icon>{{ AccountTypeUtil.iconForType(accounts[credit.accountId].accountType) }}</mat-icon>
+        </td>
+        <td>
+          <span class="account-id">{{ credit.accountId }} - {{ accounts[credit.accountId].title }}</span>
+        </td>
+        <td class="amount">{{ MoneyUtil.formatForDisplay(credit.amount) }}</td>
+        <td>&nbsp;</td>
+      </tr>
+    }
+    @for (debit of booking.debits; track debit.accountId) {
+      <tr class="body-row">
+        <td class="icon">
+          <mat-icon>{{ AccountTypeUtil.iconForType(accounts[debit.accountId].accountType) }}</mat-icon>
+        </td>
+        <td>
+          <span class="account-id">{{ debit.accountId }} - {{ accounts[debit.accountId].title }}</span>
+        </td>
+        <td>&nbsp;</td>
+        <td class="amount">{{ MoneyUtil.formatForDisplay(debit.amount) }}</td>
+      </tr>
+    }
+    <tr>
+      <th colspan="2" class="footer-row">
+        &nbsp;
+      </th>
+      <th class="amount-total footer-row">{{ MoneyUtil.formatForDisplay(booking.amount) }}</th>
+      <th class="amount-total footer-row">{{ MoneyUtil.formatForDisplay(booking.amount) }}</th>
+    </tr>
+  </table>
+  <div class="button-row">
+    <button mat-raised-button color="warn" (click)="delete()">
+      <mat-icon>delete</mat-icon>
+      Delete Transaction
+    </button>
+    <button mat-raised-button color="primary" (click)="edit()">
+      <mat-icon>edit</mat-icon>
+      Edit Transaction
+    </button>
+  </div>
+</div>

@@ -31,4 +31,22 @@ class BookingRecordController(
         return service.createRecord(bookId, request)
     }
 
+    @PutMapping("/{bookingId}")
+    fun edit(
+        @PathVariable bookId: Long,
+        @PathVariable bookingId: Long,
+        @RequestBody request: BookingRecordEditRequest,
+    ): BookingRecordDto {
+        return service.editRecord(bookId, bookingId, request)
+    }
+
+    @DeleteMapping("/{bookingId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun delete(
+        @PathVariable bookId: Long,
+        @PathVariable bookingId: Long,
+    ) {
+        service.deleteRecord(bookId, bookingId)
+    }
+
 }

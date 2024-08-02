@@ -51,3 +51,9 @@ data class BookingRecordMovementDto(
 ) {
     constructor(accountId: AccountId, amount: BigDecimal) : this(accountId.toString(), amount)
 }
+
+data class BookingRecordEditRequest(
+    val text: String,
+    val tag: String?,
+    val description: String?,
+)

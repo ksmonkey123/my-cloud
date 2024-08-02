@@ -1,5 +1,6 @@
 package ch.awae.mycloud.service.bookkeping.service
 
+import ch.awae.mycloud.*
 import ch.awae.mycloud.audit.*
 import ch.awae.mycloud.service.bookkeping.dto.*
 import ch.awae.mycloud.service.bookkeping.model.*
@@ -30,11 +31,7 @@ class BookingRecordService(
         }
 
         val record = BookingRecord(
-            book,
-            request.text,
-            request.description,
-            request.bookingDate,
-            request.tag
+            book, request.text, request.description, request.bookingDate, request.tag
         ).apply {
             movements.putAll(credits)
             movements.putAll(debits)
@@ -56,17 +53,13 @@ class BookingRecordService(
     }
 
     fun getLedgerPageForAccount(
-        bookId: Long,
-        accountId: AccountId,
-        page: Int,
-        pageSize: Int
+        bookId: Long, accountId: AccountId, page: Int, pageSize: Int
     ): AccountLedgerDto {
         val account = bookService.getAccount(bookId, accountId)
 
         val accountBalance = accountTransactionRepository.getBalanceOfAccount(account)
         val transactionPage = accountTransactionRepository.findByAccount(
-            account,
-            Pageable.ofSize(pageSize).withPage(page)
+            account, Pageable.ofSize(pageSize).withPage(page)
         )
 
         val transactions = transactionPage.content.map {
@@ -85,6 +78,28 @@ class BookingRecordService(
             PageDto(transactions, transactionPage.totalElements),
             accountBalance ?: BigDecimal.ZERO,
         )
+    }
+
+    fun getRecord(bookId: Long, bookingId: Long): BookingRecord {
+        val book = bookService.getBook(bookId)
+        return bookingRecordRepository.findByIdAndBook(bookingId, book)
+            ?: throw ResourceNotFoundException("/books/$bookId/records/$bookingId")
+    }
+
+    fun editRecord(bookId: Long, bookingId: Long, request: BookingRecordEditRequest): BookingRecordDto {
+        val record = getRecord(bookId, bookingId)
+
+        record.bookingText = request.text
+        record.description = request.description
+        record.tag = request.tag
+
+        return BookingRecordDto.of(record)
+    }
+
+    fun deleteRecord(bookId: Long, bookingId: Long) {
+        val record = getRecord(bookId, bookingId)
+
+        bookingRecordRepository.delete(record)
     }
 
 }

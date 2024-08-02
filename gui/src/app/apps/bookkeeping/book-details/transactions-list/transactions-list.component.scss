@@ -1,0 +1,42 @@
+.wrapper {
+  padding-top: 20px;
+}
+
+tr.element-row:not(.expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.element-row:not(.expanded-row):active {
+  background: #efefef;
+}
+
+.expander-icon {
+  width: 30px;
+}
+
+th.amount {
+  text-align: right;
+}
+
+td.amount {
+  width: 120px;
+  text-align: right;
+  font-family: monospace;
+}
+
+app-transaction-details {
+  width: 100%;
+}
+
+tr.detail-row {
+  height: 0;
+}
+
+.element-row td {
+  border-bottom-width: 0;
+}
+
+.element-detail {
+  overflow: hidden;
+  display: flex;
+}

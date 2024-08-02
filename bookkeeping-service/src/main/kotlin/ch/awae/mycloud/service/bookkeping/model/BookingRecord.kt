@@ -15,7 +15,7 @@ class BookingRecord(
     val book: Book,
     var bookingText: String,
     var description: String?,
-    var bookingDate: LocalDate,
+    val bookingDate: LocalDate,
     var tag: String?,
 ) : IdBaseEntity() {
 
@@ -54,5 +54,7 @@ interface BookingRecordRepository : JpaRepository<BookingRecord, Long> {
 
     @Query("select r from BookingRecord r where r.book = :book order by r.bookingDate desc, r._creationTimestamp desc")
     fun listAllInBook(book: Book, pageable: Pageable): Page<BookingRecord>
+
+    fun findByIdAndBook(id: Long, book: Book): BookingRecord?
 
 }

@@ -1,0 +1,57 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td {
+  padding: 0;
+}
+
+td.icon {
+  width: 40px;
+
+  mat-icon {
+    vertical-align: bottom;
+  }
+}
+
+th.amount {
+  text-align: right;
+}
+
+td.amount {
+  width: 100px;
+  text-align: right;
+  font-family: monospace;
+}
+
+tr.body-row:hover {
+  background-color: lightgray;
+}
+
+th.amount-total {
+  text-align: right;
+  font-family: monospace;
+}
+
+.account-id {
+  font-family: monospace;
+}
+
+.header-row {
+  border-bottom: 1px solid darkgray;
+}
+
+.footer-row {
+  border-top: 1px solid darkgray;
+}
+
+.button-row {
+  text-align: end;
+  margin-top: 5px;
+  margin-bottom: 10px;
+
+  button {
+    margin-left: 5px;
+  }
+}

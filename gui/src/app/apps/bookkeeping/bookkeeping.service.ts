@@ -2,6 +2,7 @@ import {Injectable, OnDestroy} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {ToastrService} from "ngx-toastr";
 import {BehaviorSubject, Subject, takeUntil} from "rxjs";
+import Big from "big.js";
 
 @Injectable()
 export class BookkeepingService implements OnDestroy {
@@ -12,6 +13,7 @@ export class BookkeepingService implements OnDestroy {
 
   public bookList$ = new BehaviorSubject<BookSummary[]>([])
   public book$ = new BehaviorSubject<Book | null>(null)
+  public bookingPage$ = new BehaviorSubject<BookingPage | null>(null)
 
   private closer$ = new Subject<void>()
 
@@ -20,6 +22,7 @@ export class BookkeepingService implements OnDestroy {
     this.closer$.complete()
     this.bookList$.complete()
     this.book$.complete()
+    this.bookingPage$.complete()
   }
 
   loadBooks() {
@@ -163,6 +166,64 @@ export class BookkeepingService implements OnDestroy {
         }
       })
   }
+
+  private bookingPageState = {
+    bookId: 0,
+    pageSize: 10,
+    pageNo: 0
+  }
+
+  reloadBookings() {
+    this.http.get<BookingPageDto>('/rest/bookkeeping/books/' + this.bookingPageState.bookId + '/records', {
+      params: {
+        page: this.bookingPageState.pageNo
+      }
+    }).pipe(takeUntil(this.closer$))
+      .subscribe(
+        page => {
+          this.bookingPage$.next({
+            totalElements: page.totalElements,
+            items: page.items.map(record => ({
+              id: record.id,
+              date: new Date(record.bookingDate),
+              tag: record.tag,
+              text: record.text,
+              description: record.description,
+              amount: new Big(record.amount),
+              credits: record.credits.map(i => ({
+                accountId: i.accountId,
+                amount: new Big(i.amount)
+              })),
+              debits: record.debits.map(i => ({
+                accountId: i.accountId,
+                amount: new Big(i.amount)
+              }))
+            }))
+          })
+        }
+      )
+  }
+
+  loadBookings(bookId: number, pageId: number) {
+    this.bookingPageState.bookId = bookId
+    this.bookingPageState.pageNo = pageId
+    this.reloadBookings()
+  }
+
+  deleteBooking(book: Book, booking: BookingRecord) {
+    this.http.delete<any>('/rest/bookkeeping/books/' + book.id + '/records/' + booking.id)
+      .pipe(takeUntil(this.closer$))
+      .subscribe({
+        next: (_) => {
+          this.toastr.success("Record Deleted", "Record " + booking.id + " was successfully deleted")
+          this.reloadBookings()
+        },
+        error: error => {
+          this.toastr.error(error?.error?.message, "could not delete account")
+          this.reloadBookings()
+        }
+      })
+  }
 }
 
 
@@ -214,6 +275,48 @@ export interface AccountSummary {
   accountType: AccountType
 }
 
+interface BookingPageDto {
+  items: BookingRecordDto[],
+  totalElements: number,
+}
+
+interface BookingRecordDto {
+  id: number,
+  bookingDate: Date,
+  tag?: string,
+  text: string,
+  description?: string,
+  amount: any,
+  credits: BookingMovementDto[],
+  debits: BookingMovementDto[],
+}
+
+interface BookingMovementDto {
+  accountId: string,
+  amount: any,
+}
+
+export interface BookingPage {
+  items: BookingRecord[],
+  totalElements: number,
+}
+
+export interface BookingRecord {
+  id: number,
+  date: Date,
+  tag?: string,
+  text: string,
+  description?: string,
+  amount: Big,
+  credits: BookingMovement[],
+  debits: BookingMovement[],
+}
+
+export interface BookingMovement {
+  accountId: string,
+  amount: Big,
+}
+
 export enum AccountType {
   ASSET = "ASSET",
   LIABILITY = "LIABILITY",
@@ -232,6 +335,20 @@ export class AccountTypeUtil {
         return 'trending_up'
       case AccountType.EXPENSE:
         return 'trending_down'
+    }
+  }
+}
+
+export class MoneyUtil {
+  public static formatForDisplay(amount: Big): string {
+    let rawString = amount.toFixed(2)
+    if (rawString.startsWith('0.')) {
+      return '-.' + rawString.split('.')[1]
+    }
+    if (rawString.endsWith('.00')) {
+      return rawString.split('.')[0] + '.--'
+    } else {
+      return rawString
     }
   }
 }

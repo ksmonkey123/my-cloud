@@ -1,0 +1,30 @@
+<form ngForm [formGroup]="form">
+  <div>
+    <mat-form-field class="full-length">
+      <mat-label>Text</mat-label>
+      <input matInput required [formControl]="form.controls.text">
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field>
+      <mat-label>Date</mat-label>
+      <input matInput [matDatepicker]="picker" [formControl]="form.controls.date" required>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Tag</mat-label>
+      <input matInput [formControl]="form.controls.tag">
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field class="full-length">
+      <mat-label>Description</mat-label>
+      <textarea matInput [formControl]="form.controls.description"></textarea>
+    </mat-form-field>
+  </div>
+  <mat-divider></mat-divider>
+  <!-- Movements -->
+  <h3>Credit</h3>
+  <h3>Debit</h3>
+</form>
