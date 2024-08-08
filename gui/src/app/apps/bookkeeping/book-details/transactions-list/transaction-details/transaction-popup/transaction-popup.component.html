@@ -2,19 +2,19 @@
 <mat-dialog-content>
   <form [formGroup]="form">
     <div>
-      <mat-form-field>
+      <mat-form-field class="field">
         <mat-label>Text</mat-label>
         <input matInput [formControl]="form.controls.text" required>
       </mat-form-field>
     </div>
     <div>
-      <mat-form-field>
+      <mat-form-field class="field">
         <mat-label>Tag</mat-label>
         <input matInput [formControl]="form.controls.tag">
       </mat-form-field>
     </div>
     <div>
-      <mat-form-field>
+      <mat-form-field class="field">
         <mat-label>Description</mat-label>
         <textarea matInput [formControl]="form.controls.description"></textarea>
       </mat-form-field>

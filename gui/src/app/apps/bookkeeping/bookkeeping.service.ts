@@ -204,6 +204,79 @@ export class BookkeepingService implements OnDestroy {
       )
   }
 
+  editBooking(book: Book, bookingId: number, patch: {
+    text: string,
+    tag?: string,
+    description?: string,
+  }) {
+    this.http.put<any>('/rest/bookkeeping/books/' + book.id + '/records/' + bookingId, patch)
+      .pipe(takeUntil(this.closer$))
+      .subscribe({
+        next: (_) => {
+          this.toastr.success("Transaction Saved", "Transaction " + bookingId + " was successfully updated")
+          this.reloadBookings()
+        },
+        error: error => {
+          this.toastr.error(error?.error?.message, "could not edit transaction")
+          this.reloadBookings()
+        }
+      })
+  }
+
+  createBooking(book: Book, booking: CreateBookingRecord): BehaviorSubject<number> {
+    const result = new BehaviorSubject(0)
+    this.http.post<any>('/rest/bookkeeping/books/' + book.id + '/records', this.mapBookingRecord(booking))
+      .pipe(takeUntil(this.closer$))
+      .subscribe({
+        next: (_) => {
+          this.toastr.success("Transaction Saved", "Transaction was successfully deleted")
+          this.reloadBookings()
+          result.next(1)
+        },
+        error: error => {
+          this.toastr.error(error?.error?.message, "could not save transaction")
+          this.reloadBookings()
+          result.next(-1)
+        }
+      })
+    return result
+  }
+
+  private formatDate(date: Date) {
+    let d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2)
+      month = '0' + month;
+    if (day.length < 2)
+      day = '0' + day;
+
+    return [year, month, day].join('-');
+  }
+
+  private mapBookingRecord(booking: CreateBookingRecord): CreateBookingRecordDto {
+    return {
+      bookingDate: this.formatDate(booking.date),
+      tag: booking.tag,
+      text: booking.text,
+      description: booking.description,
+      credits: booking.credits.map(c => {
+        return {
+          accountId: c.accountId,
+          amount: c.amount.toFixed(2)
+        }
+      }),
+      debits: booking.debits.map(c => {
+        return {
+          accountId: c.accountId,
+          amount: c.amount.toFixed(2)
+        }
+      })
+    }
+  }
+
   loadBookings(bookId: number, pageId: number) {
     this.bookingPageState.bookId = bookId
     this.bookingPageState.pageNo = pageId
@@ -291,6 +364,15 @@ interface BookingRecordDto {
   debits: BookingMovementDto[],
 }
 
+interface CreateBookingRecordDto {
+  bookingDate: string,
+  tag?: string,
+  text: string,
+  description?: string,
+  credits: BookingMovementDto[],
+  debits: BookingMovementDto[],
+}
+
 interface BookingMovementDto {
   accountId: string,
   amount: any,
@@ -299,6 +381,15 @@ interface BookingMovementDto {
 export interface BookingPage {
   items: BookingRecord[],
   totalElements: number,
+}
+
+export interface CreateBookingRecord {
+  date: Date,
+  tag?: string,
+  text: string,
+  description?: string,
+  credits: BookingMovement[],
+  debits: BookingMovement[],
 }
 
 export interface BookingRecord {

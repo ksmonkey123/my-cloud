@@ -1,4 +1,4 @@
-<form ngForm [formGroup]="form">
+<form ngForm [formGroup]="form" (keydown.enter)="$event.preventDefault()" (keydown.shift.enter)="$event.preventDefault()">
   <div>
     <mat-form-field class="full-length">
       <mat-label>Text</mat-label>
@@ -26,5 +26,75 @@
   <mat-divider></mat-divider>
   <!-- Movements -->
   <h3>Credit</h3>
+  @for (row of credits; track $index) {
+    <div class="account-row">
+      <mat-form-field class="half-length">
+        <mat-label>Account {{ $index + 1 }}</mat-label>
+        <mat-select [formControl]="row.account" required (valueChange)="onAmountChanged()">
+          <mat-option [value]="null">-- SELECT --</mat-option>
+          @for (group of book.groups; track group.groupNumber) {
+            <mat-optgroup label="{{group.groupNumber}} - {{group.title}}">
+              @for (acc of group.accounts; track acc.id) {
+                <mat-option [value]="acc"><mat-icon>{{AccountTypeUtil.iconForType(acc.accountType)}}</mat-icon>{{ acc.id }} - {{ acc.title }}</mat-option>
+              }
+            </mat-optgroup>
+          }
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Amount {{ $index + 1 }}</mat-label>
+        <input matInput [formControl]="row.amount" required (input)="onAmountChanged()">
+        <mat-hint>{{row.error}}</mat-hint>
+      </mat-form-field>
+      @if ($count > 1) {
+        <button mat-mini-fab color="primary" (click)="removeCreditRow($index)">
+          <mat-icon>remove</mat-icon>
+        </button>
+      }
+      @if ($last) {
+        <button mat-mini-fab color="primary" (click)="addCreditRow()">
+          <mat-icon>add</mat-icon>
+        </button>
+      }
+    </div>
+  }
   <h3>Debit</h3>
+  @for (row of debits; track $index) {
+    <div class="account-row">
+      <mat-form-field class="half-length">
+        <mat-label>Account {{ $index + 1 }}</mat-label>
+        <mat-select [formControl]="row.account" required (valueChange)="onAmountChanged()">
+          <mat-option [value]="null">-- SELECT --</mat-option>
+          @for (group of book.groups; track group.groupNumber) {
+            <mat-optgroup label="{{group.groupNumber}} - {{group.title}}">
+              @for (acc of group.accounts; track acc.id) {
+                <mat-option [value]="acc"><mat-icon>{{AccountTypeUtil.iconForType(acc.accountType)}}</mat-icon>{{ acc.id }} - {{ acc.title }}</mat-option>
+              }
+            </mat-optgroup>
+          }
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Amount</mat-label>
+        <input matInput [formControl]="row.amount" required (input)="onAmountChanged()">
+        <mat-hint>{{row.error}}</mat-hint>
+      </mat-form-field>
+      @if ($count > 1) {
+        <button mat-mini-fab color="primary" (click)="removeDebitRow($index)" type="button">
+          <mat-icon>remove</mat-icon>
+        </button>
+      }
+      @if ($last) {
+        <button mat-mini-fab color="primary" (click)="addDebitRow()" type="button">
+          <mat-icon>add</mat-icon>
+        </button>
+      }
+    </div>
+  }
+  <mat-divider></mat-divider>
+  <!-- Submission -->
+  <div class="submit">
+    <button mat-raised-button color="warn" (click)="resetForm()"><mat-icon>settings_backup_restore</mat-icon>&nbsp;Reset Form</button>
+    <button mat-raised-button color="primary" [disabled]="!form.valid || !accountsValid" (click)="onSave()"><mat-icon>check</mat-icon>&nbsp;Create Transaction</button>
+  </div>
 </form>

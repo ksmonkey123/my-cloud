@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {AccountSummary, Book, BookingRecord, BookkeepingService, MoneyUtil} from "../../bookkeeping.service";
 import {
   MatCell,
@@ -59,10 +59,10 @@ import {
   templateUrl: './transactions-list.component.html',
   styleUrl: './transactions-list.component.scss'
 })
-export class TransactionsListComponent implements OnInit, OnDestroy {
+export class TransactionsListComponent implements OnDestroy {
 
   page = 0
-  @Input() book !: Book
+  public book: Book | null = null
 
   pageData: BookingRecord[] = []
   totalItems = 0
@@ -73,12 +73,17 @@ export class TransactionsListComponent implements OnInit, OnDestroy {
 
   expandedElementIds: number[] = []
 
+  bookSubscription
   elementSubscription
   accountsSubscription
 
   constructor(
     private service: BookkeepingService,
   ) {
+    this.bookSubscription = this.service.book$.subscribe((b) => {
+      this.book = b
+      this.service.loadBookings(b!.id, this.page)
+    })
     this.elementSubscription = service.bookingPage$.subscribe((page) => {
       this.pageData = page?.items || []
       this.expandedElementIds = []
@@ -93,11 +98,8 @@ export class TransactionsListComponent implements OnInit, OnDestroy {
     })
   }
 
-  ngOnInit() {
-    this.service.loadBookings(this.book.id, this.page)
-  }
-
   ngOnDestroy() {
+    this.bookSubscription.unsubscribe()
     this.elementSubscription.unsubscribe()
     this.accountsSubscription.unsubscribe()
   }

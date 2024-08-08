@@ -5,3 +5,26 @@ mat-form-field {
 .full-length {
   width: 100%;
 }
+
+.half-length {
+  width: 50%;
+}
+
+.account-row {
+  button {
+    margin-right: 10px;
+  }
+}
+
+.submit {
+  padding-top: 10px;
+  text-align: end;
+
+  button {
+    margin-left: 10px;
+  }
+}
+
+mat-hint {
+  color: red;
+}

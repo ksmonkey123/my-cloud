@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {
-  AccountSummary,
+  AccountSummary, AccountType,
   AccountTypeUtil,
   Book,
   BookingRecord,
@@ -12,6 +12,9 @@ import {MatTable} from "@angular/material/table";
 import {MatIcon} from "@angular/material/icon";
 import {MatButton} from "@angular/material/button";
 import {SimpleModalService} from "../../../../../common/simple-modal/simple-modal.service";
+import {TransactionPopupComponent} from "./transaction-popup/transaction-popup.component";
+import {MatDialog} from "@angular/material/dialog";
+import {MatChip} from "@angular/material/chips";
 
 @Component({
   selector: 'app-transaction-details',
@@ -21,7 +24,8 @@ import {SimpleModalService} from "../../../../../common/simple-modal/simple-moda
     MatCardContent,
     MatTable,
     MatIcon,
-    MatButton
+    MatButton,
+    MatChip,
   ],
   templateUrl: './transaction-details.component.html',
   styleUrl: './transaction-details.component.scss'
@@ -35,6 +39,7 @@ export class TransactionDetailsComponent {
   constructor(
     private modal: SimpleModalService,
     private service: BookkeepingService,
+    private dialog: MatDialog
   ) {
   }
 
@@ -51,7 +56,13 @@ export class TransactionDetailsComponent {
   }
 
   edit() {
-
+    TransactionPopupComponent.open(this.dialog, this.booking)
+      .afterClosed().subscribe(result => {
+      if (result) {
+        this.service.editBooking(this.book, this.booking.id, result)
+      }
+    })
   }
 
+  protected readonly AccountType = AccountType;
 }

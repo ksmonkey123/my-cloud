@@ -1,4 +1,17 @@
-<div>{{ booking.description }}</div>
+@if (booking.tag) {
+  <div class="description">
+    <mat-chip highlighted color="primary">{{ booking.tag }}</mat-chip>
+  </div>
+}
+@if (booking.description) {
+  <div class="description">
+    <mat-card appearance="outlined">
+      <mat-card-content>
+        {{ booking.description }}
+      </mat-card-content>
+    </mat-card>
+  </div>
+}
 <div>
   <table>
     <tr>
@@ -10,7 +23,7 @@
     @for (credit of booking.credits; track credit.accountId) {
       <tr class="body-row">
         <td class="icon">
-          <mat-icon>{{ AccountTypeUtil.iconForType(accounts[credit.accountId].accountType) }}</mat-icon>
+          <mat-icon>{{ AccountTypeUtil.iconForType(accounts[credit.accountId].accountType || AccountType.ASSET) }}</mat-icon>
         </td>
         <td>
           <span class="account-id">{{ credit.accountId }} - {{ accounts[credit.accountId].title }}</span>
@@ -22,7 +35,7 @@
     @for (debit of booking.debits; track debit.accountId) {
       <tr class="body-row">
         <td class="icon">
-          <mat-icon>{{ AccountTypeUtil.iconForType(accounts[debit.accountId].accountType) }}</mat-icon>
+          <mat-icon>{{ AccountTypeUtil.iconForType(accounts[debit.accountId].accountType || AccountType.ASSET) }}</mat-icon>
         </td>
         <td>
           <span class="account-id">{{ debit.accountId }} - {{ accounts[debit.accountId].title }}</span>

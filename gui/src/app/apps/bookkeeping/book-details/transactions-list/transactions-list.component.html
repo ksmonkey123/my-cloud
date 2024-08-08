@@ -1,13 +1,17 @@
 <div class="wrapper">
+  <div class="add-panel">
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon>add_box</mat-icon>&nbsp;Add New Transaction
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-transaction-creation [book]="book!"></app-transaction-creation>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
 
-  <mat-accordion>
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title><mat-icon>add</mat-icon>Add New Transaction</mat-panel-title>
-      </mat-expansion-panel-header>
-      <app-transaction-creation [book]="book"></app-transaction-creation>
-    </mat-expansion-panel>
-  </mat-accordion>
   <table mat-table [dataSource]="pageData" multiTemplateDataRows>
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef>ID</th>
@@ -47,7 +51,7 @@
       <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
         <div class="element-detail"
              [@detailExpand]="expandedElementIds.includes(element.id) ? 'expanded' : 'collapsed'">
-          <app-transaction-details [booking]="element" [accounts]="accounts" [book]="book"></app-transaction-details>
+          <app-transaction-details [booking]="element" [accounts]="accounts" [book]="book!"></app-transaction-details>
         </div>
       </td>
     </ng-container>
