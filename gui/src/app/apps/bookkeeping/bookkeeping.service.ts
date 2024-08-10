@@ -176,7 +176,8 @@ export class BookkeepingService implements OnDestroy {
   reloadBookings() {
     this.http.get<BookingPageDto>('/rest/bookkeeping/books/' + this.bookingPageState.bookId + '/records', {
       params: {
-        page: this.bookingPageState.pageNo
+        page: this.bookingPageState.pageNo,
+        pageSize: this.bookingPageState.pageSize,
       }
     }).pipe(takeUntil(this.closer$))
       .subscribe(
@@ -277,9 +278,10 @@ export class BookkeepingService implements OnDestroy {
     }
   }
 
-  loadBookings(bookId: number, pageId: number) {
+  loadBookings(bookId: number, pageId: number, pageSize: number = 10) {
     this.bookingPageState.bookId = bookId
     this.bookingPageState.pageNo = pageId
+    this.bookingPageState.pageSize = pageSize
     this.reloadBookings()
   }
 

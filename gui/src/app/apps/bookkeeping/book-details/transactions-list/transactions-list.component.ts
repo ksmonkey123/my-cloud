@@ -24,6 +24,7 @@ import {
   MatExpansionPanelHeader,
   MatExpansionPanelTitle
 } from "@angular/material/expansion";
+import {MatPaginator, PageEvent} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-transactions-list',
@@ -48,6 +49,7 @@ import {
     MatExpansionPanel,
     MatExpansionPanelHeader,
     MatExpansionPanelTitle,
+    MatPaginator,
   ],
   animations: [
     trigger('detailExpand', [
@@ -110,8 +112,11 @@ export class TransactionsListComponent implements OnDestroy {
     } else {
       this.expandedElementIds.push(id)
     }
-    console.log(this.expandedElementIds)
   }
 
   protected readonly MoneyUtil = MoneyUtil;
+
+  handlePageEvent(event: PageEvent) {
+    this.service.loadBookings(this.book!.id, event.pageIndex, event.pageSize)
+  }
 }

@@ -95,6 +95,6 @@
   <!-- Submission -->
   <div class="submit">
     <button mat-raised-button color="warn" (click)="resetForm()"><mat-icon>settings_backup_restore</mat-icon>&nbsp;Reset Form</button>
-    <button mat-raised-button color="primary" [disabled]="!form.valid || !accountsValid" (click)="onSave()"><mat-icon>check</mat-icon>&nbsp;Create Transaction</button>
+    <button mat-raised-button color="primary" [disabled]="!form.valid" (click)="onSave()"><mat-icon>check</mat-icon>&nbsp;Create Transaction</button>
   </div>
 </form>

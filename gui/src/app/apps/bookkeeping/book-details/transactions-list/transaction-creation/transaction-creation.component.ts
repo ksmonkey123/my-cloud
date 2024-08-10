@@ -57,8 +57,6 @@ export class TransactionCreationComponent {
   credits: AccountRow[] = [this.createAccountRow()]
   debits: AccountRow[] = [this.createAccountRow(true)]
 
-  accountsValid = false
-
   constructor(private service: BookkeepingService) {
   }
 
@@ -75,24 +73,20 @@ export class TransactionCreationComponent {
 
   addCreditRow() {
     this.credits.push(this.createAccountRow())
-    this.updateRowStates()
   }
 
   removeCreditRow(index: number) {
     this.credits.splice(index, 1)
     this.onAmountChanged()
-    this.updateRowStates()
   }
 
   addDebitRow() {
     this.debits.push(this.createAccountRow())
-    this.updateRowStates()
   }
 
   removeDebitRow(index: number) {
     this.debits.splice(index, 1)
     this.onAmountChanged()
-    this.updateRowStates()
   }
 
   onAmountChanged() {
@@ -103,55 +97,12 @@ export class TransactionCreationComponent {
       .map(row => new Big(row.amount.value || 0))
       .reduce((a, b) => a.plus(b), Big(0))
     this.debits[0].amount.setValue(creditSum.minus(debitSum).toFixed(2))
-    this.updateRowStates()
   }
 
   resetForm() {
     this.form.reset()
     this.credits = [this.createAccountRow()]
     this.debits = [this.createAccountRow(true)]
-    this.updateRowStates()
-  }
-
-  updateRowStates() {
-    this.accountsValid = this.validateRows()
-  }
-
-  validateRows(): boolean {
-    let result = true
-    // single-row validity
-    for (let i = 0; i < this.credits.length; i++) {
-      let credit = this.credits[i]
-      if (!credit.amount.valid || !credit.account.valid) {
-        credit.error = 'Invalid Inputs'
-        result = false
-      } else {
-        credit.error = undefined
-      }
-    }
-    for (let i = 0; i < this.debits.length; i++) {
-      let debit = this.debits[i]
-      if (i == 0) {
-        if (!debit.account.valid) {
-          debit.error = 'Invalid Inputs'
-          result = false
-        } else {
-          debit.error = undefined
-        }
-      } else {
-        if (!debit.amount.valid || !debit.account.valid) {
-          debit.error = 'Invalid Inputs'
-          result = false
-        } else {
-          debit.error = undefined
-        }
-      }
-    }
-    // validate all unique
-    let creditAccounts = this.credits.map(r => r.account.value)
-    let debitAccounts = this.debits.map(r => r.account.value)
-    let allAccounts = [...creditAccounts, ...debitAccounts]
-    return result && (new Set(allAccounts)).size === allAccounts.length
   }
 
   onSave() {
