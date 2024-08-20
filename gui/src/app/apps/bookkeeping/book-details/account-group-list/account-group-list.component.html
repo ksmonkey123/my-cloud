@@ -11,7 +11,7 @@
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   <mat-icon>{{ AccountTypeUtil.iconForType(account.accountType) }}</mat-icon>&nbsp;
-                  {{ account.id }} - {{ account.title }}
+                  {{ account.id }} - {{ account.title }} ({{MoneyUtil.formatAccountBalanceForDisplay(account)}})
                 </mat-panel-title>
               </mat-expansion-panel-header>
               {{ account.description }}

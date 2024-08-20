@@ -1,5 +1,12 @@
 import {Component, Input} from '@angular/core';
-import {AccountGroup, AccountSummary, AccountTypeUtil, Book, BookkeepingService} from "../../bookkeeping.service";
+import {
+  AccountGroup,
+  AccountSummary,
+  AccountTypeUtil,
+  Book,
+  BookkeepingService,
+  MoneyUtil
+} from "../../bookkeeping.service";
 import {
   MatAccordion,
   MatExpansionPanel,
@@ -94,4 +101,6 @@ export class AccountGroupListComponent {
         }
       })
   }
+
+  protected readonly MoneyUtil = MoneyUtil;
 }

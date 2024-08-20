@@ -4,3 +4,7 @@ server:
 management:
   server:
     port: 8804
+
+spring:
+  jpa:
+    show-sql: true

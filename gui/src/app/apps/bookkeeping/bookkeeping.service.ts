@@ -54,7 +54,21 @@ export class BookkeepingService implements OnDestroy {
             {
               id: dto.id,
               summary: this.mapBookSummaryDto(dto.summary),
-              groups: dto.groups
+              groups: dto.groups.map(group => {
+                return {
+                  title: group.title,
+                  groupNumber: group.groupNumber,
+                  accounts: group.accounts.map(account => {
+                    return {
+                      id: account.id,
+                      title: account.title,
+                      description: account.description,
+                      accountType: account.accountType,
+                      balance: new Big(account.balance)
+                    }
+                  })
+                }
+              })
             }
           )
         }
@@ -320,7 +334,21 @@ interface BookSummaryDto {
 interface BookDto {
   id: number,
   summary: BookSummaryDto,
-  groups: AccountGroup[],
+  groups: AccountGroupDto[]
+}
+
+interface AccountGroupDto {
+  groupNumber: number,
+  title: string,
+  accounts: AccountSummaryDto[]
+}
+
+interface AccountSummaryDto {
+  id: string,
+  title: string,
+  description?: string,
+  accountType: AccountType,
+  balance: any
 }
 
 export interface Book {
@@ -347,7 +375,8 @@ export interface AccountSummary {
   id: string,
   title: string,
   description?: string,
-  accountType: AccountType
+  accountType: AccountType,
+  balance: Big
 }
 
 interface BookingPageDto {
@@ -435,13 +464,18 @@ export class AccountTypeUtil {
 export class MoneyUtil {
   public static formatForDisplay(amount: Big): string {
     let rawString = amount.toFixed(2)
-    if (rawString.startsWith('0.')) {
-      return '-.' + rawString.split('.')[1]
-    }
     if (rawString.endsWith('.00')) {
       return rawString.split('.')[0] + '.--'
     } else {
       return rawString
+    }
+  }
+
+  public static formatAccountBalanceForDisplay(account: AccountSummary): string {
+    if ((account.accountType === AccountType.INCOME) || (account.accountType === AccountType.LIABILITY)) {
+      return MoneyUtil.formatForDisplay(new Big(0).minus(account.balance))
+    } else {
+      return MoneyUtil.formatForDisplay(account.balance)
     }
   }
 }

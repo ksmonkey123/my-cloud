@@ -1,10 +1,9 @@
 package ch.awae.mycloud.service.bookkeping.model
 
 import ch.awae.mycloud.db.*
-import ch.awae.mycloud.service.bookkeping.dto.*
 import ch.awae.mycloud.service.bookkeping.model.converter.*
 import jakarta.persistence.*
-import jakarta.validation.ValidationException
+import jakarta.validation.*
 import org.springframework.data.jpa.repository.*
 import org.springframework.data.jpa.repository.Query
 
@@ -20,6 +19,9 @@ class Account(
     var title: String,
     var description: String?,
 ) : IdBaseEntity() {
+
+    @OneToOne(mappedBy = "account")
+    val balance: AccountBalance? = null
 
     override fun validate() {
         if (accountNumber !in 1..999) {
