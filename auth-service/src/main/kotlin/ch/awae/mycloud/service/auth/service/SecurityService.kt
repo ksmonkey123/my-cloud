@@ -8,8 +8,12 @@ import ch.awae.mycloud.service.auth.domain.*
 import ch.awae.mycloud.service.auth.dto.*
 import ch.awae.mycloud.service.auth.exception.*
 import jakarta.transaction.*
+import net.javacrumbs.shedlock.spring.annotation.*
+import org.springframework.beans.factory.annotation.*
+import org.springframework.scheduling.annotation.*
 import org.springframework.security.crypto.password.*
 import org.springframework.stereotype.*
+import java.time.*
 
 @Service
 @Transactional
@@ -18,9 +22,12 @@ class SecurityService(
     private val accountRepository: AccountRepository,
     private val authTokenRepository: AuthTokenRepository,
     private val passwordEncoder: PasswordEncoder,
+    @Value("\${auth.clean-timer.max-age}")
+    maxAge: String,
 ) {
 
-    val logger = createLogger()
+    private val logger = createLogger()
+    private val maxAge = Duration.parse(maxAge).abs()
 
     @Throws(BadLoginException::class)
     fun authenticateCredentials(username: String, password: String): Account {
@@ -45,6 +52,12 @@ class SecurityService(
     @AuditLog
     fun logout(@NoAudit token: String) {
         authTokenRepository.deleteByTokenString(token)
+    }
+
+    @SchedulerLock(name = "scan-timer", lockAtLeastFor = "PT20S")
+    @Scheduled(cron = "\${auth.clean-timer.schedule}")
+    fun cleanOldTokens() {
+        authTokenRepository.deleteExpiredTokens(LocalDateTime.now().minus(maxAge))
     }
 
 }

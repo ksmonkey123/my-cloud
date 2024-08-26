@@ -17,3 +17,8 @@ mycloud:
   security:
     public-endpoints:
       - /login
+
+auth:
+  clean-timer:
+    schedule: "0 */5 * * * *"
+    max-age: "PT4H"

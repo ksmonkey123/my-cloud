@@ -31,7 +31,13 @@ class AuthToken private constructor(
 
 @Repository
 interface AuthTokenRepository : JpaRepository<AuthToken, Long> {
+
     @Modifying(flushAutomatically = true)
     @Query("delete from AuthToken where tokenString = :tokenString")
-    fun deleteByTokenString(tokenString : String)
+    fun deleteByTokenString(tokenString: String)
+
+    @Modifying(flushAutomatically = true)
+    @Query("delete from AuthToken where _creationTimestamp < :timestamp")
+    fun deleteExpiredTokens(timestamp: LocalDateTime)
+
 }
