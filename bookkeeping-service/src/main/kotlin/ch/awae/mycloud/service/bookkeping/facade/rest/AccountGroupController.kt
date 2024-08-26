@@ -41,5 +41,5 @@ class AccountGroupController(
 
 data class PersistGroupRequest(
     val title: String,
-    val locked: Boolean?,
+    val locked: Boolean,
 )

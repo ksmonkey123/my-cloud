@@ -54,5 +54,5 @@ data class PersistAccountRequest(
     val title: String,
     val description: String?,
     val accountType: AccountType?,
-    val locked: Boolean?
+    val locked: Boolean,
 )

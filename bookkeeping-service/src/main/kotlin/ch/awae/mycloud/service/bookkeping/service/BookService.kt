@@ -71,9 +71,9 @@ class BookService(
         val createdGroup = groupRepository.getByBookAndGroupNumber(book, groupId)
             ?.apply {
                 this.title = dto.title
-                dto.locked?.let { this.locked = it }
+                this.locked = dto.locked
             }
-            ?: groupRepository.save(AccountGroup(book, groupId, dto.title, locked = dto.locked ?: false))
+            ?: groupRepository.save(AccountGroup(book, groupId, dto.title, locked = dto.locked))
 
         return AccountGroupDto(createdGroup)
     }
@@ -123,7 +123,7 @@ class BookService(
             // update existing account
             existingAccount.title = request.title
             existingAccount.description = request.description
-            existingAccount.locked = request.locked ?: existingAccount.locked
+            existingAccount.locked = request.locked
             existingAccount
         } else {
             // create new account
@@ -134,7 +134,7 @@ class BookService(
                     ?: throw InvalidRequestException("account creation requires an accountType"),
                 title = request.title,
                 description = request.description,
-                locked = request.locked ?: false,
+                locked = request.locked,
             )
         }
 
