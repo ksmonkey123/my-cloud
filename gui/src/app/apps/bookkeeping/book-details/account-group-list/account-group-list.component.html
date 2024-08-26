@@ -3,46 +3,72 @@
     @for (group of book.groups; track group.groupNumber) {
       <mat-expansion-panel>
         <mat-expansion-panel-header>
-          <mat-panel-title>{{ group.groupNumber }} - {{ group.title }}</mat-panel-title>
+          <mat-panel-title [class]="group.locked ? 'disabledEntry' : null">
+            {{ group.groupNumber }} - {{ group.title }}
+          </mat-panel-title>
         </mat-expansion-panel-header>
         <mat-accordion multi>
           @for (account of group.accounts; track account.id) {
             <mat-expansion-panel>
               <mat-expansion-panel-header>
-                <mat-panel-title>
+                <mat-panel-title [class]="account.locked ? 'disabledEntry' : null">
                   <mat-icon>{{ AccountTypeUtil.iconForType(account.accountType) }}</mat-icon>&nbsp;
-                  {{ account.id }} - {{ account.title }} ({{MoneyUtil.formatAccountBalanceForDisplay(account)}})
+                  {{ account.id }} - {{ account.title }} ({{ MoneyUtil.formatAccountBalanceForDisplay(account) }})
                 </mat-panel-title>
               </mat-expansion-panel-header>
               {{ account.description }}
-              <mat-action-row>
-                <button mat-raised-button color="warn" (click)="deleteAccount(account)">
-                  <mat-icon>delete</mat-icon>
-                  Delete Account
-                </button>
-                <button mat-raised-button color="primary" (click)="accountPopup(group, account)">
-                  <mat-icon>edit</mat-icon>
-                  Edit Account
-                </button>
-              </mat-action-row>
+              @if (!group.locked) {
+                <mat-action-row>
+                  @if (!account.locked) {
+                    <button mat-raised-button color="warn" (click)="deleteAccount(account)">
+                      <mat-icon>delete</mat-icon>
+                      Delete Account
+                    </button>
+                    <button mat-raised-button color="secondary" (click)="lockAccount(account, true)">
+                      <mat-icon>lock</mat-icon>
+                      Lock Account
+                    </button>
+                    <button mat-raised-button color="primary" (click)="accountPopup(group, account)">
+                      <mat-icon>edit</mat-icon>
+                      Edit Account
+                    </button>
+                  } @else {
+                    <button mat-raised-button color="secondary" (click)="lockAccount(account, false)">
+                      <mat-icon>lock_open</mat-icon>
+                      Unlock Account
+                    </button>
+                  }
+                </mat-action-row>
+              }
             </mat-expansion-panel>
           } @empty {
             <p><em>No Accounts</em></p>
           }
         </mat-accordion>
         <mat-action-row>
-          <button mat-raised-button color="warn" (click)="deleteGroup(group)">
-            <mat-icon>delete</mat-icon>
-            Delete Group
-          </button>
-          <button mat-raised-button color="secondary" (click)="groupPopup(group)">
-            <mat-icon>edit</mat-icon>
-            Edit Group
-          </button>
-          <button mat-raised-button color="primary" (click)="accountPopup(group)">
-            <mat-icon>add</mat-icon>
-            Add Account
-          </button>
+          @if (!group.locked) {
+            <button mat-raised-button color="warn" (click)="deleteGroup(group)">
+              <mat-icon>delete</mat-icon>
+              Delete Group
+            </button>
+            <button mat-raised-button color="secondary" (click)="lockGroup(group, true)">
+              <mat-icon>lock</mat-icon>
+              Lock Group
+            </button>
+            <button mat-raised-button color="secondary" (click)="groupPopup(group)">
+              <mat-icon>edit</mat-icon>
+              Edit Group
+            </button>
+            <button mat-raised-button color="primary" (click)="accountPopup(group)">
+              <mat-icon>add</mat-icon>
+              Add Account
+            </button>
+          } @else {
+            <button mat-raised-button color="secondary" (click)="lockGroup(group, false)">
+              <mat-icon>lock_open</mat-icon>
+              Unlock Group
+            </button>
+          }
         </mat-action-row>
       </mat-expansion-panel>
     }

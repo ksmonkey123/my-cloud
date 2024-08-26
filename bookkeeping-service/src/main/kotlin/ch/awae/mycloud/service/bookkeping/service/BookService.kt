@@ -66,11 +66,14 @@ class BookService(
     }
 
     @AuditLog
-    fun createOrEditAccountGroup(bookId: Long, groupId: Int, dto: CreateGroupRequest): AccountGroupDto {
+    fun createOrEditAccountGroup(bookId: Long, groupId: Int, dto: PersistGroupRequest): AccountGroupDto {
         val book = getBook(bookId)
         val createdGroup = groupRepository.getByBookAndGroupNumber(book, groupId)
-            ?.apply { this.title = dto.title }
-            ?: groupRepository.save(AccountGroup(book, groupId, dto.title))
+            ?.apply {
+                this.title = dto.title
+                dto.locked?.let { this.locked = it }
+            }
+            ?: groupRepository.save(AccountGroup(book, groupId, dto.title, locked = dto.locked ?: false))
 
         return AccountGroupDto(createdGroup)
     }
@@ -80,6 +83,10 @@ class BookService(
         val book = getBook(bookId)
         val accountGroup = groupRepository.getByBookAndGroupNumber(book, groupId)
             ?: throw ResourceNotFoundException("/books/$bookId/groups/$groupId")
+
+        if (accountGroup.locked) {
+            throw InvalidRequestException("/books/$bookId/groups/$groupId is locked")
+        }
 
         // TODO verify no account in group has any booking records
         groupRepository.delete(accountGroup)
@@ -100,11 +107,15 @@ class BookService(
     }
 
     @AuditLog
-    fun createOrEditAccount(bookId: Long, accountId: AccountId, request: EditAccountRequest): AccountSummaryDto {
+    fun createOrEditAccount(bookId: Long, accountId: AccountId, request: PersistAccountRequest): AccountSummaryDto {
         val book = getBook(bookId)
 
         val group = book.accountGroups.find { it.groupNumber == accountId.groupNumber }
             ?: throw ResourceNotFoundException("/books/$bookId/groups/${accountId.groupNumber}")
+
+        if (group.locked) {
+            throw InvalidRequestException("/books/$bookId/groups/${accountId.groupNumber} is locked")
+        }
 
         val existingAccount = accountRepository.findByGroupAndAccountNumber(group, accountId.accountNumber)
 
@@ -112,6 +123,7 @@ class BookService(
             // update existing account
             existingAccount.title = request.title
             existingAccount.description = request.description
+            existingAccount.locked = request.locked ?: existingAccount.locked
             existingAccount
         } else {
             // create new account
@@ -122,6 +134,7 @@ class BookService(
                     ?: throw InvalidRequestException("account creation requires an accountType"),
                 title = request.title,
                 description = request.description,
+                locked = request.locked ?: false,
             )
         }
 
@@ -131,6 +144,14 @@ class BookService(
     @AuditLog
     fun deleteAccount(bookId: Long, accountId: AccountId) {
         val account = getAccount(bookId, accountId)
+
+        if (account.accountGroup.locked) {
+            throw InvalidRequestException("/books/$bookId/groups/${accountId.groupNumber} is locked")
+        }
+        if (account.locked) {
+            throw InvalidRequestException("/books/$bookId/accounts/$accountId is locked")
+        }
+
         // TODO verify account has no bookings
         accountRepository.delete(account)
     }

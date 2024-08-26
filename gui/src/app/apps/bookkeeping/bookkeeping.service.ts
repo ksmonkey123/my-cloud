@@ -58,12 +58,14 @@ export class BookkeepingService implements OnDestroy {
                 return {
                   title: group.title,
                   groupNumber: group.groupNumber,
+                  locked: group.locked,
                   accounts: group.accounts.map(account => {
                     return {
                       id: account.id,
                       title: account.title,
                       description: account.description,
                       accountType: account.accountType,
+                      locked: account.locked,
                       balance: new Big(account.balance)
                     }
                   })
@@ -116,9 +118,10 @@ export class BookkeepingService implements OnDestroy {
     return createdBookId$
   }
 
-  saveAccountGroup(bookId: number, number: number, title: string) {
+  saveAccountGroup(bookId: number, number: number, title: string, locked: boolean) {
     this.http.put<AccountGroup>('/rest/bookkeeping/books/' + bookId + '/groups/' + number, {
-      title: title
+      title: title,
+      locked: locked,
     }).pipe(takeUntil(this.closer$))
       .subscribe({
         next: (group) => {
@@ -147,11 +150,12 @@ export class BookkeepingService implements OnDestroy {
       })
   }
 
-  saveAccount(bookId: number, accountId: string, title: string, description: string | undefined, type: AccountType) {
+  saveAccount(bookId: number, accountId: string, title: string, description: string | undefined, type: AccountType, locked: boolean) {
     this.http.put<AccountSummary>('/rest/bookkeeping/books/' + bookId + '/accounts/' + accountId, {
         title: title,
         description: description,
-        accountType: type
+        accountType: type,
+        locked: locked,
       }
     ).pipe(takeUntil(this.closer$))
       .subscribe({
@@ -340,6 +344,7 @@ interface BookDto {
 interface AccountGroupDto {
   groupNumber: number,
   title: string,
+  locked: boolean,
   accounts: AccountSummaryDto[]
 }
 
@@ -348,6 +353,7 @@ interface AccountSummaryDto {
   title: string,
   description?: string,
   accountType: AccountType,
+  locked: boolean,
   balance: any
 }
 
@@ -368,6 +374,7 @@ export interface BookSummary {
 export interface AccountGroup {
   groupNumber: number,
   title: string,
+  locked: boolean,
   accounts: AccountSummary[]
 }
 
@@ -376,7 +383,8 @@ export interface AccountSummary {
   title: string,
   description?: string,
   accountType: AccountType,
-  balance: Big
+  balance: Big,
+  locked: boolean,
 }
 
 interface BookingPageDto {

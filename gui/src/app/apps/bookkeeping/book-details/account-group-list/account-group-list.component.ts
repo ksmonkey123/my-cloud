@@ -66,8 +66,12 @@ export class AccountGroupListComponent {
       } : undefined,
     })
     dialogRef.afterClosed().subscribe((result) => {
-      this.service.saveAccount(this.book.id, result!.id, result!.title, result!.description, result!.type)
+      this.service.saveAccount(this.book.id, result!.id, result!.title, result!.description, result!.type, false)
     })
+  }
+
+  lockAccount(account: AccountSummary, newState: boolean) {
+    this.service.saveAccount(this.book.id, account.id, account.title, account.description, account.accountType, newState)
   }
 
   groupPopup(group ?: AccountGroup) {
@@ -78,8 +82,12 @@ export class AccountGroupListComponent {
       } : undefined
     })
     dialogRef.afterClosed().subscribe((result) => {
-      this.service.saveAccountGroup(this.book.id, result!.number, result!.title)
+      this.service.saveAccountGroup(this.book.id, result!.number, result!.title, false)
     })
+  }
+
+  lockGroup(group: AccountGroup, newState: boolean) {
+    this.service.saveAccountGroup(this.book.id, group.groupNumber, group.title, newState)
   }
 
   deleteGroup(group: AccountGroup) {

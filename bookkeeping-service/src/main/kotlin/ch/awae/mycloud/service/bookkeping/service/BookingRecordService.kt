@@ -30,6 +30,13 @@ class BookingRecordService(
             Pair(account, -it.amount)
         }
 
+        // validate that no account is locked or in a locked group
+        (credits.keys union credits.keys).forEach {
+            if (it.locked || it.accountGroup.locked) {
+                throw InvalidRequestException("account or account group locked: ${AccountId.of(it)}")
+            }
+        }
+
         val record = BookingRecord(
             book, request.text, request.description, request.bookingDate, request.tag
         ).apply {
@@ -89,6 +96,13 @@ class BookingRecordService(
     fun editRecord(bookId: Long, bookingId: Long, request: BookingRecordEditRequest): BookingRecordDto {
         val record = getRecord(bookId, bookingId)
 
+        // validate that no account is locked or in a locked group
+        record.movements.keys.forEach {
+            if (it.locked || it.accountGroup.locked) {
+                throw InvalidRequestException("account or account group locked: ${AccountId.of(it)}")
+            }
+        }
+
         record.bookingText = request.text
         record.description = request.description
         record.tag = request.tag
@@ -98,6 +112,13 @@ class BookingRecordService(
 
     fun deleteRecord(bookId: Long, bookingId: Long) {
         val record = getRecord(bookId, bookingId)
+
+        // validate that no account is locked or in a locked group
+        record.movements.keys.forEach {
+            if (it.locked || it.accountGroup.locked) {
+                throw InvalidRequestException("account or account group locked: ${AccountId.of(it)}")
+            }
+        }
 
         bookingRecordRepository.delete(record)
     }

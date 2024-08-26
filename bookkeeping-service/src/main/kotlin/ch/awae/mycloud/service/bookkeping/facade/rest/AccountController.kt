@@ -24,7 +24,7 @@ class AccountController(
     fun createOrUpdateAccount(
         @PathVariable bookId: Long,
         @PathVariable accountId: String,
-        @RequestBody request: EditAccountRequest
+        @RequestBody request: PersistAccountRequest
     ): AccountSummaryDto {
         return service.createOrEditAccount(bookId, AccountId.of(accountId), request)
     }
@@ -50,8 +50,9 @@ class AccountController(
 
 }
 
-data class EditAccountRequest(
+data class PersistAccountRequest(
     val title: String,
     val description: String?,
-    val accountType: AccountType?
+    val accountType: AccountType?,
+    val locked: Boolean?
 )

@@ -20,10 +20,10 @@ class AccountGroupController(
 
     @PutMapping("/{groupId}")
     @ResponseStatus(HttpStatus.CREATED)
-    fun createGroup(
+    fun createOrEditGroup(
         @PathVariable bookId: Long,
         @PathVariable groupId: Int,
-        @RequestBody request: CreateGroupRequest
+        @RequestBody request: PersistGroupRequest
     ): AccountGroupDto {
         return service.createOrEditAccountGroup(bookId, groupId, request)
     }
@@ -36,8 +36,10 @@ class AccountGroupController(
     ) {
         service.deleteAccountGroup(bookId, groupId)
     }
+
 }
 
-data class CreateGroupRequest(
+data class PersistGroupRequest(
     val title: String,
+    val locked: Boolean?,
 )

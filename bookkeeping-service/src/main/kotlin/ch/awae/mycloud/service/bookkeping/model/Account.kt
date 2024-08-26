@@ -18,6 +18,7 @@ class Account(
     val accountType: AccountType,
     var title: String,
     var description: String?,
+    var locked: Boolean,
 ) : IdBaseEntity() {
 
     @OneToOne(mappedBy = "account")

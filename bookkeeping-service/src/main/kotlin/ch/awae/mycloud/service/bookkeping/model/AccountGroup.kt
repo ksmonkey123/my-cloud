@@ -12,6 +12,7 @@ class AccountGroup(
     @Column(updatable = false)
     val groupNumber: Int,
     var title: String,
+    var locked: Boolean,
 ) : IdBaseEntity() {
 
     override fun validate() {
@@ -23,10 +24,6 @@ class AccountGroup(
     @OneToMany(mappedBy = "accountGroup", orphanRemoval = true)
     val accounts: List<Account> = emptyList()
 
-    data class PK(
-        val bookId: Long,
-        val groupId: Int,
-    )
 }
 
 interface AccountGroupRepository : JpaRepository<AccountGroup, Long> {
