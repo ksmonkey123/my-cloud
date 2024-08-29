@@ -74,14 +74,18 @@
         <mat-select [formControl]="row.account" required (valueChange)="onAmountChanged()">
           <mat-option [value]="null">-- SELECT --</mat-option>
           @for (group of book.groups; track group.groupNumber) {
-            <mat-optgroup label="{{group.groupNumber}} - {{group.title}}">
-              @for (acc of group.accounts; track acc.id) {
-                <mat-option [value]="acc">
-                  <mat-icon>{{ AccountTypeUtil.iconForType(acc.accountType) }}</mat-icon>
-                  {{ acc.id }} - {{ acc.title }}
-                </mat-option>
-              }
-            </mat-optgroup>
+            @if (!group.locked) {
+              <mat-optgroup label="{{group.groupNumber}} - {{group.title}}">
+                @for (acc of group.accounts; track acc.id) {
+                  @if (!acc.locked) {
+                    <mat-option [value]="acc">
+                      <mat-icon>{{ AccountTypeUtil.iconForType(acc.accountType) }}</mat-icon>
+                      {{ acc.id }} - {{ acc.title }}
+                    </mat-option>
+                  }
+                }
+              </mat-optgroup>
+            }
           }
         </mat-select>
       </mat-form-field>
