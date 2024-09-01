@@ -105,6 +105,12 @@ class BookingRecordExportService(
     }
 
     fun createAccountPage(workbook: XSSFWorkbook, account: Account) {
+        val records = accountTransactionRepository.findByAccount(account, Pageable.unpaged()).reversed()
+
+        if (records.isEmpty()) {
+            return
+        }
+
         val sheet = workbook.createSheet(account.toShortString())
 
         val inverted = account.accountType.invertedPresentation
@@ -124,8 +130,6 @@ class BookingRecordExportService(
             row.createCell(6).setCellValue("Saldo")
             row.createCell(7).setCellValue("Beschreibung")
         }
-
-        val records = accountTransactionRepository.findByAccount(account, Pageable.unpaged()).reversed()
 
         var index = 1
         var runningBalance = BigDecimal.ZERO
