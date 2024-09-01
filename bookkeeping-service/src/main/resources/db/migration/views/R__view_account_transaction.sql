@@ -7,7 +7,8 @@ create view v_account_transaction
              booking_text,
              amount,
              tag,
-             description)
+             description,
+             cre_time)
 as
 (
 select r.id,
@@ -16,9 +17,8 @@ select r.id,
        r.booking_text,
        m.amount,
        r.tag,
-       r.description
+       r.description,
+       r.cre_time
 from booking_record r,
      booking_movement m
-where r.id = m.booking_record_id
-order by r.booking_date asc,
-         r.cre_time asc);
+where r.id = m.booking_record_id);

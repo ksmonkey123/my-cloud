@@ -25,6 +25,7 @@ class AccountTransaction(
     val amount: BigDecimal,
     @ManyToOne
     val account: Account,
+    val creTime: LocalDateTime,
 )
 
 @Embeddable
@@ -32,7 +33,7 @@ class AccountTransactionPK(val recordId: Long, val accountId: Long)
 
 interface AccountTransactionRepository : JpaRepository<AccountTransaction, AccountTransactionPK> {
 
-    @Query("select t from AccountTransaction t where t.account = :account order by t.bookingDate desc")
+    @Query("select t from AccountTransaction t where t.account = :account order by t.bookingDate desc, t.creTime desc")
     fun findByAccount(account: Account, pageable: Pageable): Page<AccountTransaction>
 
     @Query("select sum(t.amount) from AccountTransaction t where t.account = :account")
