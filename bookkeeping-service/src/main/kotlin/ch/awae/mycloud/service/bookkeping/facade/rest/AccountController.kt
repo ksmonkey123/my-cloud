@@ -38,16 +38,6 @@ class AccountController(
         service.deleteAccount(bookId, AccountId.of(accountId))
     }
 
-    @GetMapping("/{accountId}/ledger")
-    fun getLedger(
-        @PathVariable bookId: Long,
-        @PathVariable accountId: String,
-        @RequestParam(required = false, defaultValue = "0") page: Int,
-        @RequestParam(required = false, defaultValue = "10") pageSize: Int,
-    ): AccountLedgerDto {
-        return recordService.getLedgerPageForAccount(bookId, AccountId.of(accountId), page, pageSize)
-    }
-
 }
 
 data class PersistAccountRequest(

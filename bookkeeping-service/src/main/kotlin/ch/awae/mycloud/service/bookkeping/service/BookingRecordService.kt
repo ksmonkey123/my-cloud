@@ -59,34 +59,6 @@ class BookingRecordService(
         )
     }
 
-    fun getLedgerPageForAccount(
-        bookId: Long, accountId: AccountId, page: Int, pageSize: Int
-    ): AccountLedgerDto {
-        val account = bookService.getAccount(bookId, accountId)
-
-        val accountBalance = accountTransactionRepository.getBalanceOfAccount(account)
-        val transactionPage = accountTransactionRepository.findByAccount(
-            account, Pageable.ofSize(pageSize).withPage(page)
-        )
-
-        val transactions = transactionPage.content.map {
-            LedgerTransactionDto(
-                id = it.recordId,
-                bookingDate = it.bookingDate,
-                text = it.bookingText,
-                description = it.description,
-                tag = it.tag,
-                amount = it.amount,
-            )
-        }
-
-        return AccountLedgerDto(
-            AccountSummaryDto(account),
-            PageDto(transactions, transactionPage.totalElements),
-            accountBalance ?: BigDecimal.ZERO,
-        )
-    }
-
     fun getRecord(bookId: Long, bookingId: Long): BookingRecord {
         val book = bookService.getBook(bookId)
         return bookingRecordRepository.findByIdAndBook(bookingId, book)

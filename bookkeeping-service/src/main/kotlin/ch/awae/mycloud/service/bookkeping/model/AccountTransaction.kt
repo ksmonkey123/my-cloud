@@ -33,10 +33,7 @@ class AccountTransactionPK(val recordId: Long, val accountId: Long)
 
 interface AccountTransactionRepository : JpaRepository<AccountTransaction, AccountTransactionPK> {
 
-    @Query("select t from AccountTransaction t where t.account = :account order by t.bookingDate desc, t.creTime desc")
-    fun findByAccount(account: Account, pageable: Pageable): Page<AccountTransaction>
-
-    @Query("select sum(t.amount) from AccountTransaction t where t.account = :account")
-    fun getBalanceOfAccount(account: Account): BigDecimal?
+    @Query("select t from AccountTransaction t where t.account = :account order by t.bookingDate asc, t.creTime asc")
+    fun findByAccount(account: Account): List<AccountTransaction>
 
 }

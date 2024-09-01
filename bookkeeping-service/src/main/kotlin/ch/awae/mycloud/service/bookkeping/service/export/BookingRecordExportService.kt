@@ -105,7 +105,7 @@ class BookingRecordExportService(
     }
 
     fun createAccountPage(workbook: XSSFWorkbook, account: Account) {
-        val records = accountTransactionRepository.findByAccount(account, Pageable.unpaged()).reversed()
+        val records = accountTransactionRepository.findByAccount(account)
 
         if (records.isEmpty()) {
             return
