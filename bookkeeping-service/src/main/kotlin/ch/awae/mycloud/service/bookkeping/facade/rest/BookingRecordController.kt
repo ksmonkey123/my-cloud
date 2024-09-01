@@ -2,6 +2,8 @@ package ch.awae.mycloud.service.bookkeping.facade.rest
 
 import ch.awae.mycloud.service.bookkeping.dto.*
 import ch.awae.mycloud.service.bookkeping.service.*
+import ch.awae.mycloud.service.bookkeping.service.export.*
+import org.springframework.core.io.*
 import org.springframework.http.*
 import org.springframework.security.access.prepost.*
 import org.springframework.web.bind.annotation.*
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*
 @PreAuthorize("hasAuthority('bookkeeping')")
 class BookingRecordController(
     val service: BookingRecordService,
+    val exportService: BookingRecordExportService,
 ) {
 
     @GetMapping
@@ -47,6 +50,20 @@ class BookingRecordController(
         @PathVariable bookingId: Long,
     ) {
         service.deleteRecord(bookId, bookingId)
+    }
+
+    @GetMapping("/export")
+    fun export(
+        @PathVariable bookId: Long
+    ): ResponseEntity<Resource> {
+        val blob = exportService.createExport(bookId)
+        return ResponseEntity.ok()
+            .headers {
+                it.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=journal.xlsx")
+            }
+            .contentLength(blob.size.toLong())
+            .contentType(MediaType.APPLICATION_OCTET_STREAM)
+            .body(ByteArrayResource(blob))
     }
 
 }

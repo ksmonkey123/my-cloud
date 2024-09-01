@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {ToastrService} from "ngx-toastr";
 import {BehaviorSubject, Subject, takeUntil} from "rxjs";
 import Big from "big.js";
+import FileSaver from "file-saver";
 
 @Injectable()
 export class BookkeepingService implements OnDestroy {
@@ -14,6 +15,7 @@ export class BookkeepingService implements OnDestroy {
   public bookList$ = new BehaviorSubject<BookSummary[]>([])
   public book$ = new BehaviorSubject<Book | null>(null)
   public bookingPage$ = new BehaviorSubject<BookingPage | null>(null)
+  public exportInProgress$ = new BehaviorSubject<boolean>(false)
 
   private closer$ = new Subject<void>()
 
@@ -95,6 +97,24 @@ export class BookkeepingService implements OnDestroy {
           this.loadBook(id)
         }
       })
+  }
+
+  exportTransactions(bookId: number) {
+    this.exportInProgress$.next(true)
+    this.http.get('/rest/bookkeeping/books/' + bookId + '/records/export', {
+      responseType: 'blob'
+    }).pipe(takeUntil(this.closer$))
+      .subscribe({
+          next: blob => {
+            FileSaver.saveAs(blob, 'transactions.xlsx')
+            this.exportInProgress$.next(false)
+          },
+          error: error => {
+            this.toastr.error(error?.error?.message, "could not export")
+            this.exportInProgress$.next(false)
+          }
+        }
+      )
   }
 
   createBook(request: CreateBookRequest) {

@@ -5,4 +5,9 @@ enum class AccountType(val shortString: String) {
     LIABILITY("P"),
     EXPENSE("-"),
     INCOME("+"),
+    ;
+
+    val invertedPresentation: Boolean
+        get() = this == LIABILITY || this == INCOME
+
 }

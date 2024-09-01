@@ -12,6 +12,17 @@
     </mat-accordion>
   </div>
 
+  <div class="download-button">
+    @if (exportActive) {
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    } @else {
+      <button mat-raised-button color="primary" (click)="onExport()">
+        <mat-icon>download</mat-icon>
+        Export
+      </button>
+    }
+  </div>
+
   <table mat-table [dataSource]="pageData" multiTemplateDataRows>
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef>ID</th>

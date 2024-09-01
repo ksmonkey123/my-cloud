@@ -12,7 +12,7 @@ import {
   MatRowDef,
   MatTable
 } from "@angular/material/table";
-import {MatIconButton} from "@angular/material/button";
+import {MatButton, MatIconButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {TransactionDetailsComponent} from "./transaction-details/transaction-details.component";
@@ -25,6 +25,7 @@ import {
   MatExpansionPanelTitle
 } from "@angular/material/expansion";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
+import {MatProgressBar} from "@angular/material/progress-bar";
 
 @Component({
   selector: 'app-transactions-list',
@@ -50,6 +51,8 @@ import {MatPaginator, PageEvent} from "@angular/material/paginator";
     MatExpansionPanelHeader,
     MatExpansionPanelTitle,
     MatPaginator,
+    MatButton,
+    MatProgressBar,
   ],
   animations: [
     trigger('detailExpand', [
@@ -75,9 +78,12 @@ export class TransactionsListComponent implements OnDestroy {
 
   expandedElementIds: number[] = []
 
+  exportActive: boolean = false
+
   bookSubscription
   elementSubscription
   accountsSubscription
+  exportSubscription
 
   constructor(
     private service: BookkeepingService,
@@ -98,12 +104,16 @@ export class TransactionsListComponent implements OnDestroy {
         this.accounts = accountMap
       }
     })
+    this.exportSubscription = service.exportInProgress$.subscribe((inProgress) => {
+      this.exportActive = inProgress
+    })
   }
 
   ngOnDestroy() {
     this.bookSubscription.unsubscribe()
     this.elementSubscription.unsubscribe()
     this.accountsSubscription.unsubscribe()
+    this.exportSubscription.unsubscribe()
   }
 
   toggleExpansion(id: number) {
@@ -112,6 +122,10 @@ export class TransactionsListComponent implements OnDestroy {
     } else {
       this.expandedElementIds.push(id)
     }
+  }
+
+  onExport() {
+    this.service.exportTransactions(this.book!.id)
   }
 
   protected readonly MoneyUtil = MoneyUtil;
