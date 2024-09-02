@@ -23,6 +23,7 @@ class EarningsReportService(
         val book = bookService.getBook(bookId)
 
         val balanceGroups = book.accountGroups.filter { it.accounts.any { a -> !a.accountType.earningsAccount } }
+            .sortedBy { it.groupNumber }
 
         val groups = book.accountGroups.filter { groupNumbers.isEmpty() || it.groupNumber in groupNumbers }.filter {
             // account must contain earnings accounts
@@ -49,12 +50,14 @@ class EarningsReportService(
             val expenseColumn = 130f
             val incomeColumn = 160f
 
-            val footer = "Stand " + LocalDateTime.now(ZoneId.of("Europe/Zurich")).format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
+            val footer = "Stand " + LocalDateTime.now(ZoneId.of("Europe/Zurich"))
+                .format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
             val footerX = ((170f - accountFont.getStringWidth(footer)) / 2) - 10
 
+            // normal balance
             addPage {
                 writeText(0f, titleFont.height, book.title, titleFont)
-                writeText(0f, titleFont.height * 2.2f, "Schlussbilanz", titleFont)
+                writeText(0f, titleFont.height * 2.2f, "Schlussbilanz I", titleFont)
 
                 var y = 30f
 
@@ -109,7 +112,88 @@ class EarningsReportService(
                 val fullAssets = allAccounts.filter { it.accountType == AccountType.ASSET }
                     .map { it.balance?.balance ?: BigDecimal.ZERO }.fold(BigDecimal.ZERO, BigDecimal::add).setScale(2)
                 val fullLiabilities = allAccounts.filter { it.accountType == AccountType.LIABILITY }
-                    .map { it.balance?.balance ?: BigDecimal.ZERO }.fold(BigDecimal.ZERO, BigDecimal::add).setScale(2).negate()
+                    .map { it.balance?.balance ?: BigDecimal.ZERO }.fold(BigDecimal.ZERO, BigDecimal::add).setScale(2)
+                    .negate()
+
+
+                val balanceSum = if (fullAssets > fullLiabilities) {
+                    writeText(0f, y, "Gewinn (Erfolgsrechnung)", groupFont)
+                    writeText(incomeColumn, y, (fullAssets - fullLiabilities).toString(), groupNumberFont, true)
+                    fullAssets
+                } else {
+                    writeText(0f, y, "Verlust (Erfolgsrechnung)", groupFont)
+                    writeText(expenseColumn, y, (fullLiabilities - fullAssets).toString(), groupNumberFont, true)
+                    fullLiabilities
+                }
+                y += stepSize * 2
+
+                writeText(0f, y, "Bilanzsumme", groupFont)
+                writeText(expenseColumn, y, balanceSum.toString(), groupNumberFont, true)
+                writeText(incomeColumn, y, balanceSum.toString(), groupNumberFont, true)
+
+                writeText(footerX, 257f, footer, accountFont)
+            }
+
+            // balance including empty accounts
+            addPage {
+                writeText(0f, titleFont.height, book.title, titleFont)
+                writeText(0f, titleFont.height * 2.2f, "Schlussbilanz I (vollständig)", titleFont)
+
+                var y = 30f
+
+                writeText(expenseColumn, y, "Aktive", groupFont, true)
+                writeText(incomeColumn, y, "Passive", groupFont, true)
+
+                y += stepSize * 2
+
+                for (group in balanceGroups) {
+                    writeText(
+                        0f, y, group.title, groupFont
+                    )
+
+                    val liabiltyAccounts = group.accounts.filter { it.accountType == AccountType.LIABILITY }
+                    val assetAccounts = group.accounts.filter { it.accountType == AccountType.ASSET }
+
+                    val totalLiabilities = liabiltyAccounts.map { it.balance?.balance ?: BigDecimal.ZERO }
+                        .fold(BigDecimal.ZERO, BigDecimal::add).setScale(2).negate()
+
+                    val totalAssets = assetAccounts.map { it.balance?.balance ?: BigDecimal.ZERO }
+                        .fold(BigDecimal.ZERO, BigDecimal::add).setScale(2)
+
+                    writeText(expenseColumn, y, totalAssets.toString(), groupNumberFont, true)
+                    writeText(incomeColumn, y, totalLiabilities.toString(), groupNumberFont, true)
+
+                    y += stepSize
+
+                    val accounts = group.accounts
+                        .filter { !it.accountType.earningsAccount }
+                        //.filter { it.balance != null && it.balance.balance.compareTo(BigDecimal.ZERO) != 0 }
+                        .sortedBy { it.accountNumber }
+
+                    for (account in accounts) {
+                        val balance = (account.balance?.balance ?: BigDecimal.ZERO).setScale(2)
+
+                        writeText(5f, y, AccountId.of(account).toString() + " - " + account.title, accountFont)
+                        if (account.accountType == AccountType.LIABILITY) {
+                            writeText(incomeColumn, y, balance.negate().toString(), accountNumberFont, true)
+                        } else {
+                            writeText(expenseColumn, y, balance.toString(), accountNumberFont, true)
+                        }
+
+                        y += stepSize
+                    }
+                    y += stepSize
+                }
+
+                y += stepSize
+
+                val allAccounts = balanceGroups.flatMap { it.accounts }
+
+                val fullAssets = allAccounts.filter { it.accountType == AccountType.ASSET }
+                    .map { it.balance?.balance ?: BigDecimal.ZERO }.fold(BigDecimal.ZERO, BigDecimal::add).setScale(2)
+                val fullLiabilities = allAccounts.filter { it.accountType == AccountType.LIABILITY }
+                    .map { it.balance?.balance ?: BigDecimal.ZERO }.fold(BigDecimal.ZERO, BigDecimal::add).setScale(2)
+                    .negate()
 
 
                 val balanceSum = if (fullAssets > fullLiabilities) {
@@ -190,7 +274,8 @@ class EarningsReportService(
                 val fullExpense = allAccounts.filter { it.accountType == AccountType.EXPENSE }
                     .map { it.balance?.balance ?: BigDecimal.ZERO }.fold(BigDecimal.ZERO, BigDecimal::add).setScale(2)
                 val fullIncome = allAccounts.filter { it.accountType == AccountType.INCOME }
-                    .map { it.balance?.balance ?: BigDecimal.ZERO }.fold(BigDecimal.ZERO, BigDecimal::add).setScale(2).negate()
+                    .map { it.balance?.balance ?: BigDecimal.ZERO }.fold(BigDecimal.ZERO, BigDecimal::add).setScale(2)
+                    .negate()
 
                 writeText(expenseColumn, y, fullExpense.toString(), groupNumberFont, true)
                 writeText(incomeColumn, y, fullIncome.toString(), groupNumberFont, true)
@@ -257,9 +342,11 @@ class EarningsReportService(
 
                     y += stepSize
                     val fullExpense = accounts.filter { it.accountType == AccountType.EXPENSE }
-                        .map { it.balance?.balance ?: BigDecimal.ZERO }.fold(BigDecimal.ZERO, BigDecimal::add).setScale(2)
+                        .map { it.balance?.balance ?: BigDecimal.ZERO }.fold(BigDecimal.ZERO, BigDecimal::add)
+                        .setScale(2)
                     val fullIncome = accounts.filter { it.accountType == AccountType.INCOME }
-                        .map { it.balance?.balance ?: BigDecimal.ZERO }.fold(BigDecimal.ZERO, BigDecimal::add).setScale(2).negate()
+                        .map { it.balance?.balance ?: BigDecimal.ZERO }.fold(BigDecimal.ZERO, BigDecimal::add)
+                        .setScale(2).negate()
 
                     writeText(0f, y, "Total", groupFont)
                     writeText(expenseColumn, y, fullExpense.toString(), groupNumberFont, true)
