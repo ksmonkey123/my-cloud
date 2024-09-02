@@ -149,6 +149,10 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
+  onEarningsReport() {
+    this.service.exportEarningsReport(this.book!!.id)
+  }
+
   protected readonly AccountType = AccountType;
 
   onTabChange(index: number) {

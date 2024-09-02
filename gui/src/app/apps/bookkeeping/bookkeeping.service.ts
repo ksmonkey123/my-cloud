@@ -117,6 +117,24 @@ export class BookkeepingService implements OnDestroy {
       )
   }
 
+  exportEarningsReport(bookId: number) {
+    this.exportInProgress$.next(true)
+    this.http.get('/rest/bookkeeping/books/' + bookId + '/documents/earnings.pdf', {
+      responseType: 'blob'
+    }).pipe(takeUntil(this.closer$))
+      .subscribe({
+          next: blob => {
+            FileSaver.saveAs(blob, 'earningsReport.pdf')
+            this.exportInProgress$.next(false)
+          },
+          error: error => {
+            this.toastr.error(error?.error?.message, "could not export")
+            this.exportInProgress$.next(false)
+          }
+        }
+      )
+  }
+
   createBook(request: CreateBookRequest) {
     let createdBookId$ = new BehaviorSubject<number>(0)
     this.http.post<BookSummaryDto>('/rest/bookkeeping/books', request)
