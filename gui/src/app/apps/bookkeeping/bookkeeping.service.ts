@@ -124,7 +124,7 @@ export class BookkeepingService implements OnDestroy {
     }).pipe(takeUntil(this.closer$))
       .subscribe({
           next: blob => {
-            FileSaver.saveAs(blob, 'earningsReport.pdf')
+            FileSaver.saveAs(blob, 'report.pdf')
             this.exportInProgress$.next(false)
           },
           error: error => {
