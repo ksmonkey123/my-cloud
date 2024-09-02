@@ -49,7 +49,7 @@ class EarningsReportService(
             val expenseColumn = 130f
             val incomeColumn = 160f
 
-            val footer = "Stand " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
+            val footer = "Stand " + LocalDateTime.now(ZoneId.of("Europe/Zurich")).format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
             val footerX = ((170f - accountFont.getStringWidth(footer)) / 2) - 10
 
             addPage {
@@ -84,7 +84,7 @@ class EarningsReportService(
 
                     val accounts = group.accounts
                         .filter { !it.accountType.earningsAccount }
-                        .filter { it.balance != null && it.balance.balance != BigDecimal.ZERO }
+                        .filter { it.balance != null && it.balance.balance.compareTo(BigDecimal.ZERO) != 0 }
                         .sortedBy { it.accountNumber }
 
                     for (account in accounts) {
@@ -111,18 +111,21 @@ class EarningsReportService(
                 val fullLiabilities = allAccounts.filter { it.accountType == AccountType.LIABILITY }
                     .map { it.balance?.balance ?: BigDecimal.ZERO }.fold(BigDecimal.ZERO, BigDecimal::add).setScale(2).negate()
 
-                if (fullAssets > fullLiabilities) {
+
+                val balanceSum = if (fullAssets > fullLiabilities) {
                     writeText(0f, y, "Gewinn (Erfolgsrechnung)", groupFont)
                     writeText(incomeColumn, y, (fullAssets - fullLiabilities).toString(), groupNumberFont, true)
+                    fullAssets
                 } else {
                     writeText(0f, y, "Verlust (Erfolgsrechnung)", groupFont)
                     writeText(expenseColumn, y, (fullLiabilities - fullAssets).toString(), groupNumberFont, true)
+                    fullLiabilities
                 }
                 y += stepSize * 2
 
-                writeText(0f, y, "Total", groupFont)
-                writeText(expenseColumn, y, fullAssets.toString(), groupNumberFont, true)
-                writeText(incomeColumn, y, fullLiabilities.toString(), groupNumberFont, true)
+                writeText(0f, y, "Bilanzsumme", groupFont)
+                writeText(expenseColumn, y, balanceSum.toString(), groupNumberFont, true)
+                writeText(incomeColumn, y, balanceSum.toString(), groupNumberFont, true)
 
                 writeText(footerX, 257f, footer, accountFont)
             }
