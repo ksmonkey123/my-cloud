@@ -3,6 +3,7 @@ package ch.awae.mycloud.pdf
 import org.apache.pdfbox.pdmodel.*
 import org.apache.pdfbox.pdmodel.common.*
 import org.apache.pdfbox.pdmodel.font.*
+import org.apache.pdfbox.pdmodel.font.Standard14Fonts.*
 import java.io.*
 
 class PdfDocument(private val generator: PdfDocument.() -> Unit) {
@@ -23,8 +24,12 @@ class PdfDocument(private val generator: PdfDocument.() -> Unit) {
 
     }
 
-    fun loadFont(fontType: Standard14Fonts.FontName, size: Float): PdfFont {
-        return PdfFont(PDType1Font(fontType), size)
+    private val loadedFonts = mutableMapOf<Pair<FontName, Float>, PdfFont>()
+
+    fun loadFont(fontType: FontName, size: Float): PdfFont {
+        return loadedFonts.computeIfAbsent(Pair(fontType, size)) { (f, s) ->
+            PdfFont(PDType1Font(f), s)
+        }
     }
 
     fun addPage(pageGenerator: PdfPage.() -> Unit) {
@@ -52,12 +57,15 @@ class PdfPage(val document: PDDocument, val page: PDPage, val generator: PdfPage
     val width = page.mediaBox.width / POINTS_PER_MM
     val stream = PDPageContentStream(document, page)
 
-    fun writeText(x: Float, y: Float, text: String, font: PdfFont, rightJustified : Boolean = false) {
+    fun writeText(x: Float, y: Float, text: String, font: PdfFont, rightJustified: Boolean = false) {
         stream.beginText()
         stream.setFont(font.pdFont, font.size)
 
         if (rightJustified) {
-            stream.newLineAtOffset((x + 30f - font.getStringWidth(text)) * POINTS_PER_MM, (height - y - 20f) * POINTS_PER_MM)
+            stream.newLineAtOffset(
+                (x + 30f - font.getStringWidth(text)) * POINTS_PER_MM,
+                (height - y - 20f) * POINTS_PER_MM
+            )
         } else {
             stream.newLineAtOffset((x + 30f) * POINTS_PER_MM, (height - y - 20f) * POINTS_PER_MM)
         }

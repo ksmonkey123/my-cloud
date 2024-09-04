@@ -17,15 +17,14 @@ class DocumentsController(
         @RequestParam("groupNumber", required = false) groups: List<Int>?
     ): ResponseEntity<Resource> {
         val pdf = earningsReportService.generateEarningsReport(bookId, groups ?: emptyList())
-        val blob = pdf.toByteArray()
 
         return ResponseEntity.ok()
             .headers {
                 it.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=journal.pdf")
             }
-            .contentLength(blob.size.toLong())
+            .contentLength(pdf.size.toLong())
             .contentType(MediaType.APPLICATION_PDF)
-            .body(ByteArrayResource(blob))
+            .body(ByteArrayResource(pdf))
     }
 
 }
