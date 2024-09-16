@@ -57,4 +57,7 @@ interface BookingRecordRepository : JpaRepository<BookingRecord, Long> {
 
     fun findByIdAndBook(id: Long, book: Book): BookingRecord?
 
+    @Query("select r from BookingRecord r where r.book = :book order by r.bookingDate asc, r._creationTimestamp asc limit 1")
+    fun findFirstInBook(book: Book): BookingRecord?
+
 }

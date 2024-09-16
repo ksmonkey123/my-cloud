@@ -16,7 +16,8 @@ class DocumentsController(
         @PathVariable("bookId") bookId: Long,
         @RequestParam("groupNumber", required = false) groups: List<Int>?
     ): ResponseEntity<Resource> {
-        val pdf = earningsReportService.generateEarningsReport(bookId, groups ?: emptyList())
+        // TODO: specific group export
+        val pdf = earningsReportService.generateReportBundle(bookId)
 
         return ResponseEntity.ok()
             .headers {

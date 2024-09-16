@@ -1,6 +1,5 @@
 package ch.awae.mycloud.service.bookkeping.service.document
 
-import ch.awae.mycloud.*
 import ch.awae.mycloud.pdf.*
 import ch.awae.mycloud.service.bookkeping.dto.*
 import ch.awae.mycloud.service.bookkeping.model.*
@@ -14,25 +13,60 @@ import java.math.*
 class EarningsReportService(
     private val bookService: BookService,
     private val accountTagBalanceRepository: AccountTagBalanceRepository,
+    private val bookingRecordRepository: BookingRecordRepository,
 ) {
 
-    fun generateEarningsReport(bookId: Long, groupNumbers: List<Int>): ByteArray {
+    fun generateReportBundle(bookId: Long): ByteArray {
         val book = bookService.getBook(bookId)
 
-        val groups = book.accountGroups
-            .filter { groupNumbers.isEmpty() || it.groupNumber in groupNumbers }
-            .filter { it.accounts.any { it.accountType.earningsAccount } }
+        val earningGroups = book.accountGroups.filter { ag -> ag.accounts.any { a -> a.accountType.earningsAccount } }
 
         return PdfDocument {
-            generateReport(this, book, "Bilanz", book.accountGroups, hideEmptyAccounts = true)
-            generateReport(this, book, "Detaillierte Bilanz", book.accountGroups)
-            if (groups.isNotEmpty()) {
-                generateReport(this, book, "Erfolgsrechnung", groups, earnings = true)
-                for (group in groups) {
+            generateInitialBalance(this, book)
+            generateReport(this, book, "Schlussbilanz", book.accountGroups, hideEmptyAccounts = true)
+            generateReport(this, book, "Schlussbilanz (detailliert)", book.accountGroups)
+            if (earningGroups.isNotEmpty()) {
+                generateReport(this, book, "Erfolgsrechnung", earningGroups, earnings = true)
+                for (group in earningGroups) {
                     generateDetailedEarningsReport(this, book, "Erfolgrechnung " + group.title, group)
                 }
             }
         }.toByteArray()
+    }
+
+    fun generateInitialBalance(pdf: PdfDocument, book: Book) {
+        val openingRecord = bookingRecordRepository.findFirstInBook(book) ?: return
+
+        val accountGroups = openingRecord.movements.toList().groupBy { (account, _) -> account.accountGroup }.toList()
+
+        val groups = accountGroups
+            .sortedBy { (group, _) -> group.groupNumber }
+            .map { (group, accounts) ->
+                ReportRenderer.Group(
+                    label = group.title,
+                    items = accounts
+                        .sortedBy { (account, _) -> account.accountNumber }
+                        .map { (account, balance) ->
+                            ReportRenderer.Item(
+                                label = AccountId.of(account).toString() + " " + account.title,
+                                amount = balance.let { if (account.accountType.invertedPresentation) it.negate() else it },
+                                type = ReportRenderer.ItemType.getType(account.accountType.invertedPresentation),
+                                tag = false,
+                            )
+                        },
+                    valueOverride = null,
+                )
+            }
+
+        ReportRenderer.generateReport(
+            pdf,
+            mode = ReportRenderer.Mode.BALANCE,
+            title = book.title,
+            subtitle = "Eröffnungsbilanz",
+            groups = groups,
+            hideZeroItems = true,
+            hideZeroProfitLine = true,
+        )
     }
 
     fun generateReport(
@@ -85,7 +119,11 @@ class EarningsReportService(
         val groups = accounts.map { account ->
             val tags = accountTagBalanceRepository.findByAccountId(account.id)
                 .takeUnless { it.size == 1 && it[0].tag.isEmpty() }
-                ?.sortedBy { it.tag.takeUnless(String::isEmpty) ?: "}" }
+                ?.sortedWith(
+                    Comparator.comparing<AccountTagBalance, BigDecimal> { it.balance }
+                        .let { if (account.accountType.invertedPresentation) it else it.reversed() }
+                        .thenComparing<String> { it.tag.takeUnless(String::isEmpty) ?: "}" }
+                )
                 ?.map { tag ->
                     ReportRenderer.Item(
                         label = tag.tag.takeUnless(String::isEmpty) ?: "(null)",

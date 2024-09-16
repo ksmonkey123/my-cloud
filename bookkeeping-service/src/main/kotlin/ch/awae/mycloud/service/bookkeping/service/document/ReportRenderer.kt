@@ -15,6 +15,7 @@ object ReportRenderer {
         subtitle: String,
         groups: List<Group>,
         hideZeroItems: Boolean = false,
+        hideZeroProfitLine: Boolean = false,
     ) {
         // text fonts
         val titleFont = pdf.loadFont(TIMES_BOLD, 18f)
@@ -119,34 +120,40 @@ object ReportRenderer {
             val totalCredit = groups.sumOf { it.valueForType(ItemType.CREDIT) ?: BigDecimal.ZERO }
             val totalDebit = groups.sumOf { it.valueForType(ItemType.DEBIT) ?: BigDecimal.ZERO }
 
+            val showProfitLine = !hideZeroProfitLine || totalCredit.compareTo(totalDebit) != 0
+
             y += 3 * groupFont.height * leading
             if (mode == Mode.EARNINGS) {
                 writeText(0f, y, "Total", groupFont)
                 writeText(creditColumn, y, formatNumber(totalCredit), groupNumberFont, true)
                 writeText(debitColumn, y, formatNumber(totalDebit), groupNumberFont, true)
 
-                y += 2 * groupFont.height * leading
-                if (totalCredit > totalDebit) {
-                    // net loss
-                    writeText(0f, y, "Verlust", groupFont)
-                    writeText(debitColumn, y, formatNumber(totalCredit - totalDebit), groupNumberFont, true)
-                } else {
-                    // net profit (or zero)
-                    writeText(0f, y, "Gewinn", groupFont)
-                    writeText(creditColumn, y, formatNumber(totalDebit - totalCredit), groupNumberFont, true)
+                if (showProfitLine) {
+                    y += 2 * groupFont.height * leading
+                    if (totalCredit > totalDebit) {
+                        // net loss
+                        writeText(0f, y, "Verlust", groupFont)
+                        writeText(debitColumn, y, formatNumber(totalCredit - totalDebit), groupNumberFont, true)
+                    } else {
+                        // net profit (or zero)
+                        writeText(0f, y, "Gewinn", groupFont)
+                        writeText(creditColumn, y, formatNumber(totalDebit - totalCredit), groupNumberFont, true)
+                    }
                 }
             } else {
-                if (totalCredit < totalDebit) {
-                    // net loss
-                    writeText(0f, y, "Verlust (Erfolgsrechnung)", groupFont)
-                    writeText(creditColumn, y, formatNumber(totalDebit - totalCredit), groupNumberFont, true)
-                } else {
-                    // net profit (or zero)
-                    writeText(0f, y, "Gewinn (Erfolgsrechnung)", groupFont)
-                    writeText(debitColumn, y, formatNumber(totalCredit - totalDebit), groupNumberFont, true)
+                if (showProfitLine) {
+                    if (totalCredit < totalDebit) {
+                        // net loss
+                        writeText(0f, y, "Verlust (Erfolgsrechnung)", groupFont)
+                        writeText(creditColumn, y, formatNumber(totalDebit - totalCredit), groupNumberFont, true)
+                    } else {
+                        // net profit (or zero)
+                        writeText(0f, y, "Gewinn (Erfolgsrechnung)", groupFont)
+                        writeText(debitColumn, y, formatNumber(totalCredit - totalDebit), groupNumberFont, true)
+                    }
+                    y += 2 * groupFont.height * leading
                 }
 
-                y += 2 * groupFont.height * leading
                 writeText(0f, y, "Bilanzsumme", groupFont)
 
                 val balanceSum = totalDebit.max(totalCredit)
