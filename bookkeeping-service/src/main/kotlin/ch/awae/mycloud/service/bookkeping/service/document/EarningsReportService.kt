@@ -48,6 +48,9 @@ class EarningsReportService(
 
         return PdfDocument {
             generateReport(this, book, "Erfolgsrechnung " + (title ?: "(partiell)"), earningGroups, earnings = true)
+            for (group in earningGroups) {
+                generateDetailedEarningsReport(this, book, "Erfolgrechnung " + group.title, group)
+            }
         }.toByteArray()
     }
 
