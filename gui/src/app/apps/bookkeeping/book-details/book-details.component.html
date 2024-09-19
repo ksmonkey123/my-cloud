@@ -31,9 +31,13 @@
           }
         </mat-card-content>
         <mat-card-actions>
-          <button mat-raised-button color="primary" (click)="onEarningsReport()">
+          <button mat-raised-button color="primary" (click)="onReportBundle()">
             <mat-icon>download</mat-icon>
-            Download Report
+            Report Bundle
+          </button>
+          <button mat-raised-button color="primary" (click)="onPartialReport()">
+            <mat-icon>download</mat-icon>
+            Partial Report
           </button>
         </mat-card-actions>
       </mat-card>

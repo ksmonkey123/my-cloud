@@ -22,6 +22,8 @@ import {MatTab, MatTabContent, MatTabGroup} from "@angular/material/tabs";
 import {AccountGroupListComponent} from "./account-group-list/account-group-list.component";
 import {TransactionsListComponent} from "./transactions-list/transactions-list.component";
 import {ReportsComponent} from "./reports/reports.component";
+import {MatDialog} from "@angular/material/dialog";
+import {ReportPopupComponent} from "./report-popup/report-popup.component";
 
 @Component({
   selector: 'app-book-details',
@@ -81,6 +83,7 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private service: BookkeepingService,
+    private dialog: MatDialog,
   ) {
     this.bookSubscription = this.service.book$.subscribe((b) => {
       this.book = b
@@ -149,8 +152,17 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  onEarningsReport() {
+  onReportBundle() {
     this.service.exportEarningsReport(this.book!!.id)
+  }
+
+  onPartialReport() {
+    const dialogRef = ReportPopupComponent.open(this.dialog, {groups: this.book!.groups})
+
+    dialogRef.afterClosed().subscribe((result) => {
+        this.service.exportPartialEarningsReport(this.book!.id, result!)
+      }
+    )
   }
 
   protected readonly AccountType = AccountType;

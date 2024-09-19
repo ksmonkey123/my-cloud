@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>Partial Report</h2>
+<mat-dialog-content>
+  <form>
+    <div>
+      <mat-form-field>
+        <mat-label>Title</mat-label>
+        <input matInput [formControl]="title">
+      </mat-form-field>
+    </div>
+    @for (box of this.checkboxes; track box.group.groupNumber) {
+      <div>
+        <p>
+          <mat-checkbox [formControl]="box.value">{{ box.group.groupNumber }}
+            - {{ box.group.title }}
+          </mat-checkbox>
+        </p>
+      </div>
+    }
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" [mat-dialog-close]="collectData()">Ok</button>
+</mat-dialog-actions>

@@ -1,5 +1,6 @@
 package ch.awae.mycloud.service.bookkeping.service.document
 
+import ch.awae.mycloud.*
 import ch.awae.mycloud.pdf.*
 import ch.awae.mycloud.service.bookkeping.dto.*
 import ch.awae.mycloud.service.bookkeping.model.*
@@ -31,6 +32,22 @@ class EarningsReportService(
                     generateDetailedEarningsReport(this, book, "Erfolgrechnung " + group.title, group)
                 }
             }
+        }.toByteArray()
+    }
+
+    fun generatePartialEarningsReport(bookId: Long, groupNumbers: List<Int>, title: String?): ByteArray {
+        val book = bookService.getBook(bookId)
+
+        val earningGroups = book.accountGroups
+            .filter { ag -> ag.groupNumber in groupNumbers }
+            .filter { ag -> ag.accounts.any { a -> a.accountType.earningsAccount } }
+
+        if (earningGroups.isEmpty()) {
+            throw InvalidRequestException("no earnings account groups selected")
+        }
+
+        return PdfDocument {
+            generateReport(this, book, "Erfolgsrechnung " + (title ?: "(partiell)"), earningGroups, earnings = true)
         }.toByteArray()
     }
 
@@ -153,5 +170,6 @@ class EarningsReportService(
             groups = groups,
         )
     }
+
 
 }

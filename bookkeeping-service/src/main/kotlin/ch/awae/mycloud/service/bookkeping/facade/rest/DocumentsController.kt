@@ -14,10 +14,18 @@ class DocumentsController(
     @GetMapping("/earnings.pdf")
     fun getEarningsDocument(
         @PathVariable("bookId") bookId: Long,
-        @RequestParam("groupNumber", required = false) groups: List<Int>?
+        @RequestParam("groupNumber", required = false) groups: List<Int>?,
+        @RequestParam("title", required = false) title: String?,
     ): ResponseEntity<Resource> {
         // TODO: specific group export
-        val pdf = earningsReportService.generateReportBundle(bookId)
+
+        val pdf =
+            if (groups.isNullOrEmpty()) {
+                earningsReportService.generateReportBundle(bookId)
+            } else {
+                earningsReportService.generatePartialEarningsReport(bookId, groups, title?.takeIf { it.isNotBlank() })
+            }
+
 
         return ResponseEntity.ok()
             .headers {
