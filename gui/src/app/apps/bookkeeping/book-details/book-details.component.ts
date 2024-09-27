@@ -156,6 +156,10 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     this.service.exportEarningsReport(this.book!!.id)
   }
 
+  onAccountLedgerExport() {
+    this.service.exportAccountLedgers(this.book!!.id)
+  }
+
   onPartialReport() {
     const dialogRef = ReportPopupComponent.open(this.dialog, {groups: this.book!.groups})
 

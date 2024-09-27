@@ -135,6 +135,24 @@ export class BookkeepingService implements OnDestroy {
       )
   }
 
+  exportAccountLedgers(bookId: number) {
+    this.exportInProgress$.next(true)
+    this.http.get('/rest/bookkeeping/books/' + bookId + '/documents/ledgers.pdf', {
+      responseType: 'blob'
+    }).pipe(takeUntil(this.closer$))
+      .subscribe({
+          next: blob => {
+            FileSaver.saveAs(blob, 'ledgers.pdf')
+            this.exportInProgress$.next(false)
+          },
+          error: error => {
+            this.toastr.error(error?.error?.message, "could not export")
+            this.exportInProgress$.next(false)
+          }
+        }
+      )
+  }
+
   exportPartialEarningsReport(bookId: number, config: { title: string; groupNumber: number[] }) {
     this.exportInProgress$.next(true)
     this.http.get('/rest/bookkeeping/books/' + bookId + '/documents/earnings.pdf', {
