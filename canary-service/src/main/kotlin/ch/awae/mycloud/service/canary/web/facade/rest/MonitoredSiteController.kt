@@ -1,7 +1,7 @@
-package ch.awae.mycloud.service.canary.facade.rest
+package ch.awae.mycloud.service.canary.web.facade.rest
 
-import ch.awae.mycloud.service.canary.dto.*
-import ch.awae.mycloud.service.canary.service.*
+import ch.awae.mycloud.service.canary.web.dto.*
+import ch.awae.mycloud.service.canary.web.service.*
 import jakarta.validation.*
 import org.springframework.http.*
 import org.springframework.security.access.prepost.*

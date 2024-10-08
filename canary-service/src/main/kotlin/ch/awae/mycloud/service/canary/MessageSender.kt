@@ -1,6 +1,6 @@
-package ch.awae.mycloud.service.canary.service
+package ch.awae.mycloud.service.canary
 
-import ch.awae.mycloud.service.canary.model.*
+import ch.awae.mycloud.*
 import org.apache.kafka.clients.producer.*
 import org.apache.kafka.common.serialization.*
 import org.springframework.beans.factory.annotation.*
@@ -13,6 +13,9 @@ class MessageSender(
     @Value("\${mycloud.kafka.url}") private val server: String,
     @Value("\${canary.kafka.topic}") private val topic: String,
 ) {
+
+    private val logger = createLogger()
+
     private val kafka = KafkaTemplate<String, String>(
         DefaultKafkaProducerFactory(
             mapOf(
@@ -23,15 +26,9 @@ class MessageSender(
         )
     )
 
-    fun sendFailure(lastRecord: TestRecord?, currentRecord: TestRecord) {
-        val message = "Website scan failed!\n\n" +
-                "URL: ${currentRecord.site.siteUrl}\nText:" +
-                currentRecord.failedTests.fold("") { acc, s -> "$acc\n - $s" }
+    fun sendMessage(message: String) {
+        logger.info("sending message {}", message)
         kafka.send(topic, message).get()
-    }
-
-    fun sendResolved(lastRecord: TestRecord) {
-        // TODO: implement resolution messages
     }
 
 }

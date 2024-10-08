@@ -1,4 +1,4 @@
-package ch.awae.mycloud.service.canary.model
+package ch.awae.mycloud.service.canary.web.model
 
 import ch.awae.mycloud.db.*
 import jakarta.persistence.*

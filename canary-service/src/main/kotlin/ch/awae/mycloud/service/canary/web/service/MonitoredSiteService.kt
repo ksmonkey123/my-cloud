@@ -1,10 +1,10 @@
-package ch.awae.mycloud.service.canary.service
+package ch.awae.mycloud.service.canary.web.service
 
 import ch.awae.mycloud.*
 import ch.awae.mycloud.audit.*
-import ch.awae.mycloud.service.canary.dto.*
-import ch.awae.mycloud.service.canary.model.*
-import jakarta.persistence.OptimisticLockException
+import ch.awae.mycloud.service.canary.web.dto.*
+import ch.awae.mycloud.service.canary.web.model.*
+import jakarta.persistence.*
 import org.springframework.data.repository.*
 import org.springframework.jdbc.core.*
 import org.springframework.stereotype.*

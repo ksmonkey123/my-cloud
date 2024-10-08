@@ -15,6 +15,7 @@ server:
 
 canary:
   timer:
-    schedule: "0 */30 * * * *"
+    web: "0 */30 * * * *"
+    dockerhub: "0 30 */6 * * *"
   kafka:
     topic: telegram-notifications

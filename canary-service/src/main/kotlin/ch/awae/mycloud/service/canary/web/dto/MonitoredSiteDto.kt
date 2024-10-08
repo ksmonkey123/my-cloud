@@ -1,6 +1,6 @@
-package ch.awae.mycloud.service.canary.dto
+package ch.awae.mycloud.service.canary.web.dto
 
-import ch.awae.mycloud.service.canary.model.*
+import ch.awae.mycloud.service.canary.web.model.*
 import jakarta.validation.*
 import jakarta.validation.constraints.NotBlank
 import org.hibernate.validator.constraints.*

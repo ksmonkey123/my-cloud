@@ -1,8 +1,9 @@
-package ch.awae.mycloud.service.canary.service
+package ch.awae.mycloud.service.canary.web.service
 
 import ch.awae.mycloud.*
 import ch.awae.mycloud.rest.*
-import ch.awae.mycloud.service.canary.model.*
+import ch.awae.mycloud.service.canary.*
+import ch.awae.mycloud.service.canary.web.model.*
 import org.springframework.data.repository.*
 import org.springframework.stereotype.*
 import org.springframework.transaction.annotation.*
@@ -28,12 +29,23 @@ class ScanningService(
         if (lastRecord?.result != TestResult.SUCCESS && scanRecord.result != TestResult.SUCCESS) {
             // at least 2 failures in series -> alert
             logger.warn("sequential failures for $id")
-            messageSender.sendFailure(lastRecord, scanRecord)
+            sendFailure(lastRecord, scanRecord)
         } else if (lastRecord != null && lastRecord.result != TestResult.SUCCESS) {
             // previous error resolved
             logger.info("previous failure resolved for $id")
-            messageSender.sendResolved(lastRecord)
+            sendResolved(lastRecord)
         }
+    }
+
+    fun sendFailure(lastRecord: TestRecord?, currentRecord: TestRecord) {
+        val message = "Website scan failed!\n\n" +
+                "URL: ${currentRecord.site.siteUrl}\nText:" +
+                currentRecord.failedTests.fold("") { acc, s -> "$acc\n - $s" }
+        messageSender.sendMessage(message)
+    }
+
+    fun sendResolved(lastRecord: TestRecord) {
+        // TODO: resolution message
     }
 
     private fun doScan(site: MonitoredSite): TestRecord {
