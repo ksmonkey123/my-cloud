@@ -19,3 +19,9 @@ canary:
     dockerhub: "0 30 */6 * * *"
   kafka:
     topic: telegram-notifications
+
+  dockerhub:
+    web-url: "https://hub.docker.com"
+    api-url: "https://hub.docker.com/v2"
+    username: ${dockerhub.username}
+    password: ${dockerhub.password}

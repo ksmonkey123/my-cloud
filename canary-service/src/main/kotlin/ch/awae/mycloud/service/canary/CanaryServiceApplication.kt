@@ -5,6 +5,7 @@ import ch.awae.mycloud.auth.*
 import ch.awae.mycloud.shedlock.*
 import org.springframework.boot.*
 import org.springframework.boot.autoconfigure.*
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.scheduling.annotation.*
 import org.springframework.transaction.annotation.*
 
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.*
 @EnableShedlock
 @EnableClientSecurity
 @EnableAuditLog
+@ConfigurationPropertiesScan
 class CanaryServiceApplication
 
 fun main(args: Array<String>) {

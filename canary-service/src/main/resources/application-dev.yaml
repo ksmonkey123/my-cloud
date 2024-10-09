@@ -7,4 +7,5 @@ management:
 
 canary:
   timer:
-    schedule: "*/30 * * * * *"
+    web: "*/30 * * * * *"
+    dockerhub: "0 * * * * *"
