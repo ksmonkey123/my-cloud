@@ -12,18 +12,19 @@ class DockerhubScanService(
     private val monitoredEntryRepository: MonitoredEntryRepository,
     private val updateAnnouncer: UpdateAnnouncer,
     private val entryStateRepository: EntryStateRepository,
+    private val dockerhubApiClient: DockerhubApiClient,
 ) {
 
     private val logger = createLogger()
 
-    fun runScan(id: Long, client: DockerhubApiClient) {
+    fun runScan(id: Long) {
         val entry = monitoredEntryRepository.findByIdOrNull(id)?.takeIf { it.enabled }
             ?: throw ResourceNotFoundException("monitored_entry($id)")
 
         val lastTagSet = entry.entryStates.maxByOrNull { it.creationTimestamp }?.let {
             TagSet(it.digest, it.tags.toSet())
         }
-        val newTagSet = loadTagSet(entry, client)
+        val newTagSet = loadTagSet(entry)
 
         if (lastTagSet == null || newTagSet != lastTagSet) {
             if (entry.tagChangesOnly && (newTagSet.tags == lastTagSet?.tags)) {
@@ -40,9 +41,9 @@ class DockerhubScanService(
         }
     }
 
-    private fun loadTagSet(entry: MonitoredEntry, client: DockerhubApiClient): TagSet {
+    private fun loadTagSet(entry: MonitoredEntry): TagSet {
         try {
-            val tags = client.getTagList(entry.namespace, entry.repository)
+            val tags = dockerhubApiClient.getTagList(entry.namespace, entry.repository)
 
             // find the watched tag in the result set
             val referenceTag = tags.values.flatten().find { it.tag == entry.tag }

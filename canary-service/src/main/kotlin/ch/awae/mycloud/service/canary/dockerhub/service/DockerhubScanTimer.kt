@@ -11,7 +11,6 @@ import org.springframework.stereotype.*
 class DockerhubScanTimer(
     private val monitoredEntryRepository: MonitoredEntryRepository,
     private val dockerhubScanService: DockerhubScanService,
-    private val dockerhubClientBuilder: DockerhubApiClient.Builder,
 ) {
 
     private val logger = createLogger()
@@ -25,11 +24,9 @@ class DockerhubScanTimer(
             logger.info("found ${ids.size} entries to process")
 
             if (ids.isNotEmpty()) {
-                val client = dockerhubClientBuilder.buildClient()
-
                 for (id in ids) {
                     try {
-                        dockerhubScanService.runScan(id, client)
+                        dockerhubScanService.runScan(id)
                     } catch (e: Exception) {
                         logger.error("error during scan for entry $id", e)
                     }

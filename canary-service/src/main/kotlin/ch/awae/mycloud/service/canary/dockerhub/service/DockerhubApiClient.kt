@@ -5,10 +5,15 @@ import ch.awae.mycloud.service.canary.dockerhub.*
 import org.springframework.boot.web.client.*
 import org.springframework.stereotype.*
 import org.springframework.web.client.*
+import kotlin.time.Duration.Companion.days
 
-class DockerhubApiClient private constructor(private val apiUrl: String, private val http: RestTemplate) {
+@Repository
+class DockerhubApiClient(private val dockerProperties: DockerProperties) {
 
     private val logger = createLogger()
+
+    private val http = ExpiringInstance(1.days, ::buildRestTemplate)
+    private val apiUrl = dockerProperties.apiUrl
 
     fun getTagList(namespace: String?, repository: String): Map<String, List<Tag>> {
         logger.debug("loading tags for ${namespace ?: "_"}/$repository")
@@ -28,40 +33,29 @@ class DockerhubApiClient private constructor(private val apiUrl: String, private
         if (url == null) {
             return previousResults
         }
-        val response = http.getForObject(url, TagListResponse::class.java)!!
+
+        val response = http.instance.getForObject(url, TagListResponse::class.java)!!
         return fetchTags(response.next, previousResults + response.results, invocationCounter + 1)
     }
 
-    @Component
-    class Builder(private val dockerProperties: DockerProperties) {
+    private fun buildRestTemplate(): RestTemplate {
+        logger.info("creating restTemplate for dockerhub API")
+        val httpBuilder = RestTemplateBuilder().defaultHeader("Content-Type", "application/json")
 
-        private val logger = createLogger()
+        // initial request to get an auth token
+        val request = mapOf(
+            "username" to dockerProperties.username,
+            "password" to dockerProperties.password
+        )
+        val token = httpBuilder.build()
+            .postForObject("$apiUrl/users/login", request, LoginResponse::class.java)?.token
+            ?: throw IllegalStateException("missing auth token for dockerhub")
 
-        fun buildClient(): DockerhubApiClient {
-            val apiUrl = dockerProperties.apiUrl
-            val http: RestTemplate = run {
-                val httpBuilder = RestTemplateBuilder()
-                    .defaultHeader("Content-Type", "application/json")
+        logger.info("successfully logged into dockerhub")
 
-                // initial request to get an auth token
-                val request = mapOf(
-                    "username" to dockerProperties.username,
-                    "password" to dockerProperties.password
-                )
-                val token =
-                    httpBuilder.build().postForObject("$apiUrl/users/login", request, LoginResponse::class.java)?.token
-                        ?: throw IllegalStateException("missing auth token for dockerhub")
-                logger.info("successfully logged into dockerhub")
-
-                // attach auth token to template by default
-                httpBuilder.defaultHeader("Authorization", "JWT $token").build()
-            }
-
-            return DockerhubApiClient(apiUrl, http)
-        }
-
+        // attach auth token to template by default
+        return httpBuilder.defaultHeader("Authorization", "JWT $token").build()
     }
-
 }
 
 data class Tag(val tag: String, val digest: String)
