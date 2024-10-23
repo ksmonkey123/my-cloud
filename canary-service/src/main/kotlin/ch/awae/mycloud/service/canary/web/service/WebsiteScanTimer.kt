@@ -12,7 +12,7 @@ class WebsiteScanTimer(
     private val scanningService: ScanningService,
 ) {
 
-    @SchedulerLock(name = "scan-timer", lockAtLeastFor = "PT20S")
+    @SchedulerLock(name = "scan-timer")
     @Scheduled(cron = "\${canary.timer.web}")
     fun performScan() {
         AuthInfo.impersonate("scan-timer") {
