@@ -33,4 +33,4 @@ spring:
         - id: canary-service
           predicates:
             - Path=/rest/canary/**
-          uri: lb://canary-service# canary service
+          uri: lb://canary-service
