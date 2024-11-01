@@ -24,8 +24,7 @@ class EarningsReportService(
 
         return PdfDocument {
             generateInitialBalance(this, book)
-            generateReport(this, book, "Schlussbilanz", book.accountGroups, hideEmptyAccounts = true)
-            generateReport(this, book, "Schlussbilanz (detailliert)", book.accountGroups)
+            generateReport(this, book, "Schlussbilanz", book.accountGroups)
             if (earningGroups.isNotEmpty()) {
                 generateReport(this, book, "Erfolgsrechnung", earningGroups, earnings = true)
                 for (group in earningGroups) {
@@ -84,7 +83,6 @@ class EarningsReportService(
             title = book.title,
             subtitle = "Eröffnungsbilanz",
             groups = groups,
-            hideZeroItems = true,
             hideZeroProfitLine = true,
         )
     }
@@ -95,7 +93,6 @@ class EarningsReportService(
         title: String,
         accountGroups: Collection<AccountGroup>,
         earnings: Boolean = false,
-        hideEmptyAccounts: Boolean = false,
     ) {
         val groups = accountGroups.sortedBy { it.groupNumber }
             // convert to Group DTO structure
@@ -124,7 +121,6 @@ class EarningsReportService(
             title = book.title,
             subtitle = title,
             groups = groups,
-            hideZeroItems = hideEmptyAccounts,
         )
     }
 

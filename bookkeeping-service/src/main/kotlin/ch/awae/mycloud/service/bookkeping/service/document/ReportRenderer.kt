@@ -14,7 +14,6 @@ object ReportRenderer {
         title: String,
         subtitle: String,
         groups: List<Group>,
-        hideZeroItems: Boolean = false,
         hideZeroProfitLine: Boolean = false,
     ) {
         // text fonts
@@ -63,7 +62,8 @@ object ReportRenderer {
                 var groupCredit = group.valueForType(ItemType.CREDIT)
                 var groupDebit = group.valueForType(ItemType.DEBIT)
 
-                if (hideZeroItems) {
+                // on balance sheets, hide nil groups
+                if (mode == Mode.BALANCE) {
                     val onlyZeroCredits = group.items
                         .filter { it.type == ItemType.CREDIT }
                         .none { it.amount.compareTo(BigDecimal.ZERO) != 0 }
@@ -95,7 +95,8 @@ object ReportRenderer {
 
                 // print group items
                 items@ for (item in group.items) {
-                    if (hideZeroItems && (item.amount.compareTo(BigDecimal.ZERO) == 0)) {
+                    // skip nil elements
+                    if (mode == Mode.BALANCE && (item.amount.compareTo(BigDecimal.ZERO) == 0)) {
                         continue@items
                     }
                     if (item.tag) {
