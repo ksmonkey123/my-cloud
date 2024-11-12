@@ -25,6 +25,8 @@ spring:
               - uri: http://canary-service/
             bookkeeping-service:
               - uri: http://bookkeeping-service/
+            ytdl-telegram-service:
+              - uri: http://ytdl-telegram-service/
 
   jpa:
     show-sql: false

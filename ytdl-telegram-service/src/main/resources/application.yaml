@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: ytdl-telegram-service
+server:
+  error:
+    include-message: always
