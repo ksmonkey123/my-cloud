@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {BehaviorSubject} from "rxjs";
 import {BookkeepingService, BookSummary} from "../bookkeeping.service";
 import {AsyncPipe} from "@angular/common";
 import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from "@angular/material/card";
@@ -16,8 +15,10 @@ import {
   MatStartDate
 } from "@angular/material/datepicker";
 import {MatFormField, MatSuffix} from "@angular/material/form-field";
-import {provideNativeDateAdapter} from "@angular/material/core";
 import {MatChip} from "@angular/material/chips";
+import {BaseDataComponent, ProcessingState} from "../../../common/base/component/base-data.component";
+import {ComponentStateService} from "../../../common/component-state.service";
+import {NgxSkeletonLoaderModule} from "ngx-skeleton-loader";
 
 @Component({
   selector: 'app-bookkeeping',
@@ -43,17 +44,31 @@ import {MatChip} from "@angular/material/chips";
     MatDialogContent,
     MatFormField,
     MatChip,
+    NgxSkeletonLoaderModule,
   ],
   templateUrl: './book-list.component.html',
   styleUrl: './book-list.component.scss'
 })
-export class BookListComponent {
+export class BookListComponent extends BaseDataComponent<BookSummary[]> {
 
-  public list$: BehaviorSubject<BookSummary[]>
+  public componentStateService = new ComponentStateService<BookListComponentState>("bookkeeping-book-list")
 
-  constructor(service: BookkeepingService) {
-    service.loadBooks()
-    this.list$ = service.bookList$
+  constructor(public service: BookkeepingService) {
+    super()
   }
 
+  protected override onBeforeSetData(data: BookSummary[]) {
+    this.componentStateService.patchComponentState({numberOfBooks: data.length})
+  }
+
+  override ngAfterViewInit() {
+    super.ngAfterViewInit();
+    this.loadData(this.service.fetchBookList())
+  }
+
+  protected readonly ProcessingState = ProcessingState;
+}
+
+interface BookListComponentState {
+  numberOfBooks?: number;
 }

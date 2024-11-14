@@ -1,7 +1,7 @@
 import {Injectable, OnDestroy} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {ToastrService} from "ngx-toastr";
-import {BehaviorSubject, Subject, takeUntil} from "rxjs";
+import {BehaviorSubject, map, Observable, Subject, takeUntil} from "rxjs";
 import Big from "big.js";
 import FileSaver from "file-saver";
 
@@ -25,6 +25,10 @@ export class BookkeepingService implements OnDestroy {
     this.bookList$.complete()
     this.book$.complete()
     this.bookingPage$.complete()
+  }
+
+  fetchBookList(): Observable<BookSummary[]> {
+    return this.http.get<BookSummaryDto[]>('/rest/bookkeeping/books').pipe(map(list => list.map(this.mapBookSummaryDto)));
   }
 
   loadBooks() {

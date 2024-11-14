@@ -24,6 +24,7 @@
     "@types/file-saver": "^2.0.7",
     "file-saver": "^2.0.5",
     "ngx-filesaver": "^18.0.0",
+    "ngx-skeleton-loader": "^9.0.0",
     "ngx-toastr": "^18.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
@@ -41,5 +42,6 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.4.5"
-  }
+  },
+  "packageManager": "yarn@4.5.1"
 }

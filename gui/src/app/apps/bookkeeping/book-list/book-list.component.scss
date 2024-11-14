@@ -8,11 +8,18 @@
   margin: 10px;
   width: 400px;
   background-color: #f0f0f0;
+  height: 200px;
 
   &:hover {
     cursor: pointer;
     background-color: lightgray;
   }
+}
+
+.nav-skeleton-item {
+  margin: 10px;
+  width: 400px;
+  height: 200px;
 }
 
 mat-icon {
