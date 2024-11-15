@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Account, UserManagementService} from "../user-management.service";
-import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
-import {MatCard, MatCardContent, MatCardHeader} from "@angular/material/card";
+import {AsyncPipe, NgIf} from "@angular/common";
+import {MatCard, MatCardContent} from "@angular/material/card";
 import {
   MatCell,
   MatCellDef,
@@ -17,13 +17,10 @@ import {
 import {MatSlideToggle} from "@angular/material/slide-toggle";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AuthService} from "../../../common/auth.service";
-import {MatChip, MatChipOption, MatChipSet} from "@angular/material/chips";
+import {MatChip} from "@angular/material/chips";
 import {ActivatedRoute, Router} from "@angular/router";
-import {MatAnchor, MatButton, MatFabButton, MatIconButton, MatMiniFabButton} from "@angular/material/button";
+import {MatButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
-import {MatTooltip} from "@angular/material/tooltip";
-import {MatFormField, MatLabel} from "@angular/material/form-field";
-import {MatInput} from "@angular/material/input";
 import {ToastrService} from "ngx-toastr";
 import {MatDialog} from "@angular/material/dialog";
 import {AddUserPopupDialog, DialogResult} from "./add-user-popup/add-user-popup.dialog";
@@ -33,7 +30,6 @@ import {AddUserPopupDialog, DialogResult} from "./add-user-popup/add-user-popup.
   standalone: true,
   imports: [
     AsyncPipe,
-    NgForOf,
     MatCard,
     MatTable,
     MatColumnDef,
@@ -49,21 +45,10 @@ import {AddUserPopupDialog, DialogResult} from "./add-user-popup/add-user-popup.
     MatSlideToggle,
     FormsModule,
     MatChip,
-    MatChipSet,
-    MatChipOption,
     NgIf,
-    MatIconButton,
     MatIcon,
-    MatFabButton,
-    MatMiniFabButton,
-    MatTooltip,
-    MatFormField,
-    MatInput,
-    MatLabel,
     ReactiveFormsModule,
-    MatButton,
-    MatAnchor,
-    MatCardHeader
+    MatButton
   ],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.scss'

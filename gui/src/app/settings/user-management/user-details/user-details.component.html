@@ -5,19 +5,19 @@
     Back
   </button>
   <mat-accordion multi="true">
-    <mat-expansion-panel expanded="true" *ngIf="(authInfo$ | async)?.username !== name">
+    <mat-expansion-panel expanded="true" *ngIf="auth.authInfo()?.username !== name">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <mat-icon>settings</mat-icon>
           Basic Permissions
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <mat-slide-toggle [disabled]="(authInfo$ | async)?.username === name"
+      <mat-slide-toggle [disabled]="auth.authInfo()?.username === name"
                         [ngModel]="(userDetails$ | async)?.enabled"
                         (toggleChange)="toggleEnabled()">
         Enabled
       </mat-slide-toggle>
-      <mat-slide-toggle [disabled]="(authInfo$ | async)?.username === name"
+      <mat-slide-toggle [disabled]="auth.authInfo()?.username === name"
                         [ngModel]="(userDetails$ | async)?.admin"
                         (toggleChange)="toggleAdmin()">
         Admin
@@ -40,7 +40,7 @@
         }
       </mat-slide-toggle>
     </mat-expansion-panel>
-    <mat-expansion-panel expanded="false" *ngIf="(authInfo$ | async)?.username !== name">
+    <mat-expansion-panel expanded="false" *ngIf="auth.authInfo()?.username !== name">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <mat-icon>lock_reset</mat-icon>

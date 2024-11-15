@@ -1,6 +1,5 @@
-import {Component, signal} from '@angular/core';
+import {Component} from '@angular/core';
 import {UserManagementService} from "../user-management.service";
-import {MatCard, MatCardContent} from "@angular/material/card";
 import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {ActivatedRoute, RouterLink} from "@angular/router";
 import {RoleManagementService} from "../../role-management/role-management.service";
@@ -22,8 +21,6 @@ import {
   selector: 'app-user-details-management',
   standalone: true,
   imports: [
-    MatCard,
-    MatCardContent,
     AsyncPipe,
     MatFormField,
     MatInput,
@@ -50,7 +47,6 @@ export class UserDetailsComponent {
   name ?: string
   userDetails$
   roleList$
-  authInfo$
 
   pwForm = this.formBuilder.group({
     password: '',
@@ -61,12 +57,11 @@ export class UserDetailsComponent {
     private formBuilder: FormBuilder,
     private roleService: RoleManagementService,
     route: ActivatedRoute,
-    auth: AuthService,
+    public auth: AuthService,
   ) {
     this.roleService.loadList()
     this.userDetails$ = svc.userDetails$
     this.roleList$ = roleService.roleList$
-    this.authInfo$ = auth.authInfo$
     route.paramMap.subscribe(params => {
       this.name = params.get('username')!
       this.svc.loadUser(this.name)

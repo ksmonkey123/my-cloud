@@ -20,7 +20,7 @@
           <th mat-header-cell *matHeaderCellDef>Username</th>
           <td mat-cell *matCellDef="let user" (click)="selectUser(user)">
             <span [class]="user.admin ? 'admin-username' : null">
-            @if (user.username == auth.authInfo$.value?.username) {
+            @if (user.username == auth.authInfo()?.username) {
               <i>{{ user.username }}</i>
             } @else {
               {{ user.username }}
@@ -35,7 +35,7 @@
           <td mat-cell *matCellDef="let user">
             <mat-slide-toggle [checked]="user.enabled"
                               (toggleChange)="enableUser(user.username, !user.enabled)"
-                              [disabled]="user.username === auth.authInfo$.value?.username"></mat-slide-toggle>
+                              [disabled]="user.username === auth.authInfo()?.username"></mat-slide-toggle>
           </td>
         </ng-container>
 

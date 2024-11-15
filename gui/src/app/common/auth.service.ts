@@ -1,5 +1,5 @@
 import {Injectable, OnDestroy, signal} from '@angular/core';
-import {BehaviorSubject, map, Observable, Subject, takeUntil} from "rxjs";
+import {map, Observable, Subject, takeUntil} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 
 export const TOKEN_NAME = "auth_token"
@@ -20,10 +20,6 @@ interface AuthInfoDto {
 })
 export class AuthService implements OnDestroy {
 
-  /**
-   * @deprecated use signal instead
-   */
-  public authInfo$: BehaviorSubject<AuthInfo | null> = new BehaviorSubject<AuthInfo | null>(null);
   public readonly authInfo = signal<AuthInfo | undefined>(undefined);
 
   private closer$ = new Subject<void>()
@@ -32,18 +28,18 @@ export class AuthService implements OnDestroy {
   }
 
   hasToken() {
-    return sessionStorage.getItem(TOKEN_NAME) !== null
+    return localStorage.getItem(TOKEN_NAME) !== null
   }
 
   getToken() {
-    return sessionStorage.getItem(TOKEN_NAME)
+    return localStorage.getItem(TOKEN_NAME)
   }
 
   setToken(token: string | null) {
     if (token === null) {
-      sessionStorage.removeItem(TOKEN_NAME)
+      localStorage.removeItem(TOKEN_NAME)
     } else {
-      sessionStorage.setItem(TOKEN_NAME, token)
+      localStorage.setItem(TOKEN_NAME, token)
     }
   }
 
@@ -57,14 +53,12 @@ export class AuthService implements OnDestroy {
             roles: user.roles,
             admin: user.roles.includes("admin"),
           };
-          this.authInfo$.next(newInfo);
           this.authInfo.set(newInfo);
         }
       })
   }
 
   ngOnDestroy() {
-    this.authInfo$.complete()
     this.closer$.next()
     this.closer$.complete()
   }
@@ -105,7 +99,6 @@ export class AuthService implements OnDestroy {
 
   logout(): void {
     this.setToken(null)
-    this.authInfo$.next(null)
   }
 
 }
