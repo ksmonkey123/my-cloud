@@ -1,4 +1,4 @@
-import {Injectable, OnDestroy} from '@angular/core';
+import {Injectable, OnDestroy, signal} from '@angular/core';
 import {BehaviorSubject, map, Observable, Subject, takeUntil} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 
@@ -20,7 +20,12 @@ interface AuthInfoDto {
 })
 export class AuthService implements OnDestroy {
 
-  public authInfo$ = new BehaviorSubject<AuthInfo | null>(null)
+  /**
+   * @deprecated use signal instead
+   */
+  public authInfo$: BehaviorSubject<AuthInfo | null> = new BehaviorSubject<AuthInfo | null>(null);
+  public readonly authInfo = signal<AuthInfo | undefined>(undefined);
+
   private closer$ = new Subject<void>()
 
   constructor(private http: HttpClient) {
@@ -47,11 +52,13 @@ export class AuthService implements OnDestroy {
       .pipe(takeUntil(this.closer$))
       .subscribe({
         next: (user) => {
-          this.authInfo$.next({
+          const newInfo: AuthInfo = {
             username: user.username,
             roles: user.roles,
             admin: user.roles.includes("admin"),
-          })
+          };
+          this.authInfo$.next(newInfo);
+          this.authInfo.set(newInfo);
         }
       })
   }

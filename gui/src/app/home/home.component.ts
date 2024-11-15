@@ -1,10 +1,12 @@
-import {Component} from '@angular/core';
+import {Component, effect} from '@angular/core';
 import {AuthService} from "../common/auth.service";
-import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
 import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from "@angular/material/card";
 import {MatIcon} from "@angular/material/icon";
 import {RouterLink} from "@angular/router";
-import {apps} from "../apps/apps.overview";
+import {AppCard, apps} from "../apps/apps.overview";
+import {ComponentStateService} from "../common/component-state.service";
+import {NgxSkeletonLoaderModule} from "ngx-skeleton-loader";
 
 @Component({
   selector: 'app-home',
@@ -17,16 +19,31 @@ import {apps} from "../apps/apps.overview";
     MatCardContent,
     MatIcon,
     NgIf,
-    AsyncPipe,
-    RouterLink
+    RouterLink,
+    NgxSkeletonLoaderModule
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
 
-  constructor(public auth: AuthService) {
-  }
+  public readonly componentStateService = new ComponentStateService<HomeComponentState>("home");
 
-  protected readonly appCards = apps.cards;
+  public cards: AppCard[] | undefined;
+
+  constructor(public auth: AuthService) {
+    effect(() => {
+      const newAuth = auth.authInfo()
+      if (newAuth) {
+        this.cards = apps.cards.filter(card => {
+          return (newAuth?.roles ?? []).includes(card.auth)
+        });
+        this.componentStateService.patchComponentState({numberOfCards: this.cards.length});
+      }
+    });
+  }
+}
+
+interface HomeComponentState {
+  numberOfCards?: number
 }

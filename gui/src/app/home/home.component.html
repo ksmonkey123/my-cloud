@@ -1,12 +1,21 @@
 <div class="nav-flexbox">
-@for (item of appCards; track item.path) {
-  <mat-card *ngIf="(auth.authInfo$ | async)?.roles?.includes(item.auth)" appearance="raised" class="nav-flex-item"
-  [routerLink]="item.path"
-  >
-    <mat-card-header>
-      <mat-card-title><mat-icon *ngIf="item.icon">{{item.icon}}</mat-icon>{{ item.title }}</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>&nbsp;</mat-card-content>
-  </mat-card>
-}
+  @if (cards) {
+    @for (item of cards; track item.path) {
+      <mat-card appearance="raised" class="nav-flex-item" [routerLink]="item.path">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>{{ item.icon }}</mat-icon>
+            {{ item.title }}
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>&nbsp;</mat-card-content>
+      </mat-card>
+    }
+  } @else {
+    @for (_ of [].constructor(componentStateService.componentState$.value?.numberOfCards ?? 1); track $index) {
+      <mat-card appearance="raised" class="nav-skeleton-item">
+        <ngx-skeleton-loader [theme]="{height:'90px', background: '#f0f0f0'}"></ngx-skeleton-loader>
+      </mat-card>
+    }
+  }
 </div>
