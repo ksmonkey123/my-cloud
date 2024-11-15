@@ -1,6 +1,5 @@
 import {Component, effect} from '@angular/core';
 import {AuthService} from "../common/auth.service";
-import {NgForOf, NgIf} from "@angular/common";
 import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from "@angular/material/card";
 import {MatIcon} from "@angular/material/icon";
 import {RouterLink} from "@angular/router";
@@ -12,13 +11,11 @@ import {NgxSkeletonLoaderModule} from "ngx-skeleton-loader";
   selector: 'app-home',
   standalone: true,
   imports: [
-    NgForOf,
     MatCard,
     MatCardTitle,
     MatCardHeader,
     MatCardContent,
     MatIcon,
-    NgIf,
     RouterLink,
     NgxSkeletonLoaderModule
   ],

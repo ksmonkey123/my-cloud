@@ -1,20 +1,9 @@
 import {Component} from '@angular/core';
 import {BookkeepingService, BookSummary} from "../bookkeeping.service";
-import {AsyncPipe} from "@angular/common";
 import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from "@angular/material/card";
 import {MatIcon} from "@angular/material/icon";
 import {RouterLink} from "@angular/router";
-import {MatDialogContent} from "@angular/material/dialog";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {
-  MatDatepickerToggle,
-  MatDatepickerToggleIcon,
-  MatDateRangeInput,
-  MatDateRangePicker,
-  MatEndDate,
-  MatStartDate
-} from "@angular/material/datepicker";
-import {MatFormField, MatSuffix} from "@angular/material/form-field";
 import {MatChip} from "@angular/material/chips";
 import {BaseDataComponent, ProcessingState} from "../../../common/base/base-data.component";
 import {ComponentStateService} from "../../../common/component-state.service";
@@ -25,7 +14,6 @@ import {NgxSkeletonLoaderModule} from "ngx-skeleton-loader";
   standalone: true,
   providers: [],
   imports: [
-    AsyncPipe,
     MatCard,
     MatCardContent,
     MatCardHeader,
@@ -33,16 +21,7 @@ import {NgxSkeletonLoaderModule} from "ngx-skeleton-loader";
     MatIcon,
     RouterLink,
     FormsModule,
-    MatDateRangeInput,
-    MatDateRangePicker,
-    MatDatepickerToggle,
-    MatDatepickerToggleIcon,
-    MatEndDate,
-    MatStartDate,
     ReactiveFormsModule,
-    MatSuffix,
-    MatDialogContent,
-    MatFormField,
     MatChip,
     NgxSkeletonLoaderModule,
   ],

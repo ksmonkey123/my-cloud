@@ -12,7 +12,7 @@
       </mat-card>
     }
   } @else {
-    @for (_ of [].constructor(componentStateService.state$.value?.numberOfCards ?? 1); track $index) {
+    @for (_ of [].constructor(componentStateService.state()?.numberOfCards ?? 1); track $index) {
       <mat-card appearance="raised" class="nav-skeleton-item">
         <ngx-skeleton-loader [theme]="{height:'90px', background: '#f0f0f0'}"></ngx-skeleton-loader>
       </mat-card>
