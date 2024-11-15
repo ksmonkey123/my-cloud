@@ -1,6 +1,7 @@
 import {BaseLocalDateChangeService} from "./base-local-data-change-service.service";
 import {BehaviorSubject} from "rxjs";
-import {StorageUtils} from "../utils/ui.utils";
+import {StorageUtils} from "../storage.utils";
+import {StateUtils} from "../state.utils";
 
 export abstract class BaseRequestStateService<REQ, RSP> extends BaseLocalDateChangeService<RSP> {
 
@@ -22,7 +23,7 @@ export abstract class BaseRequestStateService<REQ, RSP> extends BaseLocalDateCha
   }
 
   public patchRequestState(requestState: REQ) {
-    this.requestState$.next({...this.requestState$.value, ...requestState});
+    StateUtils.handlePatchState(requestState, this.requestState$);
   }
 
   public reloadRequestState() {

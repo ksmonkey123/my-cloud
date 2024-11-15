@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, EventEmitter, OnDestroy, Output, signal} from "@angular/core";
 import {interval, Observable, Subject, Subscription, take, takeUntil} from "rxjs";
-import {ErrorUtils} from "../utils/error.utils";
+import {ErrorUtils} from "../error.utils";
 
 @Component({template: ''})
 export abstract class BaseDataComponent<T> implements AfterViewInit, OnDestroy {
@@ -21,9 +21,6 @@ export abstract class BaseDataComponent<T> implements AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
-  }
-
-  protected handleReloadAfterError() {
   }
 
   private startProcessing() {

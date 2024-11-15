@@ -24,17 +24,3 @@ export class StorageUtils {
   }
 
 }
-
-export class ComponentStateUtils {
-
-  private static componentStateObservables = new Map<string, BehaviorSubject<any>>();
-
-  public static registerComponentState<T>(keyExtension: string, businessKey: string, state$: BehaviorSubject<T>) {
-    return this.componentStateObservables.set(businessKey + keyExtension, state$);
-  }
-
-  public static getComponentState<T>(keyExtension: string, businessKey: string): BehaviorSubject<T> | undefined {
-    return this.componentStateObservables.get(businessKey + keyExtension);
-  }
-
-}

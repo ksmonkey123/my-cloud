@@ -1,45 +1,63 @@
 import {BehaviorSubject} from "rxjs";
-import {ComponentStateUtils, StorageUtils} from "./base/utils/ui.utils";
+import {StorageUtils} from "./storage.utils";
+import {signal, Signal} from "@angular/core";
+import {StateUtils} from "./state.utils";
 
 export class ComponentStateService<T> {
 
   private static readonly COMPONENT_STATE_STORAGE_KEY_EXTENSION = '_COMP_STATE'
+  private static channelBags = new Map<string, ChannelBag>;
 
   private businessKey: string;
 
-  public readonly componentState$: BehaviorSubject<T | undefined>;
+  public readonly state$: BehaviorSubject<T | undefined>;
+  public readonly state: Signal<T | undefined>;
 
   constructor(businessKey: string, useLocalStore: boolean = true) {
     this.businessKey = businessKey;
-    const cached$ = ComponentStateUtils.getComponentState<T | undefined>(ComponentStateService.COMPONENT_STATE_STORAGE_KEY_EXTENSION, businessKey);
-    if (cached$) {
-      this.componentState$ = cached$;
+
+    const cachedBag = ComponentStateService.channelBags.get(businessKey);
+
+    if (cachedBag) {
+      // reuse existing bag
+      this.state$ = cachedBag.subject$;
+      this.state = cachedBag.signal;
     } else {
-      this.componentState$ = new BehaviorSubject<T | undefined>(undefined);
-      ComponentStateUtils.registerComponentState(ComponentStateService.COMPONENT_STATE_STORAGE_KEY_EXTENSION, businessKey, this.componentState$);
+      this.state$ = new BehaviorSubject<T | undefined>(undefined);
+      const writableSignal = signal<T | undefined>(undefined);
+      this.state$.subscribe(value => writableSignal.set(value));
+      this.state = writableSignal;
+
+      ComponentStateService.channelBags.set(businessKey, {
+        signal: this.state,
+        subject$: this.state$
+      });
+
       if (useLocalStore) {
-        StorageUtils.handleStorage(this.componentState$, ComponentStateService.COMPONENT_STATE_STORAGE_KEY_EXTENSION, businessKey);
+        StorageUtils.handleStorage(this.state$, ComponentStateService.COMPONENT_STATE_STORAGE_KEY_EXTENSION, businessKey);
       }
     }
   }
 
   public getCurrentComponentState(): T | undefined {
-    return this.componentState$.value;
+    return this.state$.value;
   }
 
   public patchComponentState(patch: T) {
-    this.componentState$.next({
-      ...this.componentState$.value,
-      ...patch
-    });
+    StateUtils.handlePatchState(patch, this.state$);
   }
 
   public reloadComponentState() {
-    if (this.componentState$.value) {
-      this.componentState$.next({...this.componentState$.value});
+    if (this.state$.value) {
+      this.state$.next({...this.state$.value});
     } else {
-      this.componentState$.next(undefined);
+      this.state$.next(undefined);
     }
   }
 
+}
+
+interface ChannelBag {
+  subject$: BehaviorSubject<any>,
+  signal: Signal<any>
 }

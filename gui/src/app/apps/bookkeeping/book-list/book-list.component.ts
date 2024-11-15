@@ -16,7 +16,7 @@ import {
 } from "@angular/material/datepicker";
 import {MatFormField, MatSuffix} from "@angular/material/form-field";
 import {MatChip} from "@angular/material/chips";
-import {BaseDataComponent, ProcessingState} from "../../../common/base/component/base-data.component";
+import {BaseDataComponent, ProcessingState} from "../../../common/base/base-data.component";
 import {ComponentStateService} from "../../../common/component-state.service";
 import {NgxSkeletonLoaderModule} from "ngx-skeleton-loader";
 
