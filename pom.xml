@@ -40,9 +40,8 @@
                 <version>3.6.4</version>
                 <configuration>
                     <noChangesAction>ReleaseNone</noChangesAction>
-                    <pushTags>false</pushTags>
-                    <pullTags>false</pullTags>
                     <releaseGoals>
+                        <releaseGoal>clean</releaseGoal>
                         <releaseGoal>deploy</releaseGoal>
                     </releaseGoals>
                     <releaseProfiles>
