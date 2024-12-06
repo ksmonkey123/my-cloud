@@ -25,17 +25,14 @@ spring:
               - uri: http://canary-service/
             bookkeeping-service:
               - uri: http://bookkeeping-service/
+            telegram-notification-service:
+              - uri: http://telegram-notification-service/
 
   jpa:
     show-sql: false
     open-in-view: false
     hibernate:
       ddl-auto: validate
-
-mycloud:
-  audit:
-    kafka:
-      topic: mycloud-audit-log
 
 logging:
   level:

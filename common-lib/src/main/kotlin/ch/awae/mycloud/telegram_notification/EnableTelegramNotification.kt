@@ -1,4 +1,4 @@
-package ch.awae.mycloud.audit
+package ch.awae.mycloud.telegram_notification
 
 import ch.awae.mycloud.kafka.*
 import org.springframework.context.annotation.*
@@ -7,5 +7,5 @@ import org.springframework.context.annotation.*
 @Retention(AnnotationRetention.RUNTIME)
 @MustBeDocumented
 @EnableKafkaDefaults
-@Import(AuditLogAspect::class, AuditLogService::class, KafkaSender::class)
-annotation class EnableAuditLog
+@Import(TelegramNotificationService::class)
+annotation class EnableTelegramNotification

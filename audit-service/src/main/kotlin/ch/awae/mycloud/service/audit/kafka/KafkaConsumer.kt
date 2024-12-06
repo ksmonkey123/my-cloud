@@ -7,7 +7,7 @@ import org.springframework.kafka.annotation.*
 import org.springframework.stereotype.*
 
 @Component
-@KafkaListener(topics = ["\${mycloud.audit.kafka.topic}"], containerFactory = "auditKafkaListenerContainerFactory")
+@KafkaListener(topics = ["mycloud-audit-log"], containerFactory = "kafkaListenerContainerFactory")
 class KafkaConsumer(private val svc: AuditService) {
 
     @KafkaHandler
