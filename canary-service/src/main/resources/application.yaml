@@ -17,8 +17,6 @@ canary:
   timer:
     web: "0 */15 * * * *"
     dockerhub: "0 30 */6 * * *"
-  kafka:
-    topic: telegram-notifications
 
   dockerhub:
     web-url: "https://hub.docker.com"

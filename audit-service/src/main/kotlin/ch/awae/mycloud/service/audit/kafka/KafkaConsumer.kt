@@ -8,7 +8,7 @@ import org.springframework.stereotype.*
 
 @Component
 // TODO: remove legacy topic
-@KafkaListener(topics = ["mycloud-audit-log", AUDIT_LOG_KAFKA_TOPIC], containerFactory = "kafkaListenerContainerFactory")
+@KafkaListener(topics = [AUDIT_LOG_KAFKA_TOPIC], containerFactory = "kafkaListenerContainerFactory")
 class KafkaConsumer(private val svc: AuditService) {
 
     @KafkaHandler
