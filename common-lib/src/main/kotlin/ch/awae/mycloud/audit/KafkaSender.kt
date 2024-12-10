@@ -4,6 +4,8 @@ import org.springframework.kafka.core.*
 import org.springframework.stereotype.*
 import java.util.concurrent.*
 
+const val AUDIT_LOG_KAFKA_TOPIC = "mycloud.audit-log"
+
 @Component
 class KafkaSender(private val kafkaTemplate: KafkaTemplate<String, Any>) {
 
@@ -11,7 +13,7 @@ class KafkaSender(private val kafkaTemplate: KafkaTemplate<String, Any>) {
 
     fun send(auditLogEntry: AuditLogEntry) {
         executor.submit {
-            kafkaTemplate.send("mycloud-audit-log", auditLogEntry)
+            kafkaTemplate.send(AUDIT_LOG_KAFKA_TOPIC, auditLogEntry)
         }
     }
 
