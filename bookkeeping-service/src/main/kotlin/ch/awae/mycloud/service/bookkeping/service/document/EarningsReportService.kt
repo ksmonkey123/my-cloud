@@ -142,7 +142,7 @@ class EarningsReportService(
                 )
                 ?.map { tag ->
                     ReportRenderer.Item(
-                        label = tag.tag.takeUnless(String::isEmpty) ?: "(null)",
+                        label = tag.tag.takeUnless(String::isEmpty),
                         amount = tag.balance.let { if (account.accountType.invertedPresentation) it.negate() else it },
                         type = ReportRenderer.ItemType.getType(account.accountType.invertedPresentation),
                         tag = true,
@@ -157,7 +157,7 @@ class EarningsReportService(
                     debit = (account.balance?.balance?.negate()
                         ?: BigDecimal.ZERO)?.takeIf { account.accountType.invertedPresentation },
                 ),
-                items = tags ?: emptyList(),
+                items = tags?.filter { it.amount.compareTo(BigDecimal.ZERO) != 0 } ?: emptyList(),
             )
         }
 

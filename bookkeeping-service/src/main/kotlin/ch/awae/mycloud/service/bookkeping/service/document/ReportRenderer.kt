@@ -101,10 +101,10 @@ object ReportRenderer {
                     }
                     if (item.tag) {
                         y += tagFont.height * leading
-                        writeText(tagsColumn, y, item.label, tagFont, true)
+                        writeText(tagsColumn, y, item.label ?: "(null)", tagFont, true)
                     } else {
                         y += itemFont.height * leading
-                        writeText(itemColumn, y, item.label, itemFont)
+                        writeText(itemColumn, y, item.label ?: "(null)", itemFont)
                     }
 
                     val numberFont = if (item.tag) tagNumberFont else itemNumberFont
@@ -194,7 +194,7 @@ object ReportRenderer {
     }
 
     data class Item(
-        val label: String,
+        val label: String?,
         val amount: BigDecimal,
         val type: ItemType,
         val tag: Boolean,
