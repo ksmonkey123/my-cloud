@@ -148,6 +148,8 @@ class EarningsReportService(
                         tag = true,
                     )
                 }
+                ?.filter { it.amount.compareTo(BigDecimal.ZERO) != 0 }
+                ?.takeUnless { it.size == 1 && it[0].label == null }
 
             ReportRenderer.Group(
                 label = AccountId.of(account).toString() + " " + account.title,
@@ -157,7 +159,7 @@ class EarningsReportService(
                     debit = (account.balance?.balance?.negate()
                         ?: BigDecimal.ZERO)?.takeIf { account.accountType.invertedPresentation },
                 ),
-                items = tags?.filter { it.amount.compareTo(BigDecimal.ZERO) != 0 } ?: emptyList(),
+                items = tags ?: emptyList(),
             )
         }
 
