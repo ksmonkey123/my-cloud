@@ -41,7 +41,7 @@ class ScanningService(
         val message = "Website scan failed!\n\n" +
                 "URL: ${currentRecord.site.siteUrl}\nText:" +
                 currentRecord.failedTests.fold("") { acc, s -> "$acc\n - $s" }
-        messageSender.sendMessage(message)
+        messageSender.sendMessage("website canary test failed", message)
     }
 
     fun sendResolved(lastRecord: TestRecord) {

@@ -22,7 +22,7 @@ class UpdateAnnouncer(
                 enumerate("\nunchanged tags:", unchangedTags) +
                 "\n\n${dockerProperties.webUrl}/${item.webIdentifier}/tags"
 
-        messageSender.sendMessage(message)
+        messageSender.sendMessage("new docker image available for ${item.descriptor}", message)
     }
 
     private fun enumerate(listHeader: String, items: Set<String>): String {

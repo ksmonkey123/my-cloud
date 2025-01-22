@@ -1,18 +1,18 @@
 package ch.awae.mycloud.service.canary
 
 import ch.awae.mycloud.*
-import ch.awae.mycloud.telegram_notification.*
+import ch.awae.mycloud.notification.*
 import org.springframework.stereotype.*
 
 @Service
 class MessageSender(
-    private val telegramNotificationService: TelegramNotificationService,
+    private val notificationService: NotificationService,
 ) {
     private val logger = createLogger()
 
-    fun sendMessage(message: String) {
+    fun sendMessage(title: String, message: String) {
         logger.info("sending message {}", message)
-        telegramNotificationService.send(TelegramNotificationMessage(message, TelegramMessageFormat.HTML))
+        notificationService.send(NotificationMessage(title, message))
     }
 
 }
