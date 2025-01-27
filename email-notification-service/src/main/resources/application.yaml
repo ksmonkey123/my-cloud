@@ -1,6 +1,6 @@
 spring:
   application:
-    name: telegram-notification-service
+    name: email-notification-service
 server:
   error:
     include-message: always

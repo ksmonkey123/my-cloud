@@ -37,7 +37,7 @@
         <module>shortener-service</module>
         <module>canary-service</module>
         <module>bookkeeping-service</module>
-        <module>telegram-notification-service</module>
+        <module>email-notification-service</module>
     </modules>
 
     <build>

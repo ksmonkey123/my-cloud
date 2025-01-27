@@ -1,4 +1,4 @@
-package ch.awae.mycloud.service.telegram_notification
+package ch.awae.mycloud.service.email_notification
 
 import ch.awae.mycloud.notification.*
 import org.springframework.kafka.annotation.*
@@ -7,15 +7,14 @@ import java.util.logging.*
 
 @Component
 @KafkaListener(topics = [NOTIFICATION_TOPIC], containerFactory = "kafkaListenerContainerFactory")
-class MessageProcessor(val client: TelegramClient) {
+class MessageProcessor(val client: EmailClient) {
 
     val logger: Logger = Logger.getLogger(javaClass.name)
 
     @KafkaHandler
     fun handleNotificationMessage(message: NotificationMessage) {
-        logger.info("handling notification message: \"${message.text.replace("\n", "\\n")}\"")
-        client.sendMessage(message.title + "\n\n" + message.text)
+        logger.info("handling notification message: $message")
+        client.sendPlainMessage(message)
     }
-
 
 }

@@ -1,4 +1,4 @@
-package ch.awae.mycloud.service.telegram_notification
+package ch.awae.mycloud.service.email_notification
 
 import ch.awae.mycloud.auth.*
 import ch.awae.mycloud.kafka.*
@@ -10,8 +10,8 @@ import org.springframework.boot.context.properties.*
 @ConfigurationPropertiesScan
 @EnableClientSecurity
 @EnableKafkaDefaults
-class TelegramNotificationServiceApplication
+class EmailNotificationServiceApplication
 
 fun main(args: Array<String>) {
-    SpringApplication.run(TelegramNotificationServiceApplication::class.java, *args)
+    SpringApplication.run(EmailNotificationServiceApplication::class.java, *args)
 }

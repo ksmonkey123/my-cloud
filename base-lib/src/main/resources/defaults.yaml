@@ -25,8 +25,8 @@ spring:
               - uri: http://canary-service/
             bookkeeping-service:
               - uri: http://bookkeeping-service/
-            telegram-notification-service:
-              - uri: http://telegram-notification-service/
+            email-notification-service:
+              - uri: http://email-notification-service/
 
   jpa:
     show-sql: false

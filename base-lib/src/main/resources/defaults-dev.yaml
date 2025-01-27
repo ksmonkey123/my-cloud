@@ -14,7 +14,7 @@ spring:
               - uri: http://localhost:8004/
             canary-service:
               - uri: http://localhost:8005/
-            telegram-notification-service:
+            email-notification-service:
               - uri: http://localhost:8006/
 
   jpa:
