@@ -15,7 +15,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
   logout() {
     this.auth.logout()
-    this.router.navigate(['login'])
+    void this.router.navigate(['login'], {queryParams: {target: this.router.url}})
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -33,7 +33,6 @@ export class TokenInterceptor implements HttpInterceptor {
               this.logout();
               return EMPTY;
             } else {
-              console.log("rethrowing error")
               return throwError(() => error);
             }
           }

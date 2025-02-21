@@ -6,8 +6,7 @@ import {MatInput} from "@angular/material/input";
 import {MatButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 import {AuthService} from "../common/auth.service";
-import {Router} from "@angular/router";
-import {MatToolbar} from "@angular/material/toolbar";
+import {ActivatedRoute, Router} from "@angular/router";
 import {NgIf} from "@angular/common";
 
 @Component({
@@ -23,7 +22,6 @@ import {NgIf} from "@angular/common";
     MatButton,
     MatIcon,
     ReactiveFormsModule,
-    MatToolbar,
     NgIf
   ],
   templateUrl: './login.component.html',
@@ -31,7 +29,12 @@ import {NgIf} from "@angular/common";
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private route: ActivatedRoute,
+  ) {
   }
 
   problem = false
@@ -41,19 +44,23 @@ export class LoginComponent implements OnInit {
     password: '',
   })
 
+  private target: string | undefined;
+
   ngOnInit() {
-    if (this.authService.hasToken()) {
-      console.log('already logged in, redirecting to main page')
-      this.router.navigateByUrl('/')
-    }
+    this.route.queryParams.subscribe(params => {
+        this.target = params['target']
+        if (this.authService.hasToken()) {
+          this.navigateAfterLogin()
+        }
+      }
+    )
   }
 
   onSubmit() {
     this.authService.login(this.form.value.username || '', this.form.value.password || '')
       .subscribe({
-          next: (x) => {
-            console.log("login done")
-            this.router.navigateByUrl('/')
+          next: _ => {
+            this.navigateAfterLogin()
           },
           error: () => {
             this.problem = true
@@ -62,5 +69,8 @@ export class LoginComponent implements OnInit {
       )
   }
 
+  private navigateAfterLogin() {
+      void this.router.navigateByUrl(this.target || '/')
+  }
 
 }
