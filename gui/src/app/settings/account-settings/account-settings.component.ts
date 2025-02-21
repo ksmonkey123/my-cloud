@@ -13,12 +13,10 @@ import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {MatIcon} from "@angular/material/icon";
 import {MatButton} from "@angular/material/button";
-import {RouterLink} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 
 @Component({
-  selector: 'app-password-change',
-  standalone: true,
+    selector: 'app-password-change',
   imports: [
     MatCard,
     MatCardContent,
@@ -29,10 +27,10 @@ import {ToastrService} from "ngx-toastr";
     MatLabel,
     MatIcon,
     MatButton,
-    RouterLink,
+
   ],
-  templateUrl: './account-settings.component.html',
-  styleUrl: './account-settings.component.scss'
+    templateUrl: './account-settings.component.html',
+    styleUrl: './account-settings.component.scss'
 })
 export class AccountSettingsComponent {
 

@@ -2,7 +2,10 @@ import {AfterViewInit, Component, EventEmitter, OnDestroy, Output, signal} from 
 import {interval, Observable, Subject, Subscription, take, takeUntil} from "rxjs";
 import {ErrorUtils} from "../error.utils";
 
-@Component({template: ''})
+@Component({
+    template: '',
+    standalone: false
+})
 export abstract class BaseDataComponent<T> implements AfterViewInit, OnDestroy {
 
   protected readonly processingState = signal(ProcessingState.INITIAL)

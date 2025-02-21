@@ -5,11 +5,10 @@ import {AuthService} from "./common/auth.service";
 import {NavbarComponent} from "./navbar/navbar.component";
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [NavbarComponent, RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+    selector: 'app-root',
+    imports: [NavbarComponent, RouterOutlet],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss'
 })
 export class AppComponent implements AfterViewInit {
 

@@ -14,21 +14,20 @@ import {MatButton} from "@angular/material/button";
 import {MatInput} from "@angular/material/input";
 
 @Component({
-  selector: 'app-group-popup',
-  standalone: true,
-  imports: [
-    MatDialogContent,
-    MatFormField,
-    ReactiveFormsModule,
-    MatDialogActions,
-    MatButton,
-    MatLabel,
-    MatDialogClose,
-    MatInput,
-    MatDialogTitle
-  ],
-  templateUrl: './group-popup.component.html',
-  styleUrl: './group-popup.component.scss'
+    selector: 'app-group-popup',
+    imports: [
+        MatDialogContent,
+        MatFormField,
+        ReactiveFormsModule,
+        MatDialogActions,
+        MatButton,
+        MatLabel,
+        MatDialogClose,
+        MatInput,
+        MatDialogTitle
+    ],
+    templateUrl: './group-popup.component.html',
+    styleUrl: './group-popup.component.scss'
 })
 export class GroupPopupComponent {
 

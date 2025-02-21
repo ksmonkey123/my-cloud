@@ -9,15 +9,11 @@ import {
 } from "@angular/material/dialog";
 import {MatButton} from "@angular/material/button";
 import {FormBuilder, FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {MatCard, MatCardContent} from "@angular/material/card";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
-import {MatIcon} from "@angular/material/icon";
 import {MatInput} from "@angular/material/input";
-import {NgIf} from "@angular/common";
 
 @Component({
-  selector: 'app-role-edit-popup',
-  standalone: true,
+    selector: 'app-role-edit-popup',
   imports: [
     MatDialogTitle,
     MatDialogContent,
@@ -25,17 +21,13 @@ import {NgIf} from "@angular/common";
     MatButton,
     MatDialogClose,
     FormsModule,
-    MatCard,
-    MatCardContent,
     MatFormField,
-    MatIcon,
     MatInput,
     MatLabel,
-    NgIf,
     ReactiveFormsModule
   ],
-  templateUrl: './role-edit-popup.dialog.html',
-  styleUrl: './role-edit-popup.dialog.scss'
+    templateUrl: './role-edit-popup.dialog.html',
+    styleUrl: './role-edit-popup.dialog.scss'
 })
 export class RoleEditPopupDialog {
 

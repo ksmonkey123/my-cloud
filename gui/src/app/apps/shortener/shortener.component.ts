@@ -5,25 +5,25 @@ import {
   MatCell,
   MatCellDef,
   MatColumnDef,
-  MatHeaderCell, MatHeaderCellDef,
+  MatHeaderCell,
+  MatHeaderCellDef,
   MatHeaderRow,
   MatHeaderRowDef,
-  MatRow, MatRowDef, MatTable
+  MatRow,
+  MatRowDef,
+  MatTable
 } from "@angular/material/table";
 import {MatIcon} from "@angular/material/icon";
 import {MatIconButton, MatMiniFabButton} from "@angular/material/button";
-import {MatSlideToggle} from "@angular/material/slide-toggle";
 import {Link, ShortenerService} from "./shortener.service";
 import {Clipboard} from "@angular/cdk/clipboard";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {MatTooltip} from "@angular/material/tooltip";
 import {SimpleModalService} from "../../common/simple-modal/simple-modal.service";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogResult, LinkEditPopupDialog} from "./link-edit-popup/link-edit-popup.dialog";
 
 @Component({
-  selector: 'app-shortener',
-  standalone: true,
+    selector: 'app-shortener',
   imports: [
     AsyncPipe,
     MatCard,
@@ -38,14 +38,12 @@ import {DialogResult, LinkEditPopupDialog} from "./link-edit-popup/link-edit-pop
     MatMiniFabButton,
     MatRow,
     MatRowDef,
-    MatSlideToggle,
     MatTable,
     MatHeaderCellDef,
-    MatIconButton,
-    MatTooltip
+    MatIconButton
   ],
-  templateUrl: './shortener.component.html',
-  styleUrl: './shortener.component.scss'
+    templateUrl: './shortener.component.html',
+    styleUrl: './shortener.component.scss'
 })
 export class ShortenerComponent {
 

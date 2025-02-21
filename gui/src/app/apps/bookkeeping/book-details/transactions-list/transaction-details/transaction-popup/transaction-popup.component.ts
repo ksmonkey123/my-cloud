@@ -14,22 +14,21 @@ import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 
 @Component({
-  selector: 'app-transaction-popup',
-  standalone: true,
-  imports: [
-    FormsModule,
-    MatButton,
-    MatDialogActions,
-    MatDialogContent,
-    MatDialogTitle,
-    MatFormField,
-    MatInput,
-    MatLabel,
-    ReactiveFormsModule,
-    MatDialogClose
-  ],
-  templateUrl: './transaction-popup.component.html',
-  styleUrl: './transaction-popup.component.scss'
+    selector: 'app-transaction-popup',
+    imports: [
+        FormsModule,
+        MatButton,
+        MatDialogActions,
+        MatDialogContent,
+        MatDialogTitle,
+        MatFormField,
+        MatInput,
+        MatLabel,
+        ReactiveFormsModule,
+        MatDialogClose
+    ],
+    templateUrl: './transaction-popup.component.html',
+    styleUrl: './transaction-popup.component.scss'
 })
 export class TransactionPopupComponent {
 

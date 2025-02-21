@@ -10,22 +10,21 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {NgIf} from "@angular/common";
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [
-    MatCard,
-    MatCardContent,
-    FormsModule,
-    MatFormField,
-    MatInput,
-    MatLabel,
-    MatButton,
-    MatIcon,
-    ReactiveFormsModule,
-    NgIf
-  ],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss',
+    selector: 'app-login',
+    imports: [
+        MatCard,
+        MatCardContent,
+        FormsModule,
+        MatFormField,
+        MatInput,
+        MatLabel,
+        MatButton,
+        MatIcon,
+        ReactiveFormsModule,
+        NgIf
+    ],
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit {
 

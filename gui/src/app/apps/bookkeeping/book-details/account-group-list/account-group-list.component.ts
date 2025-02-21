@@ -14,35 +14,27 @@ import {
   MatExpansionPanelHeader,
   MatExpansionPanelTitle
 } from "@angular/material/expansion";
-import {MatList, MatListItem} from "@angular/material/list";
-import {MatButton, MatIconButton} from "@angular/material/button";
+import {MatButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
-import {MatChip} from "@angular/material/chips";
-import {MatTooltip} from "@angular/material/tooltip";
 import {MatDialog} from "@angular/material/dialog";
 import {GroupPopupComponent} from "./group-popup/group-popup.component";
 import {SimpleModalService} from "../../../../common/simple-modal/simple-modal.service";
 import {AccountPopupComponent} from "./account-popup/account-popup.component";
 
 @Component({
-  selector: 'app-account-group-list',
-  standalone: true,
+    selector: 'app-account-group-list',
   imports: [
     MatAccordion,
     MatExpansionPanel,
     MatExpansionPanelTitle,
     MatExpansionPanelActionRow,
     MatExpansionPanelHeader,
-    MatList,
-    MatListItem,
     MatButton,
     MatIcon,
-    MatIconButton,
-    MatChip,
-    MatTooltip,
+
   ],
-  templateUrl: './account-group-list.component.html',
-  styleUrl: './account-group-list.component.scss'
+    templateUrl: './account-group-list.component.html',
+    styleUrl: './account-group-list.component.scss'
 })
 export class AccountGroupListComponent {
 

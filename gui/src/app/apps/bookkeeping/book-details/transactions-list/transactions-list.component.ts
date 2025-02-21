@@ -17,7 +17,6 @@ import {MatIcon} from "@angular/material/icon";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {TransactionDetailsComponent} from "./transaction-details/transaction-details.component";
 import {TransactionCreationComponent} from "./transaction-creation/transaction-creation.component";
-import {MatDivider} from "@angular/material/divider";
 import {
   MatAccordion,
   MatExpansionPanel,
@@ -28,8 +27,7 @@ import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {MatProgressBar} from "@angular/material/progress-bar";
 
 @Component({
-  selector: 'app-transactions-list',
-  standalone: true,
+    selector: 'app-transactions-list',
   imports: [
     MatTable,
     MatColumnDef,
@@ -45,7 +43,6 @@ import {MatProgressBar} from "@angular/material/progress-bar";
     MatIcon,
     TransactionDetailsComponent,
     TransactionCreationComponent,
-    MatDivider,
     MatAccordion,
     MatExpansionPanel,
     MatExpansionPanelHeader,
@@ -54,15 +51,15 @@ import {MatProgressBar} from "@angular/material/progress-bar";
     MatButton,
     MatProgressBar,
   ],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed,void', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
-  templateUrl: './transactions-list.component.html',
-  styleUrl: './transactions-list.component.scss'
+    animations: [
+        trigger('detailExpand', [
+            state('collapsed,void', style({ height: '0px', minHeight: '0' })),
+            state('expanded', style({ height: '*' })),
+            transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+        ]),
+    ],
+    templateUrl: './transactions-list.component.html',
+    styleUrl: './transactions-list.component.scss'
 })
 export class TransactionsListComponent implements OnDestroy {
 

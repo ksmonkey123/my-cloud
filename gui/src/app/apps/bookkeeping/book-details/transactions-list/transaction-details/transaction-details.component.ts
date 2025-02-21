@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {
-  AccountSummary, AccountType,
+  AccountSummary,
+  AccountType,
   AccountTypeUtil,
   Book,
   BookingRecord,
@@ -8,7 +9,6 @@ import {
   MoneyUtil
 } from "../../../bookkeeping.service";
 import {MatCard, MatCardContent} from "@angular/material/card";
-import {MatTable} from "@angular/material/table";
 import {MatIcon} from "@angular/material/icon";
 import {MatButton} from "@angular/material/button";
 import {SimpleModalService} from "../../../../../common/simple-modal/simple-modal.service";
@@ -18,11 +18,9 @@ import {MatChip} from "@angular/material/chips";
 
 @Component({
   selector: 'app-transaction-details',
-  standalone: true,
   imports: [
     MatCard,
     MatCardContent,
-    MatTable,
     MatIcon,
     MatButton,
     MatChip,

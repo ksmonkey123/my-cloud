@@ -1,4 +1,4 @@
-import {Component, Inject, model} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialog,
@@ -12,13 +12,11 @@ import {AccountGroup, AccountType} from "../../bookkeeping.service";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatInput} from "@angular/material/input";
-import {MatOption, MatSelect} from "@angular/material/select";
 import {MatButton} from "@angular/material/button";
 import {MatCheckbox} from "@angular/material/checkbox";
 
 @Component({
   selector: 'app-report-popup',
-  standalone: true,
   imports: [
     MatDialogContent,
     MatDialogTitle,
@@ -26,8 +24,6 @@ import {MatCheckbox} from "@angular/material/checkbox";
     ReactiveFormsModule,
     MatInput,
     MatLabel,
-    MatSelect,
-    MatOption,
     MatDialogActions,
     MatButton,
     MatDialogClose,

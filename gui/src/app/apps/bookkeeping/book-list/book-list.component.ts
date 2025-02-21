@@ -10,23 +10,22 @@ import {ComponentStateService} from "../../../common/component-state.service";
 import {NgxSkeletonLoaderModule} from "ngx-skeleton-loader";
 
 @Component({
-  selector: 'app-bookkeeping',
-  standalone: true,
-  providers: [],
-  imports: [
-    MatCard,
-    MatCardContent,
-    MatCardHeader,
-    MatCardTitle,
-    MatIcon,
-    RouterLink,
-    FormsModule,
-    ReactiveFormsModule,
-    MatChip,
-    NgxSkeletonLoaderModule,
-  ],
-  templateUrl: './book-list.component.html',
-  styleUrl: './book-list.component.scss'
+    selector: 'app-bookkeeping',
+    providers: [],
+    imports: [
+        MatCard,
+        MatCardContent,
+        MatCardHeader,
+        MatCardTitle,
+        MatIcon,
+        RouterLink,
+        FormsModule,
+        ReactiveFormsModule,
+        MatChip,
+        NgxSkeletonLoaderModule,
+    ],
+    templateUrl: './book-list.component.html',
+    styleUrl: './book-list.component.scss'
 })
 export class BookListComponent extends BaseDataComponent<BookSummary[]> {
 

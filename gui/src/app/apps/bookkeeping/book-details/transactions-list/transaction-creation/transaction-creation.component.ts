@@ -12,13 +12,12 @@ import {
 } from "@angular/material/datepicker";
 import {MatDivider} from "@angular/material/divider";
 import {MatSelect} from "@angular/material/select";
-import {MatButton, MatFabButton, MatMiniFabButton} from "@angular/material/button";
+import {MatButton, MatMiniFabButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 import Big from "big.js";
 
 @Component({
-  selector: 'app-transaction-creation',
-  standalone: true,
+    selector: 'app-transaction-creation',
   imports: [
     FormsModule,
     ReactiveFormsModule,
@@ -36,12 +35,11 @@ import Big from "big.js";
     MatOptgroup,
     MatButton,
     MatIcon,
-    MatFabButton,
     MatMiniFabButton,
   ],
-  providers: [provideNativeDateAdapter()],
-  templateUrl: './transaction-creation.component.html',
-  styleUrl: './transaction-creation.component.scss'
+    providers: [provideNativeDateAdapter()],
+    templateUrl: './transaction-creation.component.html',
+    styleUrl: './transaction-creation.component.scss'
 })
 export class TransactionCreationComponent {
 

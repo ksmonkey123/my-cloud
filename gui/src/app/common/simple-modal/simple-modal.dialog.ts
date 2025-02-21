@@ -8,21 +8,19 @@ import {
   MatDialogRef,
   MatDialogTitle
 } from "@angular/material/dialog";
-import {DialogConfig} from "../../settings/role-management/role-edit-popup/role-edit-popup.dialog";
 import {ModalConfig} from "./simple-modal.service";
 
 @Component({
-  selector: 'app-simple-modal',
-  standalone: true,
-  imports: [
-    MatButton,
-    MatDialogActions,
-    MatDialogContent,
-    MatDialogTitle,
-    MatDialogClose
-  ],
-  templateUrl: './simple-modal.dialog.html',
-  styleUrl: './simple-modal.dialog.scss'
+    selector: 'app-simple-modal',
+    imports: [
+        MatButton,
+        MatDialogActions,
+        MatDialogContent,
+        MatDialogTitle,
+        MatDialogClose
+    ],
+    templateUrl: './simple-modal.dialog.html',
+    styleUrl: './simple-modal.dialog.scss'
 })
 export class SimpleModalDialog {
 

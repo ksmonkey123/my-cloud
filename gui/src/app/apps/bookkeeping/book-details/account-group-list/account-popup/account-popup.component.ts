@@ -17,24 +17,23 @@ import {AccountType, AccountTypeUtil} from "../../../bookkeeping.service";
 import {MatIcon} from "@angular/material/icon";
 
 @Component({
-  selector: 'app-account-popup',
-  standalone: true,
-  imports: [
-    MatDialogContent,
-    MatFormField,
-    ReactiveFormsModule,
-    MatDialogActions,
-    MatButton,
-    MatDialogClose,
-    MatInput,
-    MatDialogTitle,
-    MatLabel,
-    MatSelect,
-    MatOption,
-    MatIcon,
-  ],
-  templateUrl: './account-popup.component.html',
-  styleUrl: './account-popup.component.scss'
+    selector: 'app-account-popup',
+    imports: [
+        MatDialogContent,
+        MatFormField,
+        ReactiveFormsModule,
+        MatDialogActions,
+        MatButton,
+        MatDialogClose,
+        MatInput,
+        MatDialogTitle,
+        MatLabel,
+        MatSelect,
+        MatOption,
+        MatIcon,
+    ],
+    templateUrl: './account-popup.component.html',
+    styleUrl: './account-popup.component.scss'
 })
 export class AccountPopupComponent {
   createMode: boolean = false

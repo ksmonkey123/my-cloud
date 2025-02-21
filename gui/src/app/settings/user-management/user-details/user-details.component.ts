@@ -18,29 +18,28 @@ import {
 } from "@angular/material/expansion";
 
 @Component({
-  selector: 'app-user-details-management',
-  standalone: true,
-  imports: [
-    AsyncPipe,
-    MatFormField,
-    MatInput,
-    MatLabel,
-    ReactiveFormsModule,
-    MatButton,
-    MatSlideToggle,
-    NgForOf,
-    MatIcon,
-    FormsModule,
-    RouterLink,
-    MatAccordion,
-    MatExpansionPanel,
-    MatExpansionPanelHeader,
-    MatExpansionPanelTitle,
-    NgIf
-  ],
-  providers: [RoleManagementService],
-  templateUrl: './user-details.component.html',
-  styleUrl: './user-details.component.scss'
+    selector: 'app-user-details-management',
+    imports: [
+        AsyncPipe,
+        MatFormField,
+        MatInput,
+        MatLabel,
+        ReactiveFormsModule,
+        MatButton,
+        MatSlideToggle,
+        NgForOf,
+        MatIcon,
+        FormsModule,
+        RouterLink,
+        MatAccordion,
+        MatExpansionPanel,
+        MatExpansionPanelHeader,
+        MatExpansionPanelTitle,
+        NgIf
+    ],
+    providers: [RoleManagementService],
+    templateUrl: './user-details.component.html',
+    styleUrl: './user-details.component.scss'
 })
 export class UserDetailsComponent {
 

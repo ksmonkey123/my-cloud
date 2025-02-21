@@ -1,16 +1,12 @@
 import {Component} from '@angular/core';
 import {Role, RoleManagementService} from "./role-management.service";
-import {AsyncPipe, NgIf} from "@angular/common";
+import {AsyncPipe} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatCard, MatCardContent} from "@angular/material/card";
 import {
   MatCell,
   MatCellDef,
   MatColumnDef,
-  MatFooterCell,
-  MatFooterCellDef,
-  MatFooterRow,
-  MatFooterRowDef,
   MatHeaderCell,
   MatHeaderCellDef,
   MatHeaderRow,
@@ -19,20 +15,15 @@ import {
   MatRowDef,
   MatTable
 } from "@angular/material/table";
-import {MatChip} from "@angular/material/chips";
-import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatIcon} from "@angular/material/icon";
-import {MatInput} from "@angular/material/input";
-import {MatButton, MatIconButton, MatMiniFabButton} from "@angular/material/button";
+import {MatButton, MatMiniFabButton} from "@angular/material/button";
 import {MatSlideToggle} from "@angular/material/slide-toggle";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogResult, RoleEditPopupDialog} from "./role-edit-popup/role-edit-popup.dialog";
-import {MatBadge} from "@angular/material/badge";
 import {SimpleModalService} from "../../common/simple-modal/simple-modal.service";
 
 @Component({
-  selector: 'app-role-management',
-  standalone: true,
+    selector: 'app-role-management',
   imports: [
     AsyncPipe,
     FormsModule,
@@ -40,34 +31,23 @@ import {SimpleModalService} from "../../common/simple-modal/simple-modal.service
     MatCardContent,
     MatCell,
     MatCellDef,
-    MatChip,
     MatColumnDef,
-    MatFormField,
     MatHeaderCell,
     MatHeaderRow,
     MatHeaderRowDef,
     MatIcon,
-    MatInput,
-    MatLabel,
     MatMiniFabButton,
     MatRow,
     MatRowDef,
     MatSlideToggle,
     MatTable,
-    NgIf,
     ReactiveFormsModule,
     MatHeaderCellDef,
-    MatFooterRow,
-    MatFooterRowDef,
-    MatFooterCell,
-    MatFooterCellDef,
-    MatIconButton,
-    MatBadge,
     MatButton
   ],
-  providers: [RoleManagementService],
-  templateUrl: './role-management.component.html',
-  styleUrl: './role-management.component.scss'
+    providers: [RoleManagementService],
+    templateUrl: './role-management.component.html',
+    styleUrl: './role-management.component.scss'
 })
 export class RoleManagementComponent {
 

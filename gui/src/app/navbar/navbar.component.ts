@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {AuthService} from "../common/auth.service";
 import {Router, RouterLink, RouterLinkActive} from "@angular/router";
-import {AsyncPipe, NgIf} from "@angular/common";
+import {NgIf} from "@angular/common";
 import {MatButton, MatIconButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
@@ -9,10 +9,8 @@ import {MatToolbar} from "@angular/material/toolbar";
 import {settings} from "../settings/settings.routes";
 
 @Component({
-  selector: 'app-navbar',
-  standalone: true,
+    selector: 'app-navbar',
   imports: [
-    AsyncPipe,
     MatButton,
     MatIcon,
     MatIconButton,
@@ -24,8 +22,8 @@ import {settings} from "../settings/settings.routes";
     RouterLinkActive,
     MatMenuTrigger
   ],
-  templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.scss'
+    templateUrl: './navbar.component.html',
+    styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
 

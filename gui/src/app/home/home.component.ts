@@ -8,19 +8,18 @@ import {ComponentStateService} from "../common/component-state.service";
 import {NgxSkeletonLoaderModule} from "ngx-skeleton-loader";
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [
-    MatCard,
-    MatCardTitle,
-    MatCardHeader,
-    MatCardContent,
-    MatIcon,
-    RouterLink,
-    NgxSkeletonLoaderModule
-  ],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+    selector: 'app-home',
+    imports: [
+        MatCard,
+        MatCardTitle,
+        MatCardHeader,
+        MatCardContent,
+        MatIcon,
+        RouterLink,
+        NgxSkeletonLoaderModule
+    ],
+    templateUrl: './home.component.html',
+    styleUrl: './home.component.scss'
 })
 export class HomeComponent {
 

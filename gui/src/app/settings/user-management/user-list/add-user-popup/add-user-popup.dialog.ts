@@ -8,31 +8,25 @@ import {
 } from "@angular/material/dialog";
 import {FormBuilder, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
-import {MatIcon} from "@angular/material/icon";
 import {MatInput} from "@angular/material/input";
-import {MatButton, MatMiniFabButton} from "@angular/material/button";
-import {NgIf} from "@angular/common";
+import {MatButton} from "@angular/material/button";
 
 @Component({
-  selector: 'app-add-user-popup',
-  standalone: true,
+    selector: 'app-add-user-popup',
   imports: [
     MatDialogTitle,
     MatDialogContent,
     FormsModule,
     MatFormField,
-    MatIcon,
     MatInput,
     MatLabel,
-    MatMiniFabButton,
-    NgIf,
     ReactiveFormsModule,
     MatDialogActions,
     MatButton,
     MatDialogClose
   ],
-  templateUrl: './add-user-popup.dialog.html',
-  styleUrl: './add-user-popup.dialog.scss'
+    templateUrl: './add-user-popup.dialog.html',
+    styleUrl: './add-user-popup.dialog.scss'
 })
 export class AddUserPopupDialog {
 
