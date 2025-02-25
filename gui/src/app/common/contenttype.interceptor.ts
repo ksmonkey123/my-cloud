@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {HttpRequest, HttpHandler, HttpEvent, HttpInterceptor} from '@angular/common/http';
+import {ClassProvider, Injectable} from '@angular/core';
+import {HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 @Injectable({
@@ -15,5 +15,13 @@ export class ContentTypeInterceptor implements HttpInterceptor {
       headers: request.headers.set('Content-Type', 'application/json')
     })
     return next.handle(req);
+  }
+}
+
+export function provideContentTypeInterceptor(): ClassProvider {
+  return {
+    provide: HTTP_INTERCEPTORS,
+    useClass: ContentTypeInterceptor,
+    multi: true
   }
 }

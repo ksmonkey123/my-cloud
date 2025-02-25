@@ -1,8 +1,9 @@
-import {Injectable} from "@angular/core";
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
+import {ClassProvider, Injectable} from "@angular/core";
+import {HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {AuthService} from "./auth.service";
 import {catchError, EMPTY, Observable, throwError} from "rxjs";
+import {Token} from "@angular/compiler";
 
 @Injectable({
   providedIn: 'root'
@@ -44,4 +45,12 @@ export class TokenInterceptor implements HttpInterceptor {
     }
   }
 
+}
+
+export function provideTokenInterceptor() : ClassProvider {
+  return {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptor,
+    multi: true
+  }
 }

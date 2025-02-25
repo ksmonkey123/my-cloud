@@ -9,16 +9,18 @@ import {
   MatDialogTitle
 } from "@angular/material/dialog";
 import {ModalConfig} from "./simple-modal.service";
+import {TranslocoDirective, TranslocoPipe} from "@jsverse/transloco";
 
 @Component({
     selector: 'app-simple-modal',
-    imports: [
-        MatButton,
-        MatDialogActions,
-        MatDialogContent,
-        MatDialogTitle,
-        MatDialogClose
-    ],
+  imports: [
+    MatButton,
+    MatDialogActions,
+    MatDialogContent,
+    MatDialogTitle,
+    MatDialogClose,
+    TranslocoPipe
+  ],
     templateUrl: './simple-modal.dialog.html',
     styleUrl: './simple-modal.dialog.scss'
 })

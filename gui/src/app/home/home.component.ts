@@ -6,20 +6,22 @@ import {RouterLink} from "@angular/router";
 import {AppCard, apps} from "../apps/apps.overview";
 import {ComponentStateService} from "../common/component-state.service";
 import {NgxSkeletonLoaderModule} from "ngx-skeleton-loader";
+import {TranslocoPipe} from "@jsverse/transloco";
 
 @Component({
-    selector: 'app-home',
-    imports: [
-        MatCard,
-        MatCardTitle,
-        MatCardHeader,
-        MatCardContent,
-        MatIcon,
-        RouterLink,
-        NgxSkeletonLoaderModule
-    ],
-    templateUrl: './home.component.html',
-    styleUrl: './home.component.scss'
+  selector: 'app-home',
+  imports: [
+    MatCard,
+    MatCardTitle,
+    MatCardHeader,
+    MatCardContent,
+    MatIcon,
+    RouterLink,
+    NgxSkeletonLoaderModule,
+    TranslocoPipe
+  ],
+  templateUrl: './home.component.html',
+  styleUrl: './home.component.scss'
 })
 export class HomeComponent {
 

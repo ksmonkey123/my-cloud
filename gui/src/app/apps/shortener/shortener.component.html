@@ -1,5 +1,5 @@
-<div class="page-body">
-  <h1>URL Shortener</h1>
+<div class="page-body" *transloco="let t">
+  <h1>{{ t('shortener.title') }}</h1>
   <mat-card>
     <mat-card-content>
       <div class="createButton">
@@ -10,13 +10,12 @@
       <table mat-table [dataSource]="(list$ | async) || []">
         <!-- Name -->
         <ng-container matColumnDef="id">
-          <th mat-header-cell *matHeaderCellDef>Link</th>
+          <th mat-header-cell *matHeaderCellDef>{{ t('shortener.link') }}</th>
           <td mat-cell *matCellDef="let link" class="nowrap">{{ link.id }}</td>
         </ng-container>
-
         <!-- Description -->
         <ng-container matColumnDef="targetUrl">
-          <th mat-header-cell *matHeaderCellDef>Target URL</th>
+          <th mat-header-cell *matHeaderCellDef>{{ t('shortener.target') }}</th>
           <td mat-cell *matCellDef="let link"><a [href]="link.targetUrl">{{ link.targetUrl }}</a></td>
         </ng-container>
 

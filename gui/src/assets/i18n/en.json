@@ -1,0 +1,14 @@
+{
+  "bookkeeping.title": "Bookkeeping",
+  "canary.title": "Monitoring",
+  "modal.cancel": "Cancel",
+  "modal.confirm": "Confirm",
+  "shortener.create.submit": "Create",
+  "shortener.create.title": "Create Link",
+  "shortener.delete.text": "Do you want to delete the link '{{ id }}'?",
+  "shortener.delete.title": "Delete Link",
+  "shortener.link": "Link",
+  "shortener.link-copy": "short link copied to clipboard",
+  "shortener.target": "Target URL",
+  "shortener.title": "URL Shortener"
+}
