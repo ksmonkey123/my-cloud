@@ -1,14 +1,32 @@
 {
-  "bookkeeping.title": "Bookkeeping",
-  "canary.title": "Monitoring",
-  "modal.cancel": "Cancel",
-  "modal.confirm": "Confirm",
-  "shortener.create.submit": "Create",
-  "shortener.create.title": "Create Link",
-  "shortener.delete.text": "Do you want to delete the link '{{ id }}'?",
-  "shortener.delete.title": "Delete Link",
-  "shortener.link": "Link",
-  "shortener.link-copy": "short link copied to clipboard",
-  "shortener.target": "Target URL",
-  "shortener.title": "URL Shortener"
+  "bookkeeping": {
+    "title": "Bookkeeping"
+  },
+  "canary": {
+    "title": "Monitoring"
+  },
+  "modal": {
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  },
+  "navbar": {
+    "account": "Account Settings",
+    "logout": "Log Out",
+    "roles": "Manage Roles",
+    "users": "Manage Users"
+  },
+  "shortener": {
+    "create": {
+      "submit": "Create",
+      "title": "Create Link"
+    },
+    "delete": {
+      "text": "Do you want to delete the link '{{ id }}'?",
+      "title": "Delete Link"
+    },
+    "link": "Link",
+    "link-copy": "short link copied to clipboard",
+    "target": "Target URL",
+    "title": "URL Shortener"
+  }
 }

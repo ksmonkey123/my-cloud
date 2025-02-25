@@ -7,9 +7,10 @@ import {MatIcon} from "@angular/material/icon";
 import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
 import {MatToolbar} from "@angular/material/toolbar";
 import {settings} from "../settings/settings.routes";
+import {TranslocoPipe} from "@jsverse/transloco";
 
 @Component({
-    selector: 'app-navbar',
+  selector: 'app-navbar',
   imports: [
     MatButton,
     MatIcon,
@@ -20,10 +21,11 @@ import {settings} from "../settings/settings.routes";
     NgIf,
     RouterLink,
     RouterLinkActive,
-    MatMenuTrigger
+    MatMenuTrigger,
+    TranslocoPipe
   ],
-    templateUrl: './navbar.component.html',
-    styleUrl: './navbar.component.scss'
+  templateUrl: './navbar.component.html',
+  styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
 
@@ -32,7 +34,7 @@ export class NavbarComponent {
 
   onLogout() {
     this.auth.fullLogout(() => {
-      this.router.navigate(['/login'])
+      void this.router.navigate(['/login'])
     })
   }
 

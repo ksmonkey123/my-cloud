@@ -1,14 +1,32 @@
 {
-  "bookkeeping.title": "Buchhaltung",
-  "canary.title": "Überwachung",
-  "modal.cancel": "Abbrechen",
-  "modal.confirm": "Bestätigen",
-  "shortener.create.submit": "Erstellen",
-  "shortener.create.title": "Link Erstellen",
-  "shortener.delete.text": "Link '{{ id }}' wirklich löschen?",
-  "shortener.delete.title": "Link löschen",
-  "shortener.link": "Link",
-  "shortener.link-copy": "Kurz-Link kopiert",
-  "shortener.target": "Ziel-URL",
-  "shortener.title": "Kurz-URLs"
+  "bookkeeping": {
+    "title": "Buchhaltung"
+  },
+  "canary": {
+    "title": "Überwachung"
+  },
+  "modal": {
+    "cancel": "Abbrechen",
+    "confirm": "Bestätigen"
+  },
+  "navbar": {
+    "account": "Mein Account",
+    "logout": "Ausloggen",
+    "roles": "Rollenverwaltung",
+    "users": "Benutzerverwaltung"
+  },
+  "shortener": {
+    "create": {
+      "submit": "Erstellen",
+      "title": "Link Erstellen"
+    },
+    "delete": {
+      "text": "Link '{{ id }}' wirklich löschen?",
+      "title": "Link löschen"
+    },
+    "link": "Link",
+    "link-copy": "Kurz-Link kopiert",
+    "target": "Ziel-URL",
+    "title": "Kurz-URLs"
+  }
 }

@@ -11,10 +11,11 @@
     <button mat-menu-item *ngIf="auth.authInfo()?.roles?.includes(item.auth)" [routerLink]="item.path"
             routerLinkActive="settings-item-selected">
       <mat-icon>{{ item.icon }}</mat-icon>
-      {{ item.title }}
+      {{ item.titleKey | transloco }}
     </button>
   }
-  <button mat-menu-item (click)="onLogout()">Log Out
+  <button mat-menu-item (click)="onLogout()">
     <mat-icon>logout</mat-icon>
+    {{ 'navbar.logout' | transloco }}
   </button>
 </mat-menu>
