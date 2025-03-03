@@ -14,9 +14,10 @@ import {MatInput} from "@angular/material/input";
 import {MatIcon} from "@angular/material/icon";
 import {MatButton} from "@angular/material/button";
 import {ToastrService} from "ngx-toastr";
+import {TranslocoPipe, TranslocoService} from "@jsverse/transloco";
 
 @Component({
-    selector: 'app-password-change',
+  selector: 'app-password-change',
   imports: [
     MatCard,
     MatCardContent,
@@ -27,14 +28,15 @@ import {ToastrService} from "ngx-toastr";
     MatLabel,
     MatIcon,
     MatButton,
+    TranslocoPipe,
 
   ],
-    templateUrl: './account-settings.component.html',
-    styleUrl: './account-settings.component.scss'
+  templateUrl: './account-settings.component.html',
+  styleUrl: './account-settings.component.scss'
 })
 export class AccountSettingsComponent {
 
-  constructor(private authService: AuthService, private toastr: ToastrService) {
+  constructor(private authService: AuthService, private toastr: ToastrService, private transloco: TranslocoService) {
   }
 
   pwForm = new FormGroup({
@@ -53,10 +55,10 @@ export class AccountSettingsComponent {
     this.authService.changePassword(this.pwForm.value.oldPassword!, this.pwForm.value.newPassword!).subscribe(
       {
         next: () => {
-          this.toastr.success("Password Changed")
+          this.toastr.success(this.transloco.translate("settings.account.password.changed"))
         },
         error: (error) => {
-          this.toastr.error(error?.error?.message, "Password Change failed", {enableHtml: true})
+          this.toastr.error(error?.error?.message, this.transloco.translate("settings.account.password.failed"), {enableHtml: true})
         }
       }
     )

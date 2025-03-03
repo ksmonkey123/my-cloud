@@ -15,6 +15,20 @@
     "roles": "Manage Roles",
     "users": "Manage Users"
   },
+  "settings": {
+    "account": {
+      "password": {
+        "changed": "Password Changed",
+        "confirm": "Confirm Password",
+        "failed": "Password Change failed",
+        "new": "New Password",
+        "old": "Old Password",
+        "submit": "Change Password",
+        "title": "Change Password"
+      },
+      "title": "Account"
+    }
+  },
   "shortener": {
     "create": {
       "submit": "Create",

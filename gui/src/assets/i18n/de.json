@@ -15,6 +15,20 @@
     "roles": "Rollenverwaltung",
     "users": "Benutzerverwaltung"
   },
+  "settings": {
+    "account": {
+      "password": {
+        "changed": "Passwort geändert",
+        "confirm": "Passwort bestätigen",
+        "failed": "Passwortwechsel fehlgeschlagen",
+        "new": "Neues Passwort",
+        "old": "Altes Passwort",
+        "submit": "Passwort wechseln",
+        "title": "Passwort wechseln"
+      },
+      "title": "Account-Einstellungen"
+    }
+  },
   "shortener": {
     "create": {
       "submit": "Erstellen",

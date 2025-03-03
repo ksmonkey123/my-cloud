@@ -1,30 +1,30 @@
 <div class="page-body">
-  <h1>Manage Account</h1>
+  <h1>{{ "settings.account.title" | transloco }}</h1>
   <mat-card>
     <mat-card-header>
-      <h2>Change Password</h2>
+      <h2>{{ "settings.account.password.title" | transloco }}</h2>
     </mat-card-header>
     <mat-card-content>
       <form [formGroup]="pwForm" (ngSubmit)="onChangePassword()">
         <mat-form-field>
-          <mat-label>Old Password</mat-label>
+          <mat-label>{{ 'settings.account.password.old' | transloco }}</mat-label>
           <input matInput type="password" formControlName="oldPassword" required>
         </mat-form-field>
         <br/>
         <mat-form-field>
-          <mat-label>New Password</mat-label>
+          <mat-label>{{ 'settings.account.password.new' | transloco }}</mat-label>
           <input matInput type="password" formControlName="newPassword" required>
         </mat-form-field>
         <br/>
         <mat-form-field>
-          <mat-label>Confirm Password</mat-label>
+          <mat-label>{{ 'settings.account.password.confirm' | transloco }}</mat-label>
           <input matInput type="password" formControlName="confirmPassword" required>
         </mat-form-field>
         <br/>
         <button mat-raised-button type="submit" color="primary"
                 [disabled]="!pwForm.valid || pwForm.value.newPassword != pwForm.value.confirmPassword">
           <mat-icon>check</mat-icon>
-          Change Password
+          {{ 'settings.account.password.submit' | transloco }}
         </button>
       </form>
     </mat-card-content>
