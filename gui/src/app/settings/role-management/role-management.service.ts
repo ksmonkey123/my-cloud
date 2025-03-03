@@ -1,12 +1,13 @@
 import {Injectable, OnDestroy} from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, Subject, takeUntil} from "rxjs";
 import {ToastrService} from "ngx-toastr";
+import {TranslocoService} from "@jsverse/transloco";
 
 @Injectable()
 export class RoleManagementService implements OnDestroy {
 
-  constructor(private http: HttpClient, private toastr: ToastrService) {
+  constructor(private http: HttpClient, private toastr: ToastrService, private translation: TranslocoService) {
   }
 
   public roleList$ = new BehaviorSubject<Role[]>([])
@@ -44,7 +45,7 @@ export class RoleManagementService implements OnDestroy {
           this.updateList(role)
         },
         error: error => {
-          this.toastr.error(error?.error?.message, "could not create role")
+          this.toastr.error(error?.error?.message, this.translation.translate("settings.roles.error.creation", {id: name}))
           this.loadList()
         }
       })
@@ -61,7 +62,7 @@ export class RoleManagementService implements OnDestroy {
             this.updateList(role)
           },
           error: error => {
-            this.toastr.error(error?.error?.message, "could not edit role")
+            this.toastr.error(error?.error?.message, this.translation.translate("settings.roles.error.creation", {id: name}))
             this.loadList()
           }
         }
@@ -76,7 +77,7 @@ export class RoleManagementService implements OnDestroy {
           this.loadList()
         },
         error: error => {
-          this.toastr.error(error?.error?.message, "could not delete role")
+          this.toastr.error(error?.error?.message, this.translation.translate("settings.roles.error.deletion", {id: name}))
           this.loadList()
         }
       })

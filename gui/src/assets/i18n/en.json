@@ -27,6 +27,28 @@
         "title": "Change Password"
       },
       "title": "Account"
+    },
+    "roles": {
+      "add": "Add Role",
+      "delete": {
+        "text": "Do you want to delete the role '{{ id }}'?",
+        "title": "Delete Role"
+      },
+      "error": {
+        "creation": "could not create role '{{ id }}'",
+        "deletion": "could not delete role '{{ id }}'",
+        "edit": "could not edit role '{{ id }}'"
+      },
+      "label": {
+        "description": "Description",
+        "enabled": "Enabled",
+        "name": "Name"
+      },
+      "modal": {
+        "create": "Create Role",
+        "edit": "Edit Role"
+      },
+      "title": "Manage Roles"
     }
   },
   "shortener": {
