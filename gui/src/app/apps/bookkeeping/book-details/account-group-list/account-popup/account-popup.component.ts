@@ -15,23 +15,25 @@ import {MatInput} from "@angular/material/input";
 import {MatOption, MatSelect} from "@angular/material/select";
 import {AccountType, AccountTypeUtil} from "../../../bookkeeping.service";
 import {MatIcon} from "@angular/material/icon";
+import {TranslocoPipe} from "@jsverse/transloco";
 
 @Component({
     selector: 'app-account-popup',
-    imports: [
-        MatDialogContent,
-        MatFormField,
-        ReactiveFormsModule,
-        MatDialogActions,
-        MatButton,
-        MatDialogClose,
-        MatInput,
-        MatDialogTitle,
-        MatLabel,
-        MatSelect,
-        MatOption,
-        MatIcon,
-    ],
+  imports: [
+    MatDialogContent,
+    MatFormField,
+    ReactiveFormsModule,
+    MatDialogActions,
+    MatButton,
+    MatDialogClose,
+    MatInput,
+    MatDialogTitle,
+    MatLabel,
+    MatSelect,
+    MatOption,
+    MatIcon,
+    TranslocoPipe,
+  ],
     templateUrl: './account-popup.component.html',
     styleUrl: './account-popup.component.scss'
 })

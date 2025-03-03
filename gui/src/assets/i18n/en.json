@@ -1,5 +1,38 @@
 {
   "bookkeeping": {
+    "account": {
+      "create": "Create Account",
+      "delete": "Delete Account",
+      "edit": "Edit Account",
+      "lock": "Lock Account",
+      "modal": {
+        "create": "Create Account",
+        "edit": "Edit Account"
+      },
+      "name": "Account Name",
+      "number": "Account Number",
+      "unlock": "Unlock Account"
+    },
+    "account-group": {
+      "create": "Add Account Group",
+      "delete": "Delete Group",
+      "edit": "Edit Group",
+      "lock": "Lock Group",
+      "modal": {
+        "create": "Create Account Group",
+        "edit": "Edit Account Group"
+      },
+      "name": "Group Name",
+      "number": "Group Number",
+      "unlock": "Unlock Group"
+    },
+    "account-type": {
+      "ASSET": "Asset",
+      "EXPENSE": "Expense",
+      "INCOME": "Income",
+      "LIABILITY": "Liability",
+      "label": "Account Type"
+    },
     "book": {
       "edit": "Edit Book",
       "label": {
@@ -15,6 +48,7 @@
     "books": {
       "add": "Add Book"
     },
+    "no-accounts": "No Accounts",
     "report": {
       "full": "Report Bundle",
       "ledgers": "Account Ledgers",
@@ -30,6 +64,9 @@
       "back": "Back",
       "cancel": "Cancel",
       "confirm": "Confirm",
+      "delete": "Delete",
+      "download": "Download",
+      "edit": "Edit",
       "save": "Save"
     }
   },

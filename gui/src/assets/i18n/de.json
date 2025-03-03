@@ -1,5 +1,38 @@
 {
   "bookkeeping": {
+    "account": {
+      "create": "Neues Konto",
+      "delete": "Konto Löschen",
+      "edit": "Konto Bearbeiten",
+      "lock": "Konto Sperren",
+      "modal": {
+        "create": "Neues Konto",
+        "edit": "Konto Bearbeiten"
+      },
+      "name": "Kontoname",
+      "number": "Kontonummer",
+      "unlock": "Konto Entsperren"
+    },
+    "account-group": {
+      "create": "Neue Kontogruppe",
+      "delete": "Gruppe Löschen",
+      "edit": "Gruppe Bearbeiten",
+      "lock": "Gruppe Sperren",
+      "modal": {
+        "create": "Neue Kontogruppe",
+        "edit": "Kontogruppe Bearbeiten"
+      },
+      "name": "Gruppenname",
+      "number": "Gruppennummer",
+      "unlock": "Gruppe Entsperren"
+    },
+    "account-type": {
+      "ASSET": "Aktiv",
+      "EXPENSE": "Aufwand",
+      "INCOME": "Ertrag",
+      "LIABILITY": "Passiv",
+      "label": "Kontotyp"
+    },
     "book": {
       "edit": "Bearbeiten",
       "label": {
@@ -15,6 +48,7 @@
     "books": {
       "add": "Neues Buch"
     },
+    "no-accounts": "Keine Konten",
     "report": {
       "full": "Abschluss",
       "ledgers": "Konto-Journale",
@@ -30,6 +64,9 @@
       "back": "Zurück",
       "cancel": "Abbrechen",
       "confirm": "Bestätigen",
+      "delete": "Löschen",
+      "download": "Herunterladen",
+      "edit": "Bearbeiten",
       "save": "Speichern"
     }
   },

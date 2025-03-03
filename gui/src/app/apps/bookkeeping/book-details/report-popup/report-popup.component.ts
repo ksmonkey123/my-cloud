@@ -14,6 +14,7 @@ import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatInput} from "@angular/material/input";
 import {MatButton} from "@angular/material/button";
 import {MatCheckbox} from "@angular/material/checkbox";
+import {TranslocoPipe} from "@jsverse/transloco";
 
 @Component({
   selector: 'app-report-popup',
@@ -28,7 +29,8 @@ import {MatCheckbox} from "@angular/material/checkbox";
     MatButton,
     MatDialogClose,
     MatCheckbox,
-    FormsModule
+    FormsModule,
+    TranslocoPipe
   ],
   templateUrl: './report-popup.component.html',
   styleUrl: './report-popup.component.scss'

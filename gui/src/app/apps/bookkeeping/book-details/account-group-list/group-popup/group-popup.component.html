@@ -1,20 +1,25 @@
-<h2 mat-dialog-title>{{ createMode ? "Create" : "Edit" }} Account Group</h2>
+<h2 mat-dialog-title>{{
+    (createMode ? "bookkeeping.account-group.modal.create" : "bookkeeping.account-group.modal.edit")
+      | transloco
+  }}</h2>
 <mat-dialog-content>
   <form [formGroup]="form">
     <div>
       <mat-form-field>
-        <mat-label>Group Number</mat-label>
+        <mat-label>{{ "bookkeeping.account-group.number" | transloco }}</mat-label>
         <input type="number" matInput [formControl]="form.controls.number" required>
       </mat-form-field>
     </div>
     <div>
       <mat-form-field>
-        <mat-label>Group Name</mat-label>
+        <mat-label>{{ "bookkeeping.account-group.name" | transloco }}</mat-label>
         <input matInput [formControl]="form.controls.title" required>
       </mat-form-field>
     </div>
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-raised-button color="primary" [mat-dialog-close]="collectData()" [disabled]="!form.valid">Ok</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="collectData()"
+          [disabled]="!form.valid">{{ "generic.button.save" | transloco }}
+  </button>
 </mat-dialog-actions>

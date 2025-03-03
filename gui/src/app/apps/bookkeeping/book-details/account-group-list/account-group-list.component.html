@@ -22,51 +22,55 @@
                   @if (!account.locked) {
                     <button mat-raised-button color="warn" (click)="deleteAccount(account)">
                       <mat-icon>delete</mat-icon>
-                      Delete Account
+                      {{ "bookkeeping.account.delete" | transloco }}
                     </button>
                     <button mat-raised-button color="secondary" (click)="lockAccount(account, true)">
                       <mat-icon>lock</mat-icon>
-                      Lock Account
+                      {{ "bookkeeping.account.lock" | transloco }}
                     </button>
                     <button mat-raised-button color="primary" (click)="accountPopup(group, account)">
                       <mat-icon>edit</mat-icon>
-                      Edit Account
+                      {{ "bookkeeping.account.edit" |transloco }}
                     </button>
                   } @else {
                     <button mat-raised-button color="secondary" (click)="lockAccount(account, false)">
                       <mat-icon>lock_open</mat-icon>
-                      Unlock Account
+                      {{ "bookkeeping.account.unlock" | transloco }}
                     </button>
                   }
                 </mat-action-row>
               }
             </mat-expansion-panel>
           } @empty {
-            <p><em>No Accounts</em></p>
+            <p><em>{{ "bookkeeping.no-accounts" | transloco }}</em></p>
+          }
+          @if (!group.locked) {
+            <mat-action-row>
+              <button mat-raised-button color="primary" (click)="accountPopup(group)">
+                <mat-icon>add</mat-icon>
+                {{ "bookkeeping.account.create" | transloco }}
+              </button>
+            </mat-action-row>
           }
         </mat-accordion>
         <mat-action-row>
           @if (!group.locked) {
             <button mat-raised-button color="warn" (click)="deleteGroup(group)">
               <mat-icon>delete</mat-icon>
-              Delete Group
+              {{ "bookkeeping.account-group.delete" | transloco }}
             </button>
             <button mat-raised-button color="secondary" (click)="lockGroup(group, true)">
               <mat-icon>lock</mat-icon>
-              Lock Group
+              {{ "bookkeeping.account-group.lock" | transloco }}
             </button>
             <button mat-raised-button color="secondary" (click)="groupPopup(group)">
               <mat-icon>edit</mat-icon>
-              Edit Group
-            </button>
-            <button mat-raised-button color="primary" (click)="accountPopup(group)">
-              <mat-icon>add</mat-icon>
-              Add Account
+              {{ "bookkeeping.account-group.edit" | transloco }}
             </button>
           } @else {
             <button mat-raised-button color="secondary" (click)="lockGroup(group, false)">
               <mat-icon>lock_open</mat-icon>
-              Unlock Group
+              {{ "bookkeeping.account-group.unlock" | transloco }}
             </button>
           }
         </mat-action-row>
@@ -76,7 +80,7 @@
   <div class="add-group-container">
     <button mat-raised-button color="primary" (click)="groupPopup()">
       <mat-icon>add</mat-icon>
-      Add Account Group
+      {{ "bookkeeping.account-group.create" | transloco }}
     </button>
   </div>
 </div>
