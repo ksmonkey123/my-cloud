@@ -86,9 +86,17 @@
       "submit": "Create",
       "title": "Create Link"
     },
+    "created": {
+      "text": "Link Created with ID '{{ id }}'",
+      "title": "Link Created"
+    },
     "delete": {
       "text": "Do you want to delete the link '{{ id }}'?",
       "title": "Delete Link"
+    },
+    "error": {
+      "creation": "could not create link",
+      "deletion": "could not delete link '{{ id }}'"
     },
     "link": "Link",
     "link-copy": "short link copied to clipboard",

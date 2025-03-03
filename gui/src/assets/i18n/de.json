@@ -86,9 +86,17 @@
       "submit": "Erstellen",
       "title": "Link Erstellen"
     },
+    "created": {
+      "text": "Link erstellt mit ID '{{ id }}'",
+      "title": "Link erstellt"
+    },
     "delete": {
       "text": "Link '{{ id }}' wirklich löschen?",
       "title": "Link löschen"
+    },
+    "error": {
+      "creation": "Fehler beim Erstellen eines Links",
+      "deletion": "Fehler beim Löschen des Links '{{ id }}'"
     },
     "link": "Link",
     "link-copy": "Kurz-Link kopiert",
