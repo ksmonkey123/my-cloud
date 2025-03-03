@@ -70,7 +70,6 @@ export class UserDetailsComponent {
   }
 
   toggleRole(role: string) {
-    const roleToToggle = this.roleList$.getValue().find(r => r.name === role)!
     this.svc.setRoleStateForUser(this.name!, role, !this.userDetails$.getValue()?.roles?.includes(role))
   }
 
