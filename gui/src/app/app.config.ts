@@ -9,6 +9,7 @@ import {provideContentTypeInterceptor} from "./common/contenttype.interceptor";
 import {provideToastr} from "ngx-toastr";
 import {TranslocoHttpLoader} from './transloco-loader';
 import {provideTransloco} from '@jsverse/transloco';
+import {providePaginatorI18n} from "./common/paginator-i18n.provider";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -28,5 +29,7 @@ export const appConfig: ApplicationConfig = {
         prodMode: !isDevMode(),
       },
       loader: TranslocoHttpLoader
-    })]
+    }),
+    providePaginatorI18n(),
+  ]
 };

@@ -12,7 +12,7 @@ import {
   MatRowDef,
   MatTable
 } from "@angular/material/table";
-import {MatButton, MatIconButton} from "@angular/material/button";
+import {MatIconButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {TransactionDetailsComponent} from "./transaction-details/transaction-details.component";
@@ -24,10 +24,10 @@ import {
   MatExpansionPanelTitle
 } from "@angular/material/expansion";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
-import {MatProgressBar} from "@angular/material/progress-bar";
+import {TranslocoPipe} from "@jsverse/transloco";
 
 @Component({
-    selector: 'app-transactions-list',
+  selector: 'app-transactions-list',
   imports: [
     MatTable,
     MatColumnDef,
@@ -48,18 +48,17 @@ import {MatProgressBar} from "@angular/material/progress-bar";
     MatExpansionPanelHeader,
     MatExpansionPanelTitle,
     MatPaginator,
-    MatButton,
-    MatProgressBar,
+    TranslocoPipe,
   ],
-    animations: [
-        trigger('detailExpand', [
-            state('collapsed,void', style({ height: '0px', minHeight: '0' })),
-            state('expanded', style({ height: '*' })),
-            transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-        ]),
-    ],
-    templateUrl: './transactions-list.component.html',
-    styleUrl: './transactions-list.component.scss'
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed,void', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
+  templateUrl: './transactions-list.component.html',
+  styleUrl: './transactions-list.component.scss'
 })
 export class TransactionsListComponent implements OnDestroy {
 
@@ -75,12 +74,9 @@ export class TransactionsListComponent implements OnDestroy {
 
   expandedElementIds: number[] = []
 
-  exportActive: boolean = false
-
   bookSubscription
   elementSubscription
   accountsSubscription
-  exportSubscription
 
   constructor(
     private service: BookkeepingService,
@@ -101,16 +97,12 @@ export class TransactionsListComponent implements OnDestroy {
         this.accounts = accountMap
       }
     })
-    this.exportSubscription = service.exportInProgress$.subscribe((inProgress) => {
-      this.exportActive = inProgress
-    })
   }
 
   ngOnDestroy() {
     this.bookSubscription.unsubscribe()
     this.elementSubscription.unsubscribe()
     this.accountsSubscription.unsubscribe()
-    this.exportSubscription.unsubscribe()
   }
 
   toggleExpansion(id: number) {
@@ -119,10 +111,6 @@ export class TransactionsListComponent implements OnDestroy {
     } else {
       this.expandedElementIds.push(id)
     }
-  }
-
-  onExport() {
-    this.service.exportTransactions(this.book!.id)
   }
 
   protected readonly MoneyUtil = MoneyUtil;

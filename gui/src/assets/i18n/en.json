@@ -50,11 +50,30 @@
     },
     "no-accounts": "No Accounts",
     "report": {
+      "excel": "Raw Data",
       "full": "Report Bundle",
       "ledgers": "Account Ledgers",
       "partial": "Partial Report"
     },
-    "title": "Bookkeeping"
+    "title": "Bookkeeping",
+    "transactions": {
+      "create": "Create Transaction",
+      "credit": "Credit",
+      "debit": "Debit",
+      "label": {
+        "amount": "Amount",
+        "date": "Datum",
+        "description": "Description",
+        "id": "ID",
+        "tag": "Tag",
+        "text": "Text"
+      },
+      "new": "Add New Transaction",
+      "numbered-account": "Account {{ id }}",
+      "numbered-amount": "Amount {{ id }}",
+      "reset": "Reset Form",
+      "select-account": "-- SELECT --"
+    }
   },
   "canary": {
     "title": "Monitoring"
@@ -75,6 +94,14 @@
     "logout": "Log Out",
     "roles": "Manage Roles",
     "users": "Manage Users"
+  },
+  "paginator": {
+    "current-page": "Page {{ current }} of {{ size }}",
+    "first-page": "First page",
+    "items-per-page": "Items per page:",
+    "last-page": "Last page",
+    "next-page": "Next page",
+    "previous-page": "Previous page"
   },
   "settings": {
     "account": {

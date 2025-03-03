@@ -31,6 +31,9 @@
           }
         </mat-card-content>
         <mat-card-actions>
+          @if (exportActive) {
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+          } @else {
           <button mat-raised-button color="primary" (click)="onReportBundle()">
             <mat-icon>download</mat-icon>
             {{ "bookkeeping.report.full" | transloco }}
@@ -43,6 +46,11 @@
             <mat-icon>download</mat-icon>
             {{ "bookkeeping.report.ledgers" | transloco }}
           </button>
+          <button mat-raised-button color="primary" (click)="onExcelExport()">
+            <mat-icon>download</mat-icon>
+            {{ "bookkeeping.report.excel" | transloco }}
+          </button>
+          }
         </mat-card-actions>
       </mat-card>
     }

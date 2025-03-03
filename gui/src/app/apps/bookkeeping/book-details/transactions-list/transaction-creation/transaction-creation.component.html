@@ -1,38 +1,39 @@
 <form ngForm [formGroup]="form" (keydown.enter)="$event.preventDefault()"
-      (keydown.shift.enter)="$event.preventDefault()">
+      (keydown.shift.enter)="$event.preventDefault()"
+      *transloco="let t">
   <div>
     <mat-form-field class="full-length">
-      <mat-label>Text</mat-label>
+      <mat-label>{{ "bookkeeping.transactions.label.text" | transloco }}</mat-label>
       <input matInput required [formControl]="form.controls.text">
     </mat-form-field>
   </div>
   <div>
     <mat-form-field>
-      <mat-label>Date</mat-label>
+      <mat-label>{{ "bookkeeping.transactions.label.date" | transloco }}</mat-label>
       <input matInput [matDatepicker]="picker" [formControl]="form.controls.date" required>
       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
     <mat-form-field>
-      <mat-label>Tag</mat-label>
+      <mat-label>{{ "bookkeeping.transactions.label.tag" | transloco }}</mat-label>
       <input matInput [formControl]="form.controls.tag">
     </mat-form-field>
   </div>
   <div>
     <mat-form-field class="full-length">
-      <mat-label>Description</mat-label>
+      <mat-label>{{ "bookkeeping.transactions.label.description" | transloco }}</mat-label>
       <textarea matInput [formControl]="form.controls.description"></textarea>
     </mat-form-field>
   </div>
   <mat-divider></mat-divider>
   <!-- Movements -->
-  <h3>Credit</h3>
+  <h3>{{ "bookkeeping.transactions.credit" | transloco }}</h3>
   @for (row of credits; track $index) {
     <div class="account-row">
       <mat-form-field class="half-length">
-        <mat-label>Account {{ $index + 1 }}</mat-label>
+        <mat-label>{{ t("bookkeeping.transactions.numbered-account", {id: $index + 1}) }}</mat-label>
         <mat-select [formControl]="row.account" required (valueChange)="onAmountChanged()">
-          <mat-option [value]="null">-- SELECT --</mat-option>
+          <mat-option [value]="null">{{ "bookkeeping.transactions.select-account" | transloco }}</mat-option>
           @for (group of book.groups; track group.groupNumber) {
             @if (!group.locked) {
               <mat-optgroup label="{{group.groupNumber}} - {{group.title}}">
@@ -50,7 +51,7 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field>
-        <mat-label>Amount {{ $index + 1 }}</mat-label>
+        <mat-label>{{ t("bookkeeping.transactions.numbered-amount", {id: $index + 1}) }}</mat-label>
         <input matInput [formControl]="row.amount" required (input)="onAmountChanged()">
         <mat-hint>{{ row.error }}</mat-hint>
       </mat-form-field>
@@ -66,11 +67,11 @@
       }
     </div>
   }
-  <h3>Debit</h3>
+  <h3>{{ "bookkeeping.transactions.debit" | transloco }}</h3>
   @for (row of debits; track $index) {
     <div class="account-row">
       <mat-form-field class="half-length">
-        <mat-label>Account {{ $index + 1 }}</mat-label>
+        <mat-label>{{ t("bookkeeping.transactions.numbered-account", {id: $index + 1}) }}</mat-label>
         <mat-select [formControl]="row.account" required (valueChange)="onAmountChanged()">
           <mat-option [value]="null">-- SELECT --</mat-option>
           @for (group of book.groups; track group.groupNumber) {
@@ -90,7 +91,7 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field>
-        <mat-label>Amount</mat-label>
+        <mat-label>{{ t("bookkeeping.transactions.numbered-amount", {id: $index + 1}) }}</mat-label>
         <input matInput [formControl]="row.amount" required (input)="onAmountChanged()">
         <mat-hint>{{ row.error }}</mat-hint>
       </mat-form-field>
@@ -110,10 +111,10 @@
   <!-- Submission -->
   <div class="submit">
     <button mat-raised-button color="warn" (click)="resetForm()">
-      <mat-icon>settings_backup_restore</mat-icon>&nbsp;Reset Form
+      <mat-icon>settings_backup_restore</mat-icon>&nbsp;{{ "bookkeeping.transactions.reset" | transloco }}
     </button>
     <button mat-raised-button color="primary" [disabled]="!form.valid" (click)="onSave()">
-      <mat-icon>check</mat-icon>&nbsp;Create Transaction
+      <mat-icon>check</mat-icon>&nbsp;{{ "bookkeeping.transactions.create" | transloco }}
     </button>
   </div>
 </form>

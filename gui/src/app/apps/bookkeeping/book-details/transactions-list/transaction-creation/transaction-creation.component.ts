@@ -15,6 +15,7 @@ import {MatSelect} from "@angular/material/select";
 import {MatButton, MatMiniFabButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 import Big from "big.js";
+import {TranslocoDirective, TranslocoPipe} from "@jsverse/transloco";
 
 @Component({
     selector: 'app-transaction-creation',
@@ -36,6 +37,8 @@ import Big from "big.js";
     MatButton,
     MatIcon,
     MatMiniFabButton,
+    TranslocoPipe,
+    TranslocoDirective,
   ],
     providers: [provideNativeDateAdapter()],
     templateUrl: './transaction-creation.component.html',

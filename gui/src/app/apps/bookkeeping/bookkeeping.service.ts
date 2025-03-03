@@ -1,4 +1,4 @@
-import {Injectable, OnDestroy} from "@angular/core";
+import {Injectable, OnDestroy, signal} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {ToastrService} from "ngx-toastr";
 import {BehaviorSubject, map, Observable, Subject, takeUntil} from "rxjs";

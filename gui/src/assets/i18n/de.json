@@ -42,7 +42,7 @@
       },
       "tab": {
         "account-groups": "Konten & Kontogruppen",
-        "transactions": "Transaktionen"
+        "transactions": "Buchungen"
       }
     },
     "books": {
@@ -50,11 +50,30 @@
     },
     "no-accounts": "Keine Konten",
     "report": {
+      "excel": "Rohdaten",
       "full": "Abschluss",
       "ledgers": "Konto-Journale",
       "partial": "Erfolgsrechnung (Auszug)"
     },
-    "title": "Buchhaltung"
+    "title": "Buchhaltung",
+    "transactions": {
+      "create": "Buchung Erfassen",
+      "credit": "Soll",
+      "debit": "Haben",
+      "label": {
+        "amount": "Betrag",
+        "date": "Buchungsdatum",
+        "description": "Details",
+        "id": "ID",
+        "tag": "Kategorie",
+        "text": "Buchungstext"
+      },
+      "new": "Neue Buchung Erfassen",
+      "numbered-account": "Konto {{ id }}",
+      "numbered-amount": "Betrag {{ id }}",
+      "reset": "Zurücksetzen",
+      "select-account": "-- AUSWÄHLEN --"
+    }
   },
   "canary": {
     "title": "Überwachung"
@@ -75,6 +94,14 @@
     "logout": "Ausloggen",
     "roles": "Rollenverwaltung",
     "users": "Benutzerverwaltung"
+  },
+  "paginator": {
+    "current-page": "Seite {{ current }} von {{ size }}",
+    "first-page": "Erste Seite",
+    "items-per-page": "Einträge pro Seite:",
+    "last-page": "Letzte Seite",
+    "next-page": "Nächste Seite",
+    "previous-page": "Vorherige Seite"
   },
   "settings": {
     "account": {
