@@ -1,8 +1,8 @@
 <button mat-flat-button color="primary" routerLink="../">
   <mat-icon>arrow_back</mat-icon>
-  Back
+  {{ "generic.button.back" | transloco }}
 </button>
-<div class="page-body">
+<div class="page-body" *transloco="let t">
 
   <!-- SUMMARY -->
   @if (!edit_mode) {
@@ -14,7 +14,7 @@
             {{ book.summary.title }} &nbsp;
             <button mat-raised-button color="primary" (click)="editBook()">
               <mat-icon>edit</mat-icon>
-              Edit Book
+              {{ "bookkeeping.book.edit" | transloco }}
             </button>
           </mat-card-title>
         </mat-card-header>
@@ -33,15 +33,15 @@
         <mat-card-actions>
           <button mat-raised-button color="primary" (click)="onReportBundle()">
             <mat-icon>download</mat-icon>
-            Report Bundle
+            {{ "bookkeeping.report.full" | transloco }}
           </button>
           <button mat-raised-button color="primary" (click)="onPartialReport()">
             <mat-icon>download</mat-icon>
-            Partial Report
+            {{ "bookkeeping.report.partial" | transloco }}
           </button>
           <button mat-raised-button color="primary" (click)="onAccountLedgerExport()">
             <mat-icon>download</mat-icon>
-            Account Ledgers
+            {{ "bookkeeping.report.ledgers" | transloco }}
           </button>
         </mat-card-actions>
       </mat-card>
@@ -53,13 +53,13 @@
         <mat-card-content style="width: 95%">
           <div>
             <mat-form-field style="width: 100%">
-              <mat-label>Title</mat-label>
+              <mat-label>{{ "bookkeeping.book.label.title" | transloco }}</mat-label>
               <input matInput required [formControl]="form.controls.title">
             </mat-form-field>
           </div>
           <div>
             <mat-form-field>
-              <mat-label>Date Range</mat-label>
+              <mat-label>{{ "bookkeeping.book.label.date-range" | transloco }}</mat-label>
               <mat-date-range-input [rangePicker]="picker" [disabled]="book != null">
                 <input matStartDate formControlName="start" placeholder="Start date">
                 <input matEndDate formControlName="end" placeholder="End date">
@@ -70,7 +70,7 @@
           </div>
           <div>
             <mat-form-field style="width: 100%">
-              <mat-label>Description</mat-label>
+              <mat-label>{{ "bookkeeping.book.label.description" | transloco }}</mat-label>
               <textarea matInput [formControl]="form.controls.description"></textarea>
             </mat-form-field>
           </div>
@@ -79,12 +79,12 @@
           @if (book != null) {
             <button mat-raised-button color="warn" (click)="cancelBookEdit()">
               <mat-icon>close</mat-icon>
-              Cancel
+              {{ "generic.button.cancel" | transloco }}
             </button>
           }
           <button mat-raised-button type="submit" color="primary" (click)="saveBookEdit()" [disabled]="!form.valid">
             <mat-icon>check</mat-icon>
-            Save
+            {{ "generic.button.save" | transloco }}
           </button>
         </mat-card-actions>
       </mat-card>
@@ -96,10 +96,10 @@
       <mat-card-content>
         <mat-tab-group dynamicHeight [selectedIndex]="selectedTabIndex.value"
                        (selectedIndexChange)="onTabChange($event)">
-          <mat-tab label="Account Groups">
+          <mat-tab [label]="t('bookkeeping.book.tab.account-groups')">
             <app-account-group-list [book]="book"></app-account-group-list>
           </mat-tab>
-          <mat-tab label="Transactions">
+          <mat-tab [label]="t('bookkeeping.book.tab.transactions')">
             <app-transactions-list></app-transactions-list>
           </mat-tab>
         </mat-tab-group>

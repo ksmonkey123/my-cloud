@@ -1,5 +1,25 @@
 {
   "bookkeeping": {
+    "book": {
+      "edit": "Edit Book",
+      "label": {
+        "date-range": "Date Range",
+        "description": "Description",
+        "title": "Title"
+      },
+      "tab": {
+        "account-groups": "Accounts & Groups",
+        "transactions": "Transactions"
+      }
+    },
+    "books": {
+      "add": "Add Book"
+    },
+    "report": {
+      "full": "Report Bundle",
+      "ledgers": "Account Ledgers",
+      "partial": "Partial Report"
+    },
     "title": "Bookkeeping"
   },
   "canary": {
@@ -7,7 +27,9 @@
   },
   "generic": {
     "button": {
-      "back": "Back"
+      "back": "Back",
+      "cancel": "Cancel",
+      "save": "Save"
     }
   },
   "modal": {
