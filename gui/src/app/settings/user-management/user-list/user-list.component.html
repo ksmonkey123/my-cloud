@@ -1,9 +1,12 @@
 <div class="page-body">
-  <h1>Manage Users</h1>
+  <h1>{{ "settings.users.title" | transloco }}</h1>
   <mat-card>
     <mat-card-content>
       <div class="createButton">
-        <button mat-raised-button color="primary" (click)="openDialog()"><mat-icon>person_add</mat-icon>Add User</button>
+        <button mat-raised-button color="primary" (click)="openDialog()">
+          <mat-icon>person_add</mat-icon>
+          {{ "settings.users.add" | transloco }}
+        </button>
       </div>
       <table mat-table [dataSource]="(list$ | async) || []">
 
@@ -17,7 +20,7 @@
 
         <!-- Username -->
         <ng-container matColumnDef="username">
-          <th mat-header-cell *matHeaderCellDef>Username</th>
+          <th mat-header-cell *matHeaderCellDef>{{ "settings.users.label.username" | transloco }}</th>
           <td mat-cell *matCellDef="let user" (click)="selectUser(user)">
             <span [class]="user.admin ? 'admin-username' : null">
             @if (user.username == auth.authInfo()?.username) {
@@ -31,7 +34,7 @@
 
         <!-- Enabled? -->
         <ng-container matColumnDef="enabled">
-          <th mat-header-cell *matHeaderCellDef>Enabled</th>
+          <th mat-header-cell *matHeaderCellDef>{{ "settings.users.label.enabled" | transloco }}</th>
           <td mat-cell *matCellDef="let user">
             <mat-slide-toggle [checked]="user.enabled"
                               (toggleChange)="enableUser(user.username, !user.enabled)"

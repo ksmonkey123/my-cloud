@@ -5,6 +5,11 @@
   "canary": {
     "title": "Überwachung"
   },
+  "generic": {
+    "button": {
+      "back": "Zurück"
+    }
+  },
   "modal": {
     "cancel": "Abbrechen",
     "confirm": "Bestätigen"
@@ -49,6 +54,31 @@
         "edit": "Rolle bearbeiten"
       },
       "title": "Rollenverwaltung"
+    },
+    "users": {
+      "add": "Neuer Benutzer",
+      "create": {
+        "submit": "Erstellen",
+        "title": "Neuer Benutzer"
+      },
+      "details": {
+        "basic-permissions": "Grundeinstellungen",
+        "password-reset": "Passwort zurücksetzen",
+        "roles": "Rollen",
+        "title": "Benutzer '{{ id }}' verwalten"
+      },
+      "error": {
+        "creation": "Fehler beim Erstellen des Benutzers '{{ id }}'",
+        "edit": "Fehler beim Bearbeiten des Benutzers '{{ id }}'"
+      },
+      "label": {
+        "admin": "Administrator",
+        "enabled": "Aktiv",
+        "password": "Passwort",
+        "username": "Benutzername"
+      },
+      "password-changed": "Passwort erfolgreich geändert",
+      "title": "Benutzerverwaltung"
     }
   },
   "shortener": {

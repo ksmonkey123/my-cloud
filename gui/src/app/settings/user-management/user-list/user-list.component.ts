@@ -24,31 +24,33 @@ import {MatIcon} from "@angular/material/icon";
 import {ToastrService} from "ngx-toastr";
 import {MatDialog} from "@angular/material/dialog";
 import {AddUserPopupDialog, DialogResult} from "./add-user-popup/add-user-popup.dialog";
+import {TranslocoPipe} from "@jsverse/transloco";
 
 @Component({
     selector: 'app-user-management',
-    imports: [
-        AsyncPipe,
-        MatCard,
-        MatTable,
-        MatColumnDef,
-        MatHeaderCell,
-        MatHeaderCellDef,
-        MatCell,
-        MatCellDef,
-        MatRow,
-        MatRowDef,
-        MatHeaderRow,
-        MatHeaderRowDef,
-        MatCardContent,
-        MatSlideToggle,
-        FormsModule,
-        MatChip,
-        NgIf,
-        MatIcon,
-        ReactiveFormsModule,
-        MatButton
-    ],
+  imports: [
+    AsyncPipe,
+    MatCard,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCell,
+    MatHeaderCellDef,
+    MatCell,
+    MatCellDef,
+    MatRow,
+    MatRowDef,
+    MatHeaderRow,
+    MatHeaderRowDef,
+    MatCardContent,
+    MatSlideToggle,
+    FormsModule,
+    MatChip,
+    NgIf,
+    MatIcon,
+    ReactiveFormsModule,
+    MatButton,
+    TranslocoPipe
+  ],
     templateUrl: './user-list.component.html',
     styleUrl: './user-list.component.scss'
 })

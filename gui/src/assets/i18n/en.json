@@ -5,6 +5,11 @@
   "canary": {
     "title": "Monitoring"
   },
+  "generic": {
+    "button": {
+      "back": "Back"
+    }
+  },
   "modal": {
     "cancel": "Cancel",
     "confirm": "Confirm"
@@ -49,6 +54,31 @@
         "edit": "Edit Role"
       },
       "title": "Manage Roles"
+    },
+    "users": {
+      "add": "Add User",
+      "create": {
+        "submit": "Create",
+        "title": "Add User"
+      },
+      "details": {
+        "basic-permissions": "Basic Permissions",
+        "password-reset": "Reset Password",
+        "roles": "Roles",
+        "title": "Manage User '{{ id }}'"
+      },
+      "error": {
+        "creation": "could not create user '{{ id }}'",
+        "edit": "could not update user '{{ id }}'"
+      },
+      "label": {
+        "admin": "Admin",
+        "enabled": "Enabled",
+        "password": "Password",
+        "username": "Username"
+      },
+      "password-changed": "password updated",
+      "title": "Manage Users"
     }
   },
   "shortener": {
