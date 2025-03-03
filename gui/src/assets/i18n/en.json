@@ -29,12 +29,9 @@
     "button": {
       "back": "Back",
       "cancel": "Cancel",
+      "confirm": "Confirm",
       "save": "Save"
     }
-  },
-  "modal": {
-    "cancel": "Cancel",
-    "confirm": "Confirm"
   },
   "navbar": {
     "account": "Account Settings",

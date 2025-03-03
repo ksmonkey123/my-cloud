@@ -1,4 +1,5 @@
-<h2 mat-dialog-title>{{ (config.create ? "settings.roles.modal.create" : "settings.roles.modal.edit") | transloco }}</h2>
+<h2
+  mat-dialog-title>{{ (config.create ? "settings.roles.modal.create" : "settings.roles.modal.edit") | transloco }}</h2>
 <mat-dialog-content>
   <form [formGroup]="form">
     <div>
@@ -16,5 +17,7 @@
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-raised-button color="primary" [mat-dialog-close]="collectData()" [disabled]="!form.valid">Ok</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="collectData()"
+          [disabled]="!form.valid">{{ "generic.button.save" | transloco }}
+  </button>
 </mat-dialog-actions>

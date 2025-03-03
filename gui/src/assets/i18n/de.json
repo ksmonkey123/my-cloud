@@ -29,12 +29,9 @@
     "button": {
       "back": "Zurück",
       "cancel": "Abbrechen",
+      "confirm": "Bestätigen",
       "save": "Speichern"
     }
-  },
-  "modal": {
-    "cancel": "Abbrechen",
-    "confirm": "Bestätigen"
   },
   "navbar": {
     "account": "Mein Account",
