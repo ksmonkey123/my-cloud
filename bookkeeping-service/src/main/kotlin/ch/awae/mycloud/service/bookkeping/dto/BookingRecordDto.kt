@@ -23,7 +23,7 @@ data class BookingRecordDto(
                 .map { (account, amount) -> BookingRecordMovementDto(AccountId.of(account), -amount) }
 
             return BookingRecordDto(
-                id = bookingRecord.id,
+                id = bookingRecord.localId,
                 bookingDate = bookingRecord.bookingDate,
                 tag = bookingRecord.tag,
                 text = bookingRecord.bookingText,

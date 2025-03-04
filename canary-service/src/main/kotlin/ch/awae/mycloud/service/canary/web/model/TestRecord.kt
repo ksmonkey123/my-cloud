@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.*
 import org.springframework.data.jpa.repository.Query
 
 @Entity
+@Table(name = "web_test_record")
 class TestRecord(
     @ManyToOne
     @JoinColumn(updatable = false)
@@ -16,7 +17,7 @@ class TestRecord(
     @Column(updatable = false)
     val errorMessage: String?,
     @ElementCollection
-    @CollectionTable(name = "failed_test", joinColumns = [JoinColumn(name = "record_id")])
+    @CollectionTable(name = "web_test_record_failed_test", joinColumns = [JoinColumn(name = "record_id")])
     @Column(name = "test_string")
     val failedTests: MutableList<String>
 ) : IdBaseEntity()

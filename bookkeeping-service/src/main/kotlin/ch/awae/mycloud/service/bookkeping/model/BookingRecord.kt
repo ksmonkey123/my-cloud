@@ -13,6 +13,7 @@ import java.time.*
 class BookingRecord(
     @ManyToOne @JoinColumn(updatable = false)
     val book: Book,
+    val localId: Long,
     var bookingText: String,
     var description: String?,
     val bookingDate: LocalDate,
@@ -55,9 +56,12 @@ interface BookingRecordRepository : JpaRepository<BookingRecord, Long> {
     @Query("select r from BookingRecord r where r.book = :book order by r.bookingDate desc, r._creationTimestamp desc")
     fun listAllInBook(book: Book, pageable: Pageable): Page<BookingRecord>
 
-    fun findByIdAndBook(id: Long, book: Book): BookingRecord?
+    fun findByLocalIdAndBook(id: Long, book: Book): BookingRecord?
 
     @Query("select r from BookingRecord r where r.book = :book order by r.bookingDate asc, r._creationTimestamp asc limit 1")
     fun findFirstInBook(book: Book): BookingRecord?
+
+    @Query("select max(r.localId) from BookingRecord r where r.book = :book")
+    fun findMaxLocalId(book: Book): Long?
 
 }

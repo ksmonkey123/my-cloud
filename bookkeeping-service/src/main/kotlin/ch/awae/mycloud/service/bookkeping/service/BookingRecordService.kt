@@ -7,14 +7,12 @@ import ch.awae.mycloud.service.bookkeping.model.*
 import org.springframework.data.domain.*
 import org.springframework.stereotype.*
 import org.springframework.transaction.annotation.*
-import java.math.*
 
 @Transactional
 @Service
 class BookingRecordService(
     val bookService: BookService,
     val bookingRecordRepository: BookingRecordRepository,
-    val accountTransactionRepository: AccountTransactionRepository,
 ) {
 
     @AuditLog
@@ -37,8 +35,10 @@ class BookingRecordService(
             }
         }
 
+        val lastLocalId = bookingRecordRepository.findMaxLocalId(book) ?: 0
+
         val record = BookingRecord(
-            book, request.text, request.description, request.bookingDate, request.tag
+            book, lastLocalId + 1, request.text, request.description, request.bookingDate, request.tag
         ).apply {
             movements.putAll(credits)
             movements.putAll(debits)
@@ -59,14 +59,14 @@ class BookingRecordService(
         )
     }
 
-    fun getRecord(bookId: Long, bookingId: Long): BookingRecord {
+    fun getRecord(bookId: Long, localBookingId: Long): BookingRecord {
         val book = bookService.getBook(bookId)
-        return bookingRecordRepository.findByIdAndBook(bookingId, book)
-            ?: throw ResourceNotFoundException("/books/$bookId/records/$bookingId")
+        return bookingRecordRepository.findByLocalIdAndBook(localBookingId, book)
+            ?: throw ResourceNotFoundException("/books/$bookId/records/$localBookingId")
     }
 
-    fun editRecord(bookId: Long, bookingId: Long, request: BookingRecordEditRequest): BookingRecordDto {
-        val record = getRecord(bookId, bookingId)
+    fun editRecord(bookId: Long, localBookingId: Long, request: BookingRecordEditRequest): BookingRecordDto {
+        val record = getRecord(bookId, localBookingId)
 
         // validate that no account is locked or in a locked group
         record.movements.keys.forEach {
@@ -82,8 +82,8 @@ class BookingRecordService(
         return BookingRecordDto.of(record)
     }
 
-    fun deleteRecord(bookId: Long, bookingId: Long) {
-        val record = getRecord(bookId, bookingId)
+    fun deleteRecord(bookId: Long, localBookingId: Long) {
+        val record = getRecord(bookId, localBookingId)
 
         // validate that no account is locked or in a locked group
         record.movements.keys.forEach {

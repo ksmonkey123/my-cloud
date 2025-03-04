@@ -11,7 +11,7 @@ create view v_account_transaction
              cre_time)
 as
 (
-select r.id,
+select r.local_id,
        m.account_id,
        r.booking_date,
        r.booking_text,

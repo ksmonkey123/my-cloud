@@ -6,12 +6,13 @@ import org.springframework.data.jpa.repository.*
 import org.springframework.data.jpa.repository.Query
 
 @Entity
+@Table(name = "web_monitored_site")
 class MonitoredSite(
     var siteUrl: String,
     var enabled: Boolean,
     @ElementCollection
     @CollectionTable(
-        name = "site_test",
+        name = "web_monitored_site_test",
         joinColumns = [JoinColumn(name = "site_id")],
     )
     @MapKeyColumn(name = "test_string")

@@ -75,7 +75,7 @@ class BookingRecordExportService(
 
         records.forEachIndexed { rowIndex, record ->
             val row = sheet.createRow(rowIndex + 1)
-            row.createCell(0).setCellValue(record.id.toString())
+            row.createCell(0).setCellValue(record.localId.toString())
             row.createCell(1).setCellValue(record.bookingDate.toString())
             row.createCell(2).setCellValue(record.bookingText)
             record.tag?.let { row.createCell(3).setCellValue(it) }
