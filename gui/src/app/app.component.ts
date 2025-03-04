@@ -17,10 +17,6 @@ export class AppComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if (!this.router.url.startsWith('/login')) {
-      this.auth.fetch()
-    }
-
     // refresh auth info on every navigation event (and implicitly redirect to login page on bad auth)
     this.router.events.subscribe((e) => {
       if (e.type == EventType.NavigationEnd && !(e as NavigationEnd).url.startsWith('/login'))

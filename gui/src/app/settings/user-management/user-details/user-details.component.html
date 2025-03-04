@@ -1,33 +1,33 @@
-<div class="page-body">
-  <h1>Manage {{ name }}</h1>
+<div class="page-body" *transloco="let t">
+  <h1>{{ t("settings.users.details.title", {id: name}) }}</h1>
   <button mat-flat-button color="primary" type="button" routerLink="..">
     <mat-icon>arrow_back</mat-icon>
-    Back
+    {{ t('generic.button.back') }}
   </button>
   <mat-accordion multi="true">
     <mat-expansion-panel expanded="true" *ngIf="auth.authInfo()?.username !== name">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <mat-icon>settings</mat-icon>
-          Basic Permissions
+          {{ t("settings.users.details.basic-permissions") }}
         </mat-panel-title>
       </mat-expansion-panel-header>
       <mat-slide-toggle [disabled]="auth.authInfo()?.username === name"
                         [ngModel]="(userDetails$ | async)?.enabled"
                         (toggleChange)="toggleEnabled()">
-        Enabled
+        {{ t("settings.users.label.enabled") }}
       </mat-slide-toggle>
       <mat-slide-toggle [disabled]="auth.authInfo()?.username === name"
                         [ngModel]="(userDetails$ | async)?.admin"
                         (toggleChange)="toggleAdmin()">
-        Admin
+        {{ t("settings.users.label.admin") }}
       </mat-slide-toggle>
     </mat-expansion-panel>
     <mat-expansion-panel expanded="true">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <mat-icon>tune</mat-icon>
-          Roles
+          {{ t("settings.users.details.roles") }}
         </mat-panel-title>
       </mat-expansion-panel-header>
       <mat-slide-toggle *ngFor="let role of (roleList$ | async)"
@@ -44,18 +44,18 @@
       <mat-expansion-panel-header>
         <mat-panel-title>
           <mat-icon>lock_reset</mat-icon>
-          Reset Password
+          {{ t("settings.users.details.password-reset") }}
         </mat-panel-title>
       </mat-expansion-panel-header>
       <form [formGroup]="pwForm" (ngSubmit)="resetPassword()">
         <mat-form-field>
-          <mat-label>New Password</mat-label>
+          <mat-label>{{ t("settings.account.password.new") }}</mat-label>
           <input matInput type="password" formControlName="password" required>
         </mat-form-field>
         <br/>
         <button mat-raised-button type="submit" color="primary" [disabled]="!pwForm.valid">
           <mat-icon>check</mat-icon>
-          Change Password
+          {{ t("settings.account.password.submit") }}
         </button>
       </form>
     </mat-expansion-panel>

@@ -16,9 +16,9 @@
   <table>
     <tr>
       <th class="header-row">&nbsp;</th>
-      <th class="header-row">Account</th>
-      <th class="header-row amount">Credit</th>
-      <th class="header-row amount">Debit</th>
+      <th class="header-row">{{ "bookkeeping.transactions.account" | transloco }}</th>
+      <th class="header-row amount">{{ "bookkeeping.transactions.credit" | transloco }}</th>
+      <th class="header-row amount">{{ "bookkeeping.transactions.debit" | transloco }}</th>
     </tr>
     @for (credit of booking.credits; track credit.accountId) {
       <tr class="body-row">
@@ -55,11 +55,11 @@
   <div class="button-row">
     <button mat-raised-button color="warn" (click)="delete()">
       <mat-icon>delete</mat-icon>
-      Delete Transaction
+      {{ "bookkeeping.transactions.delete" | transloco }}
     </button>
     <button mat-raised-button color="primary" (click)="edit()">
       <mat-icon>edit</mat-icon>
-      Edit Transaction
+      {{ "bookkeeping.transactions.edit" | transloco }}
     </button>
   </div>
 </div>

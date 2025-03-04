@@ -18,9 +18,9 @@ export const apps: AppsInformation = {
     }
   ],
   cards: [
-    {path: '/shortener', title: 'URL-Shortener', auth: 'shortener', icon: 'share'},
-    {path: '/canary', title: 'Website Canary Scan', auth: 'canary', icon: 'network_check'},
-    {path: '/bookkeeping', title: 'Bookkeeping', auth: 'bookkeeping', icon: 'account_balance'},
+    {path: '/shortener', titleKey: 'shortener.title', auth: 'shortener', icon: 'share'},
+    {path: '/canary', titleKey: 'canary.title', auth: 'canary', icon: 'network_check'},
+    {path: '/bookkeeping', titleKey: 'bookkeeping.title', auth: 'bookkeeping', icon: 'account_balance'},
   ]
 }
 
@@ -31,7 +31,7 @@ export interface AppsInformation {
 
 export interface AppCard {
   path: string
-  title: string
+  titleKey: string
   auth: string
   icon?: string
 }

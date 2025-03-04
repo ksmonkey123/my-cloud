@@ -12,20 +12,22 @@ import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatButton} from "@angular/material/button";
 import {MatInput} from "@angular/material/input";
+import {TranslocoPipe} from "@jsverse/transloco";
 
 @Component({
     selector: 'app-group-popup',
-    imports: [
-        MatDialogContent,
-        MatFormField,
-        ReactiveFormsModule,
-        MatDialogActions,
-        MatButton,
-        MatLabel,
-        MatDialogClose,
-        MatInput,
-        MatDialogTitle
-    ],
+  imports: [
+    MatDialogContent,
+    MatFormField,
+    ReactiveFormsModule,
+    MatDialogActions,
+    MatButton,
+    MatLabel,
+    MatDialogClose,
+    MatInput,
+    MatDialogTitle,
+    TranslocoPipe
+  ],
     templateUrl: './group-popup.component.html',
     styleUrl: './group-popup.component.scss'
 })

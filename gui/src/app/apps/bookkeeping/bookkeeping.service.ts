@@ -4,12 +4,13 @@ import {ToastrService} from "ngx-toastr";
 import {BehaviorSubject, map, Observable, Subject, takeUntil} from "rxjs";
 import Big from "big.js";
 import FileSaver from "file-saver";
+import {TranslocoService} from "@jsverse/transloco";
 
 @Injectable()
 export class BookkeepingService implements OnDestroy {
 
 
-  constructor(private http: HttpClient, private toastr: ToastrService) {
+  constructor(private http: HttpClient, private toastr: ToastrService, private translation: TranslocoService) {
   }
 
   public bookList$ = new BehaviorSubject<BookSummary[]>([])
@@ -90,13 +91,12 @@ export class BookkeepingService implements OnDestroy {
     })
       .pipe(takeUntil(this.closer$))
       .subscribe({
-        next: (book) => {
-          this.toastr.success("Book Edited", "Book '" + book.title + "' edited successfully")
+        next: (_) => {
           this.loadBooks()
           this.loadBook(id)
         },
         error: error => {
-          this.toastr.error(error?.error?.message, "could not edit book")
+          this.toastr.error(error?.error?.message, this.translation.translate("bookkeeping.edit-failure"))
           this.loadBooks()
           this.loadBook(id)
         }
@@ -114,7 +114,7 @@ export class BookkeepingService implements OnDestroy {
             this.exportInProgress$.next(false)
           },
           error: error => {
-            this.toastr.error(error?.error?.message, "could not export")
+            this.toastr.error(error?.error?.message, this.translation.translate("bookkeeping.export-error"))
             this.exportInProgress$.next(false)
           }
         }
@@ -132,7 +132,7 @@ export class BookkeepingService implements OnDestroy {
             this.exportInProgress$.next(false)
           },
           error: error => {
-            this.toastr.error(error?.error?.message, "could not export")
+            this.toastr.error(error?.error?.message, this.translation.translate("bookkeeping.export-error"))
             this.exportInProgress$.next(false)
           }
         }
@@ -150,7 +150,7 @@ export class BookkeepingService implements OnDestroy {
             this.exportInProgress$.next(false)
           },
           error: error => {
-            this.toastr.error(error?.error?.message, "could not export")
+            this.toastr.error(error?.error?.message, this.translation.translate("bookkeeping.export-error"))
             this.exportInProgress$.next(false)
           }
         }
@@ -169,7 +169,7 @@ export class BookkeepingService implements OnDestroy {
             this.exportInProgress$.next(false)
           },
           error: error => {
-            this.toastr.error(error?.error?.message, "could not export")
+            this.toastr.error(error?.error?.message, this.translation.translate("bookkeeping.export-error"))
             this.exportInProgress$.next(false)
           }
         }
@@ -182,13 +182,12 @@ export class BookkeepingService implements OnDestroy {
       .pipe(takeUntil(this.closer$))
       .subscribe({
         next: (book) => {
-          this.toastr.success("Book Created", "Book '" + book.title + "' created successfully")
           this.loadBooks()
           createdBookId$.next(book.id)
           createdBookId$.complete()
         },
         error: error => {
-          this.toastr.error(error?.error?.message, "could not create book")
+          this.toastr.error(error?.error?.message, this.translation.translate("bookkeeping.creation-failure"))
           this.loadBooks()
           createdBookId$.next(-1)
           createdBookId$.complete()
@@ -203,12 +202,11 @@ export class BookkeepingService implements OnDestroy {
       locked: locked,
     }).pipe(takeUntil(this.closer$))
       .subscribe({
-        next: (group) => {
-          this.toastr.success("Group Saved", "Account Group " + number + " was saved successfully")
+        next: (_) => {
           this.loadBook(bookId)
         },
         error: error => {
-          this.toastr.error(error?.error?.message, "could not save account group")
+          this.toastr.error(error?.error?.message, this.translation.translate("bookkeeping.account-group.edit-failure", {id: number}))
           this.loadBook(bookId)
         }
       })
@@ -219,11 +217,10 @@ export class BookkeepingService implements OnDestroy {
       .pipe(takeUntil(this.closer$))
       .subscribe({
         next: (_) => {
-          this.toastr.success("Group Deleted", "Account Group " + groupNumber + " was successfully deleted")
           this.loadBook(bookId)
         },
         error: error => {
-          this.toastr.error(error?.error?.message, "could not delete account group")
+          this.toastr.error(error?.error?.message, this.translation.translate("bookkeeping.account-group.delete-failure", {id: groupNumber}))
           this.loadBook(bookId)
         }
       })
@@ -238,12 +235,11 @@ export class BookkeepingService implements OnDestroy {
       }
     ).pipe(takeUntil(this.closer$))
       .subscribe({
-        next: (account) => {
-          this.toastr.success("Account Saved", "Account " + accountId + " was saved successfully")
+        next: (_) => {
           this.loadBook(bookId)
         },
         error: error => {
-          this.toastr.error(error?.error?.message, "could not save account ")
+          this.toastr.error(error?.error?.message, this.translation.translate("bookkeeping.account.save-failure", {id: accountId}))
           this.loadBook(bookId)
         }
       })
@@ -254,11 +250,10 @@ export class BookkeepingService implements OnDestroy {
       .pipe(takeUntil(this.closer$))
       .subscribe({
         next: (_) => {
-          this.toastr.success("Account Deleted", "Account " + accountId + " was successfully deleted")
           this.loadBook(bookId)
         },
         error: error => {
-          this.toastr.error(error?.error?.message, "could not delete account")
+          this.toastr.error(error?.error?.message, this.translation.translate("bookkeeping.account.delete-failure", {id: accountId}))
           this.loadBook(bookId)
         }
       })
@@ -311,11 +306,10 @@ export class BookkeepingService implements OnDestroy {
       .pipe(takeUntil(this.closer$))
       .subscribe({
         next: (_) => {
-          this.toastr.success("Transaction Saved", "Transaction " + bookingId + " was successfully updated")
           this.reloadBookings()
         },
         error: error => {
-          this.toastr.error(error?.error?.message, "could not edit transaction")
+          this.toastr.error(error?.error?.message, this.translation.translate("bookkeeping.transactions.edit-failure", {id: bookingId}))
           this.reloadBookings()
         }
       })
@@ -327,12 +321,11 @@ export class BookkeepingService implements OnDestroy {
       .pipe(takeUntil(this.closer$))
       .subscribe({
         next: (_) => {
-          this.toastr.success("Transaction Saved", "Transaction was successfully deleted")
           this.reloadBookings()
           result.next(1)
         },
         error: error => {
-          this.toastr.error(error?.error?.message, "could not save transaction")
+          this.toastr.error(error?.error?.message, this.translation.translate("bookkeeping.transactions.create-failure"))
           this.reloadBookings()
           result.next(-1)
         }
@@ -391,7 +384,7 @@ export class BookkeepingService implements OnDestroy {
           this.reloadBookings()
         },
         error: error => {
-          this.toastr.error(error?.error?.message, "could not delete account")
+          this.toastr.error(error?.error?.message, this.translation.translate("bookkeeping.transactions.delete-failure", {id: booking.id}))
           this.reloadBookings()
         }
       })

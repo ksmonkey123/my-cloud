@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Partial Report</h2>
+<h2 mat-dialog-title>{{ "bookkeeping.report.partial" | transloco }}</h2>
 <mat-dialog-content>
   <form>
     <div>
@@ -19,5 +19,7 @@
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-raised-button color="primary" [mat-dialog-close]="collectData()">Ok</button>
+  <button mat-raised-button color="primary"
+          [mat-dialog-close]="collectData()">{{ "generic.button.download" | transloco }}
+  </button>
 </mat-dialog-actions>

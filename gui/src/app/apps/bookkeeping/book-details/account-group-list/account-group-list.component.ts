@@ -20,6 +20,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {GroupPopupComponent} from "./group-popup/group-popup.component";
 import {SimpleModalService} from "../../../../common/simple-modal/simple-modal.service";
 import {AccountPopupComponent} from "./account-popup/account-popup.component";
+import {TranslocoPipe} from "@jsverse/transloco";
 
 @Component({
     selector: 'app-account-group-list',
@@ -31,6 +32,7 @@ import {AccountPopupComponent} from "./account-popup/account-popup.component";
     MatExpansionPanelHeader,
     MatButton,
     MatIcon,
+    TranslocoPipe,
 
   ],
     templateUrl: './account-group-list.component.html',

@@ -24,33 +24,35 @@ import {MatIcon} from "@angular/material/icon";
 import {ToastrService} from "ngx-toastr";
 import {MatDialog} from "@angular/material/dialog";
 import {AddUserPopupDialog, DialogResult} from "./add-user-popup/add-user-popup.dialog";
+import {TranslocoPipe, TranslocoService} from "@jsverse/transloco";
 
 @Component({
-    selector: 'app-user-management',
-    imports: [
-        AsyncPipe,
-        MatCard,
-        MatTable,
-        MatColumnDef,
-        MatHeaderCell,
-        MatHeaderCellDef,
-        MatCell,
-        MatCellDef,
-        MatRow,
-        MatRowDef,
-        MatHeaderRow,
-        MatHeaderRowDef,
-        MatCardContent,
-        MatSlideToggle,
-        FormsModule,
-        MatChip,
-        NgIf,
-        MatIcon,
-        ReactiveFormsModule,
-        MatButton
-    ],
-    templateUrl: './user-list.component.html',
-    styleUrl: './user-list.component.scss'
+  selector: 'app-user-management',
+  imports: [
+    AsyncPipe,
+    MatCard,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCell,
+    MatHeaderCellDef,
+    MatCell,
+    MatCellDef,
+    MatRow,
+    MatRowDef,
+    MatHeaderRow,
+    MatHeaderRowDef,
+    MatCardContent,
+    MatSlideToggle,
+    FormsModule,
+    MatChip,
+    NgIf,
+    MatIcon,
+    ReactiveFormsModule,
+    MatButton,
+    TranslocoPipe
+  ],
+  templateUrl: './user-list.component.html',
+  styleUrl: './user-list.component.scss'
 })
 export class UserListComponent implements OnInit {
 
@@ -62,6 +64,7 @@ export class UserListComponent implements OnInit {
               public router: Router,
               public route: ActivatedRoute,
               private toastr: ToastrService,
+              private translation: TranslocoService,
               private dialog: MatDialog) {
     this.list$ = svc.accountList$
   }
@@ -78,7 +81,7 @@ export class UserListComponent implements OnInit {
         next: () => {
           this.svc.loadList()
         }, error: (error) => {
-          this.toastr.error(error?.error?.message, "could not edit user")
+          this.toastr.error(error?.error?.message, this.translation.translate("settings.users.error.edit", {id: username}))
         }
       }
     )
@@ -97,10 +100,10 @@ export class UserListComponent implements OnInit {
             this.svc.loadList()
           },
           error: (error) => {
-            this.toastr.error(error?.error?.message, "could not create user")
+            this.toastr.error(error?.error?.message, this.translation.translate("settings.users.error.creation", {id: result.username}))
           }
         }
-    ))
+      ))
   }
 
 }

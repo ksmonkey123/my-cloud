@@ -18,9 +18,9 @@ export const settings: SettingsInformation = {
     {path: 'roles', component: RoleManagementComponent},
   ],
   options: [
-    {path: '/account', title: 'Account Settings', auth: 'user', icon: 'person'},
-    {path: '/users', title: 'Manage Users', auth: 'admin', icon: 'manage_accounts'},
-    {path: '/roles', title: 'Manage Roles', auth: 'admin', icon: 'page_info'},
+    {path: '/account', titleKey: 'navbar.account', auth: 'user', icon: 'person'},
+    {path: '/users', titleKey: 'navbar.users', auth: 'admin', icon: 'manage_accounts'},
+    {path: '/roles', titleKey: 'navbar.roles', auth: 'admin', icon: 'page_info'},
   ]
 }
 
@@ -31,7 +31,7 @@ export interface SettingsInformation {
 
 export interface SettingsOption {
   path: string
-  title: string
+  titleKey: string
   auth: string
   icon: string
 }

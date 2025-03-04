@@ -10,6 +10,7 @@ import {MatButton} from "@angular/material/button";
 import {FormBuilder, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
+import {TranslocoPipe} from "@jsverse/transloco";
 
 @Component({
     selector: 'app-link-edit-popup',
@@ -23,7 +24,8 @@ import {MatInput} from "@angular/material/input";
     MatFormField,
     MatInput,
     MatLabel,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslocoPipe
   ],
     templateUrl: './link-edit-popup.dialog.html',
     styleUrl: './link-edit-popup.dialog.scss'

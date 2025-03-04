@@ -11,6 +11,7 @@ import {MatButton} from "@angular/material/button";
 import {FormBuilder, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
+import {TranslocoPipe} from "@jsverse/transloco";
 
 @Component({
     selector: 'app-role-edit-popup',
@@ -24,7 +25,8 @@ import {MatInput} from "@angular/material/input";
     MatFormField,
     MatInput,
     MatLabel,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslocoPipe
   ],
     templateUrl: './role-edit-popup.dialog.html',
     styleUrl: './role-edit-popup.dialog.scss'

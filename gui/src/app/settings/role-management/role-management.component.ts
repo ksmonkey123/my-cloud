@@ -21,9 +21,10 @@ import {MatSlideToggle} from "@angular/material/slide-toggle";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogResult, RoleEditPopupDialog} from "./role-edit-popup/role-edit-popup.dialog";
 import {SimpleModalService} from "../../common/simple-modal/simple-modal.service";
+import {TranslocoPipe, TranslocoService} from "@jsverse/transloco";
 
 @Component({
-    selector: 'app-role-management',
+  selector: 'app-role-management',
   imports: [
     AsyncPipe,
     FormsModule,
@@ -43,11 +44,12 @@ import {SimpleModalService} from "../../common/simple-modal/simple-modal.service
     MatTable,
     ReactiveFormsModule,
     MatHeaderCellDef,
-    MatButton
+    MatButton,
+    TranslocoPipe
   ],
-    providers: [RoleManagementService],
-    templateUrl: './role-management.component.html',
-    styleUrl: './role-management.component.scss'
+  providers: [RoleManagementService],
+  templateUrl: './role-management.component.html',
+  styleUrl: './role-management.component.scss'
 })
 export class RoleManagementComponent {
 
@@ -55,7 +57,11 @@ export class RoleManagementComponent {
 
   public list$
 
-  constructor(public svc: RoleManagementService, public dialog: MatDialog, public modal: SimpleModalService) {
+  constructor(
+    public svc: RoleManagementService,
+    public dialog: MatDialog,
+    public modal: SimpleModalService,
+    private transloco: TranslocoService) {
     svc.loadList()
     this.list$ = svc.roleList$
   }
@@ -87,12 +93,14 @@ export class RoleManagementComponent {
   }
 
   deleteRole(role: Role) {
-    this.modal.confirm("Delete Role", "Do you want to delete the role '" + role.name + "'?")
-      .subscribe(confirm => {
-        if (confirm) {
-          this.svc.deleteRole(role.name)
-        }
-      })
+    this.modal.confirm(
+      this.transloco.translate("settings.roles.delete.title"),
+      this.transloco.translate("settings.roles.delete.text", {id: role.name})
+    ).subscribe(confirm => {
+      if (confirm) {
+        this.svc.deleteRole(role.name)
+      }
+    })
   }
 
   enableRole(name: string, enabled: boolean) {

@@ -8,22 +8,24 @@ import {MatChip} from "@angular/material/chips";
 import {BaseDataComponent, ProcessingState} from "../../../common/base/base-data.component";
 import {ComponentStateService} from "../../../common/component-state.service";
 import {NgxSkeletonLoaderModule} from "ngx-skeleton-loader";
+import {TranslocoPipe} from "@jsverse/transloco";
 
 @Component({
     selector: 'app-bookkeeping',
     providers: [],
-    imports: [
-        MatCard,
-        MatCardContent,
-        MatCardHeader,
-        MatCardTitle,
-        MatIcon,
-        RouterLink,
-        FormsModule,
-        ReactiveFormsModule,
-        MatChip,
-        NgxSkeletonLoaderModule,
-    ],
+  imports: [
+    MatCard,
+    MatCardContent,
+    MatCardHeader,
+    MatCardTitle,
+    MatIcon,
+    RouterLink,
+    FormsModule,
+    ReactiveFormsModule,
+    MatChip,
+    NgxSkeletonLoaderModule,
+    TranslocoPipe,
+  ],
     templateUrl: './book-list.component.html',
     styleUrl: './book-list.component.scss'
 })

@@ -10,6 +10,7 @@ import {FormBuilder, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {MatButton} from "@angular/material/button";
+import {TranslocoPipe} from "@jsverse/transloco";
 
 @Component({
     selector: 'app-add-user-popup',
@@ -23,7 +24,8 @@ import {MatButton} from "@angular/material/button";
     ReactiveFormsModule,
     MatDialogActions,
     MatButton,
-    MatDialogClose
+    MatDialogClose,
+    TranslocoPipe
   ],
     templateUrl: './add-user-popup.dialog.html',
     styleUrl: './add-user-popup.dialog.scss'

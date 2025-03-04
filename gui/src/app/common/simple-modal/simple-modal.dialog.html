@@ -1,6 +1,10 @@
 <h2 mat-dialog-title>{{ config.title }}</h2>
 <mat-dialog-content>{{ config.content }}</mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-raised-button [mat-dialog-close]="false">Cancel</button>
-  <button mat-raised-button color="primary" [mat-dialog-close]="true">Confirm</button>
+  <button mat-raised-button [mat-dialog-close]="false">
+    {{ "generic.button.cancel" | transloco }}
+  </button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="true">
+    {{ "generic.button.confirm" | transloco }}
+  </button>
 </mat-dialog-actions>

@@ -16,27 +16,29 @@ import {
   MatExpansionPanelHeader,
   MatExpansionPanelTitle
 } from "@angular/material/expansion";
+import {TranslocoDirective} from "@jsverse/transloco";
 
 @Component({
     selector: 'app-user-details-management',
-    imports: [
-        AsyncPipe,
-        MatFormField,
-        MatInput,
-        MatLabel,
-        ReactiveFormsModule,
-        MatButton,
-        MatSlideToggle,
-        NgForOf,
-        MatIcon,
-        FormsModule,
-        RouterLink,
-        MatAccordion,
-        MatExpansionPanel,
-        MatExpansionPanelHeader,
-        MatExpansionPanelTitle,
-        NgIf
-    ],
+  imports: [
+    AsyncPipe,
+    MatFormField,
+    MatInput,
+    MatLabel,
+    ReactiveFormsModule,
+    MatButton,
+    MatSlideToggle,
+    NgForOf,
+    MatIcon,
+    FormsModule,
+    RouterLink,
+    MatAccordion,
+    MatExpansionPanel,
+    MatExpansionPanelHeader,
+    MatExpansionPanelTitle,
+    NgIf,
+    TranslocoDirective
+  ],
     providers: [RoleManagementService],
     templateUrl: './user-details.component.html',
     styleUrl: './user-details.component.scss'
@@ -68,7 +70,6 @@ export class UserDetailsComponent {
   }
 
   toggleRole(role: string) {
-    const roleToToggle = this.roleList$.getValue().find(r => r.name === role)!
     this.svc.setRoleStateForUser(this.name!, role, !this.userDetails$.getValue()?.roles?.includes(role))
   }
 

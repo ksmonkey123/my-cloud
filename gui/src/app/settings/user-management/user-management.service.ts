@@ -1,12 +1,13 @@
 import {Injectable, OnDestroy} from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, Subject, takeUntil} from "rxjs";
 import {ToastrService} from "ngx-toastr";
+import {TranslocoService} from "@jsverse/transloco";
 
 @Injectable()
 export class UserManagementService implements OnDestroy {
 
-  constructor(private http: HttpClient, private toastr: ToastrService) {
+  constructor(private http: HttpClient, private toastr: ToastrService, private translation: TranslocoService) {
   }
 
   public accountList$ = new BehaviorSubject<Account[]>([])
@@ -56,7 +57,7 @@ export class UserManagementService implements OnDestroy {
       .subscribe({
           next: _ => this.loadUser(username),
           error: error => {
-            this.toastr.error(error?.error?.message, "could not update user")
+            this.toastr.error(error?.error?.message,)
             this.loadUser(username)
           }
         }
@@ -74,7 +75,7 @@ export class UserManagementService implements OnDestroy {
           this.userDetails$.next(acc)
         },
         error: (error) => {
-          this.toastr.error(error?.error?.message, "could not create user")
+          this.toastr.error(error?.error?.message, this.translation.translate("settings.users.error.creation", {id: username}))
           this.loadUser(username)
         }
       })
@@ -85,10 +86,10 @@ export class UserManagementService implements OnDestroy {
       .pipe(takeUntil(this.closer$))
       .subscribe({
           next: _ => {
-            this.toastr.success("password updated")
+            this.toastr.success(this.translation.translate(this.translation.translate("settings.users.password-changed")))
           },
           error: error => {
-            this.toastr.error(error?.error?.message, "could not update password")
+            this.toastr.error(error?.error?.message, this.translation.translate("settings.users.error.edit", {id: username}))
           }
         }
       )

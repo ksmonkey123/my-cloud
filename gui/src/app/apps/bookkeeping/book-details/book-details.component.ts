@@ -21,43 +21,50 @@ import {AccountGroupListComponent} from "./account-group-list/account-group-list
 import {TransactionsListComponent} from "./transactions-list/transactions-list.component";
 import {MatDialog} from "@angular/material/dialog";
 import {ReportPopupComponent} from "./report-popup/report-popup.component";
+import {TranslocoDirective, TranslocoPipe} from "@jsverse/transloco";
+import {MatProgressBar} from "@angular/material/progress-bar";
 
 @Component({
-    selector: 'app-book-details',
-    providers: [provideNativeDateAdapter()],
-    imports: [
-        MatButton,
-        MatIcon,
-        RouterLink,
-        MatCard,
-        MatCardContent,
-        MatCardHeader,
-        MatCardTitle,
-        FormsModule,
-        ReactiveFormsModule,
-        MatFormField,
-        MatInput,
-        MatLabel,
-        MatFormFieldModule,
-        MatDateRangeInput,
-        MatDatepickerToggle,
-        MatDateRangePicker,
-        MatStartDate,
-        MatEndDate,
-        MatCardActions,
-        MatChip,
-        MatTabGroup,
-        MatTab,
-        AccountGroupListComponent,
-        TransactionsListComponent,
-    ],
-    templateUrl: './book-details.component.html',
-    styleUrl: './book-details.component.scss'
+  selector: 'app-book-details',
+  providers: [provideNativeDateAdapter()],
+  imports: [
+    MatButton,
+    MatIcon,
+    RouterLink,
+    MatCard,
+    MatCardContent,
+    MatCardHeader,
+    MatCardTitle,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormField,
+    MatInput,
+    MatLabel,
+    MatFormFieldModule,
+    MatDateRangeInput,
+    MatDatepickerToggle,
+    MatDateRangePicker,
+    MatStartDate,
+    MatEndDate,
+    MatCardActions,
+    MatChip,
+    MatTabGroup,
+    MatTab,
+    AccountGroupListComponent,
+    TransactionsListComponent,
+    TranslocoPipe,
+    TranslocoDirective,
+    MatProgressBar,
+  ],
+  templateUrl: './book-details.component.html',
+  styleUrl: './book-details.component.scss'
 })
 export class BookDetailsComponent implements OnInit, OnDestroy {
 
   public edit_mode: boolean = false
   public book: Book | null = null
+  public exportActive = false
+
 
   public form = new FormGroup({
       title: new FormControl<string>(""),
@@ -70,6 +77,7 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   selectedTabIndex = new FormControl(0)
 
   private bookSubscription
+  private exportSubscription
 
   constructor(
     private route: ActivatedRoute,
@@ -79,6 +87,9 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   ) {
     this.bookSubscription = this.service.book$.subscribe((b) => {
       this.book = b
+    })
+    this.exportSubscription = service.exportInProgress$.subscribe((inProgress) => {
+      this.exportActive = inProgress
     })
   }
 
@@ -102,6 +113,7 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.bookSubscription.unsubscribe()
+    this.exportSubscription.unsubscribe()
   }
 
   editBook() {
@@ -159,6 +171,10 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
         this.service.exportPartialEarningsReport(this.book!.id, result!)
       }
     )
+  }
+
+  onExcelExport() {
+    this.service.exportTransactions(this.book!.id)
   }
 
   protected readonly AccountType = AccountType;
