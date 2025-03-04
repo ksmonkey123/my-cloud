@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {MatCard, MatCardContent, MatCardHeader} from "@angular/material/card";
 import {
   AbstractControl,
   FormControl,
@@ -14,21 +13,33 @@ import {MatInput} from "@angular/material/input";
 import {MatIcon} from "@angular/material/icon";
 import {MatButton} from "@angular/material/button";
 import {ToastrService} from "ngx-toastr";
-import {TranslocoPipe, TranslocoService} from "@jsverse/transloco";
+import {TranslocoDirective, TranslocoService} from "@jsverse/transloco";
+import {
+  MatAccordion,
+  MatExpansionPanel,
+  MatExpansionPanelHeader,
+  MatExpansionPanelTitle
+} from "@angular/material/expansion";
+import {MatOption} from "@angular/material/autocomplete";
+import {MatSelect} from "@angular/material/select";
+import {LanguageCode, languages} from "../../common/language.model";
 
 @Component({
   selector: 'app-password-change',
   imports: [
-    MatCard,
-    MatCardContent,
-    MatCardHeader,
     MatFormField,
     ReactiveFormsModule,
     MatInput,
     MatLabel,
     MatIcon,
     MatButton,
-    TranslocoPipe,
+    MatAccordion,
+    MatExpansionPanel,
+    MatExpansionPanelHeader,
+    MatExpansionPanelTitle,
+    TranslocoDirective,
+    MatOption,
+    MatSelect,
 
   ],
   templateUrl: './account-settings.component.html',
@@ -36,7 +47,7 @@ import {TranslocoPipe, TranslocoService} from "@jsverse/transloco";
 })
 export class AccountSettingsComponent {
 
-  constructor(private authService: AuthService, private toastr: ToastrService, private transloco: TranslocoService) {
+  constructor(protected authService: AuthService, private toastr: ToastrService, private transloco: TranslocoService) {
   }
 
   pwForm = new FormGroup({
@@ -58,10 +69,24 @@ export class AccountSettingsComponent {
           this.toastr.success(this.transloco.translate("settings.account.password.changed"))
         },
         error: (error) => {
-          this.toastr.error(error?.error?.message, this.transloco.translate("settings.account.password.failed"), {enableHtml: true})
+          this.toastr.error(error?.error?.message, this.transloco.translate("settings.account.password.failed"))
         }
       }
     )
   }
 
+  protected readonly languages = languages;
+
+  onLanguageChange(code: LanguageCode) {
+    this.authService.changeLanguage(code).subscribe({
+        next: () => {
+          this.toastr.success(this.transloco.translate("settings.account.settings-changed"))
+          this.authService.fetch()
+        },
+        error: (error) => {
+          this.toastr.error(error?.error?.message, this.transloco.translate("settings.account.change-error"))
+        }
+      }
+    )
+  }
 }

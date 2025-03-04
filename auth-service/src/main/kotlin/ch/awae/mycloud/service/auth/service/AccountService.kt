@@ -2,6 +2,7 @@ package ch.awae.mycloud.service.auth.service
 
 import ch.awae.mycloud.*
 import ch.awae.mycloud.audit.*
+import ch.awae.mycloud.auth.*
 import ch.awae.mycloud.service.auth.*
 import ch.awae.mycloud.service.auth.domain.*
 import ch.awae.mycloud.service.auth.dto.*
@@ -38,7 +39,8 @@ class AccountService(
     fun createAccount(
         @Length(min = 5) username: String,
         @NoAudit @ValidPasswordFormat password: String,
-        admin: Boolean
+        admin: Boolean,
+        language: Language,
     ): AccountSummaryDto {
         if (accountRepository.existsByUsername(username))
             throw ResourceAlreadyExistsException("/accounts/$username")
@@ -47,7 +49,8 @@ class AccountService(
             username,
             passwordEncoder.encode(password),
             true,
-            admin
+            admin,
+            language,
         )
 
         return AccountSummaryDto(accountRepository.save(account))
@@ -63,15 +66,17 @@ class AccountService(
     @AuditLog
     fun editAccount(
         @Length(min = 5) username: String,
-        @RedactedAudit @ValidPasswordFormat password: String?,
-        admin: Boolean?,
-        enabled: Boolean?,
+        @RedactedAudit @ValidPasswordFormat password: String? = null,
+        admin: Boolean? = null,
+        enabled: Boolean? = null,
+        language: Language? = null,
     ): AccountSummaryDto {
         val account = getAccount(username)
 
         if (password != null) account.password = passwordEncoder.encode(password)
         if (enabled != null) account.enabled = enabled
         if (admin != null) account.admin = admin
+        if (language != null) account.language = language
 
         return AccountSummaryDto(account)
     }

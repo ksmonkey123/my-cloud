@@ -1,5 +1,6 @@
 package ch.awae.mycloud.service.auth.domain
 
+import ch.awae.mycloud.auth.*
 import ch.awae.mycloud.db.*
 import com.fasterxml.jackson.annotation.*
 import jakarta.persistence.*
@@ -14,6 +15,8 @@ class Account(
     var password: String,
     var enabled: Boolean = true,
     var admin: Boolean = false,
+    @Convert(converter = LanguageConverter::class)
+    var language: Language,
     @JsonIgnore
     @ManyToMany
     @JoinTable(

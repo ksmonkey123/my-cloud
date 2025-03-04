@@ -107,6 +107,17 @@
       "download": "Download",
       "edit": "Edit",
       "save": "Save"
+    },
+    "language": "Language"
+  },
+  "language": {
+    "de": {
+      "self": "Deutsch",
+      "translated": "German"
+    },
+    "en": {
+      "self": "English",
+      "translated": "English"
     }
   },
   "navbar": {
@@ -125,6 +136,7 @@
   },
   "settings": {
     "account": {
+      "change-error": "user settings could not be saved",
       "password": {
         "changed": "Password Changed",
         "confirm": "Confirm Password",
@@ -134,7 +146,8 @@
         "submit": "Change Password",
         "title": "Change Password"
       },
-      "title": "Account"
+      "settings-changed": "user settings changed",
+      "title": "Account Settings"
     },
     "roles": {
       "add": "Add Role",
@@ -160,12 +173,16 @@
     },
     "users": {
       "add": "Add User",
+      "added": {
+        "text": "user '{{id}}' created successfully",
+        "title": "user created"
+      },
       "create": {
         "submit": "Create",
         "title": "Add User"
       },
       "details": {
-        "basic-permissions": "Basic Permissions",
+        "basic-settings": "Basic Settings ",
         "password-reset": "Reset Password",
         "roles": "Roles",
         "title": "Manage User '{{ id }}'"
@@ -180,6 +197,7 @@
         "password": "Password",
         "username": "Username"
       },
+      "language-changed": "language changed",
       "password-changed": "password updated",
       "title": "Manage Users"
     }

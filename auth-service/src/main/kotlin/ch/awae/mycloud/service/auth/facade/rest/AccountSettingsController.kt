@@ -21,9 +21,21 @@ class AccountSettingsController(
         accountService.changePassword(AuthInfo.username!!, request.oldPassword, request.newPassword)
     }
 
+    @PatchMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun editSettings(@Valid @RequestBody request: SettingsChangeRequest) {
+        accountService.editAccount(
+            AuthInfo.username!!,
+            language = request.languageCode?.let { Language.fromCode(it) })
+    }
+
     data class ChangePasswordRequest(
         val oldPassword: String,
         @field:ValidPasswordFormat val newPassword: String,
+    )
+
+    data class SettingsChangeRequest(
+        val languageCode: String?,
     )
 
 }

@@ -3,10 +3,10 @@ package ch.awae.mycloud.service.auth.config
 import ch.awae.mycloud.*
 import ch.awae.mycloud.auth.*
 import ch.awae.mycloud.service.auth.domain.*
-import jakarta.transaction.Transactional
-import org.springframework.boot.CommandLineRunner
-import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.stereotype.Component
+import jakarta.transaction.*
+import org.springframework.boot.*
+import org.springframework.security.crypto.password.*
+import org.springframework.stereotype.*
 
 @Component
 class InitialUserCreator(
@@ -28,6 +28,7 @@ class InitialUserCreator(
                         username = "admin",
                         password = passwordEncoder.encode("admin"),
                         admin = true,
+                        language = Language.ENGLISH,
                     )
                 )
             }

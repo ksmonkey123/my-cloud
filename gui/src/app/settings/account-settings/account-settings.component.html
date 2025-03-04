@@ -1,32 +1,51 @@
-<div class="page-body">
-  <h1>{{ "settings.account.title" | transloco }}</h1>
-  <mat-card>
-    <mat-card-header>
-      <h2>{{ "settings.account.password.title" | transloco }}</h2>
-    </mat-card-header>
-    <mat-card-content>
+<div class="page-body" *transloco="let t">
+  <h1>{{ t("settings.account.title") }}</h1>
+  <mat-accordion multi="true">
+    <mat-expansion-panel expanded="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon>language</mat-icon>
+          {{ t("generic.language") }}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-form-field>
+        <mat-label>{{ t("generic.language") }}</mat-label>
+        <mat-select [value]="authService.authInfo()?.languageCode" (selectionChange)="onLanguageChange($event.value)">
+          @for (lang of languages; track lang) {
+            <mat-option [value]="lang">{{ t("language." + lang + ".self") }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </mat-expansion-panel>
+    <mat-expansion-panel expanded="false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon>password</mat-icon>
+          {{ t("settings.account.password.title") }}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
       <form [formGroup]="pwForm" (ngSubmit)="onChangePassword()">
         <mat-form-field>
-          <mat-label>{{ 'settings.account.password.old' | transloco }}</mat-label>
+          <mat-label>{{ t('settings.account.password.old') }}</mat-label>
           <input matInput type="password" formControlName="oldPassword" required>
         </mat-form-field>
         <br/>
         <mat-form-field>
-          <mat-label>{{ 'settings.account.password.new' | transloco }}</mat-label>
+          <mat-label>{{ t('settings.account.password.new') }}</mat-label>
           <input matInput type="password" formControlName="newPassword" required>
         </mat-form-field>
         <br/>
         <mat-form-field>
-          <mat-label>{{ 'settings.account.password.confirm' | transloco }}</mat-label>
+          <mat-label>{{ t('settings.account.password.confirm') }}</mat-label>
           <input matInput type="password" formControlName="confirmPassword" required>
         </mat-form-field>
         <br/>
         <button mat-raised-button type="submit" color="primary"
                 [disabled]="!pwForm.valid || pwForm.value.newPassword != pwForm.value.confirmPassword">
           <mat-icon>check</mat-icon>
-          {{ 'settings.account.password.submit' | transloco }}
+          {{ t('settings.account.password.submit') }}
         </button>
       </form>
-    </mat-card-content>
-  </mat-card>
+    </mat-expansion-panel>
+  </mat-accordion>
 </div>

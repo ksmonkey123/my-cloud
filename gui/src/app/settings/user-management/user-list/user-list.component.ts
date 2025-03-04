@@ -94,9 +94,12 @@ export class UserListComponent implements OnInit {
   openDialog() {
     const dialogRef = this.dialog.open(AddUserPopupDialog)
     dialogRef.afterClosed().subscribe((result: DialogResult) =>
-      this.svc.createUser(result.username, result.password).subscribe(
+      this.svc.createUser(result.username, result.password, result.languageCode).subscribe(
         {
           next: () => {
+            this.toastr.success(
+              this.translation.translate("settings.users.added.text", {id: result.username}),
+              this.translation.translate("settings.users.added.title"))
             this.svc.loadList()
           },
           error: (error) => {

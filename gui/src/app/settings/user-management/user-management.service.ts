@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, Subject, takeUntil} from "rxjs";
 import {ToastrService} from "ngx-toastr";
 import {TranslocoService} from "@jsverse/transloco";
+import {LanguageCode} from "../../common/language.model";
 
 @Injectable()
 export class UserManagementService implements OnDestroy {
@@ -29,10 +30,11 @@ export class UserManagementService implements OnDestroy {
       .subscribe((x) => this.accountList$.next(x))
   }
 
-  createUser(username: string, password: string) {
+  createUser(username: string, password: string, language: string) {
     return this.http.put('rest/auth/accounts/' + username, {
       username: username,
-      password: password
+      password: password,
+      languageCode: language,
     })
   }
 
@@ -46,6 +48,21 @@ export class UserManagementService implements OnDestroy {
     return this.http.patch('rest/auth/accounts/' + username, {
       enabled: enabled
     })
+  }
+
+  changeUserLanguage(username: string, language: LanguageCode) {
+    this.http.patch('rest/auth/accounts/' + username, {
+      languageCode: language
+    }).pipe(takeUntil(this.closer$))
+      .subscribe({
+          next: _ => {
+            this.toastr.success(this.translation.translate(this.translation.translate("settings.users.language-changed")))
+          },
+          error: error => {
+            this.toastr.error(error?.error?.message, this.translation.translate("settings.users.error.edit", {id: username}))
+          }
+        }
+      )
   }
 
   setBasicsForUser(username: string, enabled?: boolean, admin?: boolean) {
@@ -108,4 +125,5 @@ export interface AccountDetails {
   admin: boolean
   enabled: boolean
   roles: string[]
+  languageCode: LanguageCode
 }

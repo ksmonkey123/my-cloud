@@ -37,7 +37,12 @@ class AuthServiceClient(
 
     private fun convertDto(dto: AuthInfoDto): AuthInfo {
         return when (dto.type) {
-            AuthInfoDto.AuthType.USER -> UserAuthInfo(dto.username, dto.roles, dto.token)
+            AuthInfoDto.AuthType.USER -> UserAuthInfo(
+                dto.username,
+                dto.roles,
+                dto.token,
+                Language.fromCode(dto.languageCode),
+            )
         }
     }
 

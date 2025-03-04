@@ -1,6 +1,8 @@
 import {Injectable, OnDestroy, signal} from '@angular/core';
 import {map, Observable, Subject, takeUntil} from "rxjs";
 import {HttpClient} from "@angular/common/http";
+import {LanguageCode} from "./language.model";
+import {TranslocoService} from "@jsverse/transloco";
 
 export const TOKEN_NAME = "auth_token"
 
@@ -8,11 +10,13 @@ export interface AuthInfo {
   username: string
   admin: boolean
   roles: string[]
+  languageCode: LanguageCode
 }
 
 interface AuthInfoDto {
   username: string
   roles: string[]
+  languageCode: LanguageCode
 }
 
 @Injectable({
@@ -24,7 +28,7 @@ export class AuthService implements OnDestroy {
 
   private closer$ = new Subject<void>()
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private translation: TranslocoService) {
   }
 
   hasToken() {
@@ -52,8 +56,10 @@ export class AuthService implements OnDestroy {
             username: user.username,
             roles: user.roles,
             admin: user.roles.includes("admin"),
+            languageCode: user.languageCode,
           };
           this.authInfo.set(newInfo);
+          this.translation.setActiveLang(newInfo.languageCode)
         }
       })
   }
@@ -80,6 +86,12 @@ export class AuthService implements OnDestroy {
     return this.http.patch<void>('rest/auth/account/password', {
       oldPassword: oldPassword,
       newPassword: newPassword
+    })
+  }
+
+  changeLanguage(language: LanguageCode) {
+    return this.http.patch<void>('rest/auth/account', {
+      languageCode: language
     })
   }
 

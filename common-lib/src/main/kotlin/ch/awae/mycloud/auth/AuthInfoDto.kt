@@ -5,6 +5,7 @@ data class AuthInfoDto(
     val username: String,
     val roles: List<String>,
     val token: String,
+    val languageCode: String,
 ) {
 
     enum class AuthType {
@@ -14,7 +15,14 @@ data class AuthInfoDto(
     companion object {
         fun of(authInfo: AuthInfo): AuthInfoDto {
             return when (authInfo) {
-                is UserAuthInfo -> AuthInfoDto(AuthType.USER, authInfo.username, authInfo.roles, authInfo.token)
+                is UserAuthInfo -> AuthInfoDto(
+                    AuthType.USER,
+                    authInfo.username,
+                    authInfo.roles,
+                    authInfo.token,
+                    authInfo.language.code
+                )
+
                 else -> throw IllegalArgumentException("invalid auth type")
             }
         }

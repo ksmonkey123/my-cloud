@@ -7,12 +7,14 @@ data class AccountDetailsDto(
     val enabled: Boolean,
     val admin: Boolean,
     val roles: List<String>,
+    val languageCode: String,
 ) {
     constructor(account: Account) : this(
         account.username,
         account.enabled,
         account.admin,
-        account.roles.map { it.name }
+        account.roles.map { it.name },
+        account.language.code,
     )
 
 }

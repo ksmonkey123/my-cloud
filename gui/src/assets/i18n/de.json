@@ -107,6 +107,17 @@
       "download": "Herunterladen",
       "edit": "Bearbeiten",
       "save": "Speichern"
+    },
+    "language": "Sprache"
+  },
+  "language": {
+    "de": {
+      "self": "Deutsch",
+      "translated": "Deutsch"
+    },
+    "en": {
+      "self": "English",
+      "translated": "Englisch"
     }
   },
   "navbar": {
@@ -125,6 +136,7 @@
   },
   "settings": {
     "account": {
+      "change-error": "Fehler beim Speichern der Benutzereinstellungen",
       "password": {
         "changed": "Passwort geändert",
         "confirm": "Passwort bestätigen",
@@ -134,6 +146,7 @@
         "submit": "Passwort wechseln",
         "title": "Passwort wechseln"
       },
+      "settings-changed": "Benutzereinstellungen gespeichert",
       "title": "Account-Einstellungen"
     },
     "roles": {
@@ -160,12 +173,16 @@
     },
     "users": {
       "add": "Neuer Benutzer",
+      "added": {
+        "text": "Der Benutzer '{{id}}' wurde erfolgreich angelegt.",
+        "title": "Benutzer erstellt"
+      },
       "create": {
         "submit": "Erstellen",
         "title": "Neuer Benutzer"
       },
       "details": {
-        "basic-permissions": "Grundeinstellungen",
+        "basic-settings": "Grundeinstellungen",
         "password-reset": "Passwort zurücksetzen",
         "roles": "Rollen",
         "title": "Benutzer '{{ id }}' verwalten"
@@ -180,6 +197,7 @@
         "password": "Passwort",
         "username": "Benutzername"
       },
+      "language-changed": "Sprache geändert",
       "password-changed": "Passwort erfolgreich geändert",
       "title": "Benutzerverwaltung"
     }

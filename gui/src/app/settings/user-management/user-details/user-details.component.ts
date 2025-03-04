@@ -17,9 +17,11 @@ import {
   MatExpansionPanelTitle
 } from "@angular/material/expansion";
 import {TranslocoDirective} from "@jsverse/transloco";
+import {MatOption, MatSelect} from "@angular/material/select";
+import {LanguageCode, languages} from "../../../common/language.model";
 
 @Component({
-    selector: 'app-user-details-management',
+  selector: 'app-user-details-management',
   imports: [
     AsyncPipe,
     MatFormField,
@@ -37,11 +39,13 @@ import {TranslocoDirective} from "@jsverse/transloco";
     MatExpansionPanelHeader,
     MatExpansionPanelTitle,
     NgIf,
-    TranslocoDirective
+    TranslocoDirective,
+    MatSelect,
+    MatOption
   ],
-    providers: [RoleManagementService],
-    templateUrl: './user-details.component.html',
-    styleUrl: './user-details.component.scss'
+  providers: [RoleManagementService],
+  templateUrl: './user-details.component.html',
+  styleUrl: './user-details.component.scss'
 })
 export class UserDetailsComponent {
 
@@ -88,4 +92,10 @@ export class UserDetailsComponent {
     this.svc.resetPassword(user.username, this.pwForm.value.password!)
   }
 
+  onLanguageChange(language: LanguageCode) {
+    const user = this.userDetails$.value!
+    this.svc.changeUserLanguage(user.username, language)
+  }
+
+  protected readonly languages = languages;
 }

@@ -1,5 +1,6 @@
 package ch.awae.mycloud.service.auth.facade.rest
 
+import ch.awae.mycloud.auth.*
 import ch.awae.mycloud.service.auth.dto.*
 import ch.awae.mycloud.service.auth.service.*
 import ch.awae.mycloud.service.auth.validation.*
@@ -27,7 +28,12 @@ class UserManagementController(
         @PathVariable username: String,
         @Valid @RequestBody request: CreateUserRequest
     ): AccountSummaryDto {
-        return accountService.createAccount(username, request.password, request.admin)
+        return accountService.createAccount(
+            username,
+            request.password,
+            request.admin,
+            Language.fromCode(request.languageCode)
+        )
     }
 
     @PatchMapping("/{username}")
@@ -35,7 +41,12 @@ class UserManagementController(
         @PathVariable username: String,
         @Valid @RequestBody request: PatchAccountRequest
     ): AccountSummaryDto {
-        return accountService.editAccount(username, request.password, request.admin, request.enabled)
+        return accountService.editAccount(
+            username,
+            request.password,
+            request.admin,
+            request.enabled,
+            request.languageCode?.let { Language.fromCode(it) })
     }
 
     @GetMapping("/{username}")
@@ -61,12 +72,14 @@ class UserManagementController(
     data class CreateUserRequest(
         @field:ValidPasswordFormat val password: String,
         val admin: Boolean,
+        val languageCode: String,
     )
 
     data class PatchAccountRequest(
         @field:ValidPasswordFormat val password: String?,
         val admin: Boolean?,
         val enabled: Boolean?,
+        val languageCode: String?,
     )
 
 }

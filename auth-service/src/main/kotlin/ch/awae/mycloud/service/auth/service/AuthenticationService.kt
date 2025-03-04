@@ -23,7 +23,8 @@ class AuthenticationService(
                     roles + "user"
                 }
             },
-        tokenString
+        tokenString,
+        account.language,
     )
 
     override fun authenticateToken(tokenString: String): AuthInfo? {

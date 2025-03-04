@@ -9,9 +9,17 @@
       <mat-expansion-panel-header>
         <mat-panel-title>
           <mat-icon>settings</mat-icon>
-          {{ t("settings.users.details.basic-permissions") }}
+          {{ t("settings.users.details.basic-settings") }}
         </mat-panel-title>
       </mat-expansion-panel-header>
+      <mat-form-field>
+        <mat-label>{{ t("generic.language") }}</mat-label>
+        <mat-select [value]="(userDetails$ | async)?.languageCode" (selectionChange)="onLanguageChange($event.value)">
+          @for (lang of languages; track lang) {
+            <mat-option [value]="lang">{{ t("language." + lang + ".translated") }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
       <mat-slide-toggle [disabled]="auth.authInfo()?.username === name"
                         [ngModel]="(userDetails$ | async)?.enabled"
                         (toggleChange)="toggleEnabled()">
