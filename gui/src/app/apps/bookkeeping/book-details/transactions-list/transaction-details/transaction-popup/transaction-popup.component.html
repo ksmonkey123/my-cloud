@@ -1,26 +1,28 @@
-<h2 mat-dialog-title>Booking Group</h2>
+<h2 mat-dialog-title>{{ "bookkeeping.transactions.edit-modal.title" | transloco }}</h2>
 <mat-dialog-content>
   <form [formGroup]="form">
     <div>
       <mat-form-field class="field">
-        <mat-label>Text</mat-label>
+        <mat-label>{{ "bookkeeping.transactions.label.text" | transloco }}</mat-label>
         <input matInput [formControl]="form.controls.text" required>
       </mat-form-field>
     </div>
     <div>
       <mat-form-field class="field">
-        <mat-label>Tag</mat-label>
+        <mat-label>{{ "bookkeeping.transactions.label.tag" | transloco }}</mat-label>
         <input matInput [formControl]="form.controls.tag">
       </mat-form-field>
     </div>
     <div>
       <mat-form-field class="field">
-        <mat-label>Description</mat-label>
+        <mat-label>{{ "bookkeeping.transactions.label.description" | transloco }}</mat-label>
         <textarea matInput [formControl]="form.controls.description"></textarea>
       </mat-form-field>
     </div>
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-raised-button color="primary" [mat-dialog-close]="collectData()" [disabled]="!form.valid">Ok</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="collectData()"
+          [disabled]="!form.valid">{{ "generic.button.save" | transloco }}
+  </button>
 </mat-dialog-actions>

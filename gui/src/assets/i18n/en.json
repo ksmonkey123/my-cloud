@@ -3,6 +3,7 @@
     "account": {
       "create": "Create Account",
       "delete": "Delete Account",
+      "delete-failure": "could not delete account {{ id }}",
       "edit": "Edit Account",
       "lock": "Lock Account",
       "modal": {
@@ -11,12 +12,15 @@
       },
       "name": "Account Name",
       "number": "Account Number",
+      "save-failure": "could not save account {{ id }}",
       "unlock": "Unlock Account"
     },
     "account-group": {
       "create": "Add Account Group",
       "delete": "Delete Group",
+      "delete-failure": "could not delete account group {{ id }}",
       "edit": "Edit Group",
+      "edit-failure": "could not save account group {{ id }}",
       "lock": "Lock Group",
       "modal": {
         "create": "Create Account Group",
@@ -48,6 +52,9 @@
     "books": {
       "add": "Add Book"
     },
+    "creation-failure": "could not create book",
+    "edit-failure": "could not edit book",
+    "export-error": "could not export",
     "no-accounts": "No Accounts",
     "report": {
       "excel": "Raw Data",
@@ -57,9 +64,22 @@
     },
     "title": "Bookkeeping",
     "transactions": {
+      "account": "Account",
       "create": "Create Transaction",
+      "create-failure": "could not save transaction",
       "credit": "Credit",
       "debit": "Debit",
+      "delete": "Delete Transaction",
+      "delete-failure": "could not delete account {{ id }}",
+      "delete-modal": {
+        "text": "Do you want to delete the transaction {{ id }}?",
+        "title": "Delete Transaction"
+      },
+      "edit": "Edit Transaction",
+      "edit-failure": "could not edit transaction {{ id }}",
+      "edit-modal": {
+        "title": "Edit Transaction"
+      },
       "label": {
         "amount": "Amount",
         "date": "Datum",

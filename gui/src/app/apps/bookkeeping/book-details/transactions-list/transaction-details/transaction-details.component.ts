@@ -15,6 +15,7 @@ import {SimpleModalService} from "../../../../../common/simple-modal/simple-moda
 import {TransactionPopupComponent} from "./transaction-popup/transaction-popup.component";
 import {MatDialog} from "@angular/material/dialog";
 import {MatChip} from "@angular/material/chips";
+import {TranslocoPipe, TranslocoService} from "@jsverse/transloco";
 
 @Component({
   selector: 'app-transaction-details',
@@ -24,6 +25,7 @@ import {MatChip} from "@angular/material/chips";
     MatIcon,
     MatButton,
     MatChip,
+    TranslocoPipe,
   ],
   templateUrl: './transaction-details.component.html',
   styleUrl: './transaction-details.component.scss'
@@ -37,7 +39,8 @@ export class TransactionDetailsComponent {
   constructor(
     private modal: SimpleModalService,
     private service: BookkeepingService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private translation: TranslocoService
   ) {
   }
 
@@ -45,7 +48,10 @@ export class TransactionDetailsComponent {
   protected readonly MoneyUtil = MoneyUtil;
 
   delete() {
-    this.modal.confirm("Delete Link", "Do you want to delete the booking record '" + this.booking.id + "'?")
+    this.modal.confirm(
+      this.translation.translate("bookkeeping.transactions.delete-modal.title"),
+      this.translation.translate("bookkeeping.transactions.delete-modal.text", {id: this.booking.id})
+    )
       .subscribe(confirm => {
         if (confirm) {
           this.service.deleteBooking(this.book, this.booking)

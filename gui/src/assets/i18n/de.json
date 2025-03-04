@@ -3,6 +3,7 @@
     "account": {
       "create": "Neues Konto",
       "delete": "Konto Löschen",
+      "delete-failure": "Fehler beim Löschen des Kontos {{ id }}",
       "edit": "Konto Bearbeiten",
       "lock": "Konto Sperren",
       "modal": {
@@ -11,12 +12,15 @@
       },
       "name": "Kontoname",
       "number": "Kontonummer",
+      "save-failure": "Fehler beim Bearbeiten des Kontos {{ id }}",
       "unlock": "Konto Entsperren"
     },
     "account-group": {
       "create": "Neue Kontogruppe",
       "delete": "Gruppe Löschen",
+      "delete-failure": "Fehler beim Löschen der Kontogruppe {{ id }}",
       "edit": "Gruppe Bearbeiten",
+      "edit-failure": "Fehler beim Bearbeiten oder Erstellen der Kontogruppe {{ id }}",
       "lock": "Gruppe Sperren",
       "modal": {
         "create": "Neue Kontogruppe",
@@ -46,8 +50,11 @@
       }
     },
     "books": {
-      "add": "Neues Buch"
+      "add": "Neue Buchhaltung"
     },
+    "creation-failure": "Fehler beim Erstellen der Buchhaltung",
+    "edit-failure": "Fehler beim Bearbeiten der Buchhaltung",
+    "export-error": "Fehler beim Export",
     "no-accounts": "Keine Konten",
     "report": {
       "excel": "Rohdaten",
@@ -57,9 +64,22 @@
     },
     "title": "Buchhaltung",
     "transactions": {
+      "account": "Konto",
       "create": "Buchung Erfassen",
+      "create-failure": "Fehler beim Erstellen der Buchnung",
       "credit": "Soll",
       "debit": "Haben",
+      "delete": "Buchung löschen",
+      "delete-failure": "Fehler beim Löschen der Buchung {{ id }}",
+      "delete-modal": {
+        "text": "Buchung {{ id }} wirklich löschen?",
+        "title": "Buchung Löschen"
+      },
+      "edit": "Buchung bearbeiten",
+      "edit-failure": "Fehler beim Bearbeiten der Buchung {{ id }}",
+      "edit-modal": {
+        "title": "Buchung Bearbeiten"
+      },
       "label": {
         "amount": "Betrag",
         "date": "Buchungsdatum",

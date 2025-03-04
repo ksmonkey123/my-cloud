@@ -12,21 +12,23 @@ import {
 } from "@angular/material/dialog";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
+import {TranslocoPipe} from "@jsverse/transloco";
 
 @Component({
     selector: 'app-transaction-popup',
-    imports: [
-        FormsModule,
-        MatButton,
-        MatDialogActions,
-        MatDialogContent,
-        MatDialogTitle,
-        MatFormField,
-        MatInput,
-        MatLabel,
-        ReactiveFormsModule,
-        MatDialogClose
-    ],
+  imports: [
+    FormsModule,
+    MatButton,
+    MatDialogActions,
+    MatDialogContent,
+    MatDialogTitle,
+    MatFormField,
+    MatInput,
+    MatLabel,
+    ReactiveFormsModule,
+    MatDialogClose,
+    TranslocoPipe
+  ],
     templateUrl: './transaction-popup.component.html',
     styleUrl: './transaction-popup.component.scss'
 })
