@@ -3,10 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --host 0.0.0.0 --proxy-config proxy-conf.js",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "start": "yarn run i18n:generate-checksums && ng serve --host 0.0.0.0 --proxy-config proxy-conf.js",
+    "build": "yarn run i18n:generate-checksums && ng build",
+    "watch": "yarn run i18n:generate-checksums && ng build --watch --configuration development",
+    "test": "ng test",
+    "i18n:generate-checksums": "node ./i18n-generate-checksums.js"
   },
   "private": true,
   "dependencies": {
