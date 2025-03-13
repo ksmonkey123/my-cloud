@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="EmailNotificationServiceApplication (dev)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <option name="ACTIVE_PROFILES" value="dev" />
+    <module name="email-notification-service" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="ch.awae.mycloud.service.email_notification.EmailNotificationServiceApplication" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="ch.awae.mycloud.service.email_notification.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

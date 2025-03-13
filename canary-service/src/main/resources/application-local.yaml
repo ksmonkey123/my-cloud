@@ -1,0 +1,11 @@
+server:
+  port: 8005
+
+management:
+  server:
+    port: 8805
+
+canary:
+  timer:
+    web: "*/30 * * * * *"
+    dockerhub: "0 * * * * *"

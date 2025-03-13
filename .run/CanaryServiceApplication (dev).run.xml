@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="CanaryServiceApplication (dev)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <option name="ACTIVE_PROFILES" value="dev" />
+    <module name="canary-service" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="ch.awae.mycloud.service.canary.CanaryServiceApplication" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="ch.awae.mycloud.service.canary.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

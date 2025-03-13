@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Full-Stack (dev)" type="CompoundRunConfigurationType">
+    <toRun name="start" type="js.build_tools.npm" />
+    <toRun name="AuditServiceApplication (dev)" type="SpringBootApplicationConfigurationType" />
+    <toRun name="AuthServiceApplication (dev)" type="SpringBootApplicationConfigurationType" />
+    <toRun name="BookkeepingServiceApplication (dev)" type="SpringBootApplicationConfigurationType" />
+    <toRun name="CanaryServiceApplication (dev)" type="SpringBootApplicationConfigurationType" />
+    <toRun name="EmailNotificationServiceApplication (dev)" type="SpringBootApplicationConfigurationType" />
+    <toRun name="GatewayServiceApplication (dev)" type="SpringBootApplicationConfigurationType" />
+    <toRun name="ShortenerServiceApplication (dev)" type="SpringBootApplicationConfigurationType" />
+    <method v="2" />
+  </configuration>
+</component>

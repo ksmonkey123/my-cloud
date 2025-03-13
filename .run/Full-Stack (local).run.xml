@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Full-Stack (local)" type="CompoundRunConfigurationType">
+    <toRun name="docker-compose.yml: Compose Deployment" type="docker-deploy" />
+    <toRun name="start" type="js.build_tools.npm" />
+    <toRun name="AuditServiceApplication (local)" type="SpringBootApplicationConfigurationType" />
+    <toRun name="AuthServiceApplication (local)" type="SpringBootApplicationConfigurationType" />
+    <toRun name="BookkeepingServiceApplication (local)" type="SpringBootApplicationConfigurationType" />
+    <toRun name="CanaryServiceApplication (local)" type="SpringBootApplicationConfigurationType" />
+    <toRun name="GatewayServiceApplication (local)" type="SpringBootApplicationConfigurationType" />
+    <toRun name="ShortenerServiceApplication (local)" type="SpringBootApplicationConfigurationType" />
+    <method v="2" />
+  </configuration>
+</component>
