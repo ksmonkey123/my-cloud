@@ -37,6 +37,8 @@
         <module>shortener-service</module>
         <module>canary-service</module>
         <module>bookkeeping-service</module>
+
+	<!-- technical backend services -->
         <module>email-notification-service</module>
     </modules>
 
@@ -47,7 +49,7 @@
                 <artifactId>multi-module-maven-release-plugin</artifactId>
                 <version>3.6.4</version>
                 <configuration>
-                    <noChangesAction>ReleaseNone</noChangesAction>
+                    <noChangesAction>ReleaseAll</noChangesAction>
                     <pushTags>false</pushTags>
                     <pullTags>false</pullTags>
                     <releaseGoals>
