@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router, RouterLink} from "@angular/router";
-import {AccountType, Book, BookkeepingService} from "../bookkeeping.service";
+import {Book, BookkeepingService} from "../bookkeeping.service";
 import {MatButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle} from "@angular/material/card";
@@ -23,6 +23,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {ReportPopupComponent} from "./report-popup/report-popup.component";
 import {TranslocoDirective, TranslocoPipe} from "@jsverse/transloco";
 import {MatProgressBar} from "@angular/material/progress-bar";
+import {toDateString} from "../../../utils";
 
 @Component({
   selector: 'app-book-details',
@@ -143,12 +144,12 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
       this.service.createBook({
         title: this.form.value.title!!,
         description: this.form.value.description || undefined,
-        openingDate: this.form.value.start!!.toISOString(),
-        closingDate: this.form.value.end!!.toISOString(),
+        openingDate: toDateString(this.form.value.start!!),
+        closingDate: toDateString(this.form.value.end!!),
       }).subscribe(
         (id) => {
           if (id > 0) {
-            this.router.navigate(['..', id], {relativeTo: this.route})
+            void this.router.navigate(['..', id], {relativeTo: this.route})
             this.edit_mode = false
           }
         }
@@ -177,11 +178,9 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     this.service.exportTransactions(this.book!.id)
   }
 
-  protected readonly AccountType = AccountType;
-
   onTabChange(index: number) {
     this.selectedTabIndex.setValue(index)
-    this.router.navigate([], {
+    void this.router.navigate([], {
       relativeTo: this.route,
       queryParams: {tab: tabIndexToName(index)},
     })

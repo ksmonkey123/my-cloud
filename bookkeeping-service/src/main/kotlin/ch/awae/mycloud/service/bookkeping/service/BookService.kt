@@ -40,11 +40,12 @@ class BookService(
     fun createBook(dto: CreateBookRequest): BookSummaryDto {
         val createdBook = bookRepository.save(
             Book(
-                AuthInfo.username!!,
-                dto.title,
-                dto.openingDate,
-                dto.closingDate,
-                dto.description
+                username = AuthInfo.username!!,
+                title = dto.title,
+                openingDate = dto.openingDate,
+                closingDate = dto.closingDate,
+                description = dto.description,
+                closed = false,
             )
         )
         return BookSummaryDto(createdBook)

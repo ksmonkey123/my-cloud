@@ -16,6 +16,7 @@ class Book(
     @Column(updatable = false)
     val closingDate: LocalDate,
     var description: String?,
+    var closed: Boolean,
 ) : IdBaseEntity() {
     @OneToMany(mappedBy = "book")
     val accountGroups: Set<AccountGroup> = emptySet()

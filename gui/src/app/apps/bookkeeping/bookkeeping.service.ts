@@ -5,6 +5,7 @@ import {BehaviorSubject, map, Observable, Subject, takeUntil} from "rxjs";
 import Big from "big.js";
 import FileSaver from "file-saver";
 import {TranslocoService} from "@jsverse/transloco";
+import {toDateString} from "../../utils";
 
 @Injectable()
 export class BookkeepingService implements OnDestroy {
@@ -333,23 +334,9 @@ export class BookkeepingService implements OnDestroy {
     return result
   }
 
-  private formatDate(date: Date) {
-    let d = new Date(date),
-      month = '' + (d.getMonth() + 1),
-      day = '' + d.getDate(),
-      year = d.getFullYear();
-
-    if (month.length < 2)
-      month = '0' + month;
-    if (day.length < 2)
-      day = '0' + day;
-
-    return [year, month, day].join('-');
-  }
-
   private mapBookingRecord(booking: CreateBookingRecord): CreateBookingRecordDto {
     return {
-      bookingDate: this.formatDate(booking.date),
+      bookingDate: toDateString(booking.date),
       tag: booking.tag,
       text: booking.text,
       description: booking.description,
