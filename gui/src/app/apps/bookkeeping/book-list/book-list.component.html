@@ -24,7 +24,11 @@
         <mat-card appearance="raised" class="nav-flex-item" [routerLink]="'./' + item.id">
           <mat-card-header>
             <mat-card-title>
-              <mat-icon>book_2</mat-icon>
+              @if (item.closed) {
+                <mat-icon>lock</mat-icon>
+              } @else {
+                <mat-icon>book_2</mat-icon>
+              }
               {{ item.title }}
             </mat-card-title>
           </mat-card-header>

@@ -40,6 +40,7 @@
     "book": {
       "edit": "Bearbeiten",
       "label": {
+        "closed": "Buchhaltung Abgeschlossen",
         "date-range": "Zeitspanne",
         "description": "Beschreibung",
         "title": "Titel"

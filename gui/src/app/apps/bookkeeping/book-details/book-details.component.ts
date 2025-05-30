@@ -25,6 +25,7 @@ import {TranslocoDirective, TranslocoPipe} from "@jsverse/transloco";
 import {MatProgressBar} from "@angular/material/progress-bar";
 import {toDateString} from "../../../utils";
 import {Book} from "../model/book";
+import {MatSlideToggle} from "@angular/material/slide-toggle";
 
 @Component({
   selector: 'app-book-details',
@@ -57,6 +58,7 @@ import {Book} from "../model/book";
     TranslocoPipe,
     TranslocoDirective,
     MatProgressBar,
+    MatSlideToggle,
   ],
   templateUrl: './book-details.component.html',
   styleUrl: './book-details.component.scss'

@@ -10,7 +10,11 @@
       <mat-card>
         <mat-card-header>
           <mat-card-title>
-            <mat-icon>book_2</mat-icon>
+            @if (book.summary.closed) {
+              <mat-icon>lock</mat-icon>
+            } @else {
+              <mat-icon>book_2</mat-icon>
+            }
             {{ book.summary.title }} &nbsp;
             <button mat-raised-button color="primary" (click)="editBook()">
               <mat-icon>edit</mat-icon>
@@ -34,22 +38,22 @@
           @if (exportActive) {
             <mat-progress-bar mode="indeterminate"></mat-progress-bar>
           } @else {
-          <button mat-raised-button color="primary" (click)="onReportBundle()">
-            <mat-icon>download</mat-icon>
-            {{ "bookkeeping.report.full" | transloco }}
-          </button>
-          <button mat-raised-button color="primary" (click)="onPartialReport()">
-            <mat-icon>download</mat-icon>
-            {{ "bookkeeping.report.partial" | transloco }}
-          </button>
-          <button mat-raised-button color="primary" (click)="onAccountLedgerExport()">
-            <mat-icon>download</mat-icon>
-            {{ "bookkeeping.report.ledgers" | transloco }}
-          </button>
-          <button mat-raised-button color="primary" (click)="onExcelExport()">
-            <mat-icon>download</mat-icon>
-            {{ "bookkeeping.report.excel" | transloco }}
-          </button>
+            <button mat-raised-button color="primary" (click)="onReportBundle()">
+              <mat-icon>download</mat-icon>
+              {{ "bookkeeping.report.full" | transloco }}
+            </button>
+            <button mat-raised-button color="primary" (click)="onPartialReport()">
+              <mat-icon>download</mat-icon>
+              {{ "bookkeeping.report.partial" | transloco }}
+            </button>
+            <button mat-raised-button color="primary" (click)="onAccountLedgerExport()">
+              <mat-icon>download</mat-icon>
+              {{ "bookkeeping.report.ledgers" | transloco }}
+            </button>
+            <button mat-raised-button color="primary" (click)="onExcelExport()">
+              <mat-icon>download</mat-icon>
+              {{ "bookkeeping.report.excel" | transloco }}
+            </button>
           }
         </mat-card-actions>
       </mat-card>
@@ -81,6 +85,10 @@
               <mat-label>{{ "bookkeeping.book.label.description" | transloco }}</mat-label>
               <textarea matInput [formControl]="form.controls.description"></textarea>
             </mat-form-field>
+          </div>
+          <div class="form-slide-toggle">
+            <mat-slide-toggle [formControl]="form.controls.closed">{{ "bookkeeping.book.label.closed" | transloco }}
+            </mat-slide-toggle>
           </div>
         </mat-card-content>
         <mat-card-actions>
