@@ -1,39 +1,43 @@
-<div class="nav-flexbox">
-
-  <mat-card appearance="raised" class="nav-flex-item" routerLink="./new">
-    <mat-card-header>
-      <mat-card-title>
-        <mat-icon>add_box</mat-icon>
-        {{ "bookkeeping.books.add" | transloco }}
-      </mat-card-title>
-    </mat-card-header>
-    <mat-card-content>&nbsp;</mat-card-content>
-  </mat-card>
-  @if (processingState() === ProcessingState.PROCESSING) {
-    @for (i of [].constructor(componentStateService.state$.value?.numberOfBooks ?? 1); track $index) {
-      <mat-card appearance="raised" class="nav-skeleton-item">
-        <ngx-skeleton-loader [theme]="{height:'200px', background: '#f0f0f0'}"></ngx-skeleton-loader>
-      </mat-card>
+<div class="page-body">
+  <div class="close-toggle">
+    <mat-slide-toggle [checked]="includeClosed" (change)="onToggle($event)">Include Closed Books</mat-slide-toggle>
+  </div>
+  <div class="nav-flexbox">
+    <mat-card appearance="raised" class="nav-flex-item" routerLink="./new">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>add_box</mat-icon>
+          {{ "bookkeeping.books.add" | transloco }}
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>&nbsp;</mat-card-content>
+    </mat-card>
+    @if (processingState() === ProcessingState.PROCESSING) {
+      @for (i of [].constructor(componentStateService.state$.value?.numberOfBooks ?? 1); track $index) {
+        <mat-card appearance="raised" class="nav-skeleton-item">
+          <ngx-skeleton-loader [theme]="{height:'200px', background: '#f0f0f0'}"></ngx-skeleton-loader>
+        </mat-card>
+      }
     }
-  }
-  @if (processingState() === ProcessingState.COMPLETED_FILLED) {
-    @for (item of data(); track item.id) {
-      <mat-card appearance="raised" class="nav-flex-item" [routerLink]="'./' + item.id">
-        <mat-card-header>
-          <mat-card-title>
-            <mat-icon>book_2</mat-icon>
-            {{ item.title }}
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>
-            <mat-chip highlighted color="primary">{{ item.openingDate.toLocaleDateString() }}
-              - {{ item.closingDate.toLocaleDateString() }}
-            </mat-chip>
-          </p>
-        </mat-card-content>
-      </mat-card>
+    @if (processingState() === ProcessingState.COMPLETED_FILLED) {
+      @for (item of data(); track item.id) {
+        <mat-card appearance="raised" class="nav-flex-item" [routerLink]="'./' + item.id">
+          <mat-card-header>
+            <mat-card-title>
+              <mat-icon>book_2</mat-icon>
+              {{ item.title }}
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+              <mat-chip highlighted color="primary">{{ item.openingDate.toLocaleDateString() }}
+                - {{ item.closingDate.toLocaleDateString() }}
+              </mat-chip>
+            </p>
+          </mat-card-content>
+        </mat-card>
+      }
     }
-  }
 
+  </div>
 </div>

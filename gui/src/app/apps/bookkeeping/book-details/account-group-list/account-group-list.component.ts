@@ -1,12 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {
-  AccountGroup,
-  AccountSummary,
-  AccountTypeUtil,
-  Book,
-  BookkeepingService,
-  MoneyUtil
-} from "../../bookkeeping.service";
+import {BookkeepingService} from "../../bookkeeping.service";
 import {
   MatAccordion,
   MatExpansionPanel,
@@ -21,6 +14,9 @@ import {GroupPopupComponent} from "./group-popup/group-popup.component";
 import {SimpleModalService} from "../../../../common/simple-modal/simple-modal.service";
 import {AccountPopupComponent} from "./account-popup/account-popup.component";
 import {TranslocoPipe} from "@jsverse/transloco";
+import {AccountGroup, AccountSummary, Book} from "../../model/book";
+import {AccountTypeUtil} from "../../model/accountType";
+import {MoneyUtil} from "../../model/moneyUtil";
 
 @Component({
     selector: 'app-account-group-list',

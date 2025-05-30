@@ -13,9 +13,9 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/
 import {MatButton} from "@angular/material/button";
 import {MatInput} from "@angular/material/input";
 import {MatOption, MatSelect} from "@angular/material/select";
-import {AccountType, AccountTypeUtil} from "../../../bookkeeping.service";
 import {MatIcon} from "@angular/material/icon";
 import {TranslocoPipe} from "@jsverse/transloco";
+import {AccountType, AccountTypeUtil} from "../../../model/accountType";
 
 @Component({
     selector: 'app-account-popup',

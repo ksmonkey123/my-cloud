@@ -8,13 +8,14 @@ import {
   MatDialogRef,
   MatDialogTitle
 } from "@angular/material/dialog";
-import {AccountGroup, AccountType} from "../../bookkeeping.service";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatInput} from "@angular/material/input";
 import {MatButton} from "@angular/material/button";
 import {MatCheckbox} from "@angular/material/checkbox";
 import {TranslocoPipe} from "@jsverse/transloco";
+import {AccountGroup} from "../../model/book";
+import {AccountType} from "../../model/accountType";
 
 @Component({
   selector: 'app-report-popup',

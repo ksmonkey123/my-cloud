@@ -1,13 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {
-  AccountSummary,
-  AccountType,
-  AccountTypeUtil,
-  Book,
-  BookingRecord,
-  BookkeepingService,
-  MoneyUtil
-} from "../../../bookkeeping.service";
+import {BookkeepingService,} from "../../../bookkeeping.service";
 import {MatCard, MatCardContent} from "@angular/material/card";
 import {MatIcon} from "@angular/material/icon";
 import {MatButton} from "@angular/material/button";
@@ -16,6 +8,10 @@ import {TransactionPopupComponent} from "./transaction-popup/transaction-popup.c
 import {MatDialog} from "@angular/material/dialog";
 import {MatChip} from "@angular/material/chips";
 import {TranslocoPipe, TranslocoService} from "@jsverse/transloco";
+import {AccountSummary, Book} from "../../../model/book";
+import {BookingRecord} from "../../../model/bookingRecord";
+import {AccountType, AccountTypeUtil} from "../../../model/accountType";
+import {MoneyUtil} from "../../../model/moneyUtil";
 
 @Component({
   selector: 'app-transaction-details',

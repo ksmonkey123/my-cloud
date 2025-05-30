@@ -5,13 +5,14 @@ import {CanaryComponent} from "./canary/canary.component";
 import {BookListComponent} from "./bookkeeping/book-list/book-list.component";
 import {BookkeepingService} from "./bookkeeping/bookkeeping.service";
 import {BookDetailsComponent} from "./bookkeeping/book-details/book-details.component";
+import {BookListService} from "./bookkeeping/book-list/book-list.service";
 
 export const apps: AppsInformation = {
   routes: [
     {path: 'shortener', component: ShortenerComponent, providers: [ShortenerService]},
     {path: 'canary', component: CanaryComponent},
     {
-      path: 'bookkeeping', providers: [BookkeepingService], children: [
+      path: 'bookkeeping', providers: [BookkeepingService, BookListService], children: [
         {path: '', component: BookListComponent},
         {path: ':book_id', component: BookDetailsComponent},
       ]

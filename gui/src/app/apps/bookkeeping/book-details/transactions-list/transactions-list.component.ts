@@ -1,5 +1,5 @@
 import {Component, OnDestroy} from '@angular/core';
-import {AccountSummary, Book, BookingRecord, BookkeepingService, MoneyUtil} from "../../bookkeeping.service";
+import {BookkeepingService} from "../../bookkeeping.service";
 import {
   MatCell,
   MatCellDef,
@@ -25,6 +25,9 @@ import {
 } from "@angular/material/expansion";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {TranslocoPipe} from "@jsverse/transloco";
+import {AccountSummary, Book} from "../../model/book";
+import {BookingRecord} from "../../model/bookingRecord";
+import {MoneyUtil} from "../../model/moneyUtil";
 
 @Component({
   selector: 'app-transactions-list',

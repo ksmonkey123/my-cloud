@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {AccountSummary, AccountTypeUtil, Book, BookkeepingService} from "../../../bookkeeping.service";
+import {BookkeepingService} from "../../../bookkeeping.service";
 import {MatOptgroup, MatOption, provideNativeDateAdapter} from "@angular/material/core";
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
@@ -16,6 +16,8 @@ import {MatButton, MatMiniFabButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 import Big from "big.js";
 import {TranslocoDirective, TranslocoPipe} from "@jsverse/transloco";
+import {AccountSummary, Book} from "../../../model/book";
+import {AccountTypeUtil} from "../../../model/accountType";
 
 @Component({
     selector: 'app-transaction-creation',

@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router, RouterLink} from "@angular/router";
-import {Book, BookkeepingService} from "../bookkeeping.service";
+import {BookkeepingService} from "../bookkeeping.service";
 import {MatButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle} from "@angular/material/card";
@@ -24,6 +24,7 @@ import {ReportPopupComponent} from "./report-popup/report-popup.component";
 import {TranslocoDirective, TranslocoPipe} from "@jsverse/transloco";
 import {MatProgressBar} from "@angular/material/progress-bar";
 import {toDateString} from "../../../utils";
+import {Book} from "../model/book";
 
 @Component({
   selector: 'app-book-details',

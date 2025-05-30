@@ -1,11 +1,15 @@
 import {Injectable, OnDestroy} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {ToastrService} from "ngx-toastr";
-import {BehaviorSubject, map, Observable, Subject, takeUntil} from "rxjs";
+import {BehaviorSubject, Subject, takeUntil} from "rxjs";
 import Big from "big.js";
 import FileSaver from "file-saver";
 import {TranslocoService} from "@jsverse/transloco";
 import {toDateString} from "../../utils";
+import {BookSummary} from "./model/bookSummary";
+import {BookingMovement, BookingRecord} from "./model/bookingRecord";
+import {AccountGroup, AccountSummary, Book} from "./model/book";
+import {AccountType} from "./model/accountType";
 
 @Injectable()
 export class BookkeepingService implements OnDestroy {
@@ -14,7 +18,6 @@ export class BookkeepingService implements OnDestroy {
   constructor(private http: HttpClient, private toastr: ToastrService, private translation: TranslocoService) {
   }
 
-  public bookList$ = new BehaviorSubject<BookSummary[]>([])
   public book$ = new BehaviorSubject<Book | null>(null)
   public bookingPage$ = new BehaviorSubject<BookingPage | null>(null)
   public exportInProgress$ = new BehaviorSubject<boolean>(false)
@@ -24,23 +27,8 @@ export class BookkeepingService implements OnDestroy {
   ngOnDestroy() {
     this.closer$.next()
     this.closer$.complete()
-    this.bookList$.complete()
     this.book$.complete()
     this.bookingPage$.complete()
-  }
-
-  fetchBookList(): Observable<BookSummary[]> {
-    return this.http.get<BookSummaryDto[]>('/rest/bookkeeping/books').pipe(map(list => list.map(this.mapBookSummaryDto)));
-  }
-
-  loadBooks() {
-    this.http.get<BookSummaryDto[]>('/rest/bookkeeping/books')
-      .pipe(takeUntil(this.closer$))
-      .subscribe(
-        (l) => {
-          this.bookList$.next(l.map(this.mapBookSummaryDto))
-        }
-      )
   }
 
   private mapBookSummaryDto(dto: BookSummaryDto): BookSummary {
@@ -95,12 +83,10 @@ export class BookkeepingService implements OnDestroy {
       .pipe(takeUntil(this.closer$))
       .subscribe({
         next: (_) => {
-          this.loadBooks()
           this.loadBook(id)
         },
         error: error => {
           this.toastr.error(error?.error?.message, this.translation.translate("bookkeeping.edit-failure"))
-          this.loadBooks()
           this.loadBook(id)
         }
       })
@@ -185,13 +171,11 @@ export class BookkeepingService implements OnDestroy {
       .pipe(takeUntil(this.closer$))
       .subscribe({
         next: (book) => {
-          this.loadBooks()
           createdBookId$.next(book.id)
           createdBookId$.complete()
         },
         error: error => {
           this.toastr.error(error?.error?.message, this.translation.translate("bookkeeping.creation-failure"))
-          this.loadBooks()
           createdBookId$.next(-1)
           createdBookId$.complete()
         }
@@ -380,7 +364,6 @@ export class BookkeepingService implements OnDestroy {
   }
 }
 
-
 export interface CreateBookRequest {
   title: string,
   description?: string,
@@ -417,37 +400,6 @@ interface AccountSummaryDto {
   accountType: AccountType,
   locked: boolean,
   balance: any
-}
-
-export interface Book {
-  id: number,
-  summary: BookSummary,
-  groups: AccountGroup[],
-}
-
-export interface BookSummary {
-  id: number,
-  title: string,
-  description?: string,
-  openingDate: Date,
-  closingDate: Date,
-  closed: boolean,
-}
-
-export interface AccountGroup {
-  groupNumber: number,
-  title: string,
-  locked: boolean,
-  accounts: AccountSummary[]
-}
-
-export interface AccountSummary {
-  id: string,
-  title: string,
-  description?: string,
-  accountType: AccountType,
-  balance: Big,
-  locked: boolean,
 }
 
 interface BookingPageDto {
@@ -492,61 +444,4 @@ export interface CreateBookingRecord {
   description?: string,
   credits: BookingMovement[],
   debits: BookingMovement[],
-}
-
-export interface BookingRecord {
-  id: number,
-  date: Date,
-  tag?: string,
-  text: string,
-  description?: string,
-  amount: Big,
-  credits: BookingMovement[],
-  debits: BookingMovement[],
-}
-
-export interface BookingMovement {
-  accountId: string,
-  amount: Big,
-}
-
-export enum AccountType {
-  ASSET = "ASSET",
-  LIABILITY = "LIABILITY",
-  EXPENSE = "EXPENSE",
-  INCOME = "INCOME",
-}
-
-export class AccountTypeUtil {
-  public static iconForType(type: AccountType): string {
-    switch (type) {
-      case AccountType.ASSET:
-        return 'savings'
-      case AccountType.LIABILITY:
-        return 'credit_card'
-      case AccountType.INCOME:
-        return 'trending_up'
-      case AccountType.EXPENSE:
-        return 'trending_down'
-    }
-  }
-}
-
-export class MoneyUtil {
-  public static formatForDisplay(amount: Big): string {
-    let rawString = amount.toFixed(2)
-    if (rawString.endsWith('.00')) {
-      return rawString.split('.')[0] + '.--'
-    } else {
-      return rawString
-    }
-  }
-
-  public static formatAccountBalanceForDisplay(account: AccountSummary): string {
-    if ((account.accountType === AccountType.INCOME) || (account.accountType === AccountType.LIABILITY)) {
-      return MoneyUtil.formatForDisplay(new Big(0).minus(account.balance))
-    } else {
-      return MoneyUtil.formatForDisplay(account.balance)
-    }
-  }
 }
