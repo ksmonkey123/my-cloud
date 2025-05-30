@@ -1,17 +1,19 @@
 package ch.awae.mycloud.service.canary.dockerhub.model
 
-import ch.awae.mycloud.db.*
 import jakarta.persistence.*
-import org.springframework.data.jpa.repository.*
+import jakarta.persistence.Table
+import org.hibernate.annotations.*
+import java.time.*
 
 @Entity
-@Table(name = "docker_entry_state")
-class EntryState(
-    @ManyToOne
+@Table(name = "v_docker_current_state")
+@Immutable
+class CurrentState(
+    @Id
+    @OneToOne
     val monitoredEntry: MonitoredEntry,
     val digest: String,
     @Convert(converter = TagListConverter::class)
     val tags: List<String>,
-) : IdBaseEntity()
-
-interface EntryStateRepository : JpaRepository<EntryState, Long>
+    val recordedAt: LocalDateTime?,
+)

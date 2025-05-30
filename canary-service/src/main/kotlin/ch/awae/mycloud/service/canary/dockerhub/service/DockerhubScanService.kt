@@ -21,7 +21,7 @@ class DockerhubScanService(
         val entry = monitoredEntryRepository.findByIdOrNull(id)?.takeIf { it.enabled }
             ?: throw ResourceNotFoundException("monitored_entry($id)")
 
-        val lastTagSet = entry.entryStates.maxByOrNull { it.creationTimestamp }?.let {
+        val lastTagSet = entry.currentState?.let {
             TagSet(it.digest, it.tags.toSet())
         }
         val newTagSet = loadTagSet(entry)

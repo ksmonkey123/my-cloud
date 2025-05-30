@@ -15,8 +15,8 @@ class MonitoredEntry(
     val enabled: Boolean,
 ) : IdBaseEntity() {
 
-    @OneToMany(mappedBy = "monitoredEntry")
-    val entryStates: Set<EntryState> = emptySet()
+    @OneToOne(mappedBy = "monitoredEntry")
+    val currentState: CurrentState? = null
 
     val descriptor: String
         get() = "${namespace ?: "_"}/$repository:$tag"
