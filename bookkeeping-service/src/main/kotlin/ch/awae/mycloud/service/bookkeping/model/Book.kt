@@ -4,6 +4,7 @@ import ch.awae.mycloud.db.*
 import jakarta.persistence.*
 import jakarta.validation.*
 import org.springframework.data.jpa.repository.*
+import org.springframework.data.jpa.repository.Query
 import java.time.*
 
 @Entity
@@ -31,7 +32,11 @@ class Book(
 
 interface BookRepository : JpaRepository<Book, Long> {
 
-    fun findByUsername(username: String): List<Book>
+    @Query("select b from Book b where b.username = :username and not b.closed")
+    fun findOpenByUsername(username: String): List<Book>
+
+    @Query("select b from Book b where b.username = :username")
+    fun findAllByUsername(username: String): List<Book>
 
     fun findByIdAndUsername(id: Long, username: String): Book?
 

@@ -12,8 +12,10 @@ import java.time.*
 class BookController(private val service: BookService) {
 
     @GetMapping
-    fun listAll(): List<BookSummaryDto> {
-        return service.getBooks()
+    fun listAll(
+        @RequestParam(value = "closed", defaultValue = "false") closed: Boolean,
+    ): List<BookSummaryDto> {
+        return service.getBooks(closed)
     }
 
     @PostMapping
@@ -42,5 +44,6 @@ data class CreateBookRequest(
 
 data class EditBookRequest(
     val title: String,
-    val description: String?
+    val description: String?,
+    val closed: Boolean,
 )

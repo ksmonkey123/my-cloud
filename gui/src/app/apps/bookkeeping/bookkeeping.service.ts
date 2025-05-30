@@ -49,7 +49,8 @@ export class BookkeepingService implements OnDestroy {
       title: dto.title,
       description: dto.description,
       openingDate: new Date(dto.openingDate),
-      closingDate: new Date(dto.closingDate)
+      closingDate: new Date(dto.closingDate),
+      closed: dto.closed,
     }
   }
 
@@ -85,10 +86,11 @@ export class BookkeepingService implements OnDestroy {
       )
   }
 
-  editBook(id: number, title: string, description: string | null) {
+  editBook(id: number, title: string, description: string | null, closed: boolean) {
     this.http.put<BookSummaryDto>('/rest/bookkeeping/books/' + id, {
       title: title,
       description: description,
+      closed: closed,
     })
       .pipe(takeUntil(this.closer$))
       .subscribe({
@@ -392,6 +394,7 @@ interface BookSummaryDto {
   description?: string,
   openingDate: string,
   closingDate: string,
+  closed: boolean,
 }
 
 interface BookDto {
@@ -428,6 +431,7 @@ export interface BookSummary {
   description?: string,
   openingDate: Date,
   closingDate: Date,
+  closed: boolean,
 }
 
 export interface AccountGroup {

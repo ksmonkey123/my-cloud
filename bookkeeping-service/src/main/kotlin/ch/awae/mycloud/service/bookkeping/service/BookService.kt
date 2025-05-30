@@ -23,9 +23,14 @@ class BookService(
     fun getBook(bookId: Long) = bookRepository.findByIdAndUsername(bookId, AuthInfo.username!!)
         ?: throw ResourceNotFoundException("/books/$bookId")
 
-    fun getBooks(): List<BookSummaryDto> {
-        return bookRepository.findByUsername(AuthInfo.username!!)
-            .map(::BookSummaryDto)
+    fun getBooks(includeClosed: Boolean): List<BookSummaryDto> {
+        val rawList = if (includeClosed) {
+            bookRepository.findAllByUsername(AuthInfo.username!!)
+        } else {
+            bookRepository.findOpenByUsername(AuthInfo.username!!)
+        }
+
+        return rawList.map(::BookSummaryDto)
             .sortedByDescending { it.openingDate }
     }
 
@@ -57,6 +62,7 @@ class BookService(
 
         book.title = request.title
         book.description = request.description?.trim()?.takeIf { it.isNotBlank() }
+        book.closed = request.closed
 
         return BookSummaryDto(book)
     }

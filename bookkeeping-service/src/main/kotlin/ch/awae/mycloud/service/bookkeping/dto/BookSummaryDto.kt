@@ -9,8 +9,16 @@ data class BookSummaryDto(
     val description: String?,
     val openingDate: LocalDate,
     val closingDate: LocalDate,
+    val closed: Boolean,
 ) {
 
-    constructor(book: Book) : this(book.id, book.title, book.description, book.openingDate, book.closingDate)
+    constructor(book: Book) : this(
+        id = book.id,
+        title = book.title,
+        description = book.description,
+        openingDate = book.openingDate,
+        closingDate = book.closingDate,
+        closed = book.closed,
+    )
 
 }

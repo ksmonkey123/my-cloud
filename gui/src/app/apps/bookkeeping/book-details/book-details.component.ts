@@ -72,6 +72,7 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
       description: new FormControl<string>(""),
       start: new FormControl<Date>(new Date()),
       end: new FormControl<Date>(new Date()),
+      closed: new FormControl<boolean>(false),
     }
   )
 
@@ -125,7 +126,8 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
         title: this.book.summary.title,
         description: this.book.summary.description || null,
         start: this.book.summary.openingDate,
-        end: this.book.summary.closingDate
+        end: this.book.summary.closingDate,
+        closed: this.book.summary.closed,
       })
     }
   }
@@ -137,7 +139,7 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   saveBookEdit() {
     if (this.book != null) {
       // edit mode
-      this.service.editBook(this.book.id, this.form.value.title!!, this.form.value.description || null)
+      this.service.editBook(this.book.id, this.form.value.title!!, this.form.value.description || null, this.form.value.closed!!)
       this.edit_mode = false
     } else {
       // create mode
