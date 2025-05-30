@@ -50,7 +50,8 @@
       }
     },
     "books": {
-      "add": "Add Book"
+      "add": "Add Book",
+      "include-closed": "show closed books"
     },
     "creation-failure": "could not create book",
     "edit-failure": "could not edit book",

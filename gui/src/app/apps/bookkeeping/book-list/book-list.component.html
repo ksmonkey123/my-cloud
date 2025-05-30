@@ -1,6 +1,6 @@
 <div class="page-body">
   <div class="close-toggle">
-    <mat-slide-toggle [checked]="includeClosed" (change)="onToggle($event)">Include Closed Books</mat-slide-toggle>
+    <mat-slide-toggle [checked]="includeClosed" (change)="onToggle($event)">{{"bookkeeping.books.include-closed" | transloco}}</mat-slide-toggle>
   </div>
   <div class="nav-flexbox">
     <mat-card appearance="raised" class="nav-flex-item" routerLink="./new">

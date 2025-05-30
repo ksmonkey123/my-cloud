@@ -50,7 +50,8 @@
       }
     },
     "books": {
-      "add": "Neue Buchhaltung"
+      "add": "Neue Buchhaltung",
+      "include-closed": "Geschlossene Bücher anzeigen"
     },
     "creation-failure": "Fehler beim Erstellen der Buchhaltung",
     "edit-failure": "Fehler beim Bearbeiten der Buchhaltung",
