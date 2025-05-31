@@ -6,11 +6,12 @@ import {BookListComponent} from "./bookkeeping/book-list/book-list.component";
 import {BookkeepingService} from "./bookkeeping/bookkeeping.service";
 import {BookDetailsComponent} from "./bookkeeping/book-details/book-details.component";
 import {BookListService} from "./bookkeeping/book-list/book-list.service";
+import {DockerService} from "./canary/docker/docker.service";
 
 export const apps: AppsInformation = {
   routes: [
     {path: 'shortener', component: ShortenerComponent, providers: [ShortenerService]},
-    {path: 'canary', component: CanaryComponent},
+    {path: 'canary', component: CanaryComponent, providers: [DockerService]},
     {
       path: 'bookkeeping', providers: [BookkeepingService, BookListService], children: [
         {path: '', component: BookListComponent},

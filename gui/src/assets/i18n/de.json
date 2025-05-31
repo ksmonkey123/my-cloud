@@ -98,6 +98,9 @@
     }
   },
   "canary": {
+    "dockerhub": {
+      "title": "Dockerhub Image Tracking"
+    },
     "title": "Überwachung"
   },
   "generic": {

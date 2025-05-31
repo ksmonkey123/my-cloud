@@ -15,5 +15,5 @@ class CurrentState(
     val digest: String,
     @Convert(converter = TagListConverter::class)
     val tags: List<String>,
-    val recordedAt: LocalDateTime?,
+    val recordedAt: LocalDateTime,
 )
