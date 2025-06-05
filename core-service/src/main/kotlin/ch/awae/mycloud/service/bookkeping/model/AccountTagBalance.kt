@@ -20,7 +20,7 @@ class AccountTagBalance(
 )
 
 @Embeddable
-class AccountTagBalancePK(val accountId: Long, val tag: String)
+data class AccountTagBalancePK(val accountId: Long, val tag: String)
 
 interface AccountTagBalanceRepository : JpaRepository<AccountTagBalance, AccountTagBalancePK> {
 

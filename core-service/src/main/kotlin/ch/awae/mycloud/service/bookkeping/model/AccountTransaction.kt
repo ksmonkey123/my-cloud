@@ -28,7 +28,7 @@ class AccountTransaction(
 )
 
 @Embeddable
-class AccountTransactionPK(val recordId: Long, val accountId: Long)
+data class AccountTransactionPK(val recordId: Long, val accountId: Long)
 
 interface AccountTransactionRepository : JpaRepository<AccountTransaction, AccountTransactionPK> {
 

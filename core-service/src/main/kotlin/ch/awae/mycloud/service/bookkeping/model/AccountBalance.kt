@@ -8,7 +8,7 @@ import java.math.*
 @Entity
 @Table(name = "v_bookkeeping_account_balance")
 @Immutable
-class AccountBalance(
+data class AccountBalance(
     @Id
     @OneToOne
     val account: BookAccount,

@@ -8,7 +8,7 @@ import java.time.*
 @Entity
 @Table(name = "v_canary_docker_current_state")
 @Immutable
-class CurrentState(
+data class CurrentState(
     @Id
     @OneToOne
     val monitoredEntry: MonitoredEntry,
