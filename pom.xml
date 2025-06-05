@@ -33,7 +33,6 @@
 
         <!-- business services -->
         <module>core-service</module>
-        <module>bookkeeping-service</module>
     </modules>
 
     <build>
