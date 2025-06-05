@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.*
 import jakarta.persistence.*
 import org.springframework.data.jpa.repository.*
 
-@Table(name = "shrt_short_link")
+@Table(name = "shortener_link")
 @Entity
 class ShortLink(
     @Id

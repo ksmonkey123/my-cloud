@@ -1,6 +1,0 @@
-spring:
-  application:
-    name: email-notification-service
-server:
-  error:
-    include-message: always

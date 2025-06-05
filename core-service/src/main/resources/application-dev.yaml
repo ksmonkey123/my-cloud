@@ -4,3 +4,8 @@ server:
 management:
   server:
     port: 8801
+
+canary:
+  timer:
+    web: "*/30 * * * * *"
+    dockerhub: "0 * * * * *"

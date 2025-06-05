@@ -35,9 +35,6 @@
         <module>core-service</module>
         <module>canary-service</module>
         <module>bookkeeping-service</module>
-
-	<!-- technical backend services -->
-        <module>email-notification-service</module>
     </modules>
 
     <build>

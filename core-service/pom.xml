@@ -23,6 +23,18 @@
             <artifactId>database-lib</artifactId>
             <version>2.0-SNAPSHOT</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.mailjet</groupId>
+            <artifactId>mailjet-client</artifactId>
+            <version>5.2.5</version>
+        </dependency>
+        <!-- newer version seems to work fine, fixes kotlin dependency errors -->
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>4.12.0</version>
+        </dependency>
     </dependencies>
 
     <profiles>
