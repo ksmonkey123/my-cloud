@@ -5,6 +5,6 @@ module.exports = [
   },
   {
     context: ['/s'],
-    target: 'http://localhost:8003/',
+    target: 'http://localhost:8001/',
   }
 ]

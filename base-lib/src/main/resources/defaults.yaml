@@ -15,18 +15,8 @@ spring:
       client:
         simple:
           instances:
-            auth-service:
-              - uri: http://auth-service/
-            audit-service:
-              - uri: http://audit-service/
-            shortener-service:
-              - uri: http://shortener-service/
-            canary-service:
-              - uri: http://canary-service/
-            bookkeeping-service:
-              - uri: http://bookkeeping-service/
-            email-notification-service:
-              - uri: http://email-notification-service/
+            core-service:
+              - uri: http://core-service/
 
   jpa:
     show-sql: false

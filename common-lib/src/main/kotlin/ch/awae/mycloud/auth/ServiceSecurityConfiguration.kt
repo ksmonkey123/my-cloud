@@ -1,6 +1,5 @@
 package ch.awae.mycloud.auth
 
-import ch.awae.mycloud.audit.*
 import ch.awae.mycloud.rest.*
 import org.springframework.boot.context.properties.*
 import org.springframework.context.annotation.*
@@ -19,7 +18,6 @@ import org.springframework.security.web.authentication.*
     HttpAuthorizationTokenFilter::class,
     HttpAuthorizationTokenEntryPoint::class,
     RestClientConfiguration::class,
-    TraceInformationRequestFilter::class,
     GlobalExceptionHandler::class
 )
 @ConfigurationPropertiesScan(basePackages = ["ch.awae.mycloud.auth"])
@@ -32,7 +30,6 @@ class ServiceSecurityConfiguration {
     fun filterChain(
         http: HttpSecurity,
         filter: HttpAuthorizationTokenFilter,
-        traceInformationRequestFilter: TraceInformationRequestFilter,
         entryPoint: HttpAuthorizationTokenEntryPoint,
         securityProperties: SecurityProperties,
     ): SecurityFilterChain {
@@ -56,7 +53,6 @@ class ServiceSecurityConfiguration {
             .httpBasic { it.disable() }
             .logout { it.disable() }
             .addFilterBefore(filter, UsernamePasswordAuthenticationFilter::class.java)
-            .addFilterBefore(traceInformationRequestFilter, UsernamePasswordAuthenticationFilter::class.java)
             .build()
     }
 

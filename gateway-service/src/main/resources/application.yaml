@@ -7,8 +7,12 @@ spring:
         locator:
           enabled: true
       default-filters:
-        - StripPrefix=2
+        - StripPrefix=1
       routes:
+        - id: rest-services
+          predicates:
+            - Path=/rest/**
+          uri: lb://core-service
         # auth service
         - id: auth-service
           predicates:

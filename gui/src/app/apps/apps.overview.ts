@@ -15,7 +15,7 @@ export const apps: AppsInformation = {
     {
       path: 'canary', providers: [DockerService], children: [
         {path: '', component: CanaryComponent},
-        {path: '/docker/:namespace/:repository/:tag', component: DockerDetailsComponent},
+        {path: 'docker/:namespace/:repository/:tag', component: DockerDetailsComponent},
       ]
     },
     {

@@ -1,1 +1,0 @@
-create sequence HIBERNATE_SEQ start 10000 increment 1;

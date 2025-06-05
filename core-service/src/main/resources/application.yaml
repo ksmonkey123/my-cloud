@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    url: ${db.cloud.url}
+    username: ${db.cloud.username}
+    password: ${db.cloud.password}
+    hikari:
+      schema: core
+  flyway:
+    default-schema: core
+  application:
+    name: core-service
+server:
+  error:
+    include-message: always
+
+mycloud:
+  security:
+    public-endpoints:
+      - /auth/login
+      - /s/**
+
+auth:
+  clean-timer:
+    schedule: "0 */5 * * * *"
+    max-age: "PT4H"

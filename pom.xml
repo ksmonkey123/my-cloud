@@ -32,9 +32,7 @@
         <module>gateway-service</module>
 
         <!-- business services -->
-        <module>auth-service</module>
-        <module>audit-service</module>
-        <module>shortener-service</module>
+        <module>core-service</module>
         <module>canary-service</module>
         <module>bookkeeping-service</module>
 

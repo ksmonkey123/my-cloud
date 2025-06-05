@@ -4,18 +4,8 @@ spring:
       client:
         simple:
           instances:
-            auth-service:
+            core-service:
               - uri: http://localhost:8001/
-            audit-service:
-              - uri: http://localhost:8002/
-            shortener-service:
-              - uri: http://localhost:8003/
-            bookkeeping-service:
-              - uri: http://localhost:8004/
-            canary-service:
-              - uri: http://localhost:8005/
-            email-notification-service:
-              - uri: http://localhost:8006/
 
   jpa:
     show-sql: true
