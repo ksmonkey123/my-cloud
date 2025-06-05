@@ -48,7 +48,7 @@ class SecurityService(
         authTokenRepository.deleteByTokenString(token)
     }
 
-    @SchedulerLock(name = "scan-timer")
+    @SchedulerLock(name = "auth-token-clean-timer")
     @Scheduled(cron = "\${auth.clean-timer.schedule}")
     fun cleanOldTokens() {
         authTokenRepository.deleteExpiredTokens(LocalDateTime.now().minus(maxAge))
