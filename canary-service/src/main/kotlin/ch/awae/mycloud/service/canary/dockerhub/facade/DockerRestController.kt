@@ -15,5 +15,19 @@ class DockerRestController(
         return dockerService.listAll()
     }
 
+    @GetMapping("/images/{namespace}:{repository}:{tag}")
+    fun getImageDetails(
+        @PathVariable namespace: String,
+        @PathVariable repository: String,
+        @PathVariable tag: String,
+    ): DockerImageDetails {
+        return dockerService.getDetails(
+            namespace.takeUnless { it == "_" },
+            repository,
+            tag,
+        )
+    }
+
+
 }
 

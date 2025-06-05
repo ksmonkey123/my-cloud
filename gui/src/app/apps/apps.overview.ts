@@ -7,11 +7,17 @@ import {BookkeepingService} from "./bookkeeping/bookkeeping.service";
 import {BookDetailsComponent} from "./bookkeeping/book-details/book-details.component";
 import {BookListService} from "./bookkeeping/book-list/book-list.service";
 import {DockerService} from "./canary/docker/docker.service";
+import {DockerDetailsComponent} from "./canary/docker-details/docker-details.component";
 
 export const apps: AppsInformation = {
   routes: [
     {path: 'shortener', component: ShortenerComponent, providers: [ShortenerService]},
-    {path: 'canary', component: CanaryComponent, providers: [DockerService]},
+    {
+      path: 'canary', providers: [DockerService], children: [
+        {path: '', component: CanaryComponent},
+        {path: '/docker/:namespace/:repository/:tag', component: DockerDetailsComponent},
+      ]
+    },
     {
       path: 'bookkeeping', providers: [BookkeepingService, BookListService], children: [
         {path: '', component: BookListComponent},

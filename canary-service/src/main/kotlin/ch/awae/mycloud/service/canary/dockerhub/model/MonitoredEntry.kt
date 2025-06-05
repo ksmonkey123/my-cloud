@@ -31,4 +31,7 @@ interface MonitoredEntryRepository : JpaRepository<MonitoredEntry, Long> {
     @Query("select me.id from MonitoredEntry me where me.enabled")
     fun listIdsOfEnabled(): List<Long>
 
+    @Query("select me from MonitoredEntry me where me.namespace = :namespace and me.repository = :repository and me.tag = :tag")
+    fun findByIdentifier(namespace: String?, repository: String, tag: String): MonitoredEntry?
+
 }
