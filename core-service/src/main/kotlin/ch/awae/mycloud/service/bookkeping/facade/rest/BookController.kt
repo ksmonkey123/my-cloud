@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*
 import java.time.*
 
 @RestController
-@RequestMapping("/bookkeeping/books")
+@RequestMapping("/rest/bookkeeping/books")
 @PreAuthorize("hasAuthority('bookkeeping')")
 class BookController(private val service: BookService) {
 

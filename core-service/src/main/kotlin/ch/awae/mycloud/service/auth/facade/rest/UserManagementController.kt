@@ -10,7 +10,7 @@ import org.springframework.security.access.prepost.*
 import org.springframework.web.bind.annotation.*
 
 @PreAuthorize("hasAuthority('admin')")
-@RequestMapping("/auth/accounts")
+@RequestMapping("/rest/auth/accounts")
 @RestController
 class UserManagementController(
     private val accountService: AccountService,

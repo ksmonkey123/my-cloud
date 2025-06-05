@@ -5,7 +5,7 @@ import ch.awae.mycloud.service.canary.dockerhub.service.*
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/canary/docker")
+@RequestMapping("/rest/canary/docker")
 class DockerRestController(
     val dockerService: DockerService,
 ) {

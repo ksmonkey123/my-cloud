@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*
  *  - logout
  */
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/rest/auth")
 class SecurityController(private val securityService: SecurityService) {
 
     private val logger = createLogger()

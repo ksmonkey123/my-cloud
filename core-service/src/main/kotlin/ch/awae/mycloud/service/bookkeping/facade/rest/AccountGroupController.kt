@@ -7,7 +7,7 @@ import org.springframework.security.access.prepost.*
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/bookkeeping/books/{bookId}/groups")
+@RequestMapping("/rest/bookkeeping/books/{bookId}/groups")
 @PreAuthorize("hasAuthority('bookkeeping')")
 class AccountGroupController(
     val service: BookService

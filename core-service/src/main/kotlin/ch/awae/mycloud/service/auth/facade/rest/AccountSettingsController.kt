@@ -10,7 +10,7 @@ import org.springframework.security.access.prepost.*
 import org.springframework.web.bind.annotation.*
 
 @PreAuthorize("hasAuthority('user')")
-@RequestMapping("/auth/account")
+@RequestMapping("/rest/auth/account")
 @RestController
 class AccountSettingsController(
     private val accountService: AccountService,

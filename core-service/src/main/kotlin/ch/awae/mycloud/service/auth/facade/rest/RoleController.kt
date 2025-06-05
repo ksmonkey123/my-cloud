@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @PreAuthorize("hasAuthority('admin')")
-@RequestMapping("/auth/roles")
+@RequestMapping("/rest/auth/roles")
 class RoleController(
     private val svc: RoleService
 ) {

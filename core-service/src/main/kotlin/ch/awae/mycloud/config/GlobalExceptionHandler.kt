@@ -1,4 +1,4 @@
-package ch.awae.mycloud.config.rest
+package ch.awae.mycloud.config
 
 import jakarta.validation.ConstraintViolationException
 import org.springframework.http.HttpStatus

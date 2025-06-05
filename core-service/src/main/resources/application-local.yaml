@@ -5,6 +5,19 @@ management:
   server:
     port: 8801
 
+spring:
+  jpa:
+    show-sql: true
+
+logging:
+  level:
+    org.springframework.jdbc.core: DEBUG
+
+db.cloud:
+  url: jdbc:postgresql://localhost:21004/postgres
+  username: postgres
+  password: postgres
+
 canary:
   timer:
     web: "*/30 * * * * *"

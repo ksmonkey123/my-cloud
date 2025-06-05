@@ -1,6 +1,6 @@
 spring:
   config:
-    name: defaults,application
+    name: application
 
   cloud:
     kubernetes:

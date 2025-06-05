@@ -6,7 +6,7 @@ import org.springframework.http.*
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/bookkeeping/books/{bookId}/documents")
+@RequestMapping("/rest/bookkeeping/books/{bookId}/documents")
 class DocumentsController(
     private val earningsReportService: EarningsReportService,
     private val accountLedgersService: AccountLedgersService,

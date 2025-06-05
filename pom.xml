@@ -21,15 +21,8 @@
     </properties>
 
     <modules>
-        <!-- base libs -->
         <module>base-pom</module>
-        <module>base-lib</module>
-
-        <!-- frontend -->
         <module>gui</module>
-        <module>gateway-service</module>
-
-        <!-- business services -->
         <module>core-service</module>
     </modules>
 

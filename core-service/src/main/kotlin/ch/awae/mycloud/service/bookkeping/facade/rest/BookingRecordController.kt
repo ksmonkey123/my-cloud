@@ -9,7 +9,7 @@ import org.springframework.security.access.prepost.*
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/bookkeeping/books/{bookId}/records")
+@RequestMapping("/rest/bookkeeping/books/{bookId}/records")
 @PreAuthorize("hasAuthority('bookkeeping')")
 class BookingRecordController(
     val service: BookingRecordService,

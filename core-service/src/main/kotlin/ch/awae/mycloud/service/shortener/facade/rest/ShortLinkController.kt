@@ -7,7 +7,7 @@ import org.springframework.security.access.prepost.*
 import org.springframework.web.bind.annotation.*
 
 @PreAuthorize("hasAuthority('shortener')")
-@RequestMapping("/shortener/links")
+@RequestMapping("/rest/shortener/links")
 @RestController
 class ShortLinkController(private val svc: ShortLinkService) {
 
