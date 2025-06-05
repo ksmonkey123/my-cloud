@@ -1,6 +1,6 @@
 package ch.awae.mycloud.service.bookkeping.model
 
-import ch.awae.mycloud.db.*
+import ch.awae.mycloud.common.db.IdBaseEntity
 import ch.awae.mycloud.service.bookkeping.dto.*
 import ch.awae.mycloud.service.bookkeping.model.converter.*
 import jakarta.persistence.*

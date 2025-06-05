@@ -1,7 +1,8 @@
 package ch.awae.mycloud.service.auth.domain
 
-import ch.awae.mycloud.auth.*
-import ch.awae.mycloud.db.*
+import ch.awae.mycloud.common.auth.Language
+import ch.awae.mycloud.common.db.IdBaseEntity
+import ch.awae.mycloud.common.db.LanguageConverter
 import com.fasterxml.jackson.annotation.*
 import jakarta.persistence.*
 import org.springframework.data.jpa.repository.*

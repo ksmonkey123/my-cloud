@@ -1,7 +1,8 @@
 package ch.awae.mycloud.service.bookkeping.service
 
-import ch.awae.mycloud.*
-import ch.awae.mycloud.auth.*
+import ch.awae.mycloud.common.InvalidRequestException
+import ch.awae.mycloud.common.ResourceNotFoundException
+import ch.awae.mycloud.common.auth.AuthInfo
 import ch.awae.mycloud.service.bookkeping.dto.*
 import ch.awae.mycloud.service.bookkeping.facade.rest.*
 import ch.awae.mycloud.service.bookkeping.model.*

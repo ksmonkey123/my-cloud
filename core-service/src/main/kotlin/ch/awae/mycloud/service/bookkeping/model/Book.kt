@@ -1,6 +1,6 @@
 package ch.awae.mycloud.service.bookkeping.model
 
-import ch.awae.mycloud.db.*
+import ch.awae.mycloud.common.db.IdBaseEntity
 import jakarta.persistence.*
 import jakarta.validation.*
 import org.springframework.data.jpa.repository.*

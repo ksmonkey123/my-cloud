@@ -1,6 +1,6 @@
 package ch.awae.mycloud.service.canary.dockerhub.model
 
-import ch.awae.mycloud.db.*
+import ch.awae.mycloud.common.db.IdBaseEntity
 import jakarta.persistence.*
 import org.springframework.data.jpa.repository.*
 import org.springframework.data.jpa.repository.Query

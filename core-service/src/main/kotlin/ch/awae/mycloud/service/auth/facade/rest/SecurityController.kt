@@ -1,7 +1,9 @@
 package ch.awae.mycloud.service.auth.facade.rest
 
-import ch.awae.mycloud.*
-import ch.awae.mycloud.auth.*
+import ch.awae.mycloud.common.auth.AuthInfo
+import ch.awae.mycloud.common.auth.AuthInfoDto
+import ch.awae.mycloud.common.auth.UserAuthInfo
+import ch.awae.mycloud.common.createLogger
 import ch.awae.mycloud.service.auth.service.*
 import org.springframework.http.*
 import org.springframework.security.access.prepost.*

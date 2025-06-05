@@ -1,6 +1,7 @@
 package ch.awae.mycloud.service.canary.dockerhub.service
 
-import ch.awae.mycloud.*
+import ch.awae.mycloud.common.ResourceNotFoundException
+import ch.awae.mycloud.common.createLogger
 import ch.awae.mycloud.service.canary.dockerhub.model.*
 import jakarta.transaction.*
 import org.springframework.data.repository.*

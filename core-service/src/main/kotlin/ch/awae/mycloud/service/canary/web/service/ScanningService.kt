@@ -1,9 +1,9 @@
 package ch.awae.mycloud.service.canary.web.service
 
-import ch.awae.mycloud.*
-import ch.awae.mycloud.rest.*
+import ch.awae.mycloud.common.createLogger
 import ch.awae.mycloud.service.canary.*
 import ch.awae.mycloud.service.canary.web.model.*
+import ch.awae.mycloud.config.rest.External
 import org.springframework.data.repository.*
 import org.springframework.stereotype.*
 import org.springframework.transaction.annotation.*

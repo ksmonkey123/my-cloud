@@ -1,6 +1,7 @@
 package ch.awae.mycloud.service.canary.dockerhub.service
 
-import ch.awae.mycloud.*
+import ch.awae.mycloud.common.ExpiringInstance
+import ch.awae.mycloud.common.createLogger
 import ch.awae.mycloud.service.canary.dockerhub.*
 import org.springframework.boot.web.client.*
 import org.springframework.stereotype.*

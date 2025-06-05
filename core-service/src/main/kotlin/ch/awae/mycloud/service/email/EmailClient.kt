@@ -1,7 +1,7 @@
 package ch.awae.mycloud.service.email
 
-import ch.awae.mycloud.*
-import ch.awae.mycloud.notification.*
+import ch.awae.mycloud.common.createLogger
+import ch.awae.mycloud.common.notification.NotificationMessage
 import com.mailjet.client.*
 import com.mailjet.client.transactional.*
 import org.springframework.boot.context.properties.*

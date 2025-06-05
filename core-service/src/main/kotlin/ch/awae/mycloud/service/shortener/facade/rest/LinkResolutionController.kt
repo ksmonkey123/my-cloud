@@ -1,6 +1,6 @@
 package ch.awae.mycloud.service.shortener.facade.rest
 
-import ch.awae.mycloud.*
+import ch.awae.mycloud.common.ResourceNotFoundException
 import ch.awae.mycloud.service.shortener.model.*
 import org.springframework.data.repository.*
 import org.springframework.http.HttpStatus

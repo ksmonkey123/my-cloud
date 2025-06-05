@@ -1,6 +1,6 @@
 package ch.awae.mycloud.service.bookkeping.service.document
 
-import ch.awae.mycloud.pdf.*
+import ch.awae.mycloud.common.pdf.PdfDocument
 import ch.awae.mycloud.service.bookkeping.dto.*
 import ch.awae.mycloud.service.bookkeping.model.*
 import ch.awae.mycloud.service.bookkeping.service.*

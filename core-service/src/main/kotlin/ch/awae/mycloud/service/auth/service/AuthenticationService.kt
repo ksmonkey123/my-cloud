@@ -1,6 +1,8 @@
 package ch.awae.mycloud.service.auth.service
 
-import ch.awae.mycloud.auth.*
+import ch.awae.mycloud.common.auth.AuthInfo
+import ch.awae.mycloud.common.auth.AuthService
+import ch.awae.mycloud.common.auth.UserAuthInfo
 import ch.awae.mycloud.service.auth.domain.*
 import jakarta.transaction.*
 import org.springframework.stereotype.*

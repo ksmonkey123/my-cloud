@@ -1,7 +1,8 @@
 package ch.awae.mycloud.service.canary
 
-import ch.awae.mycloud.*
-import ch.awae.mycloud.notification.*
+import ch.awae.mycloud.common.createLogger
+import ch.awae.mycloud.common.notification.NotificationMessage
+import ch.awae.mycloud.common.notification.NotificationService
 import org.springframework.stereotype.*
 
 @Service

@@ -1,6 +1,7 @@
 package ch.awae.mycloud.service.email
 
-import ch.awae.mycloud.notification.*
+import ch.awae.mycloud.common.notification.NotificationMessage
+import ch.awae.mycloud.common.notification.NotificationService
 import org.springframework.stereotype.*
 import java.util.logging.*
 

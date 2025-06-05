@@ -1,6 +1,6 @@
 package ch.awae.mycloud.service.shortener.model
 
-import ch.awae.mycloud.db.*
+import ch.awae.mycloud.common.db.BaseEntity
 import com.fasterxml.jackson.annotation.*
 import jakarta.persistence.*
 import org.springframework.data.jpa.repository.*

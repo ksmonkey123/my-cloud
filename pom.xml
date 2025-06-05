@@ -24,8 +24,6 @@
         <!-- base libs -->
         <module>base-pom</module>
         <module>base-lib</module>
-        <module>common-lib</module>
-        <module>database-lib</module>
 
         <!-- frontend -->
         <module>gui</module>

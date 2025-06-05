@@ -1,6 +1,6 @@
 package ch.awae.mycloud.service.bookkeping.service.document
 
-import ch.awae.mycloud.pdf.*
+import ch.awae.mycloud.common.pdf.PdfDocument
 import org.apache.pdfbox.pdmodel.font.Standard14Fonts.FontName.*
 import java.math.*
 import java.time.*
