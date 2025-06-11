@@ -22,7 +22,7 @@ class EmailOutbox(
     var sent: Boolean = false,
 ) : IdBaseEntity() {
     override fun toString(): String {
-        return "EmailOutbox(id=$id, bodyFormat=$bodyFormat, sender='$sender', recipient='$recipient', subject='$subject', bodyContent=[${bodyContent.length} chars]"
+        return "EmailOutbox(id=$id, bodyFormat=$bodyFormat, sender='$sender', recipient='$recipient', subject='$subject', bodyContent=[${bodyContent.length} chars])"
     }
 }
 
