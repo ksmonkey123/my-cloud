@@ -1,4 +1,4 @@
-package ch.awae.mycloud.common.auth
+package ch.awae.mycloud.api.auth
 
 data class AuthInfoDto(
     val type: AuthType,

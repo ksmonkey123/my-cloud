@@ -1,4 +1,4 @@
-package ch.awae.mycloud.common.auth
+package ch.awae.mycloud.api.auth
 
 interface AuthService {
     fun authenticateToken(tokenString: String): AuthInfo?

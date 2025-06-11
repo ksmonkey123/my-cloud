@@ -1,6 +1,6 @@
 package ch.awae.mycloud.config.security
 
-import ch.awae.mycloud.common.auth.AuthService
+import ch.awae.mycloud.api.auth.AuthService
 import jakarta.servlet.*
 import jakarta.servlet.http.*
 import org.springframework.security.core.context.*

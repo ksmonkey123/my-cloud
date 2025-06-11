@@ -1,6 +1,6 @@
 package ch.awae.mycloud.service.canary.dockerhub.service
 
-import ch.awae.mycloud.common.auth.AuthInfo
+import ch.awae.mycloud.api.auth.AuthInfo
 import ch.awae.mycloud.common.createLogger
 import ch.awae.mycloud.service.canary.dockerhub.model.*
 import net.javacrumbs.shedlock.spring.annotation.*

@@ -1,6 +1,6 @@
 package ch.awae.mycloud.service.auth.domain
 
-import ch.awae.mycloud.common.auth.Language
+import ch.awae.mycloud.api.auth.Language
 import ch.awae.mycloud.common.db.IdBaseEntity
 import ch.awae.mycloud.common.db.LanguageConverter
 import com.fasterxml.jackson.annotation.*

@@ -1,4 +1,4 @@
-package ch.awae.mycloud.common.auth
+package ch.awae.mycloud.api.auth
 
 import org.springframework.security.authentication.*
 import org.springframework.security.core.*

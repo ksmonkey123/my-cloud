@@ -1,6 +1,6 @@
 package ch.awae.mycloud.common.db
 
-import ch.awae.mycloud.common.auth.AuthInfo
+import ch.awae.mycloud.api.auth.AuthInfo
 import jakarta.persistence.*
 import org.slf4j.*
 import java.time.*

@@ -1,7 +1,7 @@
 package ch.awae.mycloud.service.auth.facade.rest
 
-import ch.awae.mycloud.common.auth.AuthInfo
-import ch.awae.mycloud.common.auth.Language
+import ch.awae.mycloud.api.auth.AuthInfo
+import ch.awae.mycloud.api.auth.Language
 import ch.awae.mycloud.service.auth.service.*
 import ch.awae.mycloud.service.auth.validation.*
 import jakarta.validation.*

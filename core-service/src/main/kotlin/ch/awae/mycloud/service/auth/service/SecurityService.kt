@@ -1,6 +1,6 @@
 package ch.awae.mycloud.service.auth.service
 
-import ch.awae.mycloud.common.auth.AuthInfo
+import ch.awae.mycloud.api.auth.AuthInfo
 import ch.awae.mycloud.common.createLogger
 import ch.awae.mycloud.service.auth.domain.*
 import ch.awae.mycloud.service.auth.exception.*

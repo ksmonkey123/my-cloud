@@ -1,7 +1,7 @@
 package ch.awae.mycloud.service.shortener.service
 
 import ch.awae.mycloud.common.ResourceNotFoundException
-import ch.awae.mycloud.common.auth.AuthInfo
+import ch.awae.mycloud.api.auth.AuthInfo
 import ch.awae.mycloud.service.shortener.dto.*
 import ch.awae.mycloud.service.shortener.model.*
 import jakarta.transaction.*

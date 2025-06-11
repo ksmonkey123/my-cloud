@@ -1,6 +1,6 @@
 package ch.awae.mycloud.service.canary.web.service
 
-import ch.awae.mycloud.common.auth.AuthInfo
+import ch.awae.mycloud.api.auth.AuthInfo
 import ch.awae.mycloud.service.canary.web.model.*
 import net.javacrumbs.shedlock.spring.annotation.*
 import org.springframework.scheduling.annotation.*

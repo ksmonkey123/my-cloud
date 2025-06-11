@@ -1,6 +1,6 @@
 package ch.awae.mycloud.common.db
 
-import ch.awae.mycloud.common.auth.Language
+import ch.awae.mycloud.api.auth.Language
 import jakarta.persistence.*
 
 @Converter
