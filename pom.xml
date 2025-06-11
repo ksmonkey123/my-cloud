@@ -24,12 +24,11 @@
 
     <modules>
         <!-- base lib -->
-        <module>base-lib</module>
-
-        <!-- business modules -->
         <module>module-apis</module>
+        <module>base-lib</module>
+        <!-- business modules -->
         <module>module-email</module>
-
+        <module>module-shortener</module>
         <!-- application service -->
         <module>gui</module>
         <module>core-service</module>

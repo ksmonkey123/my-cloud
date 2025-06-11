@@ -1,12 +1,10 @@
-package ch.awae.mycloud.service.shortener.facade.rest
+package ch.awae.mycloud.module.shortener
 
-import ch.awae.mycloud.common.ResourceNotFoundException
-import ch.awae.mycloud.service.shortener.model.*
+import ch.awae.mycloud.common.*
 import org.springframework.data.repository.*
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
+import org.springframework.http.*
 import org.springframework.web.bind.annotation.*
-import java.net.URI
+import java.net.*
 
 @RestController
 class LinkResolutionController(private val repository: ShortLinkRepository) {

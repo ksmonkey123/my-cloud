@@ -1,11 +1,11 @@
-package ch.awae.mycloud.service.shortener.model
+package ch.awae.mycloud.module.shortener
 
-import ch.awae.mycloud.common.db.BaseEntity
+import ch.awae.mycloud.common.db.*
 import com.fasterxml.jackson.annotation.*
 import jakarta.persistence.*
 import org.springframework.data.jpa.repository.*
 
-@Table(name = "shortener_link")
+@Table(name = "link", schema = "shortener")
 @Entity
 class ShortLink(
     @Id

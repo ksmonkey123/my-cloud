@@ -1,7 +1,5 @@
-package ch.awae.mycloud.service.shortener.facade.rest
+package ch.awae.mycloud.module.shortener
 
-import ch.awae.mycloud.service.shortener.dto.*
-import ch.awae.mycloud.service.shortener.service.*
 import org.springframework.http.*
 import org.springframework.security.access.prepost.*
 import org.springframework.web.bind.annotation.*

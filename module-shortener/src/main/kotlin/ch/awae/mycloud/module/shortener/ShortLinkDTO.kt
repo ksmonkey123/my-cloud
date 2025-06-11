@@ -1,7 +1,4 @@
-package ch.awae.mycloud.service.shortener.dto
-
-import ch.awae.mycloud.service.shortener.model.*
-import java.time.LocalDateTime
+package ch.awae.mycloud.module.shortener
 
 data class ShortLinkDTO(
     val id: String,
