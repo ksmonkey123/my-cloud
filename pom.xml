@@ -27,6 +27,7 @@
         <module>module-apis</module>
         <module>base-lib</module>
         <!-- business modules -->
+        <module>module-auth</module>
         <module>module-email</module>
         <module>module-shortener</module>
         <!-- application service -->
