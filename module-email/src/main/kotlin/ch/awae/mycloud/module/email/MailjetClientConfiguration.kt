@@ -1,4 +1,4 @@
-package ch.awae.mycloud.service.email
+package ch.awae.mycloud.module.email
 
 import com.mailjet.client.*
 import org.springframework.boot.context.properties.*

@@ -4,6 +4,7 @@ import ch.awae.mycloud.api.auth.AuthInfo
 import jakarta.persistence.*
 import org.slf4j.*
 import java.time.*
+import kotlin.also
 
 private val log = LoggerFactory.getLogger(BaseEntity::class.java)
 

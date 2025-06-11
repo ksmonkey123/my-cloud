@@ -4,6 +4,7 @@ import org.springframework.security.authentication.*
 import org.springframework.security.core.*
 import org.springframework.security.core.authority.*
 import org.springframework.security.core.context.*
+import kotlin.collections.map
 
 sealed interface AuthInfo {
     val username: String

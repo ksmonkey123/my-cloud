@@ -1,4 +1,4 @@
-package ch.awae.mycloud.service.email
+package ch.awae.mycloud.module.email
 
 import ch.awae.mycloud.common.db.*
 import jakarta.persistence.*
@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.*
 import org.springframework.data.jpa.repository.Query
 
 @Entity
-@Table(name = "email_outbox")
+@Table(schema = "email", name = "outbox")
 class EmailOutbox(
     @Column(updatable = false)
     val sender: String,

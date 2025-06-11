@@ -1,7 +1,8 @@
 package ch.awae.mycloud.common.db
 
 import ch.awae.mycloud.api.auth.Language
-import jakarta.persistence.*
+import jakarta.persistence.AttributeConverter
+import jakarta.persistence.Converter
 
 @Converter
 class LanguageConverter : AttributeConverter<Language, String> {

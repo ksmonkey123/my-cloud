@@ -17,3 +17,4 @@ class CoreServiceApplication
 fun main(args: Array<String>) {
     SpringApplication.run(CoreServiceApplication::class.java, *args)
 }
+

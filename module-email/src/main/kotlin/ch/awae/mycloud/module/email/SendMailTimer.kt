@@ -1,4 +1,4 @@
-package ch.awae.mycloud.service.email
+package ch.awae.mycloud.module.email
 
 import ch.awae.mycloud.api.auth.*
 import ch.awae.mycloud.common.*
