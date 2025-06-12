@@ -1,14 +1,13 @@
 package ch.awae.mycloud.module.bookkeping.model
 
-import ch.awae.mycloud.common.db.IdBaseEntity
+import ch.awae.mycloud.common.db.*
 import ch.awae.mycloud.module.bookkeping.dto.*
 import ch.awae.mycloud.module.bookkeping.model.converter.*
 import jakarta.persistence.*
 import jakarta.validation.*
-import org.springframework.context.annotation.Bean
 import org.springframework.data.jpa.repository.*
 import org.springframework.data.jpa.repository.Query
-import org.springframework.stereotype.Repository
+import org.springframework.stereotype.*
 
 @Table(name = "account", schema = "bookkeeping")
 @Entity(name = "BK_Account")
@@ -38,7 +37,7 @@ class Account(
 
 }
 
-@Repository("BK_AccountRepository")
+@Repository
 interface AccountRepository : JpaRepository<Account, Long> {
 
     @Query("select a from BK_Account a where a.accountGroup.book = :book order by a.accountGroup.groupNumber asc, a.accountNumber asc")
