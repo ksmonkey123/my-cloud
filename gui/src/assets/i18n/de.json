@@ -142,6 +142,12 @@
   "settings": {
     "account": {
       "change-error": "Fehler beim Speichern der Benutzereinstellungen",
+      "email": {
+        "changed": "Email-Adresse aktualisiert",
+        "failed": "Speichern der Email-Adresse fehlgeschlagen",
+        "submit": "Email-Adresse Speichern",
+        "title": "Email-Adresse"
+      },
       "password": {
         "changed": "Passwort geändert",
         "confirm": "Passwort bestätigen",
@@ -175,6 +181,11 @@
         "edit": "Rolle bearbeiten"
       },
       "title": "Rollenverwaltung"
+    },
+    "user": {
+      "label": {
+        "email": "Email"
+      }
     },
     "users": {
       "add": "Neuer Benutzer",

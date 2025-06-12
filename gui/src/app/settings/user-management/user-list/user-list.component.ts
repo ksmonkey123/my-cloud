@@ -56,7 +56,7 @@ import {TranslocoPipe, TranslocoService} from "@jsverse/transloco";
 })
 export class UserListComponent implements OnInit {
 
-  displayedColumns = ['admin', 'username', 'enabled']
+  displayedColumns = ['admin', 'username', 'email', 'enabled']
   list$
 
   constructor(public svc: UserManagementService,

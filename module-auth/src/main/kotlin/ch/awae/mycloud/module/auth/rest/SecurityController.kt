@@ -2,6 +2,7 @@ package ch.awae.mycloud.module.auth.rest
 
 import ch.awae.mycloud.api.auth.*
 import ch.awae.mycloud.common.*
+import ch.awae.mycloud.module.auth.dto.AuthInfoDto
 import ch.awae.mycloud.module.auth.service.*
 import org.springframework.http.*
 import org.springframework.security.access.prepost.*
@@ -28,7 +29,7 @@ class SecurityController(private val securityService: SecurityService) {
     @PostMapping("/logout")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun logout() {
-        val auth = AuthInfo.info as UserAuthInfo
+        val auth = AuthInfo.info as BearerTokenUserAuthInfo
 
         logger.info("handling logout request for ${auth.username}")
         securityService.logout(auth.token)

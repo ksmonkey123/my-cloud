@@ -1,8 +1,7 @@
 package ch.awae.mycloud.module.auth.service
 
-import ch.awae.mycloud.common.ResourceAlreadyExistsException
-import ch.awae.mycloud.common.ResourceNotFoundException
-import ch.awae.mycloud.api.auth.Language
+import ch.awae.mycloud.api.auth.*
+import ch.awae.mycloud.common.*
 import ch.awae.mycloud.module.auth.domain.*
 import ch.awae.mycloud.module.auth.dto.*
 import ch.awae.mycloud.module.auth.exception.*
@@ -43,11 +42,12 @@ class AccountService(
             throw ResourceAlreadyExistsException("/accounts/$username")
 
         val account = Account(
-            username,
-            passwordEncoder.encode(password),
-            true,
-            admin,
-            language,
+            username = username,
+            password = passwordEncoder.encode(password),
+            email = null,
+            enabled = true,
+            admin = admin,
+            language = language,
         )
 
         return AccountSummaryDto(accountRepository.save(account))
@@ -66,6 +66,7 @@ class AccountService(
         admin: Boolean? = null,
         enabled: Boolean? = null,
         language: Language? = null,
+        email: Boxed<String?>? = null,
     ): AccountSummaryDto {
         val account = getAccount(username)
 
@@ -73,6 +74,7 @@ class AccountService(
         if (enabled != null) account.enabled = enabled
         if (admin != null) account.admin = admin
         if (language != null) account.language = language
+        if (email != null) account.email = email.value
 
         return AccountSummaryDto(account)
     }

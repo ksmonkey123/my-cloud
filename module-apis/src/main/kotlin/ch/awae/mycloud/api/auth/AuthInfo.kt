@@ -4,12 +4,12 @@ import org.springframework.security.authentication.*
 import org.springframework.security.core.*
 import org.springframework.security.core.authority.*
 import org.springframework.security.core.context.*
-import kotlin.collections.map
 
 sealed interface AuthInfo {
     val username: String
     val roles: List<String>
     val language: Language
+    val email: String?
 
     fun toAuthentication(): Authentication {
         return UsernamePasswordAuthenticationToken(
@@ -30,6 +30,9 @@ sealed interface AuthInfo {
         val language: Language?
             get() = info?.language
 
+        val email: String?
+            get() = info?.email
+
         inline fun <T> impersonate(username: String, action: () -> T): T {
             val ctx = SecurityContextHolder.getContext()
             val backupCtx = ctx.authentication
@@ -44,16 +47,13 @@ sealed interface AuthInfo {
     }
 }
 
-sealed interface TokenBackedAuthInfo : AuthInfo {
-    val token: String
-}
-
-data class UserAuthInfo(
+data class BearerTokenUserAuthInfo(
     override val username: String,
     override val roles: List<String>,
-    override val token: String,
+    val token: String,
     override val language: Language,
-) : TokenBackedAuthInfo
+    override val email: String?,
+) : AuthInfo
 
 data class BasicImpersonation(
     override val username: String
@@ -62,4 +62,6 @@ data class BasicImpersonation(
         get() = emptyList()
     override val language: Language
         get() = Language.ENGLISH
+    override val email: String?
+        get() = null
 }

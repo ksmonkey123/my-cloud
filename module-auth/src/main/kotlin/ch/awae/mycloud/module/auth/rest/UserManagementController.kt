@@ -1,6 +1,6 @@
 package ch.awae.mycloud.module.auth.rest
 
-import ch.awae.mycloud.api.auth.Language
+import ch.awae.mycloud.api.auth.*
 import ch.awae.mycloud.module.auth.dto.*
 import ch.awae.mycloud.module.auth.service.*
 import ch.awae.mycloud.module.auth.validation.*
@@ -43,10 +43,12 @@ class UserManagementController(
     ): AccountSummaryDto {
         return accountService.editAccount(
             username,
-            request.password,
-            request.admin,
-            request.enabled,
-            request.languageCode?.let { Language.fromCode(it) })
+            password = request.password,
+            admin = request.admin,
+            enabled = request.enabled,
+            language = request.languageCode?.let { Language.fromCode(it) },
+            email = request.email?.asBoxed(),
+        )
     }
 
     @GetMapping("/{username}")
@@ -80,6 +82,7 @@ class UserManagementController(
         val admin: Boolean?,
         val enabled: Boolean?,
         val languageCode: String?,
+        @field:Valid val email: BoxedEmailDTO?,
     )
 
 }

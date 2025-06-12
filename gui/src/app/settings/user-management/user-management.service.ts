@@ -118,6 +118,7 @@ export interface Account {
   username: string
   admin: boolean
   enabled: boolean
+  email?: string
 }
 
 export interface AccountDetails {

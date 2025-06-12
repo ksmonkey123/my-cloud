@@ -1,7 +1,7 @@
 package ch.awae.mycloud.module.auth.rest
 
-import ch.awae.mycloud.api.auth.AuthInfo
-import ch.awae.mycloud.api.auth.Language
+import ch.awae.mycloud.api.auth.*
+import ch.awae.mycloud.module.auth.dto.*
 import ch.awae.mycloud.module.auth.service.*
 import ch.awae.mycloud.module.auth.validation.*
 import jakarta.validation.*
@@ -26,8 +26,10 @@ class AccountSettingsController(
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun editSettings(@Valid @RequestBody request: SettingsChangeRequest) {
         accountService.editAccount(
-            AuthInfo.username!!,
-            language = request.languageCode?.let { Language.fromCode(it) })
+            username = AuthInfo.username!!,
+            language = request.languageCode?.let { Language.fromCode(it) },
+            email = request.email?.asBoxed(),
+        )
     }
 
     data class ChangePasswordRequest(
@@ -37,6 +39,7 @@ class AccountSettingsController(
 
     data class SettingsChangeRequest(
         val languageCode: String?,
+        @field:Valid val email: BoxedEmailDTO?,
     )
 
 }

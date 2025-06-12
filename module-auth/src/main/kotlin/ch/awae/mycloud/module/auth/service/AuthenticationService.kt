@@ -1,8 +1,6 @@
 package ch.awae.mycloud.module.auth.service
 
-import ch.awae.mycloud.api.auth.AuthInfo
-import ch.awae.mycloud.api.auth.AuthService
-import ch.awae.mycloud.api.auth.UserAuthInfo
+import ch.awae.mycloud.api.auth.*
 import ch.awae.mycloud.module.auth.domain.*
 import jakarta.transaction.*
 import org.springframework.stereotype.*
@@ -13,20 +11,12 @@ class AuthenticationService(
     private val accountRepository: AccountRepository
 ) : AuthService {
 
-    fun createUserAuthInfo(account: Account, tokenString: String): UserAuthInfo = UserAuthInfo(
+    fun createUserAuthInfo(account: Account, tokenString: String): BearerTokenUserAuthInfo = BearerTokenUserAuthInfo(
         account.username,
-        account.roles
-            .filter { it.enabled }
-            .map { it.name }
-            .let { roles ->
-                if (account.admin) {
-                    roles + arrayOf("admin", "user")
-                } else {
-                    roles + "user"
-                }
-            },
+        AccountToRoleMapper.getRoles(account, includeUserRole = true),
         tokenString,
         account.language,
+        account.email,
     )
 
     override fun authenticateToken(tokenString: String): AuthInfo? {
@@ -37,7 +27,7 @@ class AuthenticationService(
         }
     }
 
-    private fun authenticateBearerToken(tokenString: String): UserAuthInfo? {
+    private fun authenticateBearerToken(tokenString: String): BearerTokenUserAuthInfo? {
         return accountRepository.findActiveByTokenString(tokenString)?.let { account ->
             createUserAuthInfo(account, tokenString)
         }

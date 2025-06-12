@@ -18,6 +18,12 @@
   }
 }
 
+.mat-column-email {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 .mat-column-enabled {
   text-align: right;
 }

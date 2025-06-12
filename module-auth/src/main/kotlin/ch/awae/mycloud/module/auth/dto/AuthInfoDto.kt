@@ -1,4 +1,7 @@
-package ch.awae.mycloud.api.auth
+package ch.awae.mycloud.module.auth.dto
+
+import ch.awae.mycloud.api.auth.AuthInfo
+import ch.awae.mycloud.api.auth.BearerTokenUserAuthInfo
 
 data class AuthInfoDto(
     val type: AuthType,
@@ -15,7 +18,7 @@ data class AuthInfoDto(
     companion object {
         fun of(authInfo: AuthInfo): AuthInfoDto {
             return when (authInfo) {
-                is UserAuthInfo -> AuthInfoDto(
+                is BearerTokenUserAuthInfo -> AuthInfoDto(
                     AuthType.USER,
                     authInfo.username,
                     authInfo.roles,

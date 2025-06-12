@@ -1,20 +1,22 @@
 package ch.awae.mycloud.module.auth.domain
 
-import ch.awae.mycloud.api.auth.Language
-import ch.awae.mycloud.common.db.IdBaseEntity
-import ch.awae.mycloud.common.db.LanguageConverter
+import ch.awae.mycloud.api.auth.*
+import ch.awae.mycloud.common.db.*
 import com.fasterxml.jackson.annotation.*
 import jakarta.persistence.*
+import jakarta.validation.constraints.Email
 import org.springframework.data.jpa.repository.*
 import org.springframework.data.jpa.repository.Query
 
-@Table(name = "account", schema="auth")
+@Table(name = "account", schema = "auth")
 @Entity
 class Account(
     @Column(updatable = false, unique = true)
     val username: String,
     @JsonIgnore
     var password: String,
+    @Email
+    var email: String?,
     var enabled: Boolean = true,
     var admin: Boolean = false,
     @Convert(converter = LanguageConverter::class)

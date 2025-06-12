@@ -17,3 +17,11 @@ export function toDateString(date: Date): string {
 
   return [year, month, day].join('-');
 }
+
+export function trimmedNonEmptyString(value: string | null | undefined): string | null {
+  if (value == null) {
+    return null;
+  }
+  const trimmed = value.trim();
+  return trimmed === "" ? null : trimmed;
+}

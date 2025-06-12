@@ -11,12 +11,14 @@ export interface AuthInfo {
   admin: boolean
   roles: string[]
   languageCode: LanguageCode
+  email?: string
 }
 
 interface AuthInfoDto {
   username: string
   roles: string[]
   languageCode: LanguageCode
+  email?: string
 }
 
 @Injectable({
@@ -57,6 +59,7 @@ export class AuthService implements OnDestroy {
             roles: user.roles,
             admin: user.roles.includes("admin"),
             languageCode: user.languageCode,
+            email: user.email,
           };
           this.authInfo.set(newInfo);
           this.translation.setActiveLang(newInfo.languageCode)
@@ -80,6 +83,14 @@ export class AuthService implements OnDestroy {
           this.fetch()
           return true
         }))
+  }
+
+  changeEmail(email: string | null) {
+    return this.http.patch<void>('rest/auth/account', {
+      email: {
+        value: email
+      }
+    })
   }
 
   changePassword(oldPassword: string, newPassword: string) {

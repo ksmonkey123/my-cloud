@@ -23,6 +23,7 @@ import {
 import {MatOption} from "@angular/material/autocomplete";
 import {MatSelect} from "@angular/material/select";
 import {LanguageCode, languages} from "../../common/language.model";
+import {trimmedNonEmptyString} from "../../utils";
 
 @Component({
   selector: 'app-password-change',
@@ -61,6 +62,23 @@ export class AccountSettingsComponent {
       }
     }]),
   })
+
+  emailForm = new FormGroup({
+    'email': new FormControl(this.authService.authInfo()?.email, [Validators.email])
+  })
+
+  onChangeEmail() {
+    this.authService.changeEmail(trimmedNonEmptyString(this.emailForm.value.email)).subscribe(
+      {
+        next: () => {
+          this.toastr.success(this.transloco.translate("settings.account.email.changed"))
+        },
+        error: (error) => {
+          this.toastr.error(error?.error?.message, this.transloco.translate("settings.account.email.failed"))
+        }
+      }
+    )
+  }
 
   onChangePassword() {
     this.authService.changePassword(this.pwForm.value.oldPassword!, this.pwForm.value.newPassword!).subscribe(

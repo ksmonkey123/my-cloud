@@ -29,6 +29,7 @@ class InitialUserCreator(
                         password = passwordEncoder.encode("admin"),
                         admin = true,
                         language = Language.ENGLISH,
+                        email = null,
                     )
                 )
             }
