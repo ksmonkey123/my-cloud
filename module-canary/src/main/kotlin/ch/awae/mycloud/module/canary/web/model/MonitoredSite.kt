@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query
 @Table(name = "web_monitored_site", schema = "canary")
 class MonitoredSite(
     @Column(updatable = false)
-    val owner: String?,
+    val owner: String,
     var siteUrl: String,
     var enabled: Boolean,
     @ElementCollection

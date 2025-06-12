@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query
 @Table(name = "docker_monitored_entry", schema = "canary")
 class MonitoredEntry(
     @Column(updatable = false)
-    val owner: String?,
+    val owner: String,
     @Column(updatable = false)
     val namespace: String?,
     @Column(updatable = false)
