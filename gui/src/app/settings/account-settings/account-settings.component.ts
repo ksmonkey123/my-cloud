@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, effect, OnDestroy, OnInit} from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -49,6 +49,9 @@ import {trimmedNonEmptyString} from "../../utils";
 export class AccountSettingsComponent {
 
   constructor(protected authService: AuthService, private toastr: ToastrService, private transloco: TranslocoService) {
+    effect(() => {
+      this.emailForm.controls.email.setValue(this.authService.authInfo()?.email ?? null);
+    })
   }
 
   pwForm = new FormGroup({
@@ -64,7 +67,7 @@ export class AccountSettingsComponent {
   })
 
   emailForm = new FormGroup({
-    'email': new FormControl(this.authService.authInfo()?.email, [Validators.email])
+    'email': new FormControl<string | null>(null, [Validators.email])
   })
 
   onChangeEmail() {

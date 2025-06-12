@@ -9,6 +9,7 @@ data class AuthInfoDto(
     val roles: List<String>,
     val token: String,
     val languageCode: String,
+    val email: String?,
 ) {
 
     enum class AuthType {
@@ -23,7 +24,8 @@ data class AuthInfoDto(
                     authInfo.username,
                     authInfo.roles,
                     authInfo.token,
-                    authInfo.language.code
+                    authInfo.language.code,
+                    authInfo.email,
                 )
 
                 else -> throw kotlin.IllegalArgumentException("invalid auth type")
