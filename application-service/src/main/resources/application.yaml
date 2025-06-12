@@ -17,11 +17,11 @@ spring:
     username: ${db.cloud.username}
     password: ${db.cloud.password}
     hikari:
-      schema: core
+      schema: public
   flyway:
-    default-schema: core
+    default-schema: public
   application:
-    name: core-service
+    name: application-service
   jpa:
     show-sql: false
     open-in-view: false

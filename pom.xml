@@ -34,7 +34,7 @@
         <module>module-bookkeeping</module>
         <!-- application service -->
         <module>gui</module>
-        <module>core-service</module>
+        <module>application-service</module>
     </modules>
 
     <dependencyManagement>

@@ -7,4 +7,4 @@ create table shedlock
     constraint pk_shedlock primary key ("name")
 );
 
-create sequence HIBERNATE_SEQ start 100000 increment 1;
+create sequence HIBERNATE_SEQ start 1000000 increment 1;
