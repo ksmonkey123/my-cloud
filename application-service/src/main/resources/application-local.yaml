@@ -1,10 +1,3 @@
-server:
-  port: 8001
-
-management:
-  server:
-    port: 8801
-
 spring:
   jpa:
     show-sql: true
@@ -20,5 +13,19 @@ db.cloud:
 
 canary:
   timer:
-    web: "*/30 * * * * *"
-    dockerhub: "0 * * * * *"
+    web: "-"
+    dockerhub: "-"
+
+email:
+  timer:
+    send: "-"
+
+
+email-notification:
+  footer: dummy
+  from: test@awae.ch
+  to: andreas.waelchli@me.com
+
+mailjet:
+  api-key-public: dummy
+  api-key-secret: dummy
