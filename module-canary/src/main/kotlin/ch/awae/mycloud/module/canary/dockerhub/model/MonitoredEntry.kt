@@ -8,9 +8,15 @@ import org.springframework.data.jpa.repository.Query
 @Entity
 @Table(name = "docker_monitored_entry", schema = "canary")
 class MonitoredEntry(
+    @Column(updatable = false)
+    val owner: String?,
+    @Column(updatable = false)
     val namespace: String?,
+    @Column(updatable = false)
     val repository: String,
+    @Column(updatable = false)
     val tag: String,
+    @Column(updatable = false)
     val tagChangesOnly: Boolean,
     val enabled: Boolean,
 ) : IdBaseEntity() {

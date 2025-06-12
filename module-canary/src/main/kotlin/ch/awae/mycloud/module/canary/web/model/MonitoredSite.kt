@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query
 @Entity
 @Table(name = "web_monitored_site", schema = "canary")
 class MonitoredSite(
+    @Column(updatable = false)
+    val owner: String?,
     var siteUrl: String,
     var enabled: Boolean,
     @ElementCollection
