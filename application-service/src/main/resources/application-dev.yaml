@@ -11,3 +11,7 @@ canary:
   timer:
     web: "*/30 * * * * *"
     dockerhub: "0 * * * * *"
+
+shedlock:
+  default:
+    min-lock: PT10S
