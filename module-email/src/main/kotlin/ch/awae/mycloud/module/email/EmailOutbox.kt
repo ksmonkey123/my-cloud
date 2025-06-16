@@ -27,7 +27,7 @@ class EmailOutbox(
 }
 
 enum class EmailBodyFormat {
-    HTML, TEXT
+    HTML, TEXT, MARKDOWN
 }
 
 interface EmailOutboxRepository : JpaRepository<EmailOutbox, Long> {

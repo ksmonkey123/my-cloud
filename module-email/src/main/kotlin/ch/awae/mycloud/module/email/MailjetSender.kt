@@ -1,7 +1,7 @@
 package ch.awae.mycloud.module.email
 
 import ch.awae.mycloud.common.*
-import com.mailjet.client.MailjetClient
+import com.mailjet.client.*
 import com.mailjet.client.transactional.*
 import jakarta.transaction.*
 import org.springframework.stereotype.*
@@ -28,6 +28,7 @@ class MailjetSender(
                 when (email.bodyFormat) {
                     EmailBodyFormat.HTML -> it.htmlPart(email.bodyContent)
                     EmailBodyFormat.TEXT -> it.textPart(email.bodyContent)
+                    EmailBodyFormat.MARKDOWN -> it.htmlPart(MarkdownParser.toHtml(email.bodyContent))
                 }
             }
             .build()

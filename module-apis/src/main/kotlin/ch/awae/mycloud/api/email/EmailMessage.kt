@@ -10,3 +10,4 @@ data class EmailMessage(
 sealed interface EmailBody
 data class PlainBody(val text: String) : EmailBody
 data class HtmlBody(val text: String) : EmailBody
+data class MarkdownBody(val text: String) : EmailBody
