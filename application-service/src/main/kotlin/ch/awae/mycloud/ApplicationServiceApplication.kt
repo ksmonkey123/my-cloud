@@ -15,10 +15,10 @@ import org.springframework.transaction.annotation.*
 @EnableScheduling
 @EnableJpaRepositories(nameGenerator = JpaRepositoryBeanNameGenerator::class)
 @ConfigurationPropertiesScan
-class CoreServiceApplication
+class ApplicationServiceApplication
 
 fun main(args: Array<String>) {
-    SpringApplication.run(CoreServiceApplication::class.java, *args)
+    SpringApplication.run(ApplicationServiceApplication::class.java, *args)
 }
 
 class JpaRepositoryBeanNameGenerator: BeanNameGenerator {
