@@ -3,7 +3,6 @@ package ch.awae.mycloud.module.canary.web.service
 import ch.awae.mycloud.api.auth.*
 import ch.awae.mycloud.api.email.*
 import ch.awae.mycloud.common.*
-import ch.awae.mycloud.module.canary.*
 import ch.awae.mycloud.module.canary.web.model.*
 import org.springframework.beans.factory.annotation.*
 import org.springframework.data.repository.*
@@ -44,15 +43,15 @@ class ScanningService(
     }
 
     fun sendFailure(email: String, lastRecord: TestRecord?, currentRecord: TestRecord) {
-        val message = "Website scan failed!<br/><br/>" +
-                "URL: <span style=\"font-family: monospace;\">${currentRecord.site.siteUrl}</span><br/>Text:" +
-                currentRecord.failedTests.fold("<ul>") { acc, s -> "$acc<li><span style=\"font-family: monospace;\">$s</span></li>" } + "</ul>"
+        val message = "Website scan failed!\n\n" +
+                "URL: <${currentRecord.site.siteUrl}>\nText:" +
+                currentRecord.failedTests.fold("") { acc, s -> "$acc\n * $s" }
         emailSendService.send(
             EmailMessage(
                 sender = sender,
                 recipient = email,
                 subject = "website canary test failed(${currentRecord.result})",
-                body = HtmlBody(message),
+                body = MarkdownBody(message),
             )
         )
     }

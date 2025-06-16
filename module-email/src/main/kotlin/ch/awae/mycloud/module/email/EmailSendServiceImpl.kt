@@ -31,6 +31,7 @@ class EmailSendServiceImpl(val repo: EmailOutboxRepository) : EmailSendService {
         return when (body) {
             is PlainBody -> Pair(EmailBodyFormat.TEXT, body.text)
             is HtmlBody -> Pair(EmailBodyFormat.HTML, body.text)
+            is MarkdownBody -> Pair(EmailBodyFormat.MARKDOWN, body.text)
         }
     }
 
