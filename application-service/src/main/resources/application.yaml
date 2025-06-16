@@ -42,6 +42,7 @@ auth:
     max-age: "PT4H"
 
 canary:
+  sender: "my@awae.ch"
   timer:
     web: "0 */15 * * * *"
     dockerhub: "0 30 */6 * * *"

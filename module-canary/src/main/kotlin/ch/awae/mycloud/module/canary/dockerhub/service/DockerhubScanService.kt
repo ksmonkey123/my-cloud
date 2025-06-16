@@ -1,22 +1,11 @@
 package ch.awae.mycloud.module.canary.dockerhub.service
 
-import ch.awae.mycloud.common.ResourceNotFoundException
-import ch.awae.mycloud.common.createLogger
-import ch.awae.mycloud.module.canary.dockerhub.model.EntryState
-import ch.awae.mycloud.module.canary.dockerhub.model.EntryStateRepository
-import ch.awae.mycloud.module.canary.dockerhub.model.MonitoredEntry
-import ch.awae.mycloud.module.canary.dockerhub.model.MonitoredEntryRepository
+import ch.awae.mycloud.api.auth.*
+import ch.awae.mycloud.common.*
+import ch.awae.mycloud.module.canary.dockerhub.model.*
 import jakarta.transaction.*
 import org.springframework.data.repository.*
 import org.springframework.stereotype.*
-import kotlin.also
-import kotlin.collections.find
-import kotlin.collections.flatten
-import kotlin.collections.map
-import kotlin.collections.toList
-import kotlin.collections.toSet
-import kotlin.let
-import kotlin.takeIf
 
 @Service
 @Transactional
@@ -25,6 +14,7 @@ class DockerhubScanService(
     private val updateAnnouncer: UpdateAnnouncer,
     private val entryStateRepository: EntryStateRepository,
     private val dockerhubApiClient: DockerhubApiClient,
+    private val userInfoService: UserInfoService,
 ) {
 
     private val logger = createLogger()
@@ -45,7 +35,12 @@ class DockerhubScanService(
             }
             // mismatch found, process update
             logger.info("\"${entry.descriptor}\" relevant changes detected")
-            updateAnnouncer.announceUpdate(entry, lastTagSet?.tags ?: emptySet(), newTagSet.tags)
+
+            val email = userInfoService.getUserInfo(entry.owner)?.email
+            if (email != null) {
+                updateAnnouncer.announceUpdate(email, entry, lastTagSet?.tags ?: emptySet(), newTagSet.tags)
+            }
+
             entryStateRepository.save(EntryState(entry, newTagSet.digest, newTagSet.tags.toList()))
         } else {
             logger.info("\"${entry.descriptor}\" unchanged")

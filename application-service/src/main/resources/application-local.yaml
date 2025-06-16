@@ -12,6 +12,7 @@ db.cloud:
   password: postgres
 
 canary:
+  sender: "test@awae.ch"
   timer:
     web: "-"
     dockerhub: "-"
@@ -19,12 +20,6 @@ canary:
 email:
   timer:
     send: "-"
-
-
-email-notification:
-  footer: dummy
-  from: test@awae.ch
-  to: andreas.waelchli@me.com
 
 mailjet:
   api-key-public: dummy

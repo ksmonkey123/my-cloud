@@ -1,29 +1,26 @@
 package ch.awae.mycloud.module.canary.web.service
 
+import ch.awae.mycloud.api.auth.*
+import ch.awae.mycloud.api.email.*
 import ch.awae.mycloud.common.*
-import ch.awae.mycloud.module.canary.MessageSender
-import ch.awae.mycloud.module.canary.web.model.MonitoredSite
-import ch.awae.mycloud.module.canary.web.model.MonitoredSiteRepository
-import ch.awae.mycloud.module.canary.web.model.TestRecord
-import ch.awae.mycloud.module.canary.web.model.TestRecordRepository
-import ch.awae.mycloud.module.canary.web.model.TestResult
+import ch.awae.mycloud.module.canary.*
+import ch.awae.mycloud.module.canary.web.model.*
+import org.springframework.beans.factory.annotation.*
 import org.springframework.data.repository.*
 import org.springframework.stereotype.*
 import org.springframework.transaction.annotation.*
 import org.springframework.web.client.*
-import kotlin.collections.filter
-import kotlin.collections.filterValues
-import kotlin.collections.fold
-import kotlin.collections.toMutableList
-import kotlin.text.contains
 
 @Service
 @Transactional
 class ScanningService(
     private val monitoredSiteRepository: MonitoredSiteRepository,
     private val testRecordRepository: TestRecordRepository,
-    private val messageSender: MessageSender,
     private val http: RestTemplate,
+    private val userInfoService: UserInfoService,
+    private val emailSendService: EmailSendService,
+    @Value("\${canary.sender}")
+    private val sender: String,
 ) {
 
     private val logger = createLogger()
@@ -33,25 +30,34 @@ class ScanningService(
         val lastRecord = testRecordRepository.findLastRecordBySite(site)
         val scanRecord = doScan(site)
 
+        val email = userInfoService.getUserInfo(site.owner)?.email ?: return
+
         if (lastRecord?.result != TestResult.SUCCESS && scanRecord.result != TestResult.SUCCESS) {
             // at least 2 failures in series -> alert
             logger.warn("sequential failures for $id")
-            sendFailure(lastRecord, scanRecord)
+            sendFailure(email, lastRecord, scanRecord)
         } else if (lastRecord != null && lastRecord.result != TestResult.SUCCESS) {
             // previous error resolved
             logger.info("previous failure resolved for $id")
-            sendResolved(lastRecord)
+            sendResolved(email, lastRecord)
         }
     }
 
-    fun sendFailure(lastRecord: TestRecord?, currentRecord: TestRecord) {
-        val message = "Website scan failed!\n\n" +
-                "URL: ${currentRecord.site.siteUrl}\nText:" +
-                currentRecord.failedTests.fold("") { acc, s -> "$acc\n - $s" }
-        messageSender.sendMessage("website canary test failed (${currentRecord.result})", message)
+    fun sendFailure(email: String, lastRecord: TestRecord?, currentRecord: TestRecord) {
+        val message = "Website scan failed!<br/><br/>" +
+                "URL: <span style=\"font-family: monospace;\">${currentRecord.site.siteUrl}</span><br/>Text:" +
+                currentRecord.failedTests.fold("<ul>") { acc, s -> "$acc<li><span style=\"font-family: monospace;\">$s</span></li>" } + "</ul>"
+        emailSendService.send(
+            EmailMessage(
+                sender = sender,
+                recipient = email,
+                subject = "website canary test failed(${currentRecord.result})",
+                body = HtmlBody(message),
+            )
+        )
     }
 
-    fun sendResolved(lastRecord: TestRecord) {
+    fun sendResolved(email: String, lastRecord: TestRecord) {
         // TODO: resolution message
     }
 
