@@ -16,7 +16,7 @@ class DockerhubScanTimer(
 
     private val logger = createLogger()
 
-    @SchedulerLock(name = "canary-dockerhub-scan-timer")
+    @SchedulerLock(name = "canary:dockerhub-scanner")
     @Scheduled(cron = "\${canary.timer.dockerhub}")
     fun performScan() {
 
