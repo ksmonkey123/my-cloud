@@ -33,7 +33,7 @@ class DockerService(
                         DockerImageSummary.State(
                             digest = s.digest,
                             tags = s.tags.sorted(),
-                            recordedAt = s.recordedAt.toString().replace("T", " "),
+                            recordedAt = s.recordedAt.toLocalDate().toString(),
                         )
                     },
                 )

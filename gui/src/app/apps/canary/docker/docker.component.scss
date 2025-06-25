@@ -1,0 +1,22 @@
+
+.createButton {
+  text-align: right;
+
+  button {
+    @media screen and (max-width: 500px) {
+      width: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .hide-small {
+    display: none;
+  }
+}
+
+.mat-column-identifier, .mat-column-tag, .mat-column-update, .mat-column-tags {
+  &:hover {
+    cursor: pointer;
+  }
+}

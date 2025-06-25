@@ -98,8 +98,21 @@
     }
   },
   "canary": {
+    "docker": {
+      "add": "Add Item",
+      "id": {
+        "name": "Identifier"
+      },
+      "tag": "Tag",
+      "tags": "Associated Tags",
+      "update": "Last Update"
+    },
     "dockerhub": {
       "title": "Dockerhub Image Tracking"
+    },
+    "tab": {
+      "docker": "Docker Images",
+      "web": "Web Scan"
     },
     "title": "Monitoring"
   },
