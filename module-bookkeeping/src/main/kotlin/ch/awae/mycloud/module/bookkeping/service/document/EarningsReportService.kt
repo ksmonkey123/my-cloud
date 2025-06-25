@@ -20,7 +20,9 @@ class EarningsReportService(
     fun generateReportBundle(bookId: Long): ByteArray {
         val book = bookService.getBook(bookId)
 
-        val earningGroups = book.accountGroups.filter { ag -> ag.accounts.any { a -> a.accountType.earningsAccount } }
+        val earningGroups = book.accountGroups
+            .filter { ag -> ag.accounts.any { a -> a.accountType.earningsAccount } }
+            .sortedBy { it.groupNumber }
 
         return PdfDocument {
             generateInitialBalance(this, book)
@@ -40,6 +42,7 @@ class EarningsReportService(
         val earningGroups = book.accountGroups
             .filter { ag -> ag.groupNumber in groupNumbers }
             .filter { ag -> ag.accounts.any { a -> a.accountType.earningsAccount } }
+            .sortedBy { it.groupNumber }
 
         if (earningGroups.isEmpty()) {
             throw InvalidRequestException("no earnings account groups selected")
