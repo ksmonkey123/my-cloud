@@ -9,8 +9,8 @@ logging:
 canary:
   sender: "test@awae.ch"
   timer:
-    web: "*/30 * * * * *"
-    dockerhub: "0 * * * * *"
+    web: "-"
+    dockerhub: "-"
 
 shedlock:
   default:

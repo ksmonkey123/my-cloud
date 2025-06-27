@@ -69,7 +69,7 @@ interface BookingRecordRepository : JpaRepository<BookingRecord, Long> {
     @Query("select max(r.localId) from BK_BookingRecord r where r.book = :book")
     fun findMaxLocalId(book: Book): Long?
 
-    @Query("select distinct r.tag from BK_BookingRecord r where r.book = :book order by r.tag asc")
+    @Query("select distinct r.tag from BK_BookingRecord r where r.book = :book and r.tag is not null order by r.tag asc")
     fun listTags(book: Book): List<String>
 
 }
