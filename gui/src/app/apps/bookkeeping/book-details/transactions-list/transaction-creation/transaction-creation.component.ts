@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, effect, Input, signal} from '@angular/core';
 import {BookkeepingService} from "../../../bookkeeping.service";
 import {MatOptgroup, MatOption, provideNativeDateAdapter} from "@angular/material/core";
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
@@ -18,9 +18,12 @@ import Big from "big.js";
 import {TranslocoDirective, TranslocoPipe} from "@jsverse/transloco";
 import {AccountSummary, Book} from "../../../model/book";
 import {AccountTypeUtil} from "../../../model/accountType";
+import {MatAutocomplete, MatAutocompleteTrigger} from "@angular/material/autocomplete";
+import {startWith} from "rxjs";
+import {toSignal} from "@angular/core/rxjs-interop";
 
 @Component({
-    selector: 'app-transaction-creation',
+  selector: 'app-transaction-creation',
   imports: [
     FormsModule,
     ReactiveFormsModule,
@@ -41,10 +44,12 @@ import {AccountTypeUtil} from "../../../model/accountType";
     MatMiniFabButton,
     TranslocoPipe,
     TranslocoDirective,
+    MatAutocomplete,
+    MatAutocompleteTrigger,
   ],
-    providers: [provideNativeDateAdapter()],
-    templateUrl: './transaction-creation.component.html',
-    styleUrl: './transaction-creation.component.scss'
+  providers: [provideNativeDateAdapter()],
+  templateUrl: './transaction-creation.component.html',
+  styleUrl: './transaction-creation.component.scss'
 })
 export class TransactionCreationComponent {
 
@@ -60,7 +65,24 @@ export class TransactionCreationComponent {
   credits: AccountRow[] = [this.createAccountRow()]
   debits: AccountRow[] = [this.createAccountRow(true)]
 
+  filteredOptions = signal<string[]>([])
+  changeEvent = toSignal(this.form.controls.tag.valueChanges.pipe(startWith('')))
+
   constructor(private service: BookkeepingService) {
+    effect(() => {
+      this.filteredOptions.set(
+        this.updateFilter(
+          this.service.tags$(),
+          this.changeEvent() || '',
+        )
+      )
+    });
+
+  }
+
+  private updateFilter(options: string[], filter: string): string[] {
+    const filterValue = filter.toLowerCase();
+    return options.filter(option => option.toLowerCase().includes(filterValue));
   }
 
   private createAccountRow(disabled: Boolean = false): AccountRow {

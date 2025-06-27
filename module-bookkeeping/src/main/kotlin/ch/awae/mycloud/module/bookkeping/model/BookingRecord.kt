@@ -1,6 +1,6 @@
 package ch.awae.mycloud.module.bookkeping.model
 
-import ch.awae.mycloud.common.db.IdBaseEntity
+import ch.awae.mycloud.common.db.*
 import jakarta.persistence.*
 import jakarta.validation.*
 import org.springframework.data.domain.*
@@ -22,7 +22,11 @@ class BookingRecord(
 ) : IdBaseEntity() {
 
     @ElementCollection
-    @CollectionTable(schema = "bookkeeping", name = "booking_movement", joinColumns = [JoinColumn(name = "booking_record_id")])
+    @CollectionTable(
+        schema = "bookkeeping",
+        name = "booking_movement",
+        joinColumns = [JoinColumn(name = "booking_record_id")]
+    )
     @MapKeyJoinColumn(name = "account_id")
     @Column(name = "amount")
     val movements: MutableMap<Account, BigDecimal> = mutableMapOf()
@@ -64,5 +68,8 @@ interface BookingRecordRepository : JpaRepository<BookingRecord, Long> {
 
     @Query("select max(r.localId) from BK_BookingRecord r where r.book = :book")
     fun findMaxLocalId(book: Book): Long?
+
+    @Query("select distinct r.tag from BK_BookingRecord r where r.book = :book order by r.tag asc")
+    fun listTags(book: Book): List<String>
 
 }

@@ -1,7 +1,6 @@
 package ch.awae.mycloud.module.bookkeping.service
 
-import ch.awae.mycloud.common.InvalidRequestException
-import ch.awae.mycloud.common.ResourceNotFoundException
+import ch.awae.mycloud.common.*
 import ch.awae.mycloud.module.bookkeping.dto.*
 import ch.awae.mycloud.module.bookkeping.model.*
 import org.springframework.data.domain.*
@@ -92,6 +91,11 @@ class BookingRecordService(
         }
 
         bookingRecordRepository.delete(record)
+    }
+
+    fun listTags(bookId: Long): List<String> {
+        val book = bookService.getBook(bookId)
+        return bookingRecordRepository.listTags(book)
     }
 
 }

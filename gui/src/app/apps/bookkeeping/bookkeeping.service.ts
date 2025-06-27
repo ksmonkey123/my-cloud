@@ -1,4 +1,4 @@
-import {Injectable, OnDestroy} from "@angular/core";
+import {Injectable, OnDestroy, signal} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {ToastrService} from "ngx-toastr";
 import {BehaviorSubject, Subject, takeUntil} from "rxjs";
@@ -20,6 +20,7 @@ export class BookkeepingService implements OnDestroy {
 
   public book$ = new BehaviorSubject<Book | null>(null)
   public bookingPage$ = new BehaviorSubject<BookingPage | null>(null)
+  public tags$ = signal<string[]>([])
   public exportInProgress$ = new BehaviorSubject<boolean>(false)
 
   private closer$ = new Subject<void>()
@@ -280,6 +281,13 @@ export class BookkeepingService implements OnDestroy {
               }))
             }))
           })
+        }
+      )
+    this.http.get<string[]>('/rest/bookkeeping/books/' + this.bookingPageState.bookId + '/tags')
+      .pipe(takeUntil(this.closer$))
+      .subscribe(
+        list => {
+          this.tags$.set(list)
         }
       )
   }
