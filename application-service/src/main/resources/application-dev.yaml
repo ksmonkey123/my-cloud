@@ -6,6 +6,11 @@ logging:
   level:
     org.springframework.jdbc.core: DEBUG
 
+auth:
+  clean-timer:
+    schedule: "0 */5 * * * *"
+
+
 canary:
   sender: "test@awae.ch"
   timer:

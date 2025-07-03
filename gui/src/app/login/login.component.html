@@ -10,7 +10,9 @@
         <mat-label>Password</mat-label>
         <input matInput type="password" formControlName="password" required>
       </mat-form-field>
-      <br/>
+      <div class="checkbox-wrapper">
+        <mat-checkbox formControlName="longRetention">stay logged in</mat-checkbox>
+      </div>
       <p class="failureBanner" *ngIf="problem">
         <mat-icon>warning</mat-icon>
         Login Failed

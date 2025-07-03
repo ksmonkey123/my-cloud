@@ -40,8 +40,8 @@ interface AccountRepository : JpaRepository<Account, Long> {
     @Query("select a from Account a where a.username = :username and a.enabled")
     fun findActiveByUsername(username: String): Account?
 
-    @Query("select t.account from AuthToken t where t.tokenString = :tokenString and t.account.enabled")
-    fun findActiveByTokenString(tokenString: String): Account?
+    @Query("select t.account from AuthToken t where t.tokenString = :tokenString and t.validUntil >= current_timestamp and t.account.enabled")
+    fun findActiveByValidTokenString(tokenString: String): Account?
 
     @Query("select a from Account a order by a.username asc")
     fun listAll(): List<Account>

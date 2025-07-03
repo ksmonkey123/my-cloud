@@ -28,7 +28,7 @@ class AuthenticationService(
     }
 
     private fun authenticateBearerToken(tokenString: String): BearerTokenUserAuthInfo? {
-        return accountRepository.findActiveByTokenString(tokenString)?.let { account ->
+        return accountRepository.findActiveByValidTokenString(tokenString)?.let { account ->
             createUserAuthInfo(account, tokenString)
         }
     }

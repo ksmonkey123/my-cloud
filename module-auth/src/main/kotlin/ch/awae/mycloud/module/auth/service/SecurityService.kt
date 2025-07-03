@@ -1,7 +1,7 @@
 package ch.awae.mycloud.module.auth.service
 
-import ch.awae.mycloud.api.auth.AuthInfo
-import ch.awae.mycloud.common.createLogger
+import ch.awae.mycloud.api.auth.*
+import ch.awae.mycloud.common.*
 import ch.awae.mycloud.module.auth.domain.*
 import ch.awae.mycloud.module.auth.exception.*
 import jakarta.transaction.*
@@ -18,12 +18,9 @@ class SecurityService(
     private val accountRepository: AccountRepository,
     private val authTokenRepository: AuthTokenRepository,
     private val passwordEncoder: PasswordEncoder,
-    @Value("\${auth.clean-timer.max-age}")
-    maxAge: String,
 ) {
 
     private val logger = createLogger()
-    private val maxAge = Duration.parse(maxAge).abs()
 
     @Throws(BadLoginException::class)
     fun authenticateCredentials(username: String, password: String): Account {
@@ -35,9 +32,9 @@ class SecurityService(
     }
 
     @Throws(BadLoginException::class)
-    fun login(username: String, password: String): AuthToken {
+    fun login(username: String, password: String, retentionPolicy: TokenRetentionPolicy): AuthToken {
         val account = authenticateCredentials(username, password)
-        val token = AuthToken.buildToken(account)
+        val token = AuthToken.buildToken(account, LocalDateTime.now().plus(retentionPolicy.duration))
 
         AuthInfo.impersonate(username) {
             return authTokenRepository.saveAndFlush(token)
@@ -51,7 +48,7 @@ class SecurityService(
     @SchedulerLock(name = "auth:expired-token-cleaner")
     @Scheduled(cron = "\${auth.clean-timer.schedule}")
     fun cleanOldTokens() {
-        authTokenRepository.deleteExpiredTokens(LocalDateTime.now().minus(maxAge))
+        authTokenRepository.deleteExpiredTokens()
     }
 
 }

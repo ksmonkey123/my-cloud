@@ -42,8 +42,7 @@ mycloud:
 
 auth:
   clean-timer:
-    schedule: "0 */5 * * * *"
-    max-age: "PT4H"
+    schedule: "0 0 0 * * *"
 
 canary:
   sender: "my@awae.ch"

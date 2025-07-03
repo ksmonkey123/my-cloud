@@ -72,10 +72,11 @@ export class AuthService implements OnDestroy {
     this.closer$.complete()
   }
 
-  login(username: string, password: string): Observable<boolean> {
+  login(username: string, password: string, stayLoggedIn: boolean): Observable<boolean> {
     return this.http.post('rest/auth/login', {
       username: username,
-      password: password
+      password: password,
+      longRetention: stayLoggedIn,
     })
       .pipe(
         map((response: any) => {

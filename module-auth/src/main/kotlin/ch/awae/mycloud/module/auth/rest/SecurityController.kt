@@ -2,7 +2,8 @@ package ch.awae.mycloud.module.auth.rest
 
 import ch.awae.mycloud.api.auth.*
 import ch.awae.mycloud.common.*
-import ch.awae.mycloud.module.auth.dto.AuthInfoDto
+import ch.awae.mycloud.module.auth.domain.*
+import ch.awae.mycloud.module.auth.dto.*
 import ch.awae.mycloud.module.auth.service.*
 import org.springframework.http.*
 import org.springframework.security.access.prepost.*
@@ -22,7 +23,13 @@ class SecurityController(private val securityService: SecurityService) {
     @PostMapping("/login")
     fun login(@RequestBody request: LoginRequest): LoginResponse {
         logger.info("handling login request for ${request.username}")
-        val authToken = securityService.login(request.username, request.password)
+
+        val policy = when (request.longRetention) {
+            false -> TokenRetentionPolicy.SHORT
+            true -> TokenRetentionPolicy.LONG
+        }
+
+        val authToken = securityService.login(request.username, request.password, policy)
         return LoginResponse(authToken.tokenString)
     }
 
@@ -39,7 +46,7 @@ class SecurityController(private val securityService: SecurityService) {
     @PreAuthorize("hasAuthority('user')")
     fun getOwnAccountInfo(): AuthInfoDto = AuthInfoDto.of(AuthInfo.info!!)
 
-    data class LoginRequest(val username: String, val password: String)
+    data class LoginRequest(val username: String, val password: String, val longRetention: Boolean)
     data class LoginResponse(val token: String)
 
 }

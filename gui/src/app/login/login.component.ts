@@ -8,21 +8,23 @@ import {MatIcon} from "@angular/material/icon";
 import {AuthService} from "../common/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {NgIf} from "@angular/common";
+import {MatCheckbox} from "@angular/material/checkbox";
 
 @Component({
     selector: 'app-login',
-    imports: [
-        MatCard,
-        MatCardContent,
-        FormsModule,
-        MatFormField,
-        MatInput,
-        MatLabel,
-        MatButton,
-        MatIcon,
-        ReactiveFormsModule,
-        NgIf
-    ],
+  imports: [
+    MatCard,
+    MatCardContent,
+    FormsModule,
+    MatFormField,
+    MatInput,
+    MatLabel,
+    MatButton,
+    MatIcon,
+    ReactiveFormsModule,
+    NgIf,
+    MatCheckbox
+  ],
     templateUrl: './login.component.html',
     styleUrl: './login.component.scss'
 })
@@ -41,6 +43,7 @@ export class LoginComponent implements OnInit {
   form = this.formBuilder.group({
     username: '',
     password: '',
+    longRetention: false,
   })
 
   private target: string | undefined;
@@ -56,7 +59,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.authService.login(this.form.value.username || '', this.form.value.password || '')
+    this.authService.login(this.form.value.username || '', this.form.value.password || '', this.form.value.longRetention || false)
       .subscribe({
           next: _ => {
             this.navigateAfterLogin()
