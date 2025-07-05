@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.*
 import org.springframework.data.jpa.repository.Query
 
 @Entity
-@Table(name = "docker_monitored_entry", schema = "canary")
+@Table(name = "docker_monitored_entry", schema = "docker")
 class MonitoredEntry(
     @Column(updatable = false)
     val owner: String,

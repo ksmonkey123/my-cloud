@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.*
 import org.springframework.data.jpa.repository.Query
 
 @Entity
-@Table(name = "docker_entry_state", schema = "canary")
+@Table(name = "docker_entry_state", schema = "docker")
 class EntryState(
     @ManyToOne
     val monitoredEntry: MonitoredEntry,

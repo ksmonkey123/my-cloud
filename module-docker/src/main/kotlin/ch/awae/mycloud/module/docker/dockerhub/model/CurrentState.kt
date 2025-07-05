@@ -6,7 +6,7 @@ import org.hibernate.annotations.*
 import java.time.*
 
 @Entity
-@Table(name = "v_docker_current_state", schema = "canary")
+@Table(name = "v_docker_current_state", schema = "docker")
 @Immutable
 data class CurrentState(
     @Id
