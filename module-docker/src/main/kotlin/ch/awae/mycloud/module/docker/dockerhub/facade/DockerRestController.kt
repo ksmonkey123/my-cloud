@@ -1,8 +1,8 @@
-package ch.awae.mycloud.module.canary.dockerhub.facade
+package ch.awae.mycloud.module.docker.dockerhub.facade
 
-import ch.awae.mycloud.module.canary.dockerhub.dto.DockerImageDetails
-import ch.awae.mycloud.module.canary.dockerhub.dto.DockerImageSummary
-import ch.awae.mycloud.module.canary.dockerhub.service.DockerService
+import ch.awae.mycloud.module.docker.dockerhub.dto.DockerImageDetails
+import ch.awae.mycloud.module.docker.dockerhub.dto.DockerImageSummary
+import ch.awae.mycloud.module.docker.dockerhub.service.DockerService
 import org.springframework.web.bind.annotation.*
 import kotlin.takeUnless
 

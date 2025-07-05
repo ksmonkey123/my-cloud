@@ -48,6 +48,9 @@ canary:
   sender: "my@awae.ch"
   timer:
     web: "0 */15 * * * *"
+
+docker:
+  timer:
     dockerhub: "0 30 */6 * * *"
   dockerhub:
     web-url: "https://hub.docker.com"

@@ -1,10 +1,10 @@
-package ch.awae.mycloud.module.canary.dockerhub.service
+package ch.awae.mycloud.module.docker.dockerhub.service
 
 import ch.awae.mycloud.common.ResourceNotFoundException
-import ch.awae.mycloud.module.canary.dockerhub.dto.DockerImageDetails
-import ch.awae.mycloud.module.canary.dockerhub.dto.DockerImageSummary
-import ch.awae.mycloud.module.canary.dockerhub.model.EntryStateRepository
-import ch.awae.mycloud.module.canary.dockerhub.model.MonitoredEntryRepository
+import ch.awae.mycloud.module.docker.dockerhub.dto.DockerImageDetails
+import ch.awae.mycloud.module.docker.dockerhub.dto.DockerImageSummary
+import ch.awae.mycloud.module.docker.dockerhub.model.EntryStateRepository
+import ch.awae.mycloud.module.docker.dockerhub.model.MonitoredEntryRepository
 import jakarta.transaction.*
 import org.springframework.data.domain.*
 import org.springframework.stereotype.*

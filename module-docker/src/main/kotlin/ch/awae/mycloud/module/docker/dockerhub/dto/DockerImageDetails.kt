@@ -1,4 +1,4 @@
-package ch.awae.mycloud.module.canary.dockerhub.dto
+package ch.awae.mycloud.module.docker.dockerhub.dto
 
 data class DockerImageDetails(
     val identifier: String,

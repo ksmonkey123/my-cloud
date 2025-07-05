@@ -1,9 +1,9 @@
-package ch.awae.mycloud.module.canary.dockerhub
+package ch.awae.mycloud.module.docker.dockerhub
 
 import org.springframework.boot.context.properties.*
 
-@ConfigurationProperties(prefix = "canary.dockerhub")
-data class DockerProperties(
+@ConfigurationProperties(prefix = "docker.dockerhub")
+data class DockerhubProperties(
     val webUrl: String,
     val apiUrl: String,
     val username: String,

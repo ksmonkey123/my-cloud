@@ -15,6 +15,9 @@ canary:
   sender: "test@awae.ch"
   timer:
     web: "-"
+
+docker:
+  timer:
     dockerhub: "-"
 
 shedlock:

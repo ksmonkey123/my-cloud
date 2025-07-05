@@ -1,8 +1,8 @@
-package ch.awae.mycloud.module.canary.dockerhub.service
+package ch.awae.mycloud.module.docker.dockerhub.service
 
 import ch.awae.mycloud.api.auth.*
 import ch.awae.mycloud.common.*
-import ch.awae.mycloud.module.canary.dockerhub.model.*
+import ch.awae.mycloud.module.docker.dockerhub.model.*
 import jakarta.transaction.*
 import org.springframework.data.repository.*
 import org.springframework.stereotype.*

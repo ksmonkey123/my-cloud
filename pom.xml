@@ -32,6 +32,7 @@
         <module>module-email</module>
         <module>module-shortener</module>
         <module>module-canary</module>
+        <module>module-docker</module>
         <module>module-bookkeeping</module>
         <!-- application service -->
         <module>gui</module>

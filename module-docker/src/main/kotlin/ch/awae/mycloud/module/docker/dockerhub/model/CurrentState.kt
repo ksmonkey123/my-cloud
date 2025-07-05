@@ -1,4 +1,4 @@
-package ch.awae.mycloud.module.canary.dockerhub.model
+package ch.awae.mycloud.module.docker.dockerhub.model
 
 import jakarta.persistence.*
 import jakarta.persistence.Table

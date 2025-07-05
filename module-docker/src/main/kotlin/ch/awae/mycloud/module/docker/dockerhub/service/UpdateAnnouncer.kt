@@ -1,14 +1,14 @@
-package ch.awae.mycloud.module.canary.dockerhub.service
+package ch.awae.mycloud.module.docker.dockerhub.service
 
 import ch.awae.mycloud.api.email.*
-import ch.awae.mycloud.module.canary.dockerhub.*
-import ch.awae.mycloud.module.canary.dockerhub.model.*
+import ch.awae.mycloud.module.docker.dockerhub.*
+import ch.awae.mycloud.module.docker.dockerhub.model.*
 import org.springframework.beans.factory.annotation.*
 import org.springframework.stereotype.*
 
 @Service
 class UpdateAnnouncer(
-    private val dockerProperties: DockerProperties,
+    private val dockerProperties: DockerhubProperties,
     private val emailSendService: EmailSendService,
     @Value("\${canary.sender}")
     private val sender: String,

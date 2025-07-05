@@ -1,8 +1,8 @@
-package ch.awae.mycloud.module.canary.dockerhub.service
+package ch.awae.mycloud.module.docker.dockerhub.service
 
 import ch.awae.mycloud.api.auth.AuthInfo
 import ch.awae.mycloud.common.createLogger
-import ch.awae.mycloud.module.canary.dockerhub.model.MonitoredEntryRepository
+import ch.awae.mycloud.module.docker.dockerhub.model.MonitoredEntryRepository
 import net.javacrumbs.shedlock.spring.annotation.*
 import org.springframework.scheduling.annotation.*
 import org.springframework.stereotype.*
@@ -16,8 +16,8 @@ class DockerhubScanTimer(
 
     private val logger = createLogger()
 
-    @SchedulerLock(name = "canary:dockerhub-scanner")
-    @Scheduled(cron = "\${canary.timer.dockerhub}")
+    @SchedulerLock(name = "docker:dockerhub-scanner")
+    @Scheduled(cron = "\${docker.timer.dockerhub}")
     fun performScan() {
 
         AuthInfo.impersonate("dockerhub-timer") {

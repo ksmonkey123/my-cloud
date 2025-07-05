@@ -1,8 +1,8 @@
-package ch.awae.mycloud.module.canary.dockerhub.service
+package ch.awae.mycloud.module.docker.dockerhub.service
 
 import ch.awae.mycloud.common.ExpiringInstance
 import ch.awae.mycloud.common.createLogger
-import ch.awae.mycloud.module.canary.dockerhub.DockerProperties
+import ch.awae.mycloud.module.docker.dockerhub.DockerhubProperties
 import org.springframework.boot.web.client.*
 import org.springframework.stereotype.*
 import org.springframework.web.client.*
@@ -14,7 +14,7 @@ import kotlin.time.Duration.Companion.days
 import kotlin.to
 
 @Repository
-class DockerhubApiClient(private val dockerProperties: DockerProperties) {
+class DockerhubApiClient(private val dockerProperties: DockerhubProperties) {
 
     private val logger = createLogger()
 
