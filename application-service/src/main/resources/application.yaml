@@ -61,3 +61,7 @@ docker:
 email:
   timer:
     send: "0 * * * * *"
+
+ytdl:
+  data-path: /data/ytdl/data
+  job-path: /data/ytdl/jobs
