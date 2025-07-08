@@ -34,6 +34,7 @@
         <module>module-canary</module>
         <module>module-docker</module>
         <module>module-bookkeeping</module>
+        <module>module-ytdl</module>
         <!-- application service -->
         <module>gui</module>
         <module>application-service</module>

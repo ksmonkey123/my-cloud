@@ -1,9 +1,9 @@
 package ch.awae.mycloud.common
 
-abstract class ModuleConfiguration {
+abstract class ModuleConfiguration(private val dbSchemaName: String? = null) {
 
     open fun databaseSchemaName(): String? {
-        return null
+        return dbSchemaName
     }
 
     open fun flywayMigrationPath(): String? {
