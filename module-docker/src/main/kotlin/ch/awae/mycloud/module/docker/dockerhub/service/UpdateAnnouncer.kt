@@ -19,10 +19,10 @@ class UpdateAnnouncer(
         val addedTags = newTags.subtract(oldTags)
         val removedTags = oldTags.subtract(newTags)
 
-        val message = "docker image `" + item.descriptor + "` updated.\n" +
-                enumerate("\nadded tags:", addedTags) +
-                enumerate("\nremoved tags:", removedTags) +
-                enumerate("\nunchanged tags:", unchangedTags) +
+        val message = "docker image `" + item.descriptor + "` updated." +
+                enumerate("\n\nadded tags:", addedTags) +
+                enumerate("\n\nremoved tags:", removedTags) +
+                enumerate("\n\nunchanged tags:", unchangedTags) +
                 "\n\n<${dockerProperties.webUrl}/${item.webIdentifier}/tags>"
 
         emailSendService.send(
