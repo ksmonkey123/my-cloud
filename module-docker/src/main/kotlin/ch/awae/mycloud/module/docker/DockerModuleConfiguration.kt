@@ -4,10 +4,6 @@ import ch.awae.mycloud.common.ModuleConfiguration
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-class DockerModuleConfiguration : ModuleConfiguration() {
-
-    override fun databaseSchemaName(): String? {
-        return "docker"
-    }
-
-}
+class DockerModuleConfiguration : ModuleConfiguration(
+    databaseSchemaName = "docker",
+)

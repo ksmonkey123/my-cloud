@@ -19,8 +19,8 @@ class MultiModuleFlywayStrategy(
         flyway.migrate()
 
         for (config in moduleConfigurations) {
-            val schema = config.databaseSchemaName() ?: continue
-            val location = config.flywayMigrationPath()
+            val schema = config.databaseSchemaName ?: continue
+            val location = config.flywayMigrationPath
                 ?: throw IllegalArgumentException("flyway schema location cannot be null if a database module is provided. processing $config")
 
             logger.info("migrating schema $schema from $location for module $config")

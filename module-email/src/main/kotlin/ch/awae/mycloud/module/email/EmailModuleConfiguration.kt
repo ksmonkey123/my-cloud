@@ -4,10 +4,6 @@ import ch.awae.mycloud.common.*
 import org.springframework.context.annotation.*
 
 @Configuration
-class EmailModuleConfiguration : ModuleConfiguration() {
-
-    override fun databaseSchemaName(): String {
-        return "email"
-    }
-
-}
+class EmailModuleConfiguration : ModuleConfiguration(
+    databaseSchemaName = "email",
+)

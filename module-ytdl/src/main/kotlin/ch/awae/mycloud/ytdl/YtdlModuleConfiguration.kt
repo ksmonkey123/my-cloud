@@ -4,4 +4,6 @@ import ch.awae.mycloud.common.*
 import org.springframework.context.annotation.*
 
 @Configuration
-class YtdlModuleConfiguration : ModuleConfiguration("ytdl")
+class YtdlModuleConfiguration : ModuleConfiguration(
+    databaseSchemaName = "ytdl",
+)

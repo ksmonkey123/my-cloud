@@ -4,10 +4,6 @@ import ch.awae.mycloud.common.*
 import org.springframework.context.annotation.*
 
 @Configuration
-class AuthModuleConfiguration : ModuleConfiguration() {
-
-    override fun databaseSchemaName(): String? {
-        return "auth"
-    }
-
-}
+class AuthModuleConfiguration : ModuleConfiguration(
+    databaseSchemaName = "auth",
+)
