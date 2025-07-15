@@ -6,4 +6,5 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class DockerModuleConfiguration : ModuleConfiguration(
     databaseSchemaName = "docker",
+    roles = listOf("docker"),
 )

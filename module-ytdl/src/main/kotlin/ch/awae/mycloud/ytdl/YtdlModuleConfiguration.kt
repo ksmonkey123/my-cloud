@@ -6,4 +6,5 @@ import org.springframework.context.annotation.*
 @Configuration
 class YtdlModuleConfiguration : ModuleConfiguration(
     databaseSchemaName = "ytdl",
+    roles = listOf("ytdl"),
 )

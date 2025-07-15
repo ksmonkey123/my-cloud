@@ -1,12 +1,12 @@
 package ch.awae.mycloud.common
 
-typealias RoleDescriptor = Pair<String, String>
-
 abstract class ModuleConfiguration(
+    name: String? = null,
     val databaseSchemaName: String? = null,
-    val roles: List<RoleDescriptor> = emptyList(),
+    val roles: List<String> = emptyList(),
 ) {
 
+    val name = name ?: databaseSchemaName ?: this.toString()
     val flywayMigrationPath: String? = databaseSchemaName?.let { "db/$it/migration" }
 
 }

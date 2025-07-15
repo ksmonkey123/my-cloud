@@ -5,10 +5,13 @@ import ch.awae.mycloud.common.*
 import ch.awae.mycloud.module.auth.domain.*
 import jakarta.transaction.*
 import org.springframework.boot.*
+import org.springframework.core.Ordered
+import org.springframework.core.annotation.Order
 import org.springframework.security.crypto.password.*
 import org.springframework.stereotype.*
 
 @Component
+@Order(1)
 class InitialUserCreator(
     private val accountRepository: AccountRepository,
     private val passwordEncoder: PasswordEncoder,

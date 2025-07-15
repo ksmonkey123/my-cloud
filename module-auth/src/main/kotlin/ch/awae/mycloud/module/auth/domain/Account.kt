@@ -46,6 +46,9 @@ interface AccountRepository : JpaRepository<Account, Long> {
     @Query("select a from Account a order by a.username asc")
     fun listAll(): List<Account>
 
+    @Query("select a from Account a where a.enabled and a.admin order by a.username asc")
+    fun listActiveAdmins(): List<Account>
+
     fun findByUsername(username: String): Account?
 
     fun existsByUsername(username: String): Boolean
