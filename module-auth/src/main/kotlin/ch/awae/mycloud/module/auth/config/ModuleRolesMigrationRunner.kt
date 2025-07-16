@@ -55,7 +55,7 @@ class ModuleRoleInitializer(
         }
         log.info("grant ${addedRoles.size} added roles to ${admins.size} active admin user(s)")
         admins.forEach { it.roles.addAll(addedRoles) }
-        accountRepository.saveAll(admins)
+        accountRepository.saveAllAndFlush(admins)
     }
 
 }
