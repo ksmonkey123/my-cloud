@@ -50,7 +50,6 @@ class BookingRecordService(
     fun listRecordsOfBook(bookId: Long, page: Int, pageSize: Int): PageDto<BookingRecordDto> {
         val book = bookService.getBook(bookId)
         val records = bookingRecordRepository.listAllInBook(book, Pageable.ofSize(pageSize).withPage(page))
-        records.hasNext()
         return PageDto(
             records.content.map { BookingRecordDto.of(it) },
             records.totalElements,

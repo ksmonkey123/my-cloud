@@ -1,5 +1,6 @@
 package ch.awae.mycloud.module.bookkeping.facade.rest
 
+import ch.awae.mycloud.common.PageDto
 import ch.awae.mycloud.module.bookkeping.dto.*
 import ch.awae.mycloud.module.bookkeping.service.*
 import ch.awae.mycloud.module.bookkeping.service.export.*
