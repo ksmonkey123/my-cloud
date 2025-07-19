@@ -95,7 +95,7 @@ export class BookkeepingService implements OnDestroy {
 
   exportTransactions(bookId: number) {
     this.exportInProgress$.next(true)
-    this.http.get('/rest/bookkeeping/books/' + bookId + '/records/export', {
+    this.http.get('/rest/bookkeeping/books/' + bookId + '/records/journal.xlsx', {
       responseType: 'blob'
     }).pipe(takeUntil(this.closer$))
       .subscribe({
