@@ -53,7 +53,7 @@ class BookingRecordController(
         service.deleteRecord(bookId, bookingId)
     }
 
-    @GetMapping("/export")
+    @GetMapping("/journal.xlsx")
     fun export(
         @PathVariable bookId: Long
     ): ResponseEntity<Resource> {
