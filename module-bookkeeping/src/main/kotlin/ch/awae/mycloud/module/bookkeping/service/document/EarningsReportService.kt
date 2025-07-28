@@ -1,13 +1,16 @@
 package ch.awae.mycloud.module.bookkeping.service.document
 
+import ch.awae.mycloud.api.documents.*
 import ch.awae.mycloud.common.*
 import ch.awae.mycloud.module.bookkeping.dto.*
 import ch.awae.mycloud.module.bookkeping.model.*
-import ch.awae.mycloud.module.bookkeping.pdf.PdfDocument
+import ch.awae.mycloud.module.bookkeping.pdf.*
 import ch.awae.mycloud.module.bookkeping.service.*
 import jakarta.transaction.*
+import org.springframework.http.*
 import org.springframework.stereotype.*
 import java.math.*
+import java.time.*
 
 @Service
 @Transactional
@@ -15,16 +18,17 @@ class EarningsReportService(
     private val bookService: BookService,
     private val accountTagBalanceRepository: AccountTagBalanceRepository,
     private val bookingRecordRepository: BookingRecordRepository,
+    private val documentStore: DocumentStore,
 ) {
 
-    fun generateReportBundle(bookId: Long): ByteArray {
+    fun generateReportBundle(bookId: Long): DocumentIdentifier {
         val book = bookService.getBook(bookId)
 
         val earningGroups = book.accountGroups
             .filter { ag -> ag.accounts.any { a -> a.accountType.earningsAccount } }
             .sortedBy { it.groupNumber }
 
-        return PdfDocument {
+        val content = PdfDocument {
             generateInitialBalance(this, book)
             generateReport(this, book, "Schlussbilanz", book.accountGroups)
             if (earningGroups.isNotEmpty()) {
@@ -34,9 +38,11 @@ class EarningsReportService(
                 }
             }
         }.toByteArray()
+
+        return documentStore.createDocument("report.pdf", MediaType.APPLICATION_PDF, content, Duration.ofHours(1))
     }
 
-    fun generatePartialEarningsReport(bookId: Long, groupNumbers: List<Int>, title: String?): ByteArray {
+    fun generatePartialEarningsReport(bookId: Long, groupNumbers: List<Int>, title: String?): DocumentIdentifier {
         val book = bookService.getBook(bookId)
 
         val earningGroups = book.accountGroups
@@ -48,12 +54,14 @@ class EarningsReportService(
             throw InvalidRequestException("no earnings account groups selected")
         }
 
-        return PdfDocument {
+        val content = PdfDocument {
             generateReport(this, book, "Erfolgsrechnung " + (title ?: "(partiell)"), earningGroups, earnings = true)
             for (group in earningGroups) {
                 generateDetailedEarningsReport(this, book, "Erfolgrechnung " + group.title, group)
             }
         }.toByteArray()
+
+        return documentStore.createDocument("partial_report.pdf", MediaType.APPLICATION_PDF, content, Duration.ofHours(1))
     }
 
     fun generateInitialBalance(pdf: PdfDocument, book: Book) {

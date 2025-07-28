@@ -1,27 +1,31 @@
 package ch.awae.mycloud.module.bookkeping.service.document
 
+import ch.awae.mycloud.api.documents.*
 import ch.awae.mycloud.module.bookkeping.dto.*
 import ch.awae.mycloud.module.bookkeping.model.*
-import ch.awae.mycloud.module.bookkeping.pdf.PdfDocument
+import ch.awae.mycloud.module.bookkeping.pdf.*
 import ch.awae.mycloud.module.bookkeping.service.*
 import jakarta.transaction.*
+import org.springframework.http.*
 import org.springframework.stereotype.*
+import java.time.*
 
 @Service
 @Transactional
 class AccountLedgersService(
     private val bookService: BookService,
     private val accountTransactionRepository: AccountTransactionRepository,
+    private val documentStore: DocumentStore,
 ) {
 
-    fun generateAccountLegderBundle(bookId: Long): ByteArray {
+    fun generateAccountLegderBundle(bookId: Long): DocumentIdentifier {
         val book = bookService.getBook(bookId)
 
         val accounts = book.accountGroups
             .sortedBy { it.groupNumber }
             .flatMap { it.accounts.sortedBy { a -> a.accountNumber } }
 
-        return PdfDocument {
+        val content = PdfDocument {
 
             for (account in accounts) {
                 generateAccountLedger(this, book, account)
@@ -29,6 +33,7 @@ class AccountLedgersService(
 
         }.toByteArray()
 
+        return documentStore.createDocument("ledgers.pdf", MediaType.APPLICATION_PDF, content, Duration.ofHours(1))
     }
 
     fun generateAccountLedger(pdf: PdfDocument, book: Book, account: Account) {

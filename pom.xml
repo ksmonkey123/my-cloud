@@ -35,6 +35,7 @@
         <module>module-docker</module>
         <module>module-bookkeeping</module>
         <module>module-ytdl</module>
+        <module>module-documents</module>
         <!-- application service -->
         <module>gui</module>
         <module>application-service</module>

@@ -1,14 +1,17 @@
 package ch.awae.mycloud.module.bookkeping.service.export
 
+import ch.awae.mycloud.api.documents.*
 import ch.awae.mycloud.module.bookkeping.model.*
 import ch.awae.mycloud.module.bookkeping.service.*
 import jakarta.transaction.*
 import org.apache.poi.ss.util.*
 import org.apache.poi.xssf.usermodel.*
 import org.springframework.data.domain.*
+import org.springframework.http.*
 import org.springframework.stereotype.*
 import java.io.*
 import java.math.*
+import java.time.*
 
 
 @Service
@@ -17,9 +20,10 @@ class BookingRecordExportService(
     private val bookService: BookService,
     private val bookingRecordRepository: BookingRecordRepository,
     private val accountTransactionRepository: AccountTransactionRepository,
+    private val documentStore: DocumentStore,
 ) {
 
-    fun createExport(bookId: Long): ByteArray {
+    fun createExport(bookId: Long): DocumentIdentifier {
         val book = bookService.getBook(bookId)
         val accounts =
             book.accountGroups.sortedBy { it.groupNumber }.flatMap { it.accounts.sortedBy { a -> a.accountNumber } }
@@ -33,9 +37,11 @@ class BookingRecordExportService(
             createAccountPage(workbook, account)
         }
 
-        return ByteArrayOutputStream().also {
+        val content = ByteArrayOutputStream().also {
             workbook.write(it)
         }.toByteArray()
+
+        return documentStore.createDocument("export.xlsx", MediaType.APPLICATION_OCTET_STREAM, content, Duration.ofHours(1))
     }
 
     fun createAccountIndexSheet(workbook: XSSFWorkbook, book: Book) {

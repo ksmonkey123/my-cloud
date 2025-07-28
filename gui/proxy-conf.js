@@ -6,5 +6,10 @@ module.exports = [
   {
     context: ['/s'],
     target: 'http://localhost:8080/',
-  }
+  },
+  {
+    context: ['/documents'],
+    target: 'http://localhost:8080/',
+  },
+
 ]

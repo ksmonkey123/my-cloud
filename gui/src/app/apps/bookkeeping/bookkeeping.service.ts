@@ -95,12 +95,11 @@ export class BookkeepingService implements OnDestroy {
 
   exportTransactions(bookId: number) {
     this.exportInProgress$.next(true)
-    this.http.get('/rest/bookkeeping/books/' + bookId + '/records/journal.xlsx', {
-      responseType: 'blob'
-    }).pipe(takeUntil(this.closer$))
+    this.http.post<DocumentIdentifier>('/rest/bookkeeping/books/' + bookId + '/records/export', {})
+      .pipe(takeUntil(this.closer$))
       .subscribe({
-          next: blob => {
-            FileSaver.saveAs(blob, 'transactions.xlsx')
+          next: id => {
+            window.open('/documents/' + id.token, '_blank')
             this.exportInProgress$.next(false)
           },
           error: error => {
@@ -113,12 +112,11 @@ export class BookkeepingService implements OnDestroy {
 
   exportEarningsReport(bookId: number) {
     this.exportInProgress$.next(true)
-    this.http.get('/rest/bookkeeping/books/' + bookId + '/documents/earnings.pdf', {
-      responseType: 'blob'
-    }).pipe(takeUntil(this.closer$))
+    this.http.post<DocumentIdentifier>('/rest/bookkeeping/books/' + bookId + '/documents/report', {})
+      .pipe(takeUntil(this.closer$))
       .subscribe({
-          next: blob => {
-            FileSaver.saveAs(blob, 'report.pdf')
+          next: id => {
+            window.open('/documents/' + id.token, '_blank')
             this.exportInProgress$.next(false)
           },
           error: error => {
@@ -131,12 +129,11 @@ export class BookkeepingService implements OnDestroy {
 
   exportAccountLedgers(bookId: number) {
     this.exportInProgress$.next(true)
-    this.http.get('/rest/bookkeeping/books/' + bookId + '/documents/ledgers.pdf', {
-      responseType: 'blob'
-    }).pipe(takeUntil(this.closer$))
+    this.http.post<DocumentIdentifier>('/rest/bookkeeping/books/' + bookId + '/documents/ledgers', {})
+      .pipe(takeUntil(this.closer$))
       .subscribe({
-          next: blob => {
-            FileSaver.saveAs(blob, 'ledgers.pdf')
+          next: id => {
+            window.open('/documents/' + id.token, '_blank')
             this.exportInProgress$.next(false)
           },
           error: error => {
@@ -149,13 +146,11 @@ export class BookkeepingService implements OnDestroy {
 
   exportPartialEarningsReport(bookId: number, config: { title: string; groupNumber: number[] }) {
     this.exportInProgress$.next(true)
-    this.http.get('/rest/bookkeeping/books/' + bookId + '/documents/earnings.pdf', {
-      responseType: 'blob',
-      params: config,
-    }).pipe(takeUntil(this.closer$))
+    this.http.post<DocumentIdentifier>('/rest/bookkeeping/books/' + bookId + '/documents/report',{})
+      .pipe(takeUntil(this.closer$))
       .subscribe({
-          next: blob => {
-            FileSaver.saveAs(blob, 'partialReport.pdf')
+          next: id => {
+            window.open('/documents/' + id.token, '_blank')
             this.exportInProgress$.next(false)
           },
           error: error => {
@@ -452,4 +447,8 @@ export interface CreateBookingRecord {
   description?: string,
   credits: BookingMovement[],
   debits: BookingMovement[],
+}
+
+interface DocumentIdentifier {
+  token: string,
 }

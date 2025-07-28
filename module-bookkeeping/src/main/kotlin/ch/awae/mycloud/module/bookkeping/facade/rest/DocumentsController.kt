@@ -1,8 +1,7 @@
 package ch.awae.mycloud.module.bookkeping.facade.rest
 
+import ch.awae.mycloud.api.documents.*
 import ch.awae.mycloud.module.bookkeping.service.document.*
-import org.springframework.core.io.*
-import org.springframework.http.*
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -12,45 +11,23 @@ class DocumentsController(
     private val accountLedgersService: AccountLedgersService,
 ) {
 
-    @GetMapping("/earnings.pdf")
+    @PostMapping("/report")
     fun getEarningsDocument(
         @PathVariable("bookId") bookId: Long,
         @RequestParam("groupNumber", required = false) groups: List<Int>?,
         @RequestParam("title", required = false) title: String?,
-    ): ResponseEntity<Resource> {
-        val pdf =
-            if (groups.isNullOrEmpty()) {
-                earningsReportService.generateReportBundle(bookId)
-            } else {
-                earningsReportService.generatePartialEarningsReport(bookId, groups, title?.takeIf { it.isNotBlank() })
-            }
-
-
-        return ResponseEntity.ok()
-            .headers {
-                it.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=earnings.pdf")
-            }
-            .contentLength(pdf.size.toLong())
-            .contentType(MediaType.APPLICATION_PDF)
-            .body(ByteArrayResource(pdf))
+    ): DocumentIdentifier {
+        return if (groups.isNullOrEmpty()) {
+            earningsReportService.generateReportBundle(bookId)
+        } else {
+            earningsReportService.generatePartialEarningsReport(bookId, groups, title?.takeIf { it.isNotBlank() })
+        }
     }
 
-
-    @GetMapping("/ledgers.pdf")
-    fun getEarningsDocument(
+    @PostMapping("/ledgers")
+    fun createLedgerDocument(
         @PathVariable("bookId") bookId: Long,
-    ): ResponseEntity<Resource> {
-        val pdf = accountLedgersService.generateAccountLegderBundle(bookId)
-
-        return ResponseEntity.ok()
-            .headers {
-                it.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=ledgers.pdf")
-            }
-            .contentLength(pdf.size.toLong())
-            .contentType(MediaType.APPLICATION_PDF)
-            .body(ByteArrayResource(pdf))
+    ): DocumentIdentifier {
+        return accountLedgersService.generateAccountLegderBundle(bookId)
     }
-
-
-
 }

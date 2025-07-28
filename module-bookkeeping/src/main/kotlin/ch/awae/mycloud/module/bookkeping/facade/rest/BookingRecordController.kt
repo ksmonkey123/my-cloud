@@ -1,5 +1,6 @@
 package ch.awae.mycloud.module.bookkeping.facade.rest
 
+import ch.awae.mycloud.api.documents.*
 import ch.awae.mycloud.common.PageDto
 import ch.awae.mycloud.module.bookkeping.dto.*
 import ch.awae.mycloud.module.bookkeping.service.*
@@ -53,18 +54,11 @@ class BookingRecordController(
         service.deleteRecord(bookId, bookingId)
     }
 
-    @GetMapping("/journal.xlsx")
+    @PostMapping("/export")
     fun export(
         @PathVariable bookId: Long
-    ): ResponseEntity<Resource> {
-        val blob = exportService.createExport(bookId)
-        return ResponseEntity.ok()
-            .headers {
-                it.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=journal.xlsx")
-            }
-            .contentLength(blob.size.toLong())
-            .contentType(MediaType.APPLICATION_OCTET_STREAM)
-            .body(ByteArrayResource(blob))
+    ): DocumentIdentifier {
+        return exportService.createExport(bookId)
     }
 
 }

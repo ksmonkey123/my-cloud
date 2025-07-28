@@ -39,6 +39,7 @@ mycloud:
       - /assets/**
       - /rest/auth/login
       - /s/**
+      - /documents/*
 
 auth:
   clean-timer:
@@ -65,3 +66,7 @@ email:
 ytdl:
   data-path: /data/ytdl/data
   job-path: /data/ytdl/jobs
+
+documents:
+  clean-timer:
+    schedule: "0 0 * * * *"
