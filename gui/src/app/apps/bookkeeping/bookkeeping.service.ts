@@ -10,6 +10,7 @@ import {BookSummary} from "./model/bookSummary";
 import {BookingMovement, BookingRecord} from "./model/bookingRecord";
 import {AccountGroup, AccountSummary, Book} from "./model/book";
 import {AccountType} from "./model/accountType";
+import {DocumentIdentifier, handleDownload} from "../../common/documents/download-handler";
 
 @Injectable()
 export class BookkeepingService implements OnDestroy {
@@ -99,7 +100,7 @@ export class BookkeepingService implements OnDestroy {
       .pipe(takeUntil(this.closer$))
       .subscribe({
           next: id => {
-            window.open('/documents/' + id.token, '_blank')
+            handleDownload(id)
             this.exportInProgress$.next(false)
           },
           error: error => {
@@ -116,7 +117,7 @@ export class BookkeepingService implements OnDestroy {
       .pipe(takeUntil(this.closer$))
       .subscribe({
           next: id => {
-            window.open('/documents/' + id.token, '_blank')
+            handleDownload(id)
             this.exportInProgress$.next(false)
           },
           error: error => {
@@ -133,7 +134,7 @@ export class BookkeepingService implements OnDestroy {
       .pipe(takeUntil(this.closer$))
       .subscribe({
           next: id => {
-            window.open('/documents/' + id.token, '_blank')
+            handleDownload(id)
             this.exportInProgress$.next(false)
           },
           error: error => {
@@ -145,15 +146,17 @@ export class BookkeepingService implements OnDestroy {
   }
 
   exportPartialEarningsReport(bookId: number, config: { title: string; groupNumber: number[] }) {
+    const w = window.open()!!
     this.exportInProgress$.next(true)
     this.http.post<DocumentIdentifier>('/rest/bookkeeping/books/' + bookId + '/documents/report',{})
       .pipe(takeUntil(this.closer$))
       .subscribe({
           next: id => {
-            window.open('/documents/' + id.token, '_blank')
+            handleDownload(id)
             this.exportInProgress$.next(false)
           },
           error: error => {
+            w.close()
             this.toastr.error(error?.error?.message, this.translation.translate("bookkeeping.export-error"))
             this.exportInProgress$.next(false)
           }
@@ -447,8 +450,4 @@ export interface CreateBookingRecord {
   description?: string,
   credits: BookingMovement[],
   debits: BookingMovement[],
-}
-
-interface DocumentIdentifier {
-  token: string,
 }

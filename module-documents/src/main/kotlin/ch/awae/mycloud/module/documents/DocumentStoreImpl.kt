@@ -16,7 +16,7 @@ class DocumentStoreImpl(
 ) : DocumentStore {
 
     override fun createDocument(filename: String, type: MediaType, content: ByteArray, lifetime: Duration): DocumentIdentifier {
-        val token = TokenGenerator.generate(32, TokenGenerator.EncoderType.URL)
+        val token = TokenGenerator.generate(16, TokenGenerator.EncoderType.URL)
         val document = DocumentEntity(
             token = token,
             filename = filename,
@@ -26,7 +26,7 @@ class DocumentStoreImpl(
         )
         documentRepository.save(document)
 
-        return DocumentIdentifier(token)
+        return DocumentIdentifier("/documents/$token", type.toString())
     }
 
     @SchedulerLock(name = "documents:expired-documents-cleaner")
