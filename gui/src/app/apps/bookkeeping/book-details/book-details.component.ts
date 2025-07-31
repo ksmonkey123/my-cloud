@@ -163,7 +163,7 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   }
 
   onReportBundle() {
-    this.service.exportEarningsReport(this.book!!.id)
+    this.service.exportEarningsReport(this.book!!.id, null)
   }
 
   onAccountLedgerExport() {
@@ -174,9 +174,10 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     const dialogRef = ReportPopupComponent.open(this.dialog, {groups: this.book!.groups})
 
     dialogRef.afterClosed().subscribe((result) => {
-        this.service.exportPartialEarningsReport(this.book!.id, result!)
+      if (result) {
+        this.service.exportEarningsReport(this.book!.id, result)
       }
-    )
+    })
   }
 
   onExcelExport() {

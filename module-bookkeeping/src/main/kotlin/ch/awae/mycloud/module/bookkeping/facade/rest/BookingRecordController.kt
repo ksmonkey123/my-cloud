@@ -1,11 +1,8 @@
 package ch.awae.mycloud.module.bookkeping.facade.rest
 
-import ch.awae.mycloud.api.documents.*
-import ch.awae.mycloud.common.PageDto
+import ch.awae.mycloud.common.*
 import ch.awae.mycloud.module.bookkeping.dto.*
 import ch.awae.mycloud.module.bookkeping.service.*
-import ch.awae.mycloud.module.bookkeping.service.export.*
-import org.springframework.core.io.*
 import org.springframework.http.*
 import org.springframework.security.access.prepost.*
 import org.springframework.web.bind.annotation.*
@@ -15,7 +12,6 @@ import org.springframework.web.bind.annotation.*
 @PreAuthorize("hasAuthority('bookkeeping')")
 class BookingRecordController(
     val service: BookingRecordService,
-    val exportService: BookingRecordExportService,
 ) {
 
     @GetMapping
@@ -52,13 +48,6 @@ class BookingRecordController(
         @PathVariable bookingId: Long,
     ) {
         service.deleteRecord(bookId, bookingId)
-    }
-
-    @PostMapping("/export")
-    fun export(
-        @PathVariable bookId: Long
-    ): DocumentIdentifier {
-        return exportService.createExport(bookId)
     }
 
 }

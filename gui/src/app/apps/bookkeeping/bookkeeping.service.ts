@@ -3,7 +3,6 @@ import {HttpClient} from "@angular/common/http";
 import {ToastrService} from "ngx-toastr";
 import {BehaviorSubject, Subject, takeUntil} from "rxjs";
 import Big from "big.js";
-import FileSaver from "file-saver";
 import {TranslocoService} from "@jsverse/transloco";
 import {toDateString} from "../../utils";
 import {BookSummary} from "./model/bookSummary";
@@ -95,60 +94,20 @@ export class BookkeepingService implements OnDestroy {
   }
 
   exportTransactions(bookId: number) {
-    this.exportInProgress$.next(true)
-    this.http.post<DocumentIdentifier>('/rest/bookkeeping/books/' + bookId + '/records/export', {})
-      .pipe(takeUntil(this.closer$))
-      .subscribe({
-          next: id => {
-            handleDownload(id)
-            this.exportInProgress$.next(false)
-          },
-          error: error => {
-            this.toastr.error(error?.error?.message, this.translation.translate("bookkeeping.export-error"))
-            this.exportInProgress$.next(false)
-          }
-        }
-      )
+    this.doExport('/rest/bookkeeping/books/' + bookId + '/documents/export', {})
   }
 
-  exportEarningsReport(bookId: number) {
-    this.exportInProgress$.next(true)
-    this.http.post<DocumentIdentifier>('/rest/bookkeeping/books/' + bookId + '/documents/report', {})
-      .pipe(takeUntil(this.closer$))
-      .subscribe({
-          next: id => {
-            handleDownload(id)
-            this.exportInProgress$.next(false)
-          },
-          error: error => {
-            this.toastr.error(error?.error?.message, this.translation.translate("bookkeeping.export-error"))
-            this.exportInProgress$.next(false)
-          }
-        }
-      )
+  exportEarningsReport(bookId: number, config: {title: string, groupNumber: number[]} | null) {
+    this.doExport('/rest/bookkeeping/books/' + bookId + '/documents/report', config || {})
   }
 
   exportAccountLedgers(bookId: number) {
-    this.exportInProgress$.next(true)
-    this.http.post<DocumentIdentifier>('/rest/bookkeeping/books/' + bookId + '/documents/ledgers', {})
-      .pipe(takeUntil(this.closer$))
-      .subscribe({
-          next: id => {
-            handleDownload(id)
-            this.exportInProgress$.next(false)
-          },
-          error: error => {
-            this.toastr.error(error?.error?.message, this.translation.translate("bookkeeping.export-error"))
-            this.exportInProgress$.next(false)
-          }
-        }
-      )
+    this.doExport('/rest/bookkeeping/books/' + bookId + '/documents/ledgers', {})
   }
 
-  exportPartialEarningsReport(bookId: number, config: { title: string; groupNumber: number[] }) {
-    const w = window.open()!!
+  private doExport(url: string, body: any) {
     this.exportInProgress$.next(true)
-    this.http.post<DocumentIdentifier>('/rest/bookkeeping/books/' + bookId + '/documents/report',{})
+    this.http.post<DocumentIdentifier>(url, body)
       .pipe(takeUntil(this.closer$))
       .subscribe({
           next: id => {
@@ -156,7 +115,6 @@ export class BookkeepingService implements OnDestroy {
             this.exportInProgress$.next(false)
           },
           error: error => {
-            w.close()
             this.toastr.error(error?.error?.message, this.translation.translate("bookkeeping.export-error"))
             this.exportInProgress$.next(false)
           }

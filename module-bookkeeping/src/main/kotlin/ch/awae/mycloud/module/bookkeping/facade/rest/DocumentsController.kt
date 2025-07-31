@@ -2,6 +2,7 @@ package ch.awae.mycloud.module.bookkeping.facade.rest
 
 import ch.awae.mycloud.api.documents.*
 import ch.awae.mycloud.module.bookkeping.service.document.*
+import ch.awae.mycloud.module.bookkeping.service.export.*
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*
 class DocumentsController(
     private val earningsReportService: EarningsReportService,
     private val accountLedgersService: AccountLedgersService,
+    private val bookingRecordExportService: BookingRecordExportService,
 ) {
 
     @PostMapping("/report")
@@ -29,5 +31,12 @@ class DocumentsController(
         @PathVariable("bookId") bookId: Long,
     ): DocumentIdentifier {
         return accountLedgersService.generateAccountLegderBundle(bookId)
+    }
+
+    @PostMapping("/export")
+    fun export(
+        @PathVariable bookId: Long
+    ): DocumentIdentifier {
+        return bookingRecordExportService.createExport(bookId)
     }
 }
