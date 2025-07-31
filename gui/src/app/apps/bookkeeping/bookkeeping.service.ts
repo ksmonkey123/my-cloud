@@ -98,7 +98,7 @@ export class BookkeepingService implements OnDestroy {
   }
 
   exportEarningsReport(bookId: number, config: {title: string, groupNumber: number[]} | null) {
-    this.doExport('/rest/bookkeeping/books/' + bookId + '/documents/report', { body: config })
+    this.doExport('/rest/bookkeeping/books/' + bookId + '/documents/report', { params: config })
   }
 
   exportAccountLedgers(bookId: number) {
