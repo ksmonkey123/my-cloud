@@ -98,16 +98,18 @@ export class BookkeepingService implements OnDestroy {
   }
 
   exportEarningsReport(bookId: number, config: {title: string, groupNumber: number[]} | null) {
-    this.doExport('/rest/bookkeeping/books/' + bookId + '/documents/report', config || {})
+    this.doExport('/rest/bookkeeping/books/' + bookId + '/documents/report', { body: config })
   }
 
   exportAccountLedgers(bookId: number) {
     this.doExport('/rest/bookkeeping/books/' + bookId + '/documents/ledgers', {})
   }
 
-  private doExport(url: string, body: any) {
+  private doExport(url: string, config: { params?: any, body?: any }) {
     this.exportInProgress$.next(true)
-    this.http.post<DocumentIdentifier>(url, body)
+    this.http.post<DocumentIdentifier>(url, config.body, {
+      params: config.params
+    })
       .pipe(takeUntil(this.closer$))
       .subscribe({
           next: id => {
