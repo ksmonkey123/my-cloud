@@ -1,11 +1,10 @@
 FROM eclipse-temurin:21
 
 ARG JAR_NAME
-ENV JAR_NAME ${JAR_NAME}
 
-COPY target/${JAR_NAME}.jar /
+COPY target/${JAR_NAME}.jar /app.jar
 
 EXPOSE 8080
 EXPOSE 8081
 
-ENTRYPOINT ["java", "-jar", "${JAR_NAME}.jar"]
+ENTRYPOINT ["java", "-jar", "/app.jar"]
