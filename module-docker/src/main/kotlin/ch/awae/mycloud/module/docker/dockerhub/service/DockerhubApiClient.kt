@@ -1,20 +1,12 @@
 package ch.awae.mycloud.module.docker.dockerhub.service
 
-import ch.awae.mycloud.common.ExpiringInstance
-import ch.awae.mycloud.common.createLogger
-import ch.awae.mycloud.module.docker.dockerhub.DockerhubProperties
+import ch.awae.mycloud.common.*
+import ch.awae.mycloud.module.docker.dockerhub.*
+import com.fasterxml.jackson.annotation.*
 import org.springframework.boot.web.client.*
 import org.springframework.stereotype.*
 import org.springframework.web.client.*
-import java.time.Duration
-import kotlin.collections.filter
-import kotlin.collections.groupBy
-import kotlin.collections.map
-import kotlin.collections.plus
-import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.minutes
-import kotlin.time.Duration.Companion.seconds
-import kotlin.to
 
 @Repository
 class DockerhubApiClient(private val dockerProperties: DockerhubProperties) {
@@ -53,11 +45,11 @@ class DockerhubApiClient(private val dockerProperties: DockerhubProperties) {
 
         // initial request to get an auth token
         val request = mapOf(
-            "username" to dockerProperties.username,
-            "password" to dockerProperties.password
+            "identifier" to dockerProperties.username,
+            "secret" to dockerProperties.password
         )
         val token = httpBuilder.build()
-            .postForObject("$apiUrl/auth/token", request, LoginResponse::class.java)?.token
+            .postForObject("$apiUrl/auth/token", request, LoginResponse::class.java)?.accessToken
             ?: throw kotlin.IllegalStateException("missing auth token for dockerhub")
 
         logger.info("successfully logged into dockerhub")
@@ -69,16 +61,6 @@ class DockerhubApiClient(private val dockerProperties: DockerhubProperties) {
 
 data class Tag(val tag: String, val digest: String)
 
-private class TagListResponse {
-    var next: String? = null
-    lateinit var results: List<TagListResult>
-}
-
-private class TagListResult {
-    lateinit var name: String
-    var digest: String? = null
-}
-
-private class LoginResponse {
-    lateinit var token: String
-}
+private data class TagListResponse(val next: String?, val results: List<TagListResult>)
+private data class TagListResult(val name: String, val digest: String?)
+private data class LoginResponse(@JsonProperty("access_token") val accessToken: String)
