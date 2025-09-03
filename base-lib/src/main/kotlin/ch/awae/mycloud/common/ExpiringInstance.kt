@@ -10,18 +10,17 @@ class ExpiringInstance<out T : Any>(
     private var currentInstance: Instance<T>? = null
     private val lock = Any()
 
-    val instance: T
-        get() {
-            synchronized(lock) {
-                val instance = currentInstance
-                if (instance != null && !instance.isExpired()) {
-                    return instance.value
-                }
-                val newInstance = supplier()
-                currentInstance = Instance(newInstance, System.currentTimeMillis() + expiration.inWholeMilliseconds)
-                return newInstance
+    operator fun invoke(): T {
+        synchronized(lock) {
+            val instance = currentInstance
+            if (instance != null && !instance.isExpired()) {
+                return instance.value
             }
+            val newInstance = supplier()
+            currentInstance = Instance(newInstance, System.currentTimeMillis() + expiration.inWholeMilliseconds)
+            return newInstance
         }
+    }
 
 }
 

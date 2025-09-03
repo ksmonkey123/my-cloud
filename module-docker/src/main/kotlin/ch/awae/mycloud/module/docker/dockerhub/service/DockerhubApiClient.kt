@@ -6,11 +6,14 @@ import ch.awae.mycloud.module.docker.dockerhub.DockerhubProperties
 import org.springframework.boot.web.client.*
 import org.springframework.stereotype.*
 import org.springframework.web.client.*
+import java.time.Duration
 import kotlin.collections.filter
 import kotlin.collections.groupBy
 import kotlin.collections.map
 import kotlin.collections.plus
 import kotlin.time.Duration.Companion.days
+import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Duration.Companion.seconds
 import kotlin.to
 
 @Repository
@@ -18,7 +21,7 @@ class DockerhubApiClient(private val dockerProperties: DockerhubProperties) {
 
     private val logger = createLogger()
 
-    private val http = ExpiringInstance(1.days, ::buildRestTemplate)
+    private val http = ExpiringInstance(9.minutes, ::buildRestTemplate)
     private val apiUrl = dockerProperties.apiUrl
 
     fun getTagList(namespace: String?, repository: String): Map<String, List<Tag>> {
@@ -40,7 +43,7 @@ class DockerhubApiClient(private val dockerProperties: DockerhubProperties) {
             return previousResults
         }
 
-        val response = http.instance.getForObject(url, TagListResponse::class.java)!!
+        val response = http().getForObject(url, TagListResponse::class.java)!!
         return fetchTags(response.next, previousResults + response.results, invocationCounter + 1)
     }
 
@@ -54,7 +57,7 @@ class DockerhubApiClient(private val dockerProperties: DockerhubProperties) {
             "password" to dockerProperties.password
         )
         val token = httpBuilder.build()
-            .postForObject("$apiUrl/users/login", request, LoginResponse::class.java)?.token
+            .postForObject("$apiUrl/auth/token", request, LoginResponse::class.java)?.token
             ?: throw kotlin.IllegalStateException("missing auth token for dockerhub")
 
         logger.info("successfully logged into dockerhub")
