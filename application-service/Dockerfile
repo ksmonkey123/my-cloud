@@ -8,4 +8,4 @@ COPY target/${JAR_NAME}.jar /
 EXPOSE 8080
 EXPOSE 8081
 
-ENTRYPOINT java -jar ${JAR_NAME}.jar
+ENTRYPOINT ["java", "-jar", "${JAR_NAME}.jar"]
