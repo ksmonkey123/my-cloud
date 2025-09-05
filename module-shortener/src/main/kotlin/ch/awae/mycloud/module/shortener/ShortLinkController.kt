@@ -1,5 +1,6 @@
 package ch.awae.mycloud.module.shortener
 
+import ch.awae.mycloud.api.auth.*
 import org.springframework.http.*
 import org.springframework.security.access.prepost.*
 import org.springframework.web.bind.annotation.*
@@ -10,16 +11,16 @@ import org.springframework.web.bind.annotation.*
 class ShortLinkController(private val svc: ShortLinkService) {
 
     @GetMapping
-    fun list(): List<ShortLinkDTO> = svc.listShortLinks()
+    fun list(): List<ShortLinkDTO> = svc.listShortLinks(AuthInfo.username!!)
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody request: CreationRequest): ShortLinkDTO = svc.createShortLink(request.targetUrl)
+    fun create(@RequestBody request: CreationRequest): ShortLinkDTO = svc.createShortLink(request.targetUrl, AuthInfo.username!!)
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun delete(@PathVariable id: String) {
-        svc.deleteShortLink(id)
+        svc.deleteShortLink(id, AuthInfo.username!!)
     }
 
     data class CreationRequest(

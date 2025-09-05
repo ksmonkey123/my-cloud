@@ -17,8 +17,8 @@ class JobService(val repo: JobRepository) {
         return repo.save(job)
     }
 
-    fun listJobs(username: String, pageNumber: Int, pageSize: Int): PageDto<JobDto> {
-        val page = repo.findByOwner(username, PageRequest.of(pageNumber, pageSize))
+    fun listJobs(owner: String, pageNumber: Int, pageSize: Int): PageDto<JobDto> {
+        val page = repo.findByOwner(owner, PageRequest.of(pageNumber, pageSize))
         return PageDto(
             page.content.map { JobDto(it) },
             page.totalElements,

@@ -23,6 +23,8 @@ spring:
   application:
     name: application-service
   jpa:
+    properties:
+      hibernate.transaction.jta.platform: none
     show-sql: false
     open-in-view: false
     hibernate:

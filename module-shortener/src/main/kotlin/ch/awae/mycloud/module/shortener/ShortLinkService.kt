@@ -28,27 +28,27 @@ class ShortLinkService(private val repo: ShortLinkRepository) {
                 return randomString
             }
         }
-        throw _root_ide_package_.kotlin.RuntimeException("failed to obtain free short link within $LINK_GENERATION_ATTEMPTS attempts")
+        throw RuntimeException("failed to obtain free short link within $LINK_GENERATION_ATTEMPTS attempts")
     }
 
-    fun listShortLinks(): List<ShortLinkDTO> = repo.findByUsername(AuthInfo.username!!).map(
+    fun listShortLinks(username: String): List<ShortLinkDTO> = repo.findByUsername(username).map(
         ::ShortLinkDTO
     )
 
-    fun createShortLink(@Valid @URL targetUrl: String): ShortLinkDTO {
+    fun createShortLink(@Valid @URL targetUrl: String, username: String): ShortLinkDTO {
         return ShortLinkDTO(
             repo.save(
                 ShortLink(
                     getUnusedShortLink(),
-                    AuthInfo.username!!,
+                    username,
                     targetUrl
                 )
             )
         )
     }
 
-    fun deleteShortLink(id: String) {
-        val link = repo.findByIdAndUsername(id, AuthInfo.username!!) ?: throw ResourceNotFoundException("/links/$id")
+    fun deleteShortLink(id: String, username: String) {
+        val link = repo.findByIdAndUsername(id, username) ?: throw ResourceNotFoundException("/links/$id")
         repo.delete(link)
     }
 

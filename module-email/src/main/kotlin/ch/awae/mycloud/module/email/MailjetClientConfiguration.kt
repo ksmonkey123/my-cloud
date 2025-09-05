@@ -14,7 +14,7 @@ data class MailjetProperties(
 class MailjetClientConfiguration {
 
     @Bean
-    fun mailjetClient(mailjetProperties: MailjetProperties): com.mailjet.client.MailjetClient {
+    fun mailjetClient(mailjetProperties: MailjetProperties): MailjetClient {
         return MailjetClient(
             ClientOptions.builder()
                 .apiKey(mailjetProperties.apiKeyPublic)
