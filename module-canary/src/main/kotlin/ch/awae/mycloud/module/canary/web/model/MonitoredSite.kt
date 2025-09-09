@@ -1,6 +1,6 @@
 package ch.awae.mycloud.module.canary.web.model
 
-import ch.awae.mycloud.common.db.IdBaseEntity
+import ch.awae.mycloud.common.db.*
 import jakarta.persistence.*
 import org.springframework.data.jpa.repository.*
 import org.springframework.data.jpa.repository.Query

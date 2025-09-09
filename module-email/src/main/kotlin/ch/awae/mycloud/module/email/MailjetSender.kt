@@ -36,7 +36,7 @@ class MailjetSender(
         val req = SendEmailsRequest.builder().message(mail).build()
         req.sendWith(mailjetClient)
 
-        email.sent = true
+        email.markAsSent()
     }
 
 }

@@ -20,7 +20,5 @@ class ShortLink(
 
 interface ShortLinkRepository : JpaRepository<ShortLink, String> {
     fun findByUsername(username: String): List<ShortLink>
-
     fun findByIdAndUsername(id: String, username: String): ShortLink?
-
 }

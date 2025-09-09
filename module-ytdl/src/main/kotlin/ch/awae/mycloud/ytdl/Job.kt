@@ -1,20 +1,11 @@
 package ch.awae.mycloud.ytdl
 
-import ch.awae.mycloud.common.db.IdBaseEntity
-import jakarta.persistence.CollectionTable
-import jakarta.persistence.Column
-import jakarta.persistence.ElementCollection
-import jakarta.persistence.Entity
-import jakarta.persistence.EnumType
-import jakarta.persistence.Enumerated
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.MapKeyColumn
-import jakarta.persistence.Table
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
-import org.springframework.data.jpa.repository.JpaRepository
+import ch.awae.mycloud.common.db.*
+import jakarta.persistence.*
+import org.springframework.data.domain.*
+import org.springframework.data.jpa.repository.*
 import org.springframework.data.jpa.repository.Query
-import java.time.LocalDateTime
+import java.time.*
 import java.util.*
 
 @Entity(name = "YTDL_Job")
@@ -24,6 +15,7 @@ class Job(
     @Column(updatable = false) val url: String,
     @Column(updatable = false) @Enumerated(EnumType.STRING) val format: OutputFormat,
     @Column(updatable = false, columnDefinition = "uuid") val uuid: UUID = UUID.randomUUID(),
+    @Column(updatable = false) val createdAt: LocalDateTime = LocalDateTime.now(),
 ) : IdBaseEntity() {
 
     @Enumerated(EnumType.STRING)
@@ -75,10 +67,10 @@ class Job(
 
 interface JobRepository : JpaRepository<Job, Long> {
 
-    @Query("select j from YTDL_Job j where j.owner = :owner order by j._creationTimestamp desc")
+    @Query("select j from YTDL_Job j where j.owner = :owner order by j.createdAt desc")
     fun findByOwner(owner: String, pageable: Pageable): Page<Job>
 
-    @Query("select j from YTDL_Job j where j.status = ch.awae.mycloud.ytdl.JobStatus.PENDING order by j._creationTimestamp asc limit :limit")
+    @Query("select j from YTDL_Job j where j.status = ch.awae.mycloud.ytdl.JobStatus.PENDING order by j.createdAt asc limit :limit")
     fun findPending(limit: Int): List<Job>
 
     @Query("select j from YTDL_Job j where j.submittedAt is not null and j.completedAt is null")

@@ -58,12 +58,12 @@ class BookingRecord(
 
 interface BookingRecordRepository : JpaRepository<BookingRecord, Long> {
 
-    @Query("select r from BK_BookingRecord r where r.book = :book order by r.bookingDate desc, r._creationTimestamp desc")
+    @Query("select r from BK_BookingRecord r where r.book = :book order by r.bookingDate desc, r.localId desc")
     fun listAllInBook(book: Book, pageable: Pageable): Page<BookingRecord>
 
     fun findByLocalIdAndBook(id: Long, book: Book): BookingRecord?
 
-    @Query("select r from BK_BookingRecord r where r.book = :book order by r.bookingDate asc, r._creationTimestamp asc limit 1")
+    @Query("select r from BK_BookingRecord r where r.book = :book order by r.bookingDate asc, r.localId asc limit 1")
     fun findFirstInBook(book: Book): BookingRecord?
 
     @Query("select max(r.localId) from BK_BookingRecord r where r.book = :book")

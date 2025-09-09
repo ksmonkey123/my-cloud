@@ -55,7 +55,7 @@ class DockerService(
                 DockerImageDetails.State(
                     digest = it.digest,
                     tags = it.tags.sorted(),
-                    recordedAt = it.creationTimestamp.toString().replace("T", " "),
+                    recordedAt = it.recordedAt.toString().replace("T", " "),
                 )
             }
         )
