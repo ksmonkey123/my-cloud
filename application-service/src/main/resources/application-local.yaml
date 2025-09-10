@@ -17,6 +17,7 @@ canary:
     web: "-"
 
 docker:
+  sender: "test@awae.ch"
   timer:
     dockerhub: "-"
 

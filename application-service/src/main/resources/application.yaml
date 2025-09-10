@@ -53,6 +53,7 @@ canary:
     web: "0 */15 * * * *"
 
 docker:
+  sender: "my@awae.ch"
   timer:
     dockerhub: "0 30 */6 * * *"
   dockerhub:
