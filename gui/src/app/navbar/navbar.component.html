@@ -8,7 +8,7 @@
 </mat-toolbar>
 <mat-menu #toolbarSettingsMenu="matMenu">
   @for (item of settingsOptions; track item.path) {
-    <button mat-menu-item *ngIf="auth.authInfo()?.roles?.includes(item.auth)" [routerLink]="item.path"
+    <button mat-menu-item *ngIf="auth.authInfo()?.authorities?.includes(item.auth)" [routerLink]="item.path"
             routerLinkActive="settings-item-selected">
       <mat-icon>{{ item.icon }}</mat-icon>
       {{ item.titleKey | transloco }}

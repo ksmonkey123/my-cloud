@@ -127,6 +127,7 @@
   },
   "navbar": {
     "account": "Mein Account",
+    "api-keys": "API-Schlüssel",
     "logout": "Ausloggen",
     "roles": "Rollenverwaltung",
     "users": "Benutzerverwaltung"
@@ -161,14 +162,7 @@
       "title": "Account-Einstellungen"
     },
     "roles": {
-      "add": "Neue Rolle",
-      "delete": {
-        "text": "Rolle '{{ id }}' wirklich löschen?",
-        "title": "Rolle löschen"
-      },
       "error": {
-        "creation": "Fehler beim Erstellen der Rolle '{{ id }}'",
-        "deletion": "Fehler beim Löschen der Rolle '{{ id }}'",
         "edit": "Fehler beim Bearbeiten der Rolle '{{ id }}'"
       },
       "label": {
@@ -177,7 +171,6 @@
         "name": "Name"
       },
       "modal": {
-        "create": "Rolle erstellen",
         "edit": "Rolle bearbeiten"
       },
       "title": "Rollenverwaltung"

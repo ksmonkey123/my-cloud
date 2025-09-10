@@ -37,20 +37,6 @@ export class RoleManagementService implements OnDestroy {
     this.roleList$.next(list)
   }
 
-  createRole(name: string, description: string) {
-    this.http.put<Role>('/rest/auth/roles/' + name, {description: description})
-      .pipe(takeUntil(this.closer$))
-      .subscribe({
-        next: (role) => {
-          this.updateList(role)
-        },
-        error: error => {
-          this.toastr.error(error?.error?.message, this.translation.translate("settings.roles.error.creation", {id: name}))
-          this.loadList()
-        }
-      })
-  }
-
   editRole(name: string, data: RoleEditData) {
     this.http.patch<Role>('/rest/auth/roles/' + name, {
       description: data.description,
@@ -67,20 +53,6 @@ export class RoleManagementService implements OnDestroy {
           }
         }
       )
-  }
-
-  deleteRole(name: string) {
-    this.http.delete('/rest/auth/roles/' + name)
-      .pipe(takeUntil(this.closer$))
-      .subscribe({
-        next: _ => {
-          this.loadList()
-        },
-        error: error => {
-          this.toastr.error(error?.error?.message, this.translation.translate("settings.roles.error.deletion", {id: name}))
-          this.loadList()
-        }
-      })
   }
 }
 

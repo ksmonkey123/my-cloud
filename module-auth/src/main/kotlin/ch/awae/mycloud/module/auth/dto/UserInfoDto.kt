@@ -7,5 +7,4 @@ data class UserInfoDto(
     override val email: String?,
     override val language: Language,
     override val enabled: Boolean,
-    override val roles: List<String>,
 ) : UserInfo

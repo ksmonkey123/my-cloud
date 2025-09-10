@@ -1,15 +1,11 @@
 package ch.awae.mycloud.module.auth.config
 
-import ch.awae.mycloud.api.auth.AuthInfo
-import ch.awae.mycloud.common.ModuleConfiguration
-import ch.awae.mycloud.common.createLogger
-import ch.awae.mycloud.module.auth.domain.AccountRepository
-import ch.awae.mycloud.module.auth.domain.Role
-import ch.awae.mycloud.module.auth.domain.RoleRepository
-import jakarta.transaction.Transactional
-import org.springframework.boot.CommandLineRunner
-import org.springframework.core.annotation.Order
-import org.springframework.stereotype.Component
+import ch.awae.mycloud.common.*
+import ch.awae.mycloud.module.auth.domain.*
+import jakarta.transaction.*
+import org.springframework.boot.*
+import org.springframework.core.annotation.*
+import org.springframework.stereotype.*
 
 @Component
 @Order(2)
@@ -23,29 +19,43 @@ class ModuleRoleInitializer(
 
     @Transactional
     override fun run(vararg args: String?) {
-        AuthInfo.impersonate("init") {
-            val addedRoles = moduleConfigurations.flatMap { module ->
-                if (module.roles.isNotEmpty()) {
-                    log.info("initializing ${module.roles.size} role(s) for module ${module.name}")
-                    module.roles.mapNotNull { role -> initializeRole(module, role) }
-                } else {
-                    emptyList()
-                }
-            }
+        val requiredRoles = moduleConfigurations.flatMap { it.roles }.associateBy { it.name }
+        val existingRoles = roleRepository.findAll().associateBy { it.name }
 
-            if (addedRoles.isNotEmpty()) {
-                grantRoles(addedRoles)
+        val allNames = requiredRoles.keys + existingRoles.keys
+
+        val joinedLists = allNames.map { name ->
+            Pair(requiredRoles[name], existingRoles[name])
+        }
+
+        val addedRoles = mutableListOf<Role>()
+
+        for ((required, existing) in joinedLists) {
+            if (required != null && existing == null) {
+                addedRoles += addRole(required)
+            } else if (required != null && existing != null) {
+                updateRole(existing, required)
+            } else if (existing != null) {
+                roleRepository.delete(existing)
             }
+        }
+
+        if (addedRoles.isNotEmpty()) {
+            grantRoles(addedRoles)
         }
     }
 
-    private fun initializeRole(module: ModuleConfiguration, name: String): Role? {
-        val role = roleRepository.findByName(name)
-        if (role != null) {
-            return null
+    private fun addRole(roleConfig: RoleConfig): Role {
+        return roleRepository.save(Role(roleConfig.name, true, roleConfig.authorities.toSet()))
+    }
+
+    private fun updateRole(role: Role, config: RoleConfig) {
+        val requiredAuthorities = config.authorities.toSet()
+
+        if (role.authorities != requiredAuthorities) {
+            role.authorities = requiredAuthorities
         }
-        log.info("initializing role $name for module ${module.name}")
-        return roleRepository.save(Role(name, true, "role for module '${module.name}'"))
+
     }
 
     private fun grantRoles(addedRoles: List<Role>) {
@@ -57,5 +67,4 @@ class ModuleRoleInitializer(
         admins.forEach { it.roles.addAll(addedRoles) }
         accountRepository.saveAllAndFlush(admins)
     }
-
 }

@@ -17,26 +17,12 @@ class RoleController(
         return svc.getAllRoles()
     }
 
-    @PutMapping("/{role}")
-    fun create(@PathVariable role: String, @RequestBody request: CreateRoleRequest): RoleDto {
-        return svc.createRole(role, request.description)
-    }
-
     @PatchMapping("/{role}")
-    fun edit(@PathVariable role: String, @RequestBody request: PathRoleRequest): RoleDto {
+    fun edit(@PathVariable role: String, @RequestBody request: PatchRoleRequest): RoleDto {
         return svc.editRole(role, request.description, request.enabled)
     }
 
-    @DeleteMapping("/{role}")
-    fun delete(@PathVariable role: String) {
-        svc.deleteRole(role)
-    }
-
-    data class CreateRoleRequest(
-        val description: String?
-    )
-
-    data class PathRoleRequest(
+    data class PatchRoleRequest(
         val enabled: Boolean?,
         val description: String?,
     )

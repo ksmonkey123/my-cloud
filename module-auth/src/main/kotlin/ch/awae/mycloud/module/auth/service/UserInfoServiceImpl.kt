@@ -17,7 +17,6 @@ class UserInfoServiceImpl(val accountRepository: AccountRepository) : UserInfoSe
                 email = user.email,
                 language = user.language,
                 enabled = user.enabled,
-                roles = AccountToRoleMapper.getRoles(user),
             )
         }
     }

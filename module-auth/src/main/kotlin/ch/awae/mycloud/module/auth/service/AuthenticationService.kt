@@ -13,7 +13,7 @@ class AuthenticationService(
 
     fun createUserAuthInfo(account: Account, tokenString: String): BearerTokenUserAuthInfo = BearerTokenUserAuthInfo(
         account.username,
-        AccountToRoleMapper.getRoles(account, includeUserRole = true),
+        AccountToAuthoritiesMapper.getAuthorities(account),
         tokenString,
         account.language,
         account.email,

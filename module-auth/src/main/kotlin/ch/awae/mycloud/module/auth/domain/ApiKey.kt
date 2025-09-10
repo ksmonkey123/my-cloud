@@ -16,13 +16,8 @@ class ApiKey(
     @ManyToOne
     @JoinColumn(updatable = false)
     val owner: Account,
-    @ManyToMany
-    @JoinTable(
-        schema = "auth", name = "api_key_role",
-        joinColumns = [JoinColumn(name = "api_key_id")],
-        inverseJoinColumns = [JoinColumn(name = "role_id")]
-    )
-    val roles: MutableSet<Role> = mutableSetOf(),
+    @Convert(converter = AuthoritiesConverter::class)
+    val authorities: Set<String>,
     val creationTime: LocalDateTime = LocalDateTime.now(),
 ) : IdBaseEntity()
 
@@ -35,3 +30,4 @@ interface ApiKeyRepository : JpaRepository<ApiKey, Long> {
     fun findByOwnerAndName(username: String, name: String): ApiKey?
 
 }
+

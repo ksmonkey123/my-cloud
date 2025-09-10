@@ -9,14 +9,14 @@ export const TOKEN_NAME = "auth_token"
 export interface AuthInfo {
   username: string
   admin: boolean
-  roles: string[]
+  authorities: string[]
   languageCode: LanguageCode
   email?: string
 }
 
 interface AuthInfoDto {
   username: string
-  roles: string[]
+  authorities: string[]
   languageCode: LanguageCode
   email?: string
 }
@@ -56,8 +56,8 @@ export class AuthService implements OnDestroy {
         next: (user) => {
           const newInfo: AuthInfo = {
             username: user.username,
-            roles: user.roles,
-            admin: user.roles.includes("admin"),
+            authorities: user.authorities,
+            admin: user.authorities.includes("admin"),
             languageCode: user.languageCode,
             email: user.email,
           };

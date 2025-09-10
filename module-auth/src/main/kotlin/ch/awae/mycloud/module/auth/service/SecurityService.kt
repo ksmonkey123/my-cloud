@@ -36,9 +36,7 @@ class SecurityService(
         val account = authenticateCredentials(username, password)
         val token = AuthToken.buildToken(account, LocalDateTime.now().plus(retentionPolicy.duration))
 
-        AuthInfo.impersonate(username) {
-            return authTokenRepository.saveAndFlush(token)
-        }
+        return authTokenRepository.saveAndFlush(token)
     }
 
     fun logout(token: String) {

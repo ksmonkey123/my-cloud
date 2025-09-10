@@ -34,7 +34,7 @@ export class HomeComponent {
       const newAuth = auth.authInfo()
       if (newAuth) {
         this.cards = apps.cards.filter(card => {
-          return (newAuth?.roles ?? []).includes(card.auth)
+          return (newAuth?.authorities ?? []).includes(card.auth)
         });
         this.componentStateService.patchComponentState({numberOfCards: this.cards.length});
       }

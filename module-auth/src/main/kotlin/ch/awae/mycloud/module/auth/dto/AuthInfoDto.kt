@@ -1,12 +1,11 @@
 package ch.awae.mycloud.module.auth.dto
 
-import ch.awae.mycloud.api.auth.AuthInfo
-import ch.awae.mycloud.api.auth.BearerTokenUserAuthInfo
+import ch.awae.mycloud.api.auth.*
 
 data class AuthInfoDto(
     val type: AuthType,
     val username: String,
-    val roles: List<String>,
+    val authorities: List<String>,
     val token: String,
     val languageCode: String,
     val email: String?,
@@ -22,7 +21,7 @@ data class AuthInfoDto(
                 is BearerTokenUserAuthInfo -> AuthInfoDto(
                     AuthType.USER,
                     authInfo.username,
-                    authInfo.roles,
+                    authInfo.authorities.toList(),
                     authInfo.token,
                     authInfo.language.code,
                     authInfo.email,

@@ -21,7 +21,7 @@ import {MatSlideToggle} from "@angular/material/slide-toggle";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogResult, RoleEditPopupDialog} from "./role-edit-popup/role-edit-popup.dialog";
 import {SimpleModalService} from "../../common/simple-modal/simple-modal.service";
-import {TranslocoPipe, TranslocoService} from "@jsverse/transloco";
+import {TranslocoPipe} from "@jsverse/transloco";
 
 @Component({
   selector: 'app-role-management',
@@ -53,7 +53,7 @@ import {TranslocoPipe, TranslocoService} from "@jsverse/transloco";
 })
 export class RoleManagementComponent {
 
-  displayedColumns = ['name', 'description', 'enabled', 'delete']
+  displayedColumns = ['name', 'description', 'enabled']
 
   public list$
 
@@ -61,7 +61,7 @@ export class RoleManagementComponent {
     public svc: RoleManagementService,
     public dialog: MatDialog,
     public modal: SimpleModalService,
-    private transloco: TranslocoService) {
+  ) {
     svc.loadList()
     this.list$ = svc.roleList$
   }
@@ -70,7 +70,6 @@ export class RoleManagementComponent {
     const dialogRef = this.dialog.open(RoleEditPopupDialog,
       {
         data: {
-          create: false,
           name: role.name,
           description: role.description
         }
@@ -78,29 +77,6 @@ export class RoleManagementComponent {
     dialogRef.afterClosed().subscribe((result: DialogResult) =>
       this.svc.editRole(result.name, {description: result.description})
     )
-  }
-
-  openNewRoleDialog() {
-    const dialogRef = this.dialog.open(RoleEditPopupDialog,
-      {
-        data: {
-          create: true
-        }
-      })
-    dialogRef.afterClosed().subscribe((result: DialogResult) =>
-      this.svc.createRole(result.name, result.description)
-    )
-  }
-
-  deleteRole(role: Role) {
-    this.modal.confirm(
-      this.transloco.translate("settings.roles.delete.title"),
-      this.transloco.translate("settings.roles.delete.text", {id: role.name})
-    ).subscribe(confirm => {
-      if (confirm) {
-        this.svc.deleteRole(role.name)
-      }
-    })
   }
 
   enableRole(name: string, enabled: boolean) {

@@ -2,12 +2,6 @@
   <h1>{{ "settings.roles.title" | transloco }}</h1>
   <mat-card>
     <mat-card-content>
-      <div class="createButton">
-        <button mat-raised-button color="primary" (click)="openNewRoleDialog()">
-          <mat-icon>add</mat-icon>
-          {{ "settings.roles.add" | transloco }}
-        </button>
-      </div>
       <table mat-table [dataSource]="(list$ | async) || []">
         <!-- Name -->
         <ng-container matColumnDef="name">
@@ -27,16 +21,6 @@
           <td mat-cell *matCellDef="let role">
             <mat-slide-toggle [checked]="role.enabled"
                               (toggleChange)="enableRole(role.name, !role.enabled)"></mat-slide-toggle>
-          </td>
-        </ng-container>
-
-        <!-- Delete? -->
-        <ng-container matColumnDef="delete">
-          <th mat-header-cell *matHeaderCellDef>&nbsp;</th>
-          <td mat-cell *matCellDef="let role">
-            <button mat-mini-fab color="warn" (click)="deleteRole(role)">
-              <mat-icon>delete</mat-icon>
-            </button>
           </td>
         </ng-container>
 

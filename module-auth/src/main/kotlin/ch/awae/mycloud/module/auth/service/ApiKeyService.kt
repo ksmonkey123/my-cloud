@@ -34,7 +34,7 @@ class ApiKeyService(
                 name = name,
                 tokenString = TokenGenerator.generate(64, TokenGenerator.EncoderType.URL),
                 owner = accountService.getAccount(username),
-                roles = roleRepository.findRolesByName(roles).toMutableSet(),
+                authorities = roles.toSet(),
             )
         )
 

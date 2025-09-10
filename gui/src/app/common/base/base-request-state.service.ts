@@ -1,9 +1,9 @@
-import {BaseLocalDateChangeService} from "./base-local-data-change-service.service";
+import {BaseLocalDataChangeService} from "./base-local-data-change-service.service";
 import {BehaviorSubject} from "rxjs";
 import {StorageUtils} from "../storage.utils";
 import {StateUtils} from "../state.utils";
 
-export abstract class BaseRequestStateService<REQ, RSP> extends BaseLocalDateChangeService<RSP> {
+export abstract class BaseRequestStateService<REQ, RSP> extends BaseLocalDataChangeService<RSP> {
 
   public readonly requestState$ = new BehaviorSubject<REQ | undefined>(this.getInitialRequest());
 

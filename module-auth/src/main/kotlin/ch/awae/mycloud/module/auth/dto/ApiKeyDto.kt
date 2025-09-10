@@ -5,33 +5,35 @@ import java.time.*
 
 data class ApiKeyDto(
     val name: String,
-    val roles: List<ApiKeyRoleDto>,
+    val authorities: List<ApiKeyAuthoritiesDto>,
     val createdAt: LocalDateTime,
 ) {
     companion object {
         fun of(apiKey: ApiKey): ApiKeyDto {
-            val userRoleNames = apiKey.owner.roles.map { it.name }
-            val apiKeyRoles = apiKey.roles.map {
-                ApiKeyRoleDto(
-                    name = it.name,
-                    description = it.description,
-                    enabled = it.enabled,
-                    granted = userRoleNames.contains(it.name),
+            val activeUserAuthorities = apiKey.owner.roles.filter { it.enabled }.flatMap { it.authorities }.toSet()
+            val allUserAuthorities = apiKey.owner.roles.flatMap { it.authorities }.toSet()
+
+            val apiKeyAuthorities = apiKey.authorities.map {
+                ApiKeyAuthoritiesDto(
+                    name = it,
+                    // only if the role is active, we treat it as enabled
+                    enabled = activeUserAuthorities.contains(it),
+                    // granted means, the auth-code is granted to the user, but may not currently be enabled
+                    granted = allUserAuthorities.contains(it),
                 )
             }
 
             return ApiKeyDto(
                 name = apiKey.name,
-                roles = apiKeyRoles,
+                authorities = apiKeyAuthorities,
                 createdAt = apiKey.creationTime,
             )
         }
     }
 }
 
-data class ApiKeyRoleDto(
+data class ApiKeyAuthoritiesDto(
     val name: String,
-    val description: String?,
     val enabled: Boolean,
     val granted: Boolean,
 )

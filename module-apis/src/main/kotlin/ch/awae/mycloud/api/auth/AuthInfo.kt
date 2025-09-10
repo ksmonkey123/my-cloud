@@ -7,7 +7,7 @@ import org.springframework.security.core.context.*
 
 sealed interface AuthInfo {
     val username: String
-    val roles: List<String>
+    val authorities: Set<String>
     val language: Language
     val email: String?
 
@@ -15,7 +15,7 @@ sealed interface AuthInfo {
         return UsernamePasswordAuthenticationToken(
             this.username,
             this,
-            this.roles.map(::SimpleGrantedAuthority)
+            this.authorities.map(::SimpleGrantedAuthority)
         )
     }
 
@@ -35,36 +35,13 @@ sealed interface AuthInfo {
 
         val email: String?
             get() = info.email
-
-        inline fun <T> impersonate(username: String, action: () -> T): T {
-            val ctx = SecurityContextHolder.getContext()
-            val backupCtx = ctx.authentication
-
-            try {
-                ctx.authentication = BasicImpersonation(username).toAuthentication()
-                return action()
-            } finally {
-                ctx.authentication = backupCtx
-            }
-        }
     }
 }
 
 data class BearerTokenUserAuthInfo(
     override val username: String,
-    override val roles: List<String>,
+    override val authorities: Set<String>,
     val token: String,
     override val language: Language,
     override val email: String?,
 ) : AuthInfo
-
-data class BasicImpersonation(
-    override val username: String
-) : AuthInfo {
-    override val roles: List<String>
-        get() = emptyList()
-    override val language: Language
-        get() = Language.ENGLISH
-    override val email: String?
-        get() = null
-}

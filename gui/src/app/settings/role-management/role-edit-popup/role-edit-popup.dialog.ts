@@ -37,30 +37,22 @@ export class RoleEditPopupDialog {
     name: '',
     description: '',
   })
-  createMode
   name
 
   constructor(public dialogRef: MatDialogRef<RoleEditPopupDialog>,
               @Inject(MAT_DIALOG_DATA) public config: DialogConfig,
               private formBuilder: FormBuilder
   ) {
-    this.createMode = config.create
-    if (!config.create) {
-      this.form.setValue({
-        name: config.name!,
-        description: config.description || null,
-      })
-      this.form.get('name')?.disable()
-      this.name = config.name
-    }
+    this.form.setValue({
+      name: config.name!,
+      description: config.description || null,
+    })
+    this.form.get('name')?.disable()
+    this.name = config.name
   }
 
   collectData(): DialogResult {
-    if (this.createMode) {
-      return {name: this.form.value.name!, description: this.form.value.description || ''}
-    } else {
-      return {name: this.name!, description: this.form.value.description || ''}
-    }
+    return {name: this.name!, description: this.form.value.description || ''}
   }
 
 }
