@@ -29,6 +29,9 @@ class ApiKey(
 interface ApiKeyRepository : JpaRepository<ApiKey, Long> {
 
     @Query("select a from AUTH_API_KEY a where a.owner.username = :username order by a.creationTime desc")
-    fun listByOwnerUsername(username: String) : List<ApiKey>
+    fun listByOwnerUsername(username: String): List<ApiKey>
+
+    @Query("select a from AUTH_API_KEY a where a.owner.username = :username and a.name = :name")
+    fun findByOwnerAndName(username: String, name: String): ApiKey?
 
 }
