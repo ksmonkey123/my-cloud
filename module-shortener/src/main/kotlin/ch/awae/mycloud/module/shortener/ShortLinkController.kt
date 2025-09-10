@@ -11,16 +11,16 @@ import org.springframework.web.bind.annotation.*
 class ShortLinkController(private val svc: ShortLinkService) {
 
     @GetMapping
-    fun list(): List<ShortLinkDTO> = svc.listShortLinks(AuthInfo.username!!)
+    fun list(): List<ShortLinkDTO> = svc.listShortLinks(AuthInfo.username)
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody request: CreationRequest): ShortLinkDTO = svc.createShortLink(request.targetUrl, AuthInfo.username!!)
+    fun create(@RequestBody request: CreationRequest): ShortLinkDTO = svc.createShortLink(request.targetUrl, AuthInfo.username)
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun delete(@PathVariable id: String) {
-        svc.deleteShortLink(id, AuthInfo.username!!)
+        svc.deleteShortLink(id, AuthInfo.username)
     }
 
     data class CreationRequest(

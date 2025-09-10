@@ -26,12 +26,12 @@ class JobRestController(
         @RequestParam(required = false, defaultValue = "0") page: Int,
         @RequestParam(required = false, defaultValue = "10") pageSize: Int,
     ): PageDto<JobDto> {
-        return service.listJobs(AuthInfo.username!!, page, pageSize)
+        return service.listJobs(AuthInfo.username, page, pageSize)
     }
 
     @PostMapping
     fun createJob(@Valid @RequestBody request: JobCreationRequest) {
-        service.createJob(AuthInfo.username!!, request.url, request.format)
+        service.createJob(AuthInfo.username, request.url, request.format)
     }
 
 }

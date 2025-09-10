@@ -28,7 +28,6 @@ class AuthToken private constructor(
 
 }
 
-@Repository
 interface AuthTokenRepository : JpaRepository<AuthToken, Long> {
 
     @Modifying(flushAutomatically = true)

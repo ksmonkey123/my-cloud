@@ -37,7 +37,6 @@ class Account(
 
 }
 
-@Repository
 interface AccountRepository : JpaRepository<Account, Long> {
 
     @Query("select a from BK_Account a where a.accountGroup.book = :book order by a.accountGroup.groupNumber asc, a.accountNumber asc")

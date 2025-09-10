@@ -19,14 +19,14 @@ class AccountSettingsController(
     @PatchMapping("/password")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun changeOwnPassword(@Valid @RequestBody request: ChangePasswordRequest) {
-        accountService.changePassword(AuthInfo.username!!, request.oldPassword, request.newPassword)
+        accountService.changePassword(AuthInfo.username, request.oldPassword, request.newPassword)
     }
 
     @PatchMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun editSettings(@Valid @RequestBody request: SettingsChangeRequest) {
         accountService.editAccount(
-            username = AuthInfo.username!!,
+            username = AuthInfo.username,
             language = request.languageCode?.let { Language.fromCode(it) },
             email = request.email?.asBoxed(),
         )

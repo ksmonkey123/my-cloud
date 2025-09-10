@@ -21,17 +21,20 @@ sealed interface AuthInfo {
 
     companion object {
 
-        val info: AuthInfo?
+        val info: AuthInfo
+            get() = infoOrNull ?: throw NullPointerException("no auth info present in current context")
+
+        val infoOrNull: AuthInfo?
             get() = SecurityContextHolder.getContext().authentication?.credentials as? AuthInfo
 
-        val username: String?
-            get() = info?.username
+        val username: String
+            get() = info.username
 
-        val language: Language?
-            get() = info?.language
+        val language: Language
+            get() = info.language
 
         val email: String?
-            get() = info?.email
+            get() = info.email
 
         inline fun <T> impersonate(username: String, action: () -> T): T {
             val ctx = SecurityContextHolder.getContext()

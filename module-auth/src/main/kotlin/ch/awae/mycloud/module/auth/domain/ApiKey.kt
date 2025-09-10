@@ -2,6 +2,8 @@ package ch.awae.mycloud.module.auth.domain
 
 import ch.awae.mycloud.common.db.*
 import jakarta.persistence.*
+import org.springframework.data.jpa.repository.*
+import org.springframework.data.jpa.repository.Query
 import java.time.*
 
 @Table(name = "api_key", schema = "auth")
@@ -23,3 +25,10 @@ class ApiKey(
     val roles: MutableSet<Role> = mutableSetOf(),
     val creationTime: LocalDateTime = LocalDateTime.now(),
 ) : IdBaseEntity()
+
+interface ApiKeyRepository : JpaRepository<ApiKey, Long> {
+
+    @Query("select a from AUTH_API_KEY a where a.owner.username = :username order by a.creationTime desc")
+    fun listByOwnerUsername(username: String) : List<ApiKey>
+
+}
