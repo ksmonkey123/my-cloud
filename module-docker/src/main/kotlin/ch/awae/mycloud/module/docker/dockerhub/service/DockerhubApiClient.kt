@@ -29,7 +29,7 @@ class DockerhubApiClient(private val dockerProperties: DockerhubProperties) {
         return cache.get(Pair(namespace, repository))
     }
 
-    fun doGetTagList(namespace: String?, repository: String): Map<String, List<Tag>> {
+    private fun doGetTagList(namespace: String?, repository: String): Map<String, List<Tag>> {
         logger.debug("loading tags for ${namespace ?: "_"}/$repository")
         val rawTags =
             fetchTags("$apiUrl/namespaces/${namespace ?: "library"}/repositories/${repository}/tags?page_size=100")
