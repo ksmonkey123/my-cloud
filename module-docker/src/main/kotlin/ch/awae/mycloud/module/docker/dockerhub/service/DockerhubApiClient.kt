@@ -3,10 +3,15 @@ package ch.awae.mycloud.module.docker.dockerhub.service
 import ch.awae.mycloud.common.*
 import ch.awae.mycloud.module.docker.dockerhub.*
 import com.fasterxml.jackson.annotation.*
+import com.github.benmanes.caffeine.cache.*
 import org.springframework.boot.web.client.*
 import org.springframework.stereotype.*
 import org.springframework.web.client.*
+import java.time.*
 import kotlin.time.Duration.Companion.minutes
+
+private typealias ResourceID = Pair<String?, String>
+private typealias ResourceState = Map<String, List<Tag>>
 
 @Repository
 class DockerhubApiClient(private val dockerProperties: DockerhubProperties) {
@@ -16,7 +21,15 @@ class DockerhubApiClient(private val dockerProperties: DockerhubProperties) {
     private val http = ExpiringInstance(9.minutes, ::buildRestTemplate)
     private val apiUrl = dockerProperties.apiUrl
 
+    private val cache: LoadingCache<ResourceID, ResourceState> = Caffeine.newBuilder()
+        .expireAfterWrite(Duration.ofMinutes(10))
+        .build { (namespace, repository) -> doGetTagList(namespace, repository) }
+
     fun getTagList(namespace: String?, repository: String): Map<String, List<Tag>> {
+        return cache.get(Pair(namespace, repository))
+    }
+
+    fun doGetTagList(namespace: String?, repository: String): Map<String, List<Tag>> {
         logger.debug("loading tags for ${namespace ?: "_"}/$repository")
         val rawTags =
             fetchTags("$apiUrl/namespaces/${namespace ?: "library"}/repositories/${repository}/tags?page_size=100")
