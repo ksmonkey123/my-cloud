@@ -38,6 +38,7 @@
         <module>module-bookkeeping</module>
         <module>module-ytdl</module>
         <module>module-documents</module>
+        <module>module-features</module>
         <!-- application service -->
         <module>gui</module>
         <module>application-service</module>
@@ -68,13 +69,13 @@
             <dependency>
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi-ooxml</artifactId>
-                <version>5.4.0</version>
+                <version>5.4.1</version>
             </dependency>
             <!-- Pdfbox -->
             <dependency>
                 <groupId>org.apache.pdfbox</groupId>
                 <artifactId>pdfbox</artifactId>
-                <version>3.0.3</version>
+                <version>3.0.6</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

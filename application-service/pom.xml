@@ -13,57 +13,6 @@
     <version>2.0-SNAPSHOT</version>
 
     <dependencies>
-        <dependency>
-            <groupId>ch.awae.mycloud</groupId>
-            <artifactId>base-lib</artifactId>
-            <version>2.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.awae.mycloud</groupId>
-            <artifactId>module-auth</artifactId>
-            <version>2.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.awae.mycloud</groupId>
-            <artifactId>module-email</artifactId>
-            <version>2.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.awae.mycloud</groupId>
-            <artifactId>module-shortener</artifactId>
-            <version>2.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.awae.mycloud</groupId>
-            <artifactId>module-canary</artifactId>
-            <version>2.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.awae.mycloud</groupId>
-            <artifactId>module-docker</artifactId>
-            <version>2.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.awae.mycloud</groupId>
-            <artifactId>module-bookkeeping</artifactId>
-            <version>2.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.awae.mycloud</groupId>
-            <artifactId>module-ytdl</artifactId>
-            <version>2.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.awae.mycloud</groupId>
-            <artifactId>module-documents</artifactId>
-            <version>2.0-SNAPSHOT</version>
-        </dependency>
-        <!-- GUI -->
-        <dependency>
-            <groupId>ch.awae.mycloud</groupId>
-            <artifactId>gui</artifactId>
-            <version>2.0-SNAPSHOT</version>
-        </dependency>
         <!-- Flyway -->
         <dependency>
             <groupId>org.flywaydb</groupId>
@@ -74,20 +23,72 @@
             <groupId>net.javacrumbs.shedlock</groupId>
             <artifactId>shedlock-provider-jdbc-template</artifactId>
         </dependency>
-        <!-- Mailjet -->
+        <!-- GUI -->
         <dependency>
-            <groupId>com.mailjet</groupId>
-            <artifactId>mailjet-client</artifactId>
+            <groupId>ch.awae.mycloud</groupId>
+            <artifactId>gui</artifactId>
+            <version>2.0-SNAPSHOT</version>
         </dependency>
-        <!-- Apache POI for Excel generation -->
+        <!-- Base Libs -->
         <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi-ooxml</artifactId>
+            <groupId>ch.awae.mycloud</groupId>
+            <artifactId>base-lib</artifactId>
+            <version>2.0-SNAPSHOT</version>
         </dependency>
-        <!-- Pdfbox -->
+        <!-- Modules -->
         <dependency>
-            <groupId>org.apache.pdfbox</groupId>
-            <artifactId>pdfbox</artifactId>
+            <groupId>ch.awae.mycloud</groupId>
+            <artifactId>module-auth</artifactId>
+            <version>2.0-SNAPSHOT</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.awae.mycloud</groupId>
+            <artifactId>module-email</artifactId>
+            <version>2.0-SNAPSHOT</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.awae.mycloud</groupId>
+            <artifactId>module-shortener</artifactId>
+            <version>2.0-SNAPSHOT</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.awae.mycloud</groupId>
+            <artifactId>module-canary</artifactId>
+            <version>2.0-SNAPSHOT</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.awae.mycloud</groupId>
+            <artifactId>module-docker</artifactId>
+            <version>2.0-SNAPSHOT</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.awae.mycloud</groupId>
+            <artifactId>module-bookkeeping</artifactId>
+            <version>2.0-SNAPSHOT</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.awae.mycloud</groupId>
+            <artifactId>module-ytdl</artifactId>
+            <version>2.0-SNAPSHOT</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.awae.mycloud</groupId>
+            <artifactId>module-documents</artifactId>
+            <version>2.0-SNAPSHOT</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.awae.mycloud</groupId>
+            <artifactId>module-features</artifactId>
+            <version>2.0-SNAPSHOT</version>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
 
