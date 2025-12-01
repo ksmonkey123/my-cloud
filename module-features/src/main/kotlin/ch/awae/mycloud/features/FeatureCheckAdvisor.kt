@@ -1,6 +1,7 @@
 package ch.awae.mycloud.features
 
 import ch.awae.mycloud.api.features.*
+import ch.awae.mycloud.common.*
 import org.aopalliance.aop.*
 import org.aopalliance.intercept.*
 import org.springframework.aop.*
@@ -8,7 +9,6 @@ import org.springframework.aop.support.*
 import org.springframework.aop.support.annotation.*
 import org.springframework.beans.factory.config.*
 import org.springframework.context.annotation.*
-import java.util.*
 
 
 @Configuration
@@ -28,6 +28,9 @@ class FeatureCheckAdvisor(@Lazy featureFlagService: FeatureFlagService) : Abstra
     override fun getAdvice(): Advice = advice
 
     private class FeatureCheckInterceptor(private val service: FeatureFlagService) : MethodInterceptor {
+
+        private val log = createLogger()
+
         override fun invoke(invocation: MethodInvocation): Any? {
             val annotation = invocation.method.getAnnotation(FeatureCheck::class.java)
 
@@ -35,27 +38,14 @@ class FeatureCheckAdvisor(@Lazy featureFlagService: FeatureFlagService) : Abstra
                 return invocation.proceed()
             }
 
-            when (annotation.policy) {
-                FeatureCheck.BlockingPolicy.EXCEPTION -> throwException(annotation.feature)
-                FeatureCheck.BlockingPolicy.RETURN -> return calculateReturnValueForCall(
-                    invocation.method.returnType,
-                    annotation.feature
-                )
+            log.warn("invocation of '${invocation.method}' blocked due to disabled feature flag '${annotation.feature}'")
+
+            if (invocation.method.returnType != Void.TYPE || annotation.alwaysThrow) {
+                throw UnsupportedOperationException("function disabled by feature flag '${annotation.feature}'")
             }
+
+            return Unit
         }
 
-
-        private fun calculateReturnValueForCall(type: Class<*>, feature: String): Any? {
-            return when (type) {
-                Void.TYPE -> Unit
-                Optional::class.java -> Optional.empty<Any>()
-                Result::class.java -> runCatching { throwException(feature) }
-                else -> null
-            }
-        }
-
-        private fun throwException(feature: String): Nothing {
-            throw UnsupportedOperationException("function disabled by feature flag '${feature}'")
-        }
     }
 }
