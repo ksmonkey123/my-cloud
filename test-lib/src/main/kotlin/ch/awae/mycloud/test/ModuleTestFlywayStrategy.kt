@@ -1,14 +1,14 @@
 package ch.awae.mycloud.test
 
-import ch.awae.mycloud.common.ModuleConfiguration
-import ch.awae.mycloud.common.createLogger
-import org.flywaydb.core.Flyway
-import org.springframework.boot.autoconfigure.flyway.FlywayMigrationStrategy
-import org.springframework.stereotype.Component
-
+import ch.awae.mycloud.common.*
+import org.flywaydb.core.*
+import org.springframework.boot.autoconfigure.flyway.*
+import org.springframework.context.annotation.*
+import org.springframework.stereotype.*
 
 @Component
-class MultiModuleFlywayStrategy(
+@Profile("module-test")
+class ModuleTestFlywayStrategy(
     val moduleConfigurations: List<ModuleConfiguration>,
 ) : FlywayMigrationStrategy {
 
@@ -18,7 +18,12 @@ class MultiModuleFlywayStrategy(
         val dataSource = flyway.configuration.dataSource
 
         logger.info("migrating core schema")
-        flyway.migrate()
+        Flyway.configure()
+            .schemas("public")
+            .locations("db/public/migration")
+            .dataSource(dataSource)
+            .load()
+            .migrate()
 
         for (module in moduleConfigurations) {
             val schema = module.databaseSchemaName ?: continue

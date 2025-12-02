@@ -28,7 +28,7 @@
         <!-- base lib -->
         <module>module-apis</module>
         <module>base-lib</module>
-        <module>test-lib-modules</module>
+        <module>test-lib</module>
         <!-- business modules -->
         <module>module-auth</module>
         <module>module-email</module>

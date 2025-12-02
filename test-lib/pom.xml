@@ -9,7 +9,7 @@
         <version>2.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>test-lib-modules</artifactId>
+    <artifactId>test-lib</artifactId>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
