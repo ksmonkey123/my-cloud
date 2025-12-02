@@ -4,6 +4,7 @@ abstract class ModuleConfiguration(
     name: String? = null,
     val databaseSchemaName: String? = null,
     val roles: List<RoleConfig> = emptyList(),
+    val features: List<String> = emptyList(),
 ) {
 
     val name = name ?: databaseSchemaName ?: this.toString()

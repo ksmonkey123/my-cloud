@@ -73,3 +73,6 @@ ytdl:
 documents:
   clean-timer:
     schedule: "0 0 * * * *"
+
+features:
+  default-state: false
