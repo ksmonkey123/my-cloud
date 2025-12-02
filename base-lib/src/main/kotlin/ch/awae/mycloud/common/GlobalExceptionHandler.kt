@@ -1,11 +1,9 @@
-package ch.awae.mycloud.config
+package ch.awae.mycloud.common
 
-import jakarta.validation.ConstraintViolationException
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.MethodArgumentNotValidException
-import org.springframework.web.bind.annotation.ExceptionHandler
-import org.springframework.web.bind.annotation.RestControllerAdvice
+import jakarta.validation.*
+import org.springframework.http.*
+import org.springframework.web.bind.*
+import org.springframework.web.bind.annotation.*
 
 @RestControllerAdvice
 class GlobalExceptionHandler {
@@ -31,6 +29,23 @@ class GlobalExceptionHandler {
         return ResponseEntity(
             mapOf("errors" to errors, "message" to "input validation failed"),
             HttpStatus.BAD_REQUEST
+        )
+    }
+
+
+    @ExceptionHandler(IllegalArgumentException::class)
+    fun handleValidationErrors(ex: IllegalArgumentException): ResponseEntity<Map<String, Any>> {
+        return ResponseEntity(
+            mapOf("message" to (ex.message ?: "IllegalArgumentException")),
+            HttpStatus.BAD_REQUEST
+        )
+    }
+
+    @ExceptionHandler(Exception::class)
+    fun handleValidationErrors(ex: Exception): ResponseEntity<Map<String, Any>> {
+        return ResponseEntity(
+            mapOf("type" to ex.javaClass.name, "message" to (ex.message ?: ex.javaClass.simpleName)),
+            HttpStatus.INTERNAL_SERVER_ERROR
         )
     }
 

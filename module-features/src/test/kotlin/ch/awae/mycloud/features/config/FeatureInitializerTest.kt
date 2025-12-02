@@ -1,6 +1,8 @@
-package ch.awae.mycloud.features
+package ch.awae.mycloud.features.config
 
 import ch.awae.mycloud.common.*
+import ch.awae.mycloud.features.FeaturesModuleTest
+import ch.awae.mycloud.features.model.FeatureFlag
 import org.junit.jupiter.api.Test
 import org.springframework.context.annotation.*
 import org.springframework.data.repository.findByIdOrNull

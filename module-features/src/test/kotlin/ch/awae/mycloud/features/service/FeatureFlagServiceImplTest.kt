@@ -1,5 +1,6 @@
-package ch.awae.mycloud.features
+package ch.awae.mycloud.features.service
 
+import ch.awae.mycloud.features.FeaturesModuleTest
 import jakarta.validation.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

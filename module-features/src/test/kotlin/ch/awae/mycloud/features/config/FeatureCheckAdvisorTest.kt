@@ -1,4 +1,4 @@
-package ch.awae.mycloud.features
+package ch.awae.mycloud.features.config
 
 import ch.awae.mycloud.api.features.*
 import ch.awae.mycloud.test.*
