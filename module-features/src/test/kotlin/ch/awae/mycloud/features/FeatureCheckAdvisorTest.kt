@@ -4,9 +4,9 @@ import ch.awae.mycloud.api.features.*
 import ch.awae.mycloud.test.*
 import org.junit.jupiter.api.*
 import org.springframework.beans.factory.annotation.*
-import org.springframework.context.annotation.Profile
+import org.springframework.context.annotation.*
 import org.springframework.stereotype.*
-import org.springframework.test.context.ActiveProfiles
+import org.springframework.test.context.*
 import org.springframework.test.context.jdbc.*
 import kotlin.test.*
 import kotlin.test.Test
@@ -26,7 +26,7 @@ class FeatureCheckAdvisorTest : ModuleTest() {
         // should not work, should not cause exception
         service.voidInactive()
         // should not work, should cause exception
-        assertThrows<UnsupportedOperationException> { service.voidException() }
+        assertThrows<FeatureDisabledException> { service.voidException() }
     }
 
     @Test
@@ -36,9 +36,9 @@ class FeatureCheckAdvisorTest : ModuleTest() {
         assertEquals("hello world", service.stringActive("testStringCalls"))
         assertEquals("testStringCalls", service.lastStringCall)
         // should not work, should cause exception
-        assertThrows<UnsupportedOperationException> { service.stringInactive() }
+        assertThrows<FeatureDisabledException> { service.stringInactive() }
         // should not work, should cause exception
-        assertThrows<UnsupportedOperationException> { service.stringException() }
+        assertThrows<FeatureDisabledException> { service.stringException() }
     }
 
     @Test
@@ -48,9 +48,9 @@ class FeatureCheckAdvisorTest : ModuleTest() {
         assertEquals(1, service.intActive("testIntCalls"))
         assertEquals("testIntCalls", service.lastIntCall)
         // should not work, should cause exception
-        assertThrows<UnsupportedOperationException> { service.intInactive() }
+        assertThrows<FeatureDisabledException> { service.intInactive() }
         // should not work, should cause exception
-        assertThrows<UnsupportedOperationException> { service.intException() }
+        assertThrows<FeatureDisabledException> { service.intException() }
     }
 
 }
@@ -100,7 +100,7 @@ class DummyService {
         return 1
     }
 
-    @FeatureCheck("inactive")
+    @FeatureCheck("inactive", silent = true)
     fun intInactive(): Int {
         throw AssertionError("should not be called")
     }

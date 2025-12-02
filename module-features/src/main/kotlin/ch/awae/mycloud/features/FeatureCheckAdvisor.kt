@@ -38,12 +38,19 @@ class FeatureCheckAdvisor(@Lazy featureFlagService: FeatureFlagService) : Abstra
                 return invocation.proceed()
             }
 
-            log.warn("invocation of '${invocation.method}' blocked due to disabled feature flag '${annotation.feature}'")
-
-            if (invocation.method.returnType != Void.TYPE || annotation.alwaysThrow) {
-                throw UnsupportedOperationException("function disabled by feature flag '${annotation.feature}'")
+            val logMessage = "invocation of '${invocation.method.toGenericString()}' blocked due to disabled feature flag '${annotation.feature}'"
+            if (annotation.silent) {
+                log.debug(logMessage)
+            } else {
+                log.warn(logMessage)
             }
 
+            if (invocation.method.returnType != Void.TYPE || annotation.alwaysThrow) {
+                throw FeatureDisabledException(
+                    annotation.feature,
+                    invocation.method.toGenericString(),
+                )
+            }
             return Unit
         }
 
