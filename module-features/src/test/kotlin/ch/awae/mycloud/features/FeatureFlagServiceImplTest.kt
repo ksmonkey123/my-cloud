@@ -1,6 +1,8 @@
 package ch.awae.mycloud.features
 
+import jakarta.validation.*
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.springframework.data.repository.*
 import org.springframework.test.context.*
 import org.springframework.test.context.jdbc.*
@@ -31,10 +33,20 @@ class FeatureFlagServiceImplTest : FeaturesModuleTest() {
         assertFalse(featureFlagService.isEnabled("inactive"))
     }
 
+    @Test
+    fun testInvalidFlag() {
+        assertThrows <ConstraintViolationException> { featureFlagService.isEnabled("") }
+        assertThrows <ConstraintViolationException> { featureFlagService.isEnabled("1234567890123456789012345678901") }
+        assertThrows <ConstraintViolationException> { featureFlagService.isEnabled("this is a feature") }
+
+        featureFlagService.isEnabled("1")
+        featureFlagService.isEnabled("123456789012345678901234567890")
+    }
+
 }
 
 @ActiveProfiles("default-true")
-class FeatureFlagServiceImplTest_DefaultTrue : FeaturesModuleTest() {
+class FeatureFlagServiceImplDefaultTrueTest : FeaturesModuleTest() {
 
 
     @Test

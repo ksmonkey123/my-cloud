@@ -35,7 +35,7 @@ class FeatureInitializerTest : FeaturesModuleTest() {
 }
 
 @ActiveProfiles("init-test", "default-true")
-class FeatureInitializerTest_DefaultTrue : FeaturesModuleTest() {
+class FeatureInitializerDefaultTrueTest : FeaturesModuleTest() {
 
     @Test
     fun verifyFeatureInit() {

@@ -5,9 +5,11 @@ import jakarta.transaction.*
 import org.springframework.beans.factory.annotation.*
 import org.springframework.data.repository.*
 import org.springframework.stereotype.*
+import org.springframework.validation.annotation.Validated
 
 @Service
 @Transactional
+@Validated
 class FeatureFlagServiceImpl(
     private val repo: FeatureFlagRepository,
     @param:Value("\${features.default-state}") private val enabledByDefault: Boolean,
