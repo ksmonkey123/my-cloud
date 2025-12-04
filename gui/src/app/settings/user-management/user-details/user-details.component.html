@@ -41,11 +41,7 @@
       <mat-slide-toggle *ngFor="let role of (roleList$ | async)"
                         [checked]="(userDetails$ | async)?.roles?.includes(role.name)"
                         (toggleChange)="toggleRole(role.name)">
-        @if (role.enabled) {
           {{ role.name }}
-        } @else {
-          <i>{{ role.name }}</i>
-        }
       </mat-slide-toggle>
     </mat-expansion-panel>
     <mat-expansion-panel expanded="false" *ngIf="auth.authInfo()?.username !== name">

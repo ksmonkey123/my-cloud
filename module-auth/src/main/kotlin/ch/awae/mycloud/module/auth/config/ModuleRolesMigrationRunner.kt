@@ -46,7 +46,7 @@ class ModuleRoleInitializer(
     }
 
     private fun addRole(roleConfig: RoleConfig): Role {
-        return roleRepository.save(Role(roleConfig.name, true, roleConfig.authorities.toSet()))
+        return roleRepository.save(Role(roleConfig.name, roleConfig.authorities.toSet()))
     }
 
     private fun updateRole(role: Role, config: RoleConfig) {

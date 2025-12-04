@@ -11,6 +11,7 @@ export class UserManagementService implements OnDestroy {
   constructor(private http: HttpClient, private toastr: ToastrService, private translation: TranslocoService) {
   }
 
+  public roleList$ = new BehaviorSubject<Role[]>([])
   public accountList$ = new BehaviorSubject<Account[]>([])
   public userDetails$ = new BehaviorSubject<AccountDetails | undefined>(undefined)
 
@@ -22,6 +23,13 @@ export class UserManagementService implements OnDestroy {
     this.closer$.complete()
     this.userDetails$.complete()
     this.accountList$.complete()
+    this.roleList$.complete()
+  }
+
+  loadRoleList() {
+    this.http.get<Role[]>('/rest/auth/roles')
+      .pipe(takeUntil(this.closer$))
+      .subscribe((r) => this.roleList$.next(r.sort((a, b) => a.name.localeCompare(b.name))))
   }
 
   loadList() {
@@ -127,4 +135,10 @@ export interface AccountDetails {
   enabled: boolean
   roles: string[]
   languageCode: LanguageCode
+}
+
+export interface Role {
+  name: string
+  description?: string
+  accountCount: number
 }

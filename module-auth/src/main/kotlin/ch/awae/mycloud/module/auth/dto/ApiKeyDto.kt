@@ -10,7 +10,7 @@ data class ApiKeyDto(
 ) {
     companion object {
         fun of(apiKey: ApiKey): ApiKeyDto {
-            val activeUserAuthorities = apiKey.owner.roles.filter { it.enabled }.flatMap { it.authorities }.toSet()
+            val activeUserAuthorities = apiKey.owner.roles.flatMap { it.authorities }.toSet()
             val allUserAuthorities = apiKey.owner.roles.flatMap { it.authorities }.toSet()
 
             val apiKeyAuthorities = apiKey.authorities.map {

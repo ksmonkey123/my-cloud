@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {UserManagementService} from "../user-management.service";
 import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {ActivatedRoute, RouterLink} from "@angular/router";
-import {RoleManagementService} from "../../role-management/role-management.service";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {FormBuilder, FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -43,7 +42,6 @@ import {LanguageCode, languages} from "../../../common/language.model";
     MatSelect,
     MatOption
   ],
-  providers: [RoleManagementService],
   templateUrl: './user-details.component.html',
   styleUrl: './user-details.component.scss'
 })
@@ -60,13 +58,12 @@ export class UserDetailsComponent {
   constructor(
     private svc: UserManagementService,
     private formBuilder: FormBuilder,
-    private roleService: RoleManagementService,
     route: ActivatedRoute,
     public auth: AuthService,
   ) {
-    this.roleService.loadList()
+    this.svc.loadRoleList()
     this.userDetails$ = svc.userDetails$
-    this.roleList$ = roleService.roleList$
+    this.roleList$ = svc.roleList$
     route.paramMap.subscribe(params => {
       this.name = params.get('username')!
       this.svc.loadUser(this.name)
