@@ -8,4 +8,5 @@ import org.springframework.context.annotation.*
 class ShortenerModuleConfiguration : ModuleConfiguration(
     databaseSchemaName = "shortener",
     roles = listOf(RoleConfig("shortener")),
+    features = listOf("shortener:frontend"),
 )

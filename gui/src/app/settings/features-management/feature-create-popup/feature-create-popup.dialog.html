@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>{{ "settings.features.modal.create" | transloco }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <div>
+      <mat-form-field>
+        <mat-label>{{ "settings.features.label.id" | transloco }}</mat-label>
+        <input matInput formControlName="id" required>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-slide-toggle formControlName="enabled">{{ "settings.features.label.enabled" | transloco }}</mat-slide-toggle>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" [mat-dialog-close]="collectData()"
+          [disabled]="!form.valid">{{ "generic.button.save" | transloco }}
+  </button>
+</mat-dialog-actions>

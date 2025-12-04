@@ -1,0 +1,29 @@
+.page-body {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+  background-color: #e0e0e0;
+}
+
+.mat-column-id {
+  width: 100%;
+}
+
+.mat-column-enabled {
+  text-align: right;
+}
+
+table {
+  margin-top: 1em;
+}
+
+.createButton {
+  text-align: right;
+
+  button {
+    margin: 10px;
+  }
+
+}

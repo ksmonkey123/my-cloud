@@ -128,6 +128,7 @@
   "navbar": {
     "account": "Account Settings",
     "api-keys": "API Keys",
+    "features": "Manage Features",
     "logout": "Log Out",
     "roles": "Manage Roles",
     "users": "Manage Users"
@@ -160,6 +161,27 @@
       },
       "settings-changed": "user settings changed",
       "title": "Account Settings"
+    },
+    "feature": {
+      "delete": {
+        "text": "Do you want to delete feature '{{ id }}'?",
+        "title": "Delete Feature"
+      },
+      "error": {
+        "create": "could not create feature '{{ id }}'",
+        "delete": "could not delete feature '{{ id }}'",
+        "toggle": "could not toggle feature '{{ id }}'"
+      }
+    },
+    "features": {
+      "label": {
+        "enabled": "Enabled",
+        "id": "Feature ID"
+      },
+      "modal": {
+        "create": "Create Feature"
+      },
+      "title": "Manage Features"
     },
     "roles": {
       "error": {

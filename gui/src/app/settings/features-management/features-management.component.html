@@ -1,0 +1,41 @@
+<div class="page-body">
+  <h1>{{ "settings.features.title" | transloco }}</h1>
+  <mat-card>
+    <mat-card-content>
+      <div class="createButton">
+        <button mat-mini-fab color="primary" (click)="openCreateDialog()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <table mat-table [dataSource]="this.data() || []">
+        <!-- Id -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>{{"settings.features.label.id" | transloco}}</th>
+          <td mat-cell *matCellDef="let feature">{{ feature.id }}</td>
+        </ng-container>
+
+        <!-- Enabled? -->
+        <ng-container matColumnDef="enabled">
+          <th mat-header-cell *matHeaderCellDef>{{"settings.features.label.enabled" | transloco}}</th>
+          <td mat-cell *matCellDef="let feature">
+            <mat-slide-toggle [checked]="feature.enabled"
+                              (toggleChange)="toggleFeature(feature)"></mat-slide-toggle>
+          </td>
+        </ng-container>
+
+        <!-- Delete? -->
+        <ng-container matColumnDef="delete">
+          <th mat-header-cell *matHeaderCellDef>&nbsp;</th>
+          <td mat-cell *matCellDef="let feature">
+            <button mat-mini-fab color="warn" (click)="deleteFeature(feature)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</div>

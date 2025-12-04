@@ -7,4 +7,5 @@ import org.springframework.context.annotation.Configuration
 class BookkeepingModuleConfiguration : ModuleConfiguration(
     databaseSchemaName = "bookkeeping",
     roles = listOf(RoleConfig("bookkeeping")),
+    features = listOf("bookkeeping:frontend"),
 )

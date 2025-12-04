@@ -7,6 +7,7 @@ import {AppCard, apps} from "../apps/apps.overview";
 import {ComponentStateService} from "../common/component-state.service";
 import {NgxSkeletonLoaderModule} from "ngx-skeleton-loader";
 import {TranslocoPipe} from "@jsverse/transloco";
+import {FeaturesService} from "../common/features.service";
 
 @Component({
   selector: 'app-home',
@@ -29,12 +30,12 @@ export class HomeComponent {
 
   public cards: AppCard[] | undefined;
 
-  constructor(public auth: AuthService) {
+  constructor(public auth: AuthService, public features: FeaturesService) {
     effect(() => {
       const newAuth = auth.authInfo()
       if (newAuth) {
         this.cards = apps.cards.filter(card => {
-          return (newAuth?.authorities ?? []).includes(card.auth)
+          return (newAuth?.authorities ?? []).includes(card.auth) && features.test(card.feature)()
         });
         this.componentStateService.patchComponentState({numberOfCards: this.cards.length});
       }
