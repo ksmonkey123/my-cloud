@@ -2,11 +2,14 @@ package ch.awae.mycloud.common
 
 import jakarta.validation.*
 import org.springframework.http.*
+import org.springframework.jdbc.datasource.init.ScriptStatementFailedException
 import org.springframework.web.bind.*
 import org.springframework.web.bind.annotation.*
 
 @RestControllerAdvice
 class GlobalExceptionHandler {
+
+    private val log = createLogger()
 
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun handleValidationErrors(ex: MethodArgumentNotValidException): ResponseEntity<Map<String, Any>> {
@@ -43,6 +46,7 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception::class)
     fun handleValidationErrors(ex: Exception): ResponseEntity<Map<String, Any>> {
+        log.error(ex.message, ex)
         return ResponseEntity(
             mapOf("type" to ex.javaClass.name, "message" to (ex.message ?: ex.javaClass.simpleName)),
             HttpStatus.INTERNAL_SERVER_ERROR

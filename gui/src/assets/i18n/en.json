@@ -128,6 +128,7 @@
   "navbar": {
     "account": "Account Settings",
     "api-keys": "API Keys",
+    "features": "Manage Features",
     "logout": "Log Out",
     "roles": "Manage Roles",
     "users": "Manage Users"
@@ -160,6 +161,18 @@
       },
       "settings-changed": "user settings changed",
       "title": "Account Settings"
+    },
+    "feature": {
+      "error": {
+        "toggle": "could not toggle feature '{{ id }}'"
+      }
+    },
+    "features": {
+      "label": {
+        "enabled": "Enabled",
+        "id": "Feature ID"
+      },
+      "title": "Manage Features"
     },
     "roles": {
       "error": {

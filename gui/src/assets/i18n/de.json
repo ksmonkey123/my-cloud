@@ -128,6 +128,7 @@
   "navbar": {
     "account": "Mein Account",
     "api-keys": "API-Schlüssel",
+    "features": "Feature-Verwaltung",
     "logout": "Ausloggen",
     "roles": "Rollenverwaltung",
     "users": "Benutzerverwaltung"
@@ -160,6 +161,18 @@
       },
       "settings-changed": "Benutzereinstellungen gespeichert",
       "title": "Account-Einstellungen"
+    },
+    "feature": {
+      "error": {
+        "toggle": "Fehler beim Umschalten des Features '{{ id }}'"
+      }
+    },
+    "features": {
+      "label": {
+        "enabled": "Aktiv",
+        "id": "Feature-ID"
+      },
+      "title": "Feature-Verwaltung"
     },
     "roles": {
       "error": {

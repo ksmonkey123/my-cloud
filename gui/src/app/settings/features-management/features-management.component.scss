@@ -1,0 +1,22 @@
+.page-body {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+  background-color: #e0e0e0;
+}
+
+.mat-column-id {
+  @media screen and (max-width: 500px) {
+    width: 100%;
+  }
+}
+
+.mat-column-enabled {
+  text-align: right;
+}
+
+table {
+  margin-top: 1em;
+}

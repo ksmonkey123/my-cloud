@@ -15,8 +15,6 @@ import {
   MatRowDef,
   MatTable
 } from "@angular/material/table";
-import {MatIcon} from "@angular/material/icon";
-import {MatButton, MatMiniFabButton} from "@angular/material/button";
 import {MatSlideToggle} from "@angular/material/slide-toggle";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogResult, RoleEditPopupDialog} from "./role-edit-popup/role-edit-popup.dialog";
@@ -36,15 +34,12 @@ import {TranslocoPipe} from "@jsverse/transloco";
     MatHeaderCell,
     MatHeaderRow,
     MatHeaderRowDef,
-    MatIcon,
-    MatMiniFabButton,
     MatRow,
     MatRowDef,
     MatSlideToggle,
     MatTable,
     ReactiveFormsModule,
     MatHeaderCellDef,
-    MatButton,
     TranslocoPipe
   ],
   providers: [RoleManagementService],

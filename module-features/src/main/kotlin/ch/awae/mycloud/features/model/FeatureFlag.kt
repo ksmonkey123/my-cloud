@@ -16,10 +16,10 @@ class FeatureFlag(
 
 interface FeatureFlagRepository : JpaRepository<FeatureFlag, String> {
 
-    @Query("select FeatureFlag from FeatureFlag order by id asc")
-    fun listAllSorted() : List<FeatureFlag>
+    @Query("select f from FeatureFlag f order by f.id asc")
+    fun listAllSorted(): List<FeatureFlag>
 
-    @Query("select FeatureFlag from FeatureFlag where enabled = :enabled order by id asc")
+    @Query("select f from FeatureFlag f where f.enabled = :enabled order by f.id asc")
     fun listByEnabled(enabled: Boolean): List<FeatureFlag>
 
 }
