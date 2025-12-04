@@ -36,10 +36,19 @@ class FeatureFlagServiceImpl(
         }
     }
 
-    fun update(id: String, enabled: Boolean): FeatureFlag {
-        val flag = repo.findByIdOrNull(id) ?: throw ResourceNotFoundException("/features/$id")
-        flag.enabled = enabled
-        return repo.save(flag)
+    fun update(id: String, enabled: Boolean): UpdateResult<FeatureFlag> {
+        val flag = repo.findByIdOrNull(id)
+
+        if (flag != null) {
+            flag.enabled = enabled
+            return UpdateResult.Updated(flag)
+        } else {
+            return UpdateResult.Created(repo.save(FeatureFlag(id, enabled)))
+        }
+    }
+
+    fun delete(id: String) {
+        repo.deleteById(id)
     }
 
 }

@@ -163,7 +163,13 @@
       "title": "Account Settings"
     },
     "feature": {
+      "delete": {
+        "text": "Do you want to delete feature '{{ id }}'?",
+        "title": "Delete Feature"
+      },
       "error": {
+        "create": "could not create feature '{{ id }}'",
+        "delete": "could not delete feature '{{ id }}'",
         "toggle": "could not toggle feature '{{ id }}'"
       }
     },
@@ -171,6 +177,9 @@
       "label": {
         "enabled": "Enabled",
         "id": "Feature ID"
+      },
+      "modal": {
+        "create": "Create Feature"
       },
       "title": "Manage Features"
     },

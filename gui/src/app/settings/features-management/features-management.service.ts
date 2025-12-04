@@ -14,8 +14,12 @@ export class FeaturesManagementService {
       .pipe(map((response) => response.features))
   }
 
-  updateFeatureState(id: string, enabled: boolean) {
-    return this.http.put(`/rest/features/${id}`, {enabled: enabled})
+  updateFeature(feature: Feature) {
+    return this.http.put(`/rest/features/${feature.id}`, {enabled: feature.enabled})
+  }
+
+  deleteFeature(id: string) {
+    return this.http.delete<Feature>(`/rest/features/${id}`)
   }
 
 }

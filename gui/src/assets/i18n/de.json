@@ -163,7 +163,13 @@
       "title": "Account-Einstellungen"
     },
     "feature": {
+      "delete": {
+        "text": "Feature '{{ id }}' wirklich löschen?",
+        "title": "Feature löschen"
+      },
       "error": {
+        "create": "Fehler beim Erstellen des Features '{{ id }}'",
+        "delete": "Fehler beim Löschen des Features '{{ id }}'",
         "toggle": "Fehler beim Umschalten des Features '{{ id }}'"
       }
     },
@@ -171,6 +177,9 @@
       "label": {
         "enabled": "Aktiv",
         "id": "Feature-ID"
+      },
+      "modal": {
+        "create": "Feature erstellen"
       },
       "title": "Feature-Verwaltung"
     },

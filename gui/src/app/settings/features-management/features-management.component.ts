@@ -18,6 +18,11 @@ import {
 import {MatCard, MatCardContent} from "@angular/material/card";
 import {MatSlideToggle} from "@angular/material/slide-toggle";
 import {ToastrService} from "ngx-toastr";
+import {MatIcon} from "@angular/material/icon";
+import {MatMiniFabButton} from "@angular/material/button";
+import {SimpleModalService} from "../../common/simple-modal/simple-modal.service";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {FeatureCreatePopup} from "./feature-create-popup/feature-create-popup.dialog";
 
 @Component({
   selector: 'app-features-management',
@@ -35,18 +40,22 @@ import {ToastrService} from "ngx-toastr";
     MatRow,
     MatHeaderRow,
     MatHeaderRowDef,
-    MatRowDef
+    MatRowDef,
+    MatIcon,
+    MatMiniFabButton
   ],
   templateUrl: './features-management.component.html',
   styleUrl: './features-management.component.scss'
 })
 export class FeaturesManagementComponent extends BaseDataComponent<Feature[]> {
 
-  displayedColumns = ['id', 'enabled']
+  displayedColumns = ['id', 'enabled', 'delete']
 
   constructor(private service: FeaturesManagementService,
               private toastr: ToastrService,
-              private translation: TranslocoService,
+              private transloco: TranslocoService,
+              private modal: SimpleModalService,
+              private dialog: MatDialog,
   ) {
     super();
   }
@@ -61,14 +70,46 @@ export class FeaturesManagementComponent extends BaseDataComponent<Feature[]> {
   }
 
   toggleFeature(feature: Feature) {
-    console.log("toggle " + feature.id)
-    this.service.updateFeatureState(feature.id, !feature.enabled)
+    this.service.updateFeature({...feature, enabled: !feature.enabled})
       .subscribe({
         next: () => this.refresh(),
         error: error => {
-          this.toastr.error(error?.error?.message, this.translation.translate("settings.feature.error.toggle", {id: feature.id}))
+          this.toastr.error(error?.error?.message, this.transloco.translate("settings.feature.error.toggle", {id: feature.id}))
         }
       })
+  }
+
+  deleteFeature(feature: Feature) {
+    console.log("delete feature " + feature.id)
+    this.modal.confirm(
+      this.transloco.translate("settings.feature.delete.title"),
+      this.transloco.translate("settings.feature.delete.text", {id: feature.id}))
+      .subscribe(confirm => {
+        if (confirm) {
+          this.service.deleteFeature(feature.id)
+            .subscribe({
+              next: () => this.refresh(),
+              error: error => {
+                this.toastr.error(error?.error?.message, this.transloco.translate("settings.feature.error.delete", {id: feature.id}))
+              }
+            })
+        }
+      })
+  }
+
+  openCreateDialog() {
+    const dialogRef: MatDialogRef<FeatureCreatePopup, Feature> = this.dialog.open(FeatureCreatePopup)
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.service.updateFeature(result)
+          .subscribe({
+            next: () => this.refresh(),
+            error: error => {
+              this.toastr.error(error?.error?.message, this.transloco.translate("settings.feature.error.create", {id: result.id}))
+            }
+          })
+      }
+    })
   }
 
 }
