@@ -1,11 +1,12 @@
-import {Injectable, OnDestroy, signal} from "@angular/core";
+import {computed, inject, Injectable, OnDestroy, Signal, signal} from "@angular/core";
 import {Subject, takeUntil} from "rxjs";
 import {HttpClient} from "@angular/common/http";
+import {CanActivateFn} from "@angular/router";
 
 @Injectable({providedIn: 'root'})
 export class FeaturesService implements OnDestroy {
 
-  private featureState: FeatureState = {defaultState: false, features: {}}
+  private featureState = signal<FeatureState>({defaultState: false, features: {}})
 
   private closer$ = new Subject<void>()
 
@@ -25,18 +26,26 @@ export class FeaturesService implements OnDestroy {
             state.features[feature.id] = feature.enabled
           }
 
-          this.featureState = state
+          this.featureState.set(state)
         }
       })
   }
 
-  /**
-   * tests if the given feature is enabled
-   *
-   * @param id the feature id
-   */
-  test(id: string): boolean {
-    return this.featureState.features[id] ?? this.featureState.defaultState
+  private tests = new Map<string, Signal<boolean>>()
+
+  test(id: string): Signal<boolean> {
+    if (this.tests.has(id)) {
+      return this.tests.get(id)!!
+    }
+
+    const result = computed(() => {
+        let state = this.featureState()
+        return state.features[id] ?? state.defaultState
+      }
+    )
+
+    this.tests.set(id, result)
+    return result
   }
 
   ngOnDestroy() {
