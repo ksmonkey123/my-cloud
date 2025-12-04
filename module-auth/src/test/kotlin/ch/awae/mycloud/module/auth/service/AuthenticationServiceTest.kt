@@ -9,17 +9,26 @@ import kotlin.test.*
 class AuthenticationServiceTest : AuthModuleTest() {
 
     @Test
-    @Sql(scripts = ["/testdata/insert_auth_token.sql"])
+    @Sql(scripts = ["/testdata/clear_schema.sql", "/testdata/1000_setup_bearer_token_test.sql"])
     fun testAuthenticateValidToken() {
-        val info = authenticationService.authenticateToken("Bearer valid_token")
+        val info = authenticationService.authenticateToken("Bearer MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDE")
         assertNotNull(info)
-        assertEquals("admin", info.username)
+        assertEquals("test-user-1000", info.username)
     }
 
     @Test
-    @Sql(scripts = ["/testdata/insert_auth_token.sql"])
+    @Sql(scripts = ["/testdata/clear_schema.sql", "/testdata/1000_setup_bearer_token_test.sql"])
     fun testAuthenticateInvalidToken() {
-        val info = authenticationService.authenticateToken("expired_token")
+        val info = authenticationService.authenticateToken("Bearer OTEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDE")
         assertNull(info)
     }
+
+    @Test
+    @Sql(scripts = ["/testdata/clear_schema.sql", "/testdata/1000_setup_bearer_token_test.sql"])
+    fun testAuthenticateDisabledUser() {
+        val info = authenticationService.authenticateToken("Bearer QTEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDE")
+        assertNull(info)
+    }
+
+
 }

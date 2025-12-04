@@ -10,16 +10,13 @@ data class ApiKeyDto(
 ) {
     companion object {
         fun of(apiKey: ApiKey): ApiKeyDto {
-            val activeUserAuthorities = apiKey.owner.roles.flatMap { it.authorities }.toSet()
-            val allUserAuthorities = apiKey.owner.roles.flatMap { it.authorities }.toSet()
+            val userAuthorities = apiKey.owner.roles.flatMap { it.authorities }.toSet()
 
             val apiKeyAuthorities = apiKey.authorities.map {
                 ApiKeyAuthoritiesDto(
                     name = it,
                     // only if the role is active, we treat it as enabled
-                    enabled = activeUserAuthorities.contains(it),
-                    // granted means, the auth-code is granted to the user, but may not currently be enabled
-                    granted = allUserAuthorities.contains(it),
+                    active = userAuthorities.contains(it),
                 )
             }
 
@@ -34,6 +31,5 @@ data class ApiKeyDto(
 
 data class ApiKeyAuthoritiesDto(
     val name: String,
-    val enabled: Boolean,
-    val granted: Boolean,
+    val active: Boolean,
 )

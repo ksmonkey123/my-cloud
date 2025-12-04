@@ -1,5 +1,6 @@
 package ch.awae.mycloud.module.documents
 
+import ch.awae.mycloud.api.common.TokenGenerator
 import ch.awae.mycloud.api.documents.*
 import ch.awae.mycloud.common.*
 import jakarta.transaction.*
@@ -13,10 +14,11 @@ import java.time.*
 @Transactional
 class DocumentStoreImpl(
     private val documentRepository: DocumentRepository,
+    private val tokenGenerator: TokenGenerator,
 ) : DocumentStore {
 
     override fun createDocument(filename: String, type: MediaType, content: ByteArray, lifetime: Duration): DocumentIdentifier {
-        val token = TokenGenerator.generate(16, TokenGenerator.EncoderType.URL)
+        val token = tokenGenerator.generate(16, TokenGenerator.EncoderType.URL)
         val document = DocumentEntity(
             token = token,
             filename = filename,
