@@ -4,7 +4,6 @@ object AccountToAuthoritiesMapper {
 
     fun getAuthorities(account: Account): Set<String> {
         return account.roles
-            .filter { it.enabled }
             .flatMap { it.authorities }
             .let { authorities ->
                 if (account.admin) {

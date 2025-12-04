@@ -1,13 +1,11 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, Subject, takeUntil} from "rxjs";
-import {ToastrService} from "ngx-toastr";
-import {TranslocoService} from "@jsverse/transloco";
 
 @Injectable()
 export class RoleManagementService implements OnDestroy {
 
-  constructor(private http: HttpClient, private toastr: ToastrService, private translation: TranslocoService) {
+  constructor(private http: HttpClient) {
   }
 
   public roleList$ = new BehaviorSubject<Role[]>([])
@@ -29,41 +27,10 @@ export class RoleManagementService implements OnDestroy {
       .subscribe((r) => this.roleList$.next(r.sort(this.sorter)))
   }
 
-  updateList(role: Role) {
-    let list = this.roleList$.value
-    list = list.filter(r => r.name !== role.name)
-    list.push(role)
-    list = list.sort(this.sorter)
-    this.roleList$.next(list)
-  }
-
-  editRole(name: string, data: RoleEditData) {
-    this.http.patch<Role>('/rest/auth/roles/' + name, {
-      description: data.description,
-      enabled: data.enabled
-    })
-      .pipe(takeUntil(this.closer$))
-      .subscribe({
-          next: (role) => {
-            this.updateList(role)
-          },
-          error: error => {
-            this.toastr.error(error?.error?.message, this.translation.translate("settings.roles.error.creation", {id: name}))
-            this.loadList()
-          }
-        }
-      )
-  }
 }
 
 export interface Role {
   name: string
   description?: string
-  enabled: boolean
   accountCount: number
-}
-
-export interface RoleEditData {
-  description?: string
-  enabled?: boolean
 }

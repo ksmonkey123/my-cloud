@@ -17,14 +17,4 @@ class RoleController(
         return svc.getAllRoles()
     }
 
-    @PatchMapping("/{role}")
-    fun edit(@PathVariable role: String, @RequestBody request: PatchRoleRequest): RoleDto {
-        return svc.editRole(role, request.description, request.enabled)
-    }
-
-    data class PatchRoleRequest(
-        val enabled: Boolean?,
-        val description: String?,
-    )
-
 }

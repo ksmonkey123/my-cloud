@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.Query
 class Role(
     @Column(updatable = false, unique = true)
     val name: String,
-    var enabled: Boolean = true,
     @Convert(converter = AuthoritiesConverter::class)
     var authorities: Set<String>,
     var description: String? = null,
@@ -26,8 +25,6 @@ class Role(
 }
 
 interface RoleRepository : JpaRepository<Role, Long> {
-
-    fun findByName(name: String): Role?
 
     @Query("select r from Role r where r.name in :names")
     fun findRolesByName(names: List<String>): List<Role>
