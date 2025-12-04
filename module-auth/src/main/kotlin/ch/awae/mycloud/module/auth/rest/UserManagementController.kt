@@ -10,19 +10,24 @@ import org.springframework.security.access.prepost.*
 import org.springframework.web.bind.annotation.*
 
 @PreAuthorize("hasAuthority('admin')")
-@RequestMapping("/rest/auth/accounts")
+@RequestMapping("/rest/auth")
 @RestController
 class UserManagementController(
     private val accountService: AccountService,
+    private val roleService: RoleService,
 ) {
 
+    @GetMapping("roles")
+    fun listAllRoles(): List<RoleDto> {
+        return roleService.getAllRoles()
+    }
 
-    @GetMapping("")
+    @GetMapping("accounts")
     fun listAllAccounts(): List<AccountSummaryDto> {
         return accountService.getAccounts()
     }
 
-    @PutMapping("/{username}")
+    @PutMapping("accounts/{username}")
     @ResponseStatus(HttpStatus.CREATED)
     fun createAccount(
         @PathVariable username: String,
@@ -36,7 +41,7 @@ class UserManagementController(
         )
     }
 
-    @PatchMapping("/{username}")
+    @PatchMapping("accounts/{username}")
     fun editAccount(
         @PathVariable username: String,
         @Valid @RequestBody request: PatchAccountRequest
@@ -51,12 +56,12 @@ class UserManagementController(
         )
     }
 
-    @GetMapping("/{username}")
+    @GetMapping("accounts/{username}")
     fun getAccountDetails(@PathVariable username: String): AccountDetailsDto {
         return accountService.getAccountDetails(username)
     }
 
-    @PatchMapping("/{username}/roles")
+    @PatchMapping("accounts/{username}/roles")
     fun editAccountRoles(@PathVariable username: String, @RequestBody request: PatchRolesRequest): AccountDetailsDto {
         return accountService.editAccountRoles(
             username,
