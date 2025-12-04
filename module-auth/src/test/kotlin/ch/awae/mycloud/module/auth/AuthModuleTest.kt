@@ -1,13 +1,18 @@
 package ch.awae.mycloud.module.auth
 
+import ch.awae.mycloud.api.common.*
 import ch.awae.mycloud.module.auth.config.*
 import ch.awae.mycloud.module.auth.domain.*
 import ch.awae.mycloud.module.auth.service.*
 import ch.awae.mycloud.test.*
+import com.ninjasquad.springmockk.*
 import org.springframework.beans.factory.annotation.*
 import org.springframework.security.crypto.password.*
 
 class AuthModuleTest : ModuleTest() {
+
+    @MockkBean
+    lateinit var tokenGenerator: TokenGenerator
 
     @Autowired
     lateinit var initialUserCreator: InitialUserCreator

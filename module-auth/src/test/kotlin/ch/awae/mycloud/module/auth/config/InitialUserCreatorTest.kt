@@ -12,7 +12,7 @@ import kotlin.test.*
 class InitialUserCreatorTest : AuthModuleTest() {
 
     @Test
-    @Sql(scripts = ["/testdata/clean_auth.sql"])
+    @Sql(scripts = ["/testdata/clear_schema.sql"])
     fun `initial user must be created when no users exist`() {
         assertEquals(0, accountRepository.count())
 
@@ -29,7 +29,7 @@ class InitialUserCreatorTest : AuthModuleTest() {
     }
 
     @Test
-    @Sql(scripts = ["/testdata/clean_auth.sql", "/testdata/insert_normal_user.sql"])
+    @Sql(scripts = ["/testdata/clear_schema.sql", "/testdata/3000_setup_logged_in_normal_user.sql"])
     fun `initial user must be created when no admins exist, even if normal user is present`() {
         assertEquals(1, accountRepository.count())
 
@@ -41,13 +41,13 @@ class InitialUserCreatorTest : AuthModuleTest() {
 
 
     @Test
-    @Sql(scripts = ["/testdata/clean_auth.sql", "/testdata/insert_admin_user.sql"])
+    @Sql(scripts = ["/testdata/clear_schema.sql", "/testdata/2000_setup_admin_users.sql"])
     fun `initial user must not be created if an admin already exists`() {
-        assertEquals(1, accountRepository.count())
+        assertEquals(2, accountRepository.count())
 
         initialUserCreator.run()
 
-        assertEquals(1, accountRepository.count())
+        assertEquals(2, accountRepository.count())
         assertNull(accountRepository.findByUsername("admin"))
     }
 

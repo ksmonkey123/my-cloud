@@ -1,5 +1,6 @@
 package ch.awae.mycloud.module.auth.domain
 
+import ch.awae.mycloud.api.common.TokenGenerator
 import ch.awae.mycloud.common.*
 import ch.awae.mycloud.common.db.*
 import jakarta.persistence.*
@@ -20,8 +21,8 @@ class AuthToken private constructor(
 ) : IdBaseEntity() {
 
     companion object {
-        fun buildToken(account: Account, validUntil: LocalDateTime): AuthToken {
-            val tokenString = TokenGenerator.generate(32, TokenGenerator.EncoderType.BASIC)
+        fun buildToken(account: Account, tokenGenerator: TokenGenerator, validUntil: LocalDateTime): AuthToken {
+            val tokenString = tokenGenerator.generate(32, TokenGenerator.EncoderType.BASIC)
             return AuthToken(tokenString, account, validUntil)
         }
     }

@@ -10,8 +10,10 @@ import jakarta.transaction.*
 import org.hibernate.validator.constraints.*
 import org.springframework.security.crypto.password.*
 import org.springframework.stereotype.*
+import org.springframework.validation.annotation.*
 
 @Service
+@Validated
 @Transactional
 class AccountService(
     private val accountRepository: AccountRepository,

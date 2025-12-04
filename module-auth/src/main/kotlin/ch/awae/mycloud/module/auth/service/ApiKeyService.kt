@@ -1,5 +1,6 @@
 package ch.awae.mycloud.module.auth.service
 
+import ch.awae.mycloud.api.common.*
 import ch.awae.mycloud.common.*
 import ch.awae.mycloud.module.auth.domain.*
 import ch.awae.mycloud.module.auth.dto.*
@@ -10,8 +11,8 @@ import org.springframework.stereotype.*
 @Transactional
 class ApiKeyService(
     private val accountService: AccountService,
-    private val roleRepository: RoleRepository,
     private val apiKeyRepository: ApiKeyRepository,
+    private val tokenGenerator: TokenGenerator,
 ) {
 
     fun listKeys(username: String): List<ApiKeyDto> {
@@ -32,7 +33,7 @@ class ApiKeyService(
         val saved = apiKeyRepository.save(
             ApiKey(
                 name = name,
-                tokenString = TokenGenerator.generate(64, TokenGenerator.EncoderType.URL),
+                tokenString = tokenGenerator.generate(64, TokenGenerator.EncoderType.URL),
                 owner = accountService.getAccount(username),
                 authorities = roles.toSet(),
             )
