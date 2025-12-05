@@ -25,7 +25,7 @@ class ApiKeyService(
         apiKeyRepository.delete(key)
     }
 
-    fun create(username: String, name: String, roles: List<String>): Pair<ApiKeyDto, String> {
+    fun create(username: String, name: String, authorities: List<String>): Pair<ApiKeyDto, String> {
         if (apiKeyRepository.findByOwnerAndName(username, name) != null) {
             throw ResourceAlreadyExistsException("/auth/api_key/$name")
         }
@@ -35,7 +35,7 @@ class ApiKeyService(
                 name = name,
                 tokenString = tokenGenerator.generate(64, TokenGenerator.EncoderType.URL),
                 owner = accountService.getAccount(username),
-                authorities = roles.toSet(),
+                authorities = authorities.toSet(),
             )
         )
 

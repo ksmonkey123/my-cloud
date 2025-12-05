@@ -13,6 +13,6 @@ class AuthoritiesConverter : AttributeConverter<Set<String>, String> {
     }
 
     override fun convertToEntityAttribute(dbData: String?): Set<String> {
-        return dbData?.let { mapper.readValue(it) } ?: emptySet()
+        return mapper.readValue<Set<String>>(dbData ?: return emptySet())
     }
 }

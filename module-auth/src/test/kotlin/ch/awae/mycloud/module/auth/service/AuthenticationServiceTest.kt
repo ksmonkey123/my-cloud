@@ -30,5 +30,10 @@ class AuthenticationServiceTest : AuthModuleTest() {
         assertNull(info)
     }
 
+    @Test
+    fun testAuthenticateUnsupportedTokenType() {
+        val info = authenticationService.authenticateToken("Unsupported Token")
+        assertNull(info)
+    }
 
 }
