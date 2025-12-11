@@ -28,3 +28,6 @@ email:
 mailjet:
   api-key-public: dummy
   api-key-secret: dummy
+
+features:
+  default-state: true
