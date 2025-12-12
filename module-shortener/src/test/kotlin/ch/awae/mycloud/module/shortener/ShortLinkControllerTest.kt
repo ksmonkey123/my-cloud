@@ -1,13 +1,13 @@
 package ch.awae.mycloud.module.shortener
 
-import ch.awae.mycloud.test.*
-import ch.awae.mycloud.test.mvc.*
-import com.ninjasquad.springmockk.*
-import io.mockk.*
-import org.junit.jupiter.api.*
-import org.springframework.boot.test.autoconfigure.web.servlet.*
-import org.springframework.http.*
-import org.springframework.test.web.servlet.*
+import ch.awae.mycloud.test.WithBearerAuth
+import ch.awae.mycloud.test.mvc.ModuleWebTest
+import com.ninjasquad.springmockk.MockkBean
+import io.mockk.every
+import org.junit.jupiter.api.Test
+import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest
+import org.springframework.http.MediaType
+import org.springframework.test.web.servlet.get
 
 @WebMvcTest(controllers = [ShortLinkController::class])
 class ShortLinkControllerTest : ModuleWebTest() {

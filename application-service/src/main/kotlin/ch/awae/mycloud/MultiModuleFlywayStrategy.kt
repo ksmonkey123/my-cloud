@@ -1,9 +1,10 @@
 package ch.awae.mycloud
 
-import ch.awae.mycloud.common.*
-import org.flywaydb.core.*
-import org.springframework.boot.autoconfigure.flyway.*
-import org.springframework.stereotype.*
+import ch.awae.mycloud.common.ModuleConfiguration
+import ch.awae.mycloud.common.createLogger
+import org.flywaydb.core.Flyway
+import org.springframework.boot.flyway.autoconfigure.FlywayMigrationStrategy
+import org.springframework.stereotype.Component
 
 @Component
 class MultiModuleFlywayStrategy(

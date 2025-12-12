@@ -37,7 +37,7 @@ class JobRestController(
 }
 
 data class JobCreationRequest(
-    @URL
+    @param:URL
     val url: String,
     val format: OutputFormat,
 )

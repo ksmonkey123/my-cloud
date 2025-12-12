@@ -2,7 +2,7 @@ package ch.awae.mycloud.test
 
 import ch.awae.mycloud.common.*
 import org.flywaydb.core.*
-import org.springframework.boot.autoconfigure.flyway.*
+import org.springframework.boot.flyway.autoconfigure.FlywayMigrationStrategy
 import org.springframework.context.annotation.*
 import org.springframework.stereotype.*
 

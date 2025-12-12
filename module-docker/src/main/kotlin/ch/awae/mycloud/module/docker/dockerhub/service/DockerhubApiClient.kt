@@ -1,13 +1,15 @@
 package ch.awae.mycloud.module.docker.dockerhub.service
 
-import ch.awae.mycloud.common.*
-import ch.awae.mycloud.module.docker.dockerhub.*
-import com.fasterxml.jackson.annotation.*
-import com.github.benmanes.caffeine.cache.*
-import org.springframework.boot.web.client.*
-import org.springframework.stereotype.*
-import org.springframework.web.client.*
-import java.time.*
+import ch.awae.mycloud.common.ExpiringInstance
+import ch.awae.mycloud.common.createLogger
+import ch.awae.mycloud.module.docker.dockerhub.DockerhubProperties
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.github.benmanes.caffeine.cache.Caffeine
+import com.github.benmanes.caffeine.cache.LoadingCache
+import org.springframework.boot.restclient.RestTemplateBuilder
+import org.springframework.stereotype.Repository
+import org.springframework.web.client.RestTemplate
+import java.time.Duration
 import kotlin.time.Duration.Companion.minutes
 
 private typealias ResourceID = Pair<String?, String>
@@ -76,4 +78,4 @@ data class Tag(val tag: String, val digest: String)
 
 private data class TagListResponse(val next: String?, val results: List<TagListResult>)
 private data class TagListResult(val name: String, val digest: String?)
-private data class LoginResponse(@JsonProperty("access_token") val accessToken: String)
+private data class LoginResponse(@param:JsonProperty("access_token") val accessToken: String)

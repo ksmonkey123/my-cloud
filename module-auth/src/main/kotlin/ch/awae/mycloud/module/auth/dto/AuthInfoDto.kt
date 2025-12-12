@@ -26,8 +26,6 @@ data class AuthInfoDto(
                     authInfo.language.code,
                     authInfo.email,
                 )
-
-                else -> throw kotlin.IllegalArgumentException("invalid auth type")
             }
         }
     }

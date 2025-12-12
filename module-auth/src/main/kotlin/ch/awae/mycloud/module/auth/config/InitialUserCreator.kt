@@ -19,7 +19,7 @@ class InitialUserCreator(
     private val logger = createLogger()
 
     @Transactional
-    override fun run(vararg args: String?) {
+    override fun run(vararg args: String) {
         val adminCount = accountRepository.countAdmins()
 
         if (adminCount == 0L) {
@@ -27,7 +27,7 @@ class InitialUserCreator(
             accountRepository.save(
                 Account(
                     username = "admin",
-                    password = passwordEncoder.encode("admin"),
+                    password = passwordEncoder.encode("admin")!!,
                     admin = true,
                     language = Language.ENGLISH,
                     email = null,

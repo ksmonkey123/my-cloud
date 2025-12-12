@@ -15,7 +15,7 @@ class Account(
     val username: String,
     @JsonIgnore
     var password: String,
-    @Email
+    @param:Email
     var email: String?,
     var enabled: Boolean = true,
     var admin: Boolean = false,

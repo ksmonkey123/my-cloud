@@ -17,7 +17,7 @@ class FeatureInitializer(
 
     private val log = createLogger()
 
-    override fun run(vararg args: String?) {
+    override fun run(vararg args: String) {
         for (module in modules) {
             for (feature in module.features) {
                 if (!repo.existsById(feature)) {

@@ -29,7 +29,7 @@ class AccountService(
         if (!passwordEncoder.matches(oldPassword, account.password)) {
             throw InvalidPasswordException()
         }
-        account.password = passwordEncoder.encode(newPassword)
+        account.password = passwordEncoder.encode(newPassword)!!
     }
 
     fun createAccount(
@@ -43,7 +43,7 @@ class AccountService(
 
         val account = Account(
             username = username,
-            password = passwordEncoder.encode(password),
+            password = passwordEncoder.encode(password)!!,
             email = null,
             enabled = true,
             admin = admin,
@@ -70,7 +70,7 @@ class AccountService(
     ): AccountSummaryDto {
         val account = getAccount(username)
 
-        if (password != null) account.password = passwordEncoder.encode(password)
+        if (password != null) account.password = passwordEncoder.encode(password)!!
         if (enabled != null) account.enabled = enabled
         if (admin != null) account.admin = admin
         if (language != null) account.language = language

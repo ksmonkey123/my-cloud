@@ -18,7 +18,7 @@ class ModuleRoleInitializer(
     private val log = createLogger()
 
     @Transactional
-    override fun run(vararg args: String?) {
+    override fun run(vararg args: String) {
         val requiredRoles = moduleConfigurations.flatMap { it.roles }.associateBy { it.name }
         val existingRoles = roleRepository.findAll().associateBy { it.name }
 

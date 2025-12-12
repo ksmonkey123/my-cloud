@@ -10,7 +10,7 @@ import org.springframework.stereotype.*
 class UpdateAnnouncer(
     private val dockerProperties: DockerhubProperties,
     private val emailSendService: EmailSendService,
-    @Value("\${docker.sender}")
+    @param:Value("\${docker.sender}")
     private val sender: String,
 ) {
 

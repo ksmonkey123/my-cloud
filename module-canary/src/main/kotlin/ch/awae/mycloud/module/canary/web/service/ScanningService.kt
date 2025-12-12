@@ -18,7 +18,7 @@ class ScanningService(
     private val http: RestTemplate,
     private val userInfoService: UserInfoService,
     private val emailSendService: EmailSendService,
-    @Value("\${canary.sender}")
+    @param:Value("\${canary.sender}")
     private val sender: String,
 ) {
 

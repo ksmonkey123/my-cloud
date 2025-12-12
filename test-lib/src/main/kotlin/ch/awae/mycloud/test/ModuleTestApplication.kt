@@ -1,8 +1,8 @@
 package ch.awae.mycloud.test
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
+import org.springframework.boot.persistence.autoconfigure.EntityScan
 import org.springframework.context.annotation.Profile
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
