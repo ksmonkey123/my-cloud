@@ -162,6 +162,10 @@
       "settings-changed": "Benutzereinstellungen gespeichert",
       "title": "Account-Einstellungen"
     },
+    "api-keys": {
+      "nokeys": "Es sind noch keine API-Schlüssel erfasst!",
+      "title": "API-Schlüssel"
+    },
     "feature": {
       "delete": {
         "text": "Feature '{{ id }}' wirklich löschen?",

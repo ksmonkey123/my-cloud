@@ -1,16 +1,13 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {map, Observable, Subject, takeUntil} from "rxjs";
 import {HttpClient} from "@angular/common/http";
-import {TranslocoService} from "@jsverse/transloco";
-import {BaseLocalDataChangeService} from "../../common/base/base-local-data-change-service.service";
 
 @Injectable()
-export class ApiKeyManagementService extends BaseLocalDataChangeService<ApiKey[]> implements OnDestroy {
+export class ApiKeyManagementService implements OnDestroy {
 
   private closer$ = new Subject<void>()
 
-  constructor(private http: HttpClient, private translation: TranslocoService) {
-    super();
+  constructor(private http: HttpClient) {
   }
 
   public list(): Observable<ApiKey[]> {

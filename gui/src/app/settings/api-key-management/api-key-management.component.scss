@@ -1,0 +1,17 @@
+.page-body {
+  max-width: 800px;
+  padding: 2em;
+  margin: 0 auto;
+
+  mat-icon {
+    vertical-align: bottom;
+    margin-bottom: -2px;
+  }
+
+}
+
+mat-panel-title {
+  mat-icon {
+    margin-right: 1em;
+  }
+}

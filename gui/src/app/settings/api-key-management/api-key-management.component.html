@@ -1,6 +1,18 @@
-<p>api-key-management works!</p>
-<ul>
-  @for (key of this.data(); track $index) {
-    <li>{{ key.name }}</li>
+<div class="page-body" *transloco="let t">
+  <h1>{{ t("settings.api-keys.title") }}</h1>
+  @if (data()?.length) {
+    <mat-accordion multi="true">
+      @for (key of data(); track key.name) {
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-icon>key</mat-icon>
+            {{ key.name }}
+          </mat-expansion-panel-header>
+          {{ key.createdAt }}
+        </mat-expansion-panel>
+      }
+    </mat-accordion>
+  } @else {
+    <p><mat-icon>info</mat-icon>&nbsp;{{ t("settings.api-keys.nokeys") }} </p>
   }
-</ul>
+</div>

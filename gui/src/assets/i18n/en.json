@@ -162,6 +162,10 @@
       "settings-changed": "user settings changed",
       "title": "Account Settings"
     },
+    "api-keys": {
+      "nokeys": "No API Keys have yet been created!",
+      "title": "API Keys"
+    },
     "feature": {
       "delete": {
         "text": "Do you want to delete feature '{{ id }}'?",
