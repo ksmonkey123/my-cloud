@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Account, UserManagementService} from "../user-management.service";
-import {AsyncPipe, NgIf} from "@angular/common";
+import { AsyncPipe } from "@angular/common";
 import {MatCard, MatCardContent} from "@angular/material/card";
 import {
   MatCell,
@@ -45,12 +45,11 @@ import {TranslocoPipe, TranslocoService} from "@jsverse/transloco";
     MatSlideToggle,
     FormsModule,
     MatChip,
-    NgIf,
     MatIcon,
     ReactiveFormsModule,
     MatButton,
     TranslocoPipe
-  ],
+],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.scss'
 })

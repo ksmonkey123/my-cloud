@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {UserManagementService} from "../user-management.service";
-import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
+import { AsyncPipe } from "@angular/common";
 import {ActivatedRoute, RouterLink} from "@angular/router";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
@@ -29,7 +29,6 @@ import {LanguageCode, languages} from "../../../common/language.model";
     ReactiveFormsModule,
     MatButton,
     MatSlideToggle,
-    NgForOf,
     MatIcon,
     FormsModule,
     RouterLink,
@@ -37,11 +36,10 @@ import {LanguageCode, languages} from "../../../common/language.model";
     MatExpansionPanel,
     MatExpansionPanelHeader,
     MatExpansionPanelTitle,
-    NgIf,
     TranslocoDirective,
     MatSelect,
     MatOption
-  ],
+],
   templateUrl: './user-details.component.html',
   styleUrl: './user-details.component.scss'
 })

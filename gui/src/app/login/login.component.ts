@@ -7,7 +7,7 @@ import {MatButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 import {AuthService} from "../common/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {NgIf} from "@angular/common";
+
 import {MatCheckbox} from "@angular/material/checkbox";
 
 @Component({
@@ -22,9 +22,8 @@ import {MatCheckbox} from "@angular/material/checkbox";
     MatButton,
     MatIcon,
     ReactiveFormsModule,
-    NgIf,
     MatCheckbox
-  ],
+],
     templateUrl: './login.component.html',
     styleUrl: './login.component.scss'
 })
