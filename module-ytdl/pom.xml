@@ -6,17 +6,17 @@
     <parent>
         <groupId>ch.awae.mycloud</groupId>
         <artifactId>project-repo</artifactId>
-        <version>2.0-SNAPSHOT</version>
+        <version>2.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>module-ytdl</artifactId>
-    <version>2.0-SNAPSHOT</version>
+    <version>2.1-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
             <groupId>ch.awae.mycloud</groupId>
             <artifactId>base-lib</artifactId>
-            <version>2.0-SNAPSHOT</version>
+            <version>2.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
