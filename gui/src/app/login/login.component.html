@@ -13,10 +13,12 @@
       <div class="checkbox-wrapper">
         <mat-checkbox formControlName="longRetention">stay logged in</mat-checkbox>
       </div>
-      <p class="failureBanner" *ngIf="problem">
-        <mat-icon>warning</mat-icon>
-        Login Failed
-      </p>
+      @if (problem) {
+        <p class="failureBanner">
+          <mat-icon>warning</mat-icon>
+          Login Failed
+        </p>
+      }
       <button mat-raised-button type="submit" color="primary" [disabled]="!form.valid">
         <mat-icon>login</mat-icon>
         Log In

@@ -2,17 +2,21 @@
   <button mat-button type="button" routerLink="/">my.awae.ch</button>
 
   <span class="toolbar-spacer"></span>
-  <button mat-icon-button [matMenuTriggerFor]="toolbarSettingsMenu" *ngIf="auth.authInfo()">
-    <mat-icon>settings</mat-icon>
-  </button>
+  @if (auth.authInfo()) {
+    <button mat-icon-button [matMenuTriggerFor]="toolbarSettingsMenu">
+      <mat-icon>settings</mat-icon>
+    </button>
+  }
 </mat-toolbar>
 <mat-menu #toolbarSettingsMenu="matMenu">
   @for (item of settingsOptions; track item.path) {
-    <button mat-menu-item *ngIf="auth.authInfo()?.authorities?.includes(item.auth)" [routerLink]="item.path"
-            routerLinkActive="settings-item-selected">
-      <mat-icon>{{ item.icon }}</mat-icon>
-      {{ item.titleKey | transloco }}
-    </button>
+    @if (auth.authInfo()?.authorities?.includes(item.auth)) {
+      <button mat-menu-item [routerLink]="item.path"
+              routerLinkActive="settings-item-selected">
+        <mat-icon>{{ item.icon }}</mat-icon>
+        {{ item.titleKey | transloco }}
+      </button>
+    }
   }
   <button mat-menu-item (click)="onLogout()">
     <mat-icon>logout</mat-icon>
