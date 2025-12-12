@@ -84,7 +84,7 @@
       },
       "label": {
         "amount": "Amount",
-        "date": "Datum",
+        "date": "Transaction Date",
         "description": "Description",
         "id": "ID",
         "tag": "Tag",
@@ -161,6 +161,10 @@
       },
       "settings-changed": "user settings changed",
       "title": "Account Settings"
+    },
+    "api-keys": {
+      "nokeys": "No API Keys have yet been created!",
+      "title": "API Keys"
     },
     "feature": {
       "delete": {
