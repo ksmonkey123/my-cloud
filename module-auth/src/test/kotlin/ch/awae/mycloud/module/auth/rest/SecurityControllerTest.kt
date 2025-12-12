@@ -10,7 +10,7 @@ import com.ninjasquad.springmockk.*
 import io.mockk.*
 import org.junit.jupiter.api.*
 import org.springframework.beans.factory.annotation.*
-import org.springframework.boot.test.autoconfigure.web.servlet.*
+import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest
 import org.springframework.http.*
 import org.springframework.http.MediaType.*
 import org.springframework.test.web.servlet.*
@@ -44,7 +44,7 @@ class SecurityControllerTest : ModuleWebTest() {
             .andExpect {
                 status { isOk() }
                 content {
-                    contentType(MediaType.APPLICATION_JSON)
+                    contentType(APPLICATION_JSON)
                     json(
                         """
                         {
