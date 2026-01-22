@@ -1,12 +1,15 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseDataComponent} from "../../../common/base/base-data.component";
 import {ApiKey, ApiKeyManagementService} from "../api-key-management.service";
 import {
   MatCell,
   MatCellDef,
-  MatColumnDef, MatHeaderCell,
-  MatHeaderCellDef, MatHeaderRow,
-  MatHeaderRowDef, MatRow,
+  MatColumnDef,
+  MatHeaderCell,
+  MatHeaderCellDef,
+  MatHeaderRow,
+  MatHeaderRowDef,
+  MatRow,
   MatRowDef,
   MatTable
 } from "@angular/material/table";
@@ -36,7 +39,7 @@ import {MatChip} from "@angular/material/chips";
 })
 export class ApiKeyListComponent extends BaseDataComponent<ApiKey[]> {
 
-  expandedKey: ApiKey | null = null;
+  expandedKeyNames: string[] = [];
 
   constructor(private service: ApiKeyManagementService) {
     super();
@@ -52,11 +55,15 @@ export class ApiKeyListComponent extends BaseDataComponent<ApiKey[]> {
   }
 
   isExpanded(key: ApiKey) {
-    return this.expandedKey === key;
+    return this.expandedKeyNames.includes(key.name);
   }
 
   toggle(key: ApiKey) {
-    this.expandedKey = this.isExpanded(key) ? null : key;
+    if (!this.isExpanded(key)) {
+      this.expandedKeyNames.push(key.name);
+    } else {
+      this.expandedKeyNames = this.expandedKeyNames.filter(k => k !== key.name);
+    }
   }
 
 }
