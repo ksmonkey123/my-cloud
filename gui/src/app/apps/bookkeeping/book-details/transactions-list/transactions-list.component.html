@@ -26,7 +26,8 @@
       <td mat-cell *matCellDef="let element">{{ element.text }}</td>
     </ng-container>
     <ng-container matColumnDef="amount">
-      <th mat-header-cell *matHeaderCellDef class="amount">{{ "bookkeeping.transactions.label.amount" | transloco }}</th>
+      <th mat-header-cell *matHeaderCellDef class="amount">{{ "bookkeeping.transactions.label.amount" | transloco }}
+      </th>
       <td mat-cell *matCellDef="let element" class="amount">
         @if (!expandedElementIds.includes(element.id)) {
           {{ MoneyUtil.formatForDisplay(element.amount) }}
@@ -49,9 +50,10 @@
 
     <ng-container matColumnDef="expandedDetail">
       <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
-        <div class="element-detail"
-             [@detailExpand]="expandedElementIds.includes(element.id) ? 'expanded' : 'collapsed'">
-          <app-transaction-details [booking]="element" [accounts]="accounts" [book]="book!"></app-transaction-details>
+        <div class="element-detail" [class.element-detail-expanded]="expandedElementIds.includes(element.id)">
+          <div class="element-detail-content">
+            <app-transaction-details [booking]="element" [accounts]="accounts" [book]="book!"></app-transaction-details>
+          </div>
         </div>
       </td>
     </ng-container>
