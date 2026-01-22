@@ -37,7 +37,6 @@
         <module>module-canary</module>
         <module>module-docker</module>
         <module>module-bookkeeping</module>
-        <module>module-ytdl</module>
         <module>module-documents-api</module>
         <module>module-documents</module>
         <module>module-features-api</module>
