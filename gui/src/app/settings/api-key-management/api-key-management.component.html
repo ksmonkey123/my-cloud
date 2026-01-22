@@ -1,10 +1,8 @@
 <div class="page-body" *transloco="let t">
   <h1>{{ t("settings.api-keys.title") }}</h1>
 
-  <mat-card>
-    <mat-card-content>
-      <app-api-key-creation></app-api-key-creation>
-      <app-api-key-list></app-api-key-list>
-    </mat-card-content>
-  </mat-card>
+  <mat-accordion multi>
+    <app-api-key-creation></app-api-key-creation>
+    <app-api-key-list></app-api-key-list>
+  </mat-accordion>
 </div>

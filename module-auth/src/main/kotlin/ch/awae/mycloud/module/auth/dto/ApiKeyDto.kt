@@ -1,7 +1,7 @@
 package ch.awae.mycloud.module.auth.dto
 
-import ch.awae.mycloud.module.auth.domain.*
-import java.time.*
+import ch.awae.mycloud.module.auth.domain.ApiKey
+import java.time.LocalDateTime
 
 data class ApiKeyDto(
     val name: String,
@@ -18,7 +18,7 @@ data class ApiKeyDto(
                     // only if the role is active, we treat it as enabled
                     active = userAuthorities.contains(it),
                 )
-            }
+            }.sortedBy { it.name }
 
             return ApiKeyDto(
                 name = apiKey.name,
