@@ -65,6 +65,5 @@ export interface ApiKey {
 
 export interface ApiKeyAuthority {
   name: string
-  enabled: boolean
-  granted: boolean
+  active: boolean
 }

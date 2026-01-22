@@ -1,0 +1,57 @@
+.toggle-button {
+  transition: transform 0.3s ease;
+}
+
+.toggle-button-expanded {
+  transform: rotate(180deg);
+}
+
+.element-row {
+  cursor: pointer;
+}
+
+tr.element-row:not(.element-row-expanded):hover {
+  background: whitesmoke;
+}
+
+tr.element-row:not(.element-row-expanded):active {
+  background: #efefef;
+}
+
+.element-row td {
+  border-bottom-width: 0;
+}
+
+.key-details-wrapper {
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: 0fr;
+  grid-template-columns: 100%;
+  transition: grid-template-rows 0.3s ease;
+}
+
+.key-details-wrapper-expanded {
+  grid-template-rows: 1fr;
+}
+
+.key-details {
+  display: flex;
+  min-height: 0;
+  flex-wrap: wrap;
+}
+
+.details-row {
+  height: 0;
+}
+
+.auth-chip {
+  margin: 3px;
+}
+
+th.created-at {
+  width: 120px;
+}
+
+th.expander-icon {
+  width: 30px;
+}
