@@ -1,6 +1,6 @@
 package ch.awae.mycloud.module.auth.service
 
-import ch.awae.mycloud.api.common.*
+import ch.awae.mycloud.common.TokenGenerator
 import ch.awae.mycloud.module.auth.*
 import ch.awae.mycloud.module.auth.domain.*
 import ch.awae.mycloud.module.auth.exception.*

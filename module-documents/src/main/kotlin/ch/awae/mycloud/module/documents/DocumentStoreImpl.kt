@@ -1,8 +1,7 @@
 package ch.awae.mycloud.module.documents
 
-import ch.awae.mycloud.api.common.TokenGenerator
+import ch.awae.mycloud.common.TokenGenerator
 import ch.awae.mycloud.api.documents.*
-import ch.awae.mycloud.common.*
 import jakarta.transaction.*
 import net.javacrumbs.shedlock.spring.annotation.*
 import org.springframework.http.*

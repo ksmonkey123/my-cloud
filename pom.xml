@@ -26,18 +26,21 @@
 
     <modules>
         <!-- base lib -->
-        <module>module-apis</module>
+        <module>module-auth-api</module>
         <module>base-lib</module>
         <module>test-lib</module>
         <!-- business modules -->
         <module>module-auth</module>
+        <module>module-email-api</module>
         <module>module-email</module>
         <module>module-shortener</module>
         <module>module-canary</module>
         <module>module-docker</module>
         <module>module-bookkeeping</module>
         <module>module-ytdl</module>
+        <module>module-documents-api</module>
         <module>module-documents</module>
+        <module>module-features-api</module>
         <module>module-features</module>
         <!-- application service -->
         <module>gui</module>

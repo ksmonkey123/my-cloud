@@ -1,6 +1,7 @@
 package ch.awae.mycloud
 
-import ch.awae.mycloud.api.common.*
+import ch.awae.mycloud.common.TokenGenerationException
+import ch.awae.mycloud.common.TokenGenerator
 import org.springframework.stereotype.*
 import java.security.*
 

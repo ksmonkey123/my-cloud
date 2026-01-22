@@ -1,7 +1,7 @@
 package ch.awae.mycloud.module.auth.rest
 
 import ch.awae.mycloud.api.auth.*
-import ch.awae.mycloud.api.common.*
+import ch.awae.mycloud.common.TokenGenerator
 import ch.awae.mycloud.module.auth.domain.*
 import ch.awae.mycloud.module.auth.service.*
 import ch.awae.mycloud.test.*
@@ -11,7 +11,6 @@ import io.mockk.*
 import org.junit.jupiter.api.*
 import org.springframework.beans.factory.annotation.*
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest
-import org.springframework.http.*
 import org.springframework.http.MediaType.*
 import org.springframework.test.web.servlet.*
 import java.time.*

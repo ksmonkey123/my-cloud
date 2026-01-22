@@ -1,4 +1,4 @@
-package ch.awae.mycloud.api.common
+package ch.awae.mycloud.common
 
 import java.util.*
 

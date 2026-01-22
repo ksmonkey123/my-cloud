@@ -1,12 +1,10 @@
 package ch.awae.mycloud.module.auth.domain
 
-import ch.awae.mycloud.api.common.TokenGenerator
-import ch.awae.mycloud.common.*
+import ch.awae.mycloud.common.TokenGenerator
 import ch.awae.mycloud.common.db.*
 import jakarta.persistence.*
 import org.springframework.data.jpa.repository.*
 import org.springframework.data.jpa.repository.Query
-import org.springframework.stereotype.*
 import java.time.*
 
 @Table(name = "auth_token", schema = "auth")

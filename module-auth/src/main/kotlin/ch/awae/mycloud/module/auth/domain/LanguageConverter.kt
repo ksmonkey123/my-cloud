@@ -1,4 +1,4 @@
-package ch.awae.mycloud.common.db
+package ch.awae.mycloud.module.auth.domain
 
 import ch.awae.mycloud.api.auth.Language
 import jakarta.persistence.AttributeConverter
