@@ -2,10 +2,39 @@
   <mat-expansion-panel-header>
     <mat-panel-title>
       <mat-icon>add</mat-icon>
-      Add API Key
+      {{ "settings.api-keys.create.title" | transloco }}
     </mat-panel-title>
   </mat-expansion-panel-header>
 
-  <p>Hello</p>
+  <form ngForm (keydown.enter)="$event.preventDefault()"
+        (keydown.shift.enter)="$event.preventDefault()">
+    <mat-form-field class="full-length">
+      <mat-label>{{ "settings.api-keys.label.name" | transloco }}</mat-label>
+      <input matInput [formControl]="form.controls.name" required>
+    </mat-form-field>
+
+    <div class="auth-selection">
+      <mat-label>{{ "settings.api-keys.label.authorities-selection" | transloco }}</mat-label>
+    </div>
+    <mat-chip-set>
+      @for (auth of availableAuthorities(); track $index) {
+        <mat-chip [highlighted]="isSelected(auth)"
+                  [color]="isSelected(auth) ? 'primary' : 'accent'"
+                  (click)="toggle(auth)">
+          {{ auth }}
+        </mat-chip>
+      }
+    </mat-chip-set>
+
+    <!-- Submission -->
+    <div class="submit">
+      <button mat-raised-button color="warn" (click)="resetForm()">
+        <mat-icon>settings_backup_restore</mat-icon>&nbsp;{{ "settings.api-keys.action.reset" | transloco }}
+      </button>
+      <button mat-raised-button color="primary" [disabled]="!form.valid" (click)="createKey()">
+        <mat-icon>check</mat-icon>&nbsp;{{ "settings.api-keys.action.create" | transloco }}
+      </button>
+    </div>
+  </form>
 
 </mat-expansion-panel>

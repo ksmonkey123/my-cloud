@@ -163,7 +163,30 @@
       "title": "Account-Einstellungen"
     },
     "api-keys": {
-      "nokeys": "Es sind noch keine API-Schlüssel erfasst!",
+      "action": {
+        "create": "Schlüssel erstellen",
+        "delete": "Schlüssel Löschen",
+        "reset": "Zurücksetzen"
+      },
+      "create": {
+        "error": "Fehler beim Anlegen des API-Schlüssels",
+        "success": "Neuer API-Schlüssel wurde erfolgreich angelegt.",
+        "title": "Neuen API-Schlüssel erstellen"
+      },
+      "label": {
+        "authorities-selection": "Berechtigungen (bitte auswählen)",
+        "created-at": "Erstellt am",
+        "name": "Name"
+      },
+      "list": {
+        "title": "Bestehende API-Schlüssel"
+      },
+      "modal": {
+        "delete": {
+          "message": "Wollen Sie den API-Schlüssel '{{ name }}' wirklich löschen?",
+          "title": "API-Schlüssel Löschen?"
+        }
+      },
       "title": "API-Schlüssel"
     },
     "feature": {

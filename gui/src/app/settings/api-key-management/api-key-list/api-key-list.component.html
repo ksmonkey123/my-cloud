@@ -2,19 +2,20 @@
   <mat-expansion-panel-header class="noclose-header">
     <mat-panel-title>
       <mat-icon>list</mat-icon>
-      Current API Keys
+      {{ "settings.api-keys.list.title" | transloco }}
     </mat-panel-title>
   </mat-expansion-panel-header>
   <table mat-table [dataSource]="data() || []" multiTemplateDataRows>
 
     <!-- NAME ROW -->
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <th mat-header-cell *matHeaderCellDef>{{ "settings.api-keys.label.name" | transloco }}</th>
       <td mat-cell *matCellDef="let key"> {{ key.name }}</td>
     </ng-container>
     <!-- CREATED AT ROW -->
     <ng-container matColumnDef="createdAt">
-      <th mat-header-cell *matHeaderCellDef class="created-at">Created At</th>
+      <th mat-header-cell *matHeaderCellDef class="created-at">{{ "settings.api-keys.label.created-at" | transloco }}
+      </th>
       <td mat-cell *matCellDef="let key"> {{ key.createdAt.toLocaleDateString() }}</td>
     </ng-container>
     <!-- EXPANSION ICON -->
@@ -33,18 +34,21 @@
       <td mat-cell *matCellDef="let key" [attr.colspan]="3">
         <div class="key-details-wrapper" [class.key-details-wrapper-expanded]="isExpanded(key)">
           <div class="key-details">
-            <div class="auth-chips">
+            <mat-chip-set>
               @for (auth of key.authorities; track auth.name) {
-                <div>
-                  <mat-chip class="auth-chip" [disabled]="!auth.active" color="primary" highlighted>{{ auth.name }}
-                  </mat-chip>
-                </div>
+                <mat-chip [disabled]="!auth.active" color="primary" highlighted>{{ auth.name }}
+                </mat-chip>
               }
-            </div>
+            </mat-chip-set>
+            @if (key.token) {
+              <div>
+                Token is: {{ key.token }}
+              </div>
+            }
             <div class="action-buttons">
               <button mat-raised-button color="warn" (click)="delete(key)">
                 <mat-icon>delete</mat-icon>
-                Delete Key
+                {{ "settings.api-keys.action.delete" | transloco }}
               </button>
             </div>
           </div>

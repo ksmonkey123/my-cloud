@@ -1,12 +1,13 @@
 package ch.awae.mycloud.module.auth.rest
 
-import ch.awae.mycloud.api.auth.*
-import ch.awae.mycloud.common.*
-import ch.awae.mycloud.module.auth.domain.*
-import ch.awae.mycloud.module.auth.dto.*
-import ch.awae.mycloud.module.auth.service.*
-import org.springframework.http.*
-import org.springframework.security.access.prepost.*
+import ch.awae.mycloud.api.auth.AuthInfo
+import ch.awae.mycloud.api.auth.BearerTokenUserAuthInfo
+import ch.awae.mycloud.common.createLogger
+import ch.awae.mycloud.module.auth.domain.TokenRetentionPolicy
+import ch.awae.mycloud.module.auth.dto.AuthInfoDto
+import ch.awae.mycloud.module.auth.service.SecurityService
+import org.springframework.http.HttpStatus
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
 /**

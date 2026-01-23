@@ -163,7 +163,30 @@
       "title": "Account Settings"
     },
     "api-keys": {
-      "nokeys": "No API Keys have yet been created!",
+      "action": {
+        "create": "Create Key",
+        "delete": "Delete Key",
+        "reset": "Reset Form"
+      },
+      "create": {
+        "error": "an error occured while creating the new API key",
+        "success": "API key created successfully!",
+        "title": "Create New API Key"
+      },
+      "label": {
+        "authorities-selection": "Permissions (please select)",
+        "created-at": "Created at",
+        "name": "Name"
+      },
+      "list": {
+        "title": "Existing API Keys"
+      },
+      "modal": {
+        "delete": {
+          "message": "Please confirm the deletion of this API key: '{{ name }}'",
+          "title": "Delete API Key?"
+        }
+      },
       "title": "API Keys"
     },
     "feature": {

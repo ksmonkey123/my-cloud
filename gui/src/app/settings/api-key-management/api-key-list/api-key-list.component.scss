@@ -38,17 +38,8 @@ tr.element-row:not(.element-row-expanded):active {
   min-height: 0;
 }
 
-.auth-chips {
-  display: flex;
-  flex-wrap: wrap;
-}
-
 .details-row {
   height: 0;
-}
-
-.auth-chip {
-  margin: 3px;
 }
 
 th.created-at {
