@@ -38,7 +38,19 @@ tr.detail-row {
 
 .element-detail {
   overflow: hidden;
+  display: grid;
+  grid-template-rows: 0fr;
+  grid-template-columns: 100%;
+  transition: grid-template-rows 300ms cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.element-detail-expanded {
+  grid-template-rows: 1fr;
+}
+
+.element-detail-content {
   display: flex;
+  min-height: 0;
 }
 
 .add-panel {

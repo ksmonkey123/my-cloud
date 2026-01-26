@@ -15,7 +15,7 @@ class HttpAuthorizationTokenFilter(val authServiceClient: AuthService) : OncePer
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
-        val auth = request.getHeader("Authorization")?.let(authServiceClient::authenticateToken)
+        val auth = request.getHeader("Authorization")?.trim()?.let(authServiceClient::authenticateToken)
 
         if (auth != null) {
             logger.info("authenticated user '${auth.username}' for ${request.method} ${request.requestURI}")

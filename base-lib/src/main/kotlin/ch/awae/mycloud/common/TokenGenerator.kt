@@ -1,43 +1,32 @@
 package ch.awae.mycloud.common
 
-import java.security.*
 import java.util.*
 
-object TokenGenerator {
+interface TokenGenerator {
 
     /**
-     * @param collisionCheck: if provided, a `true` result indicates a collision
+     * generate a random base64 encoded token
+     *
+     * @param bytes the number of bytes of initial random data.
+     * @param type the type of encoder to use.
+     * @param collisionCheck an optional callback for indicating collisions. a `true` result indicates a collision.
+     * @param maxAttempts the number of times a token generation is attempted before giving up
+     * @throws TokenGenerationException if no valid token was generated in the [maxAttempts] attempts to do so.
      */
     fun generate(
         bytes: Int,
         type: EncoderType = EncoderType.BASIC_PADDED,
         collisionCheck: ((String) -> Boolean)? = null,
-        maxAttempts: Int = 10,
-    ): String {
-        val encoder = when (type) {
-            EncoderType.URL -> Base64.getUrlEncoder().withoutPadding()
-            EncoderType.URL_PADDED -> Base64.getUrlEncoder()
-            EncoderType.BASIC -> Base64.getEncoder().withoutPadding()
-            EncoderType.BASIC_PADDED -> Base64.getEncoder()
-        }
+        maxAttempts: Int = 10
+    ): String
 
-        val array = ByteArray(bytes)
-        for (i in 0 until maxAttempts) {
-            SecureRandom().nextBytes(array)
-            val token = encoder.encodeToString(array)
-            if (collisionCheck == null || !collisionCheck(token)) {
-                // no collision check or no collision
-                return token
-            }
-        }
-        throw IllegalArgumentException("unable to generate token")
-    }
-
-    enum class EncoderType {
-        URL,
-        URL_PADDED,
-        BASIC,
-        BASIC_PADDED,
+    enum class EncoderType(val encoder: Base64.Encoder) {
+        URL(Base64.getUrlEncoder().withoutPadding()),
+        URL_PADDED(Base64.getUrlEncoder()),
+        BASIC(Base64.getEncoder().withoutPadding()),
+        BASIC_PADDED(Base64.getEncoder()),
     }
 
 }
+
+class TokenGenerationException(message: String) : RuntimeException(message)

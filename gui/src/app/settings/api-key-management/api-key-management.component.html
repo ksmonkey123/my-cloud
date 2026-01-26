@@ -1,6 +1,8 @@
-<p>api-key-management works!</p>
-<ul>
-  @for (key of this.data(); track $index) {
-    <li>{{ key.name }}</li>
-  }
-</ul>
+<div class="page-body">
+  <h1>{{ "settings.api-keys.title" | transloco }}</h1>
+
+  <mat-accordion multi>
+    <app-api-key-creation></app-api-key-creation>
+    <app-api-key-list></app-api-key-list>
+  </mat-accordion>
+</div>

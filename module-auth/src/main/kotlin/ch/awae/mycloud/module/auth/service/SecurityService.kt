@@ -1,5 +1,6 @@
 package ch.awae.mycloud.module.auth.service
 
+import ch.awae.mycloud.common.TokenGenerator
 import ch.awae.mycloud.common.*
 import ch.awae.mycloud.module.auth.domain.*
 import ch.awae.mycloud.module.auth.exception.BadLoginException
@@ -16,6 +17,7 @@ class SecurityService(
     private val accountRepository: AccountRepository,
     private val authTokenRepository: AuthTokenRepository,
     private val passwordEncoder: PasswordEncoder,
+    private val tokenGenerator: TokenGenerator,
 ) {
 
     private val logger = createLogger()
@@ -27,7 +29,7 @@ class SecurityService(
             ?: throw BadLoginException()
 
         logger.info("authenticated account $username")
-        val token = AuthToken.buildToken(account, LocalDateTime.now().plus(retentionPolicy.duration))
+        val token = AuthToken.buildToken(account, tokenGenerator, LocalDateTime.now().plus(retentionPolicy.duration))
 
         return authTokenRepository.saveAndFlush(token)
     }

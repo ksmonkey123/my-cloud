@@ -1,11 +1,10 @@
 package ch.awae.mycloud.module.auth.domain
 
-import ch.awae.mycloud.common.*
+import ch.awae.mycloud.common.TokenGenerator
 import ch.awae.mycloud.common.db.*
 import jakarta.persistence.*
 import org.springframework.data.jpa.repository.*
 import org.springframework.data.jpa.repository.Query
-import org.springframework.stereotype.*
 import java.time.*
 
 @Table(name = "auth_token", schema = "auth")
@@ -20,8 +19,8 @@ class AuthToken private constructor(
 ) : IdBaseEntity() {
 
     companion object {
-        fun buildToken(account: Account, validUntil: LocalDateTime): AuthToken {
-            val tokenString = TokenGenerator.generate(32, TokenGenerator.EncoderType.BASIC)
+        fun buildToken(account: Account, tokenGenerator: TokenGenerator, validUntil: LocalDateTime): AuthToken {
+            val tokenString = tokenGenerator.generate(32, TokenGenerator.EncoderType.BASIC)
             return AuthToken(tokenString, account, validUntil)
         }
     }

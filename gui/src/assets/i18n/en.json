@@ -84,7 +84,7 @@
       },
       "label": {
         "amount": "Amount",
-        "date": "Datum",
+        "date": "Transaction Date",
         "description": "Description",
         "id": "ID",
         "tag": "Tag",
@@ -161,6 +161,42 @@
       },
       "settings-changed": "user settings changed",
       "title": "Account Settings"
+    },
+    "api-keys": {
+      "action": {
+        "create": "Create Key",
+        "delete": "Delete Key",
+        "reset": "Reset Form"
+      },
+      "create": {
+        "error": "an error occured while creating the new API key",
+        "success": "API key created successfully. The API token will only displayed once. Please remember to copy it now!",
+        "title": "Create New API Key"
+      },
+      "error": {
+        "duplicate-name": "An API key with this name already exists"
+      },
+      "info": {
+        "copy-success": "API token copied to clipboard"
+      },
+      "label": {
+        "authorities-selection": "Permissions: (please select)",
+        "created-at": "Created at",
+        "name": "Name",
+        "token": "Key Token"
+      },
+      "list": {
+        "title": "Existing API Keys"
+      },
+      "modal": {
+        "delete": {
+          "error": "Error deleting API key",
+          "message": "Please confirm the deletion of this API key: '{{ name }}'",
+          "success": "API key deleted successfully",
+          "title": "Delete API Key?"
+        }
+      },
+      "title": "API Keys"
     },
     "feature": {
       "delete": {

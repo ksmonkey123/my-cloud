@@ -1,7 +1,7 @@
 package ch.awae.mycloud.module.auth.dto
 
-import ch.awae.mycloud.module.auth.domain.*
-import java.time.*
+import ch.awae.mycloud.module.auth.domain.ApiKey
+import java.time.LocalDateTime
 
 data class ApiKeyDto(
     val name: String,
@@ -10,18 +10,15 @@ data class ApiKeyDto(
 ) {
     companion object {
         fun of(apiKey: ApiKey): ApiKeyDto {
-            val activeUserAuthorities = apiKey.owner.roles.flatMap { it.authorities }.toSet()
-            val allUserAuthorities = apiKey.owner.roles.flatMap { it.authorities }.toSet()
+            val userAuthorities = apiKey.owner.roles.flatMap { it.authorities }.toSet()
 
             val apiKeyAuthorities = apiKey.authorities.map {
                 ApiKeyAuthoritiesDto(
                     name = it,
                     // only if the role is active, we treat it as enabled
-                    enabled = activeUserAuthorities.contains(it),
-                    // granted means, the auth-code is granted to the user, but may not currently be enabled
-                    granted = allUserAuthorities.contains(it),
+                    active = userAuthorities.contains(it),
                 )
-            }
+            }.sortedBy { it.name }
 
             return ApiKeyDto(
                 name = apiKey.name,
@@ -34,6 +31,5 @@ data class ApiKeyDto(
 
 data class ApiKeyAuthoritiesDto(
     val name: String,
-    val enabled: Boolean,
-    val granted: Boolean,
+    val active: Boolean,
 )

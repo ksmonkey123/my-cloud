@@ -10,8 +10,8 @@ import org.springframework.stereotype.*
 @Transactional
 class ApiKeyService(
     private val accountService: AccountService,
-    private val roleRepository: RoleRepository,
     private val apiKeyRepository: ApiKeyRepository,
+    private val tokenGenerator: TokenGenerator,
 ) {
 
     fun listKeys(username: String): List<ApiKeyDto> {
@@ -24,7 +24,7 @@ class ApiKeyService(
         apiKeyRepository.delete(key)
     }
 
-    fun create(username: String, name: String, roles: List<String>): Pair<ApiKeyDto, String> {
+    fun create(username: String, name: String, authorities: List<String>): Pair<ApiKeyDto, String> {
         if (apiKeyRepository.findByOwnerAndName(username, name) != null) {
             throw ResourceAlreadyExistsException("/auth/api_key/$name")
         }
@@ -32,9 +32,9 @@ class ApiKeyService(
         val saved = apiKeyRepository.save(
             ApiKey(
                 name = name,
-                tokenString = TokenGenerator.generate(64, TokenGenerator.EncoderType.URL),
+                tokenString = tokenGenerator.generate(64, TokenGenerator.EncoderType.URL),
                 owner = accountService.getAccount(username),
-                authorities = roles.toSet(),
+                authorities = authorities.toSet(),
             )
         )
 

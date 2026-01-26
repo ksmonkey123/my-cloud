@@ -1,6 +1,7 @@
 <div class="page-body" *transloco="let t">
   <h1>{{ t("settings.account.title") }}</h1>
   <mat-accordion multi="true">
+    <!-- Language -->
     <mat-expansion-panel expanded="true">
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -17,6 +18,7 @@
         </mat-select>
       </mat-form-field>
     </mat-expansion-panel>
+    <!-- Email -->
     <mat-expansion-panel expanded="true">
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -37,6 +39,7 @@
         </button>
       </form>
     </mat-expansion-panel>
+    <!-- Change Password -->
     <mat-expansion-panel expanded="false">
       <mat-expansion-panel-header>
         <mat-panel-title>

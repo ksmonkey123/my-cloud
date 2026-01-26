@@ -1,6 +1,7 @@
 package ch.awae.mycloud.module.bookkeping.dto
 
 import ch.awae.mycloud.module.bookkeping.model.*
+import com.fasterxml.jackson.annotation.JsonCreator
 import java.math.*
 import java.time.*
 
@@ -45,7 +46,7 @@ data class CreateBookingRecordRequest(
     val debits: List<BookingRecordMovementDto>,
 )
 
-data class BookingRecordMovementDto(
+data class BookingRecordMovementDto @JsonCreator constructor(
     val accountId: String,
     val amount: BigDecimal,
 ) {

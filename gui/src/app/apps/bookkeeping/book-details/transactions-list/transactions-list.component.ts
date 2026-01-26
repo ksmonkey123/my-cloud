@@ -14,7 +14,6 @@ import {
 } from "@angular/material/table";
 import {MatIconButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
-import {animate, state, style, transition, trigger} from "@angular/animations";
 import {TransactionDetailsComponent} from "./transaction-details/transaction-details.component";
 import {TransactionCreationComponent} from "./transaction-creation/transaction-creation.component";
 import {
@@ -52,13 +51,6 @@ import {MoneyUtil} from "../../model/moneyUtil";
     MatExpansionPanelTitle,
     MatPaginator,
     TranslocoPipe,
-  ],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed,void', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
   ],
   templateUrl: './transactions-list.component.html',
   styleUrl: './transactions-list.component.scss'

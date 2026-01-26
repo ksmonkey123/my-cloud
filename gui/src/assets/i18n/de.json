@@ -162,6 +162,42 @@
       "settings-changed": "Benutzereinstellungen gespeichert",
       "title": "Account-Einstellungen"
     },
+    "api-keys": {
+      "action": {
+        "create": "Schlüssel erstellen",
+        "delete": "Schlüssel Löschen",
+        "reset": "Zurücksetzen"
+      },
+      "create": {
+        "error": "Fehler beim Anlegen des API-Schlüssels",
+        "success": "Neuer API-Schlüssel wurde erfolgreich angelegt. Das API-Token wird nur einmal angezeigt, bitte kopieren!",
+        "title": "Neuen API-Schlüssel erstellen"
+      },
+      "error": {
+        "duplicate-name": "Ein API-Schlüssel mit diesem Namen existiert bereits"
+      },
+      "info": {
+        "copy-success": "API-Token in die Zwischenablage kopiert"
+      },
+      "label": {
+        "authorities-selection": "Berechtigungen: (bitte auswählen)",
+        "created-at": "Erstellt am",
+        "name": "Name",
+        "token": "Schlüssel-Token"
+      },
+      "list": {
+        "title": "Bestehende API-Schlüssel"
+      },
+      "modal": {
+        "delete": {
+          "error": "Fehler beim Löschen des API Schlüssels",
+          "message": "Wollen Sie den API-Schlüssel '{{ name }}' wirklich löschen?",
+          "success": "API-Schlüssel erfolgreich gelöscht",
+          "title": "API-Schlüssel Löschen?"
+        }
+      },
+      "title": "API-Schlüssel"
+    },
     "feature": {
       "delete": {
         "text": "Feature '{{ id }}' wirklich löschen?",
