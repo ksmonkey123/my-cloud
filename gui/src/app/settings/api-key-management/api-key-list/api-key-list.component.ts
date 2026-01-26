@@ -24,6 +24,7 @@ import {translate, TranslocoPipe} from "@jsverse/transloco";
 import {MatFormField, MatInput, MatLabel, MatSuffix} from "@angular/material/input";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Clipboard} from "@angular/cdk/clipboard";
+import {patchState} from "../../../common/base/base-local-data-change-service.service";
 
 @Component({
   selector: 'app-api-key-list',
@@ -75,10 +76,12 @@ export class ApiKeyListComponent extends BaseDataComponent<ApiKey[]> {
 
     this.service.localDataChanges$
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(newKeys => {
-        if (newKeys) {
-          this.loadData(of(newKeys.concat(this.data() || [])));
-          for (let key of newKeys) {
+      .subscribe(changes => {
+        if (changes) {
+          this.loadData(of(
+            patchState(this.data(), changes).sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+          ))
+          for (let key of changes.added || []) {
             this.expandedKeyNames.push(key.name);
           }
         }
@@ -107,7 +110,7 @@ export class ApiKeyListComponent extends BaseDataComponent<ApiKey[]> {
               .subscribe({
                 next: () => {
                   this.toast.success(translate("settings.api-keys.modal.delete.success"))
-                  this.loadData(of((this.data() || []).filter(k => k.name !== key.name)))
+                  this.service.setLocalDataChanges({removed: [key]})
                 },
                 error: error => {
                   this.toast.error(error?.error?.message, translate("settings.api-keys.modal.delete.error"))

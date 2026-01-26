@@ -11,6 +11,9 @@
     <mat-form-field class="full-length">
       <mat-label>{{ "settings.api-keys.label.name" | transloco }}</mat-label>
       <input matInput [formControl]="form.controls.name" required>
+      @if (form.controls.name.hasError('duplicateName')) {
+        <mat-error>{{ "settings.api-keys.error.duplicate-name" | transloco }}</mat-error>
+      }
     </mat-form-field>
 
     <div>

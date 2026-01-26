@@ -173,6 +173,9 @@
         "success": "Neuer API-Schlüssel wurde erfolgreich angelegt. Das API-Token wird nur einmal angezeigt, bitte kopieren!",
         "title": "Neuen API-Schlüssel erstellen"
       },
+      "error": {
+        "duplicate-name": "Ein API-Schlüssel mit diesem Namen existiert bereits"
+      },
       "info": {
         "copy-success": "API-Token in die Zwischenablage kopiert"
       },

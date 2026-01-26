@@ -173,6 +173,9 @@
         "success": "API key created successfully. The API token will only displayed once. Please remember to copy it now!",
         "title": "Create New API Key"
       },
+      "error": {
+        "duplicate-name": "An API key with this name already exists"
+      },
       "info": {
         "copy-success": "API token copied to clipboard"
       },
