@@ -25,6 +25,7 @@ import {MatFormField, MatInput, MatLabel, MatSuffix} from "@angular/material/inp
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Clipboard} from "@angular/cdk/clipboard";
 import {patchState} from "../../../common/base/base-local-data-change-service.service";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-api-key-list',
@@ -51,7 +52,8 @@ import {patchState} from "../../../common/base/base-local-data-change-service.se
     MatFormField,
     MatLabel,
     MatInput,
-    MatSuffix
+    MatSuffix,
+    DatePipe
   ],
   templateUrl: './api-key-list.component.html',
   styleUrl: './api-key-list.component.scss',
