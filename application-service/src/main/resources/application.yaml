@@ -12,7 +12,7 @@ management:
 spring:
   config:
     name: application
-    import: optional:configtree:/secrets/mycloud
+    import: optional:configtree:/secrets/*/
 
   datasource:
     url: ${db.cloud.url}
