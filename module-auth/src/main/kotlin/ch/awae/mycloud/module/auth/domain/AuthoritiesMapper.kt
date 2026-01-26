@@ -1,6 +1,6 @@
 package ch.awae.mycloud.module.auth.domain
 
-object AccountToAuthoritiesMapper {
+object AuthoritiesMapper {
 
     fun getAuthorities(account: Account): Set<String> {
         return account.roles
@@ -13,5 +13,9 @@ object AccountToAuthoritiesMapper {
                 }
             }
             .toSet()
+    }
+
+    fun getAuthorities(apiKey: ApiKey): Set<String> {
+        return (apiKey.authorities intersect apiKey.owner.roles.flatMap { it.authorities }.toSet()) + "api"
     }
 }

@@ -44,7 +44,7 @@ class SecurityController(private val securityService: SecurityService) {
     }
 
     @GetMapping("/authenticate")
-    @PreAuthorize("hasAuthority('user')")
+    @PreAuthorize("hasAnyAuthority('user', 'api')")
     fun getOwnAccountInfo(): AuthInfoDto = AuthInfoDto.of(AuthInfo.info)
 
     data class LoginRequest(val username: String, val password: String, val longRetention: Boolean)
