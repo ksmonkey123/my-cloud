@@ -1,9 +1,9 @@
 package ch.awae.mycloud.api.auth
 
-import org.springframework.security.authentication.*
-import org.springframework.security.core.*
-import org.springframework.security.core.authority.*
-import org.springframework.security.core.context.*
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.Authentication
+import org.springframework.security.core.authority.SimpleGrantedAuthority
+import org.springframework.security.core.context.SecurityContextHolder
 
 sealed interface AuthInfo {
     val username: String
@@ -39,6 +39,14 @@ sealed interface AuthInfo {
 }
 
 data class BearerTokenUserAuthInfo(
+    override val username: String,
+    override val authorities: Set<String>,
+    val token: String,
+    override val language: Language,
+    override val email: String?,
+) : AuthInfo
+
+data class ApiKeyUserAuthInfo(
     override val username: String,
     override val authorities: Set<String>,
     val token: String,

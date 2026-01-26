@@ -1,10 +1,10 @@
 package ch.awae.mycloud.module.auth.domain
 
-import ch.awae.mycloud.common.db.*
+import ch.awae.mycloud.common.db.IdBaseEntity
 import jakarta.persistence.*
-import org.springframework.data.jpa.repository.*
+import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
-import java.time.*
+import java.time.LocalDateTime
 
 @Table(name = "api_key", schema = "auth")
 @Entity(name = "AUTH_API_KEY")
@@ -29,5 +29,7 @@ interface ApiKeyRepository : JpaRepository<ApiKey, Long> {
     @Query("select a from AUTH_API_KEY a where a.owner.username = :username and a.name = :name")
     fun findByOwnerAndName(username: String, name: String): ApiKey?
 
-}
+    @Query("select a from AUTH_API_KEY a where a.tokenString = :tokenString and a.owner.enabled")
+    fun findActiveByTokenString(tokenString: String): ApiKey?
 
+}

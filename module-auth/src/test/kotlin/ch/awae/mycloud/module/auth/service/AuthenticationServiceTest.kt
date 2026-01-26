@@ -1,10 +1,11 @@
 package ch.awae.mycloud.module.auth.service
 
-import ch.awae.mycloud.module.auth.*
-import org.junit.jupiter.api.*
+import ch.awae.mycloud.module.auth.AuthModuleTest
 import org.junit.jupiter.api.Test
-import org.springframework.test.context.jdbc.*
-import kotlin.test.*
+import org.junit.jupiter.api.assertNotNull
+import org.junit.jupiter.api.assertNull
+import org.springframework.test.context.jdbc.Sql
+import kotlin.test.assertEquals
 
 class AuthenticationServiceTest : AuthModuleTest() {
 
@@ -33,6 +34,28 @@ class AuthenticationServiceTest : AuthModuleTest() {
     @Test
     fun testAuthenticateUnsupportedTokenType() {
         val info = authenticationService.authenticateToken("Unsupported Token")
+        assertNull(info)
+    }
+
+    @Test
+    @Sql(scripts = ["/testdata/clear_schema.sql", "/testdata/1000_setup_bearer_token_test.sql"])
+    fun testAuthenticateApiKey() {
+        val info =
+            authenticationService.authenticateToken("Key -ER_dxeF4Pgj8EtA2iNQbpFUd305nLdwLF5GueWWuKJBf2oNErdjrCyXOg6gg6WA73GSY0Ai4qCxvKGs7EO7rw")
+        assertNotNull(info)
+    }
+
+    @Test
+    @Sql(scripts = ["/testdata/clear_schema.sql", "/testdata/1000_setup_bearer_token_test.sql"])
+    fun testAuthenticateApiKeyDisabledUser() {
+        val info =
+            authenticationService.authenticateToken("Key -AR_dxeF4Pgj8EtA2iNQbpFUd305nLdwLF5GueWWuKJBf2oNErdjrCyXOg6gg6WA73GSY0Ai4qCxvKGs7EO7rw")
+        assertNull(info)
+    }
+
+    fun testAuthenticateApiKeyInvalidToken() {
+        val info =
+            authenticationService.authenticateToken("Key -XR_dxeF4Pgj8EtA2iNQbpFUd305nLdwLF5GueWWuKJBf2oNErdjrCyXOg6gg6WA73GSY0Ai4qCxvKGs7EO7rw")
         assertNull(info)
     }
 

@@ -67,6 +67,42 @@ class SecurityControllerTest : ModuleWebTest() {
     }
 
     @Test
+    @WithApiAuth(
+        username = "test-user",
+        email = "test.user@example.org",
+        authorities = ["a", "b"],
+        language = Language.ENGLISH,
+        token = "dummy-token"
+    )
+    fun testApiAuthenticate() {
+        mvc.get("/rest/auth/authenticate")
+            .andExpect {
+                status { isOk() }
+                content {
+                    contentType(APPLICATION_JSON)
+                    json(
+                        """
+                        {
+                          "type": "API_KEY",
+                          "username": "test-user",
+                          "email": "test.user@example.org",
+                          "authorities": [
+                            "api",
+                            "a",
+                            "b"
+                          ],
+                          "token": "dummy-token",
+                          "languageCode": "en"
+                        }
+                    """.trimIndent()
+                    )
+                }
+            }
+
+        confirmVerified(securityService)
+    }
+
+    @Test
     @WithBearerAuth(token = "my-own-dummy-token")
     fun testLogout() {
         every { securityService.logout("my-own-dummy-token") } just runs
