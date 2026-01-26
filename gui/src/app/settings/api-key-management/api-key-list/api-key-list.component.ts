@@ -21,6 +21,9 @@ import {ToastrService} from "ngx-toastr";
 import {MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle} from "@angular/material/expansion";
 import {of, takeUntil} from "rxjs";
 import {translate, TranslocoPipe} from "@jsverse/transloco";
+import {MatFormField, MatInput, MatLabel, MatSuffix} from "@angular/material/input";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {Clipboard} from "@angular/cdk/clipboard";
 
 @Component({
   selector: 'app-api-key-list',
@@ -43,7 +46,11 @@ import {translate, TranslocoPipe} from "@jsverse/transloco";
     MatExpansionPanelHeader,
     MatExpansionPanelTitle,
     MatChipSet,
-    TranslocoPipe
+    TranslocoPipe,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    MatSuffix
   ],
   templateUrl: './api-key-list.component.html',
   styleUrl: './api-key-list.component.scss',
@@ -52,13 +59,19 @@ export class ApiKeyListComponent extends BaseDataComponent<ApiKey[]> {
 
   expandedKeyNames: string[] = [];
 
-  constructor(private service: ApiKeyManagementService, private modal: SimpleModalService, private toast: ToastrService) {
+  constructor(
+    private service: ApiKeyManagementService,
+    private modal: SimpleModalService,
+    private toast: ToastrService,
+    private clipboard: Clipboard,
+    private snackbar: MatSnackBar,
+  ) {
     super();
   }
 
   override ngAfterViewInit() {
     super.ngAfterViewInit();
-    this.refresh();
+    this.loadData(this.service.list());
 
     this.service.localDataChanges$
       .pipe(takeUntil(this.unsubscribe$))
@@ -70,10 +83,6 @@ export class ApiKeyListComponent extends BaseDataComponent<ApiKey[]> {
           }
         }
       });
-  }
-
-  private refresh() {
-    this.loadData(this.service.list());
   }
 
   isExpanded(key: ApiKey) {
@@ -96,15 +105,22 @@ export class ApiKeyListComponent extends BaseDataComponent<ApiKey[]> {
           if (result) {
             this.service.delete(key.name)
               .subscribe({
-                next: () => this.refresh(),
+                next: () => {
+                  this.toast.success(translate("settings.api-keys.modal.delete.success"))
+                  this.loadData(of((this.data() || []).filter(k => k.name !== key.name)))
+                },
                 error: error => {
-                  this.refresh()
-                  this.toast.error(error?.error?.message, "error deleting key")
+                  this.toast.error(error?.error?.message, translate("settings.api-keys.modal.delete.error"))
                 }
               })
           }
         }
       )
+  }
+
+  copyToClipboard(token: string) {
+    this.clipboard.copy(token)
+    this.snackbar.open(translate('settings.api-keys.info.copy-success'), 'OK', {duration: 2000})
   }
 
   @ViewChild("noclose")
@@ -113,5 +129,4 @@ export class ApiKeyListComponent extends BaseDataComponent<ApiKey[]> {
   alwaysOpen() {
     this.alwaysOpenPanel.open();
   }
-
 }

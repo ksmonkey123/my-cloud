@@ -13,18 +13,18 @@
       <input matInput [formControl]="form.controls.name" required>
     </mat-form-field>
 
-    <div class="auth-selection">
+    <div>
       <mat-label>{{ "settings.api-keys.label.authorities-selection" | transloco }}</mat-label>
+      <mat-chip-set>
+        @for (auth of availableAuthorities(); track $index) {
+          <mat-chip [highlighted]="isSelected(auth)"
+                    [color]="isSelected(auth) ? 'primary' : 'accent'"
+                    (click)="toggle(auth)">
+            {{ auth }}
+          </mat-chip>
+        }
+      </mat-chip-set>
     </div>
-    <mat-chip-set>
-      @for (auth of availableAuthorities(); track $index) {
-        <mat-chip [highlighted]="isSelected(auth)"
-                  [color]="isSelected(auth) ? 'primary' : 'accent'"
-                  (click)="toggle(auth)">
-          {{ auth }}
-        </mat-chip>
-      }
-    </mat-chip-set>
 
     <!-- Submission -->
     <div class="submit">

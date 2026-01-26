@@ -170,20 +170,26 @@
       },
       "create": {
         "error": "Fehler beim Anlegen des API-Schlüssels",
-        "success": "Neuer API-Schlüssel wurde erfolgreich angelegt.",
+        "success": "Neuer API-Schlüssel wurde erfolgreich angelegt. Das API-Token wird nur einmal angezeigt, bitte kopieren!",
         "title": "Neuen API-Schlüssel erstellen"
       },
+      "info": {
+        "copy-success": "API-Token in die Zwischenablage kopiert"
+      },
       "label": {
-        "authorities-selection": "Berechtigungen (bitte auswählen)",
+        "authorities-selection": "Berechtigungen: (bitte auswählen)",
         "created-at": "Erstellt am",
-        "name": "Name"
+        "name": "Name",
+        "token": "Schlüssel-Token"
       },
       "list": {
         "title": "Bestehende API-Schlüssel"
       },
       "modal": {
         "delete": {
+          "error": "Fehler beim Löschen des API Schlüssels",
           "message": "Wollen Sie den API-Schlüssel '{{ name }}' wirklich löschen?",
+          "success": "API-Schlüssel erfolgreich gelöscht",
           "title": "API-Schlüssel Löschen?"
         }
       },

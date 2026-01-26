@@ -170,20 +170,26 @@
       },
       "create": {
         "error": "an error occured while creating the new API key",
-        "success": "API key created successfully!",
+        "success": "API key created successfully. The API token will only displayed once. Please remember to copy it now!",
         "title": "Create New API Key"
       },
+      "info": {
+        "copy-success": "API token copied to clipboard"
+      },
       "label": {
-        "authorities-selection": "Permissions (please select)",
+        "authorities-selection": "Permissions: (please select)",
         "created-at": "Created at",
-        "name": "Name"
+        "name": "Name",
+        "token": "Key Token"
       },
       "list": {
         "title": "Existing API Keys"
       },
       "modal": {
         "delete": {
+          "error": "Error deleting API key",
           "message": "Please confirm the deletion of this API key: '{{ name }}'",
+          "success": "API key deleted successfully",
           "title": "Delete API Key?"
         }
       },
