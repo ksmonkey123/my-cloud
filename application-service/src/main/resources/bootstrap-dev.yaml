@@ -1,3 +1,0 @@
-spring:
-  config:
-    additional-location: file:/home/${user}/.credentials/my-cloud-dev/

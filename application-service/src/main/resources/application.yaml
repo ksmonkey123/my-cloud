@@ -1,7 +1,5 @@
 server:
   port: 8080
-  error:
-    include-message: always
 
 management:
   server:
@@ -12,6 +10,10 @@ management:
         enabled: true
 
 spring:
+  config:
+    name: application
+    import: optional:configtree:/secrets/
+
   datasource:
     url: ${db.cloud.url}
     username: ${db.cloud.username}
@@ -33,6 +35,9 @@ spring:
     scheduling:
       pool:
         size: 5
+  web:
+    error:
+      include-message: always
 
 mycloud:
   security:
