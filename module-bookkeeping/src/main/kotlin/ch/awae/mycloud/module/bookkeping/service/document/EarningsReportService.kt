@@ -2,9 +2,9 @@ package ch.awae.mycloud.module.bookkeping.service.document
 
 import ch.awae.mycloud.api.documents.*
 import ch.awae.mycloud.common.*
+import ch.awae.mycloud.lib.pdf.Document
 import ch.awae.mycloud.module.bookkeping.dto.*
 import ch.awae.mycloud.module.bookkeping.model.*
-import ch.awae.mycloud.module.bookkeping.pdf.*
 import ch.awae.mycloud.module.bookkeping.service.*
 import jakarta.transaction.*
 import org.springframework.http.*
@@ -28,7 +28,7 @@ class EarningsReportService(
             .filter { ag -> ag.accounts.any { a -> a.accountType.earningsAccount } }
             .sortedBy { it.groupNumber }
 
-        val content = PdfDocument {
+        val content = Document {
             generateInitialBalance(this, book)
             generateReport(this, book, "Schlussbilanz", book.accountGroups)
             if (earningGroups.isNotEmpty()) {
@@ -54,7 +54,7 @@ class EarningsReportService(
             throw InvalidRequestException("no earnings account groups selected")
         }
 
-        val content = PdfDocument {
+        val content = Document {
             generateReport(this, book, "Erfolgsrechnung " + (title ?: "(partiell)"), earningGroups, earnings = true)
             for (group in earningGroups) {
                 generateDetailedEarningsReport(this, book, "Erfolgrechnung " + group.title, group)
@@ -64,7 +64,7 @@ class EarningsReportService(
         return documentStore.createDocument("partial_report.pdf", MediaType.APPLICATION_PDF, content, Duration.ofHours(1))
     }
 
-    fun generateInitialBalance(pdf: PdfDocument, book: Book) {
+    fun generateInitialBalance(pdf: Document, book: Book) {
         val openingRecord = bookingRecordRepository.findFirstInBook(book) ?: return
 
         val accountGroups = openingRecord.movements.toList().groupBy { (account, _) -> account.accountGroup }.toList()
@@ -99,7 +99,7 @@ class EarningsReportService(
     }
 
     fun generateReport(
-        pdf: PdfDocument,
+        pdf: Document,
         book: Book,
         title: String,
         accountGroups: Collection<AccountGroup>,
@@ -136,7 +136,7 @@ class EarningsReportService(
     }
 
     fun generateDetailedEarningsReport(
-        pdf: PdfDocument,
+        pdf: Document,
         book: Book,
         title: String,
         accountGroup: AccountGroup,

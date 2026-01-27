@@ -28,10 +28,10 @@
             <artifactId>base-lib</artifactId>
             <version>2.2-SNAPSHOT</version>
         </dependency>
-        <!-- PDF Generation -->
         <dependency>
-            <groupId>org.apache.pdfbox</groupId>
-            <artifactId>pdfbox</artifactId>
+            <groupId>ch.awae.mycloud</groupId>
+            <artifactId>lib-pdf</artifactId>
+            <version>2.2-SNAPSHOT</version>
         </dependency>
         <!-- XLSX Generation -->
         <dependency>

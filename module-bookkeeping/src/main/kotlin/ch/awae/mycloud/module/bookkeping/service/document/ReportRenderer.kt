@@ -1,15 +1,16 @@
 package ch.awae.mycloud.module.bookkeping.service.document
 
-import ch.awae.mycloud.module.bookkeping.pdf.PdfDocument
-import org.apache.pdfbox.pdmodel.font.Standard14Fonts.FontName.*
-import java.math.*
-import java.time.*
-import java.time.format.*
+import ch.awae.mycloud.lib.pdf.Document
+import ch.awae.mycloud.lib.pdf.StandardFont.*
+import java.math.BigDecimal
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 object ReportRenderer {
 
     fun generateReport(
-        pdf: PdfDocument,
+        pdf: Document,
         mode: Mode,
         title: String,
         subtitle: String,
@@ -17,17 +18,17 @@ object ReportRenderer {
         hideZeroProfitLine: Boolean = false,
     ) {
         // text fonts
-        val titleFont = pdf.loadFont(TIMES_BOLD, 18f)
-        val groupFont = pdf.loadFont(TIMES_BOLD, 12f)
-        val itemFont = pdf.loadFont(TIMES_ROMAN, 12f)
-        val tagFont = pdf.loadFont(TIMES_ITALIC, 12f)
+        val titleFont = pdf.loadFont(LIBERATION_SERIF_BOLD, 18f)
+        val groupFont = pdf.loadFont(LIBERATION_SERIF_BOLD, 12f)
+        val itemFont = pdf.loadFont(LIBERATION_SERIF_REGULAR, 12f)
+        val tagFont = pdf.loadFont(LIBERATION_SERIF_ITALIC, 12f)
 
-        val footerFont = pdf.loadFont(TIMES_ROMAN, 9f)
+        val footerFont = pdf.loadFont(LIBERATION_SERIF_REGULAR, 9f)
 
         // number fonts
-        val groupNumberFont = pdf.loadFont(COURIER_BOLD, 11f)
-        val itemNumberFont = pdf.loadFont(COURIER, 11f)
-        val tagNumberFont = pdf.loadFont(COURIER_OBLIQUE, 11f)
+        val groupNumberFont = pdf.loadFont(LIBERATION_MONO_BOLD, 11f)
+        val itemNumberFont = pdf.loadFont(LIBERATION_MONO_REGULAR, 11f)
+        val tagNumberFont = pdf.loadFont(LIBERATION_MONO_ITALIC, 11f)
 
         // document formatting rules
         val leading = 1.2f
