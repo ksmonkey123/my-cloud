@@ -1,30 +1,32 @@
 package ch.awae.mycloud.module.bookkeping.service.document
 
-import ch.awae.mycloud.module.bookkeping.pdf.PdfDocument
-import org.apache.pdfbox.pdmodel.font.*
-import java.math.*
-import java.time.*
-import java.time.format.*
+import ch.awae.mycloud.lib.pdf.Document
+import ch.awae.mycloud.lib.pdf.StandardFont.*
+import java.math.BigDecimal
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 object AccountLedgerRenderer {
 
     fun generateLedger(
-        pdf: PdfDocument,
+        pdf: Document,
         title: String,
         subtitle: String,
         transactions: List<TransactionRecord>,
         invertedPresentation: Boolean,
     ) {
         // text fonts
-        val titleFont = pdf.loadFont(Standard14Fonts.FontName.TIMES_BOLD, 14f)
-        val groupFont = pdf.loadFont(Standard14Fonts.FontName.TIMES_BOLD, 11f)
-        val itemFont = pdf.loadFont(Standard14Fonts.FontName.TIMES_ROMAN, 11f)
+        val titleFont = pdf.loadFont(LIBERATION_SERIF_BOLD, 14f)
+        val groupFont = pdf.loadFont(LIBERATION_SERIF_BOLD, 11f)
+        val itemFont = pdf.loadFont(LIBERATION_SERIF_REGULAR, 11f)
 
-        val footerFont = pdf.loadFont(Standard14Fonts.FontName.TIMES_ROMAN, 9f)
+        val footerFont = pdf.loadFont(LIBERATION_SERIF_REGULAR, 9f)
 
         // number fonts
-        val groupNumberFont = pdf.loadFont(Standard14Fonts.FontName.COURIER_BOLD, 10f)
-        val itemNumberFont = pdf.loadFont(Standard14Fonts.FontName.COURIER, 10f)
+        val groupNumberFont = pdf.loadFont(LIBERATION_MONO_BOLD, 10f)
+        val itemNumberFont = pdf.loadFont(LIBERATION_MONO_REGULAR, 10f)
 
         // document formatting rules
         val leading = 1.2f

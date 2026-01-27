@@ -1,9 +1,9 @@
 package ch.awae.mycloud.module.bookkeping.service.document
 
 import ch.awae.mycloud.api.documents.*
+import ch.awae.mycloud.lib.pdf.Document
 import ch.awae.mycloud.module.bookkeping.dto.*
 import ch.awae.mycloud.module.bookkeping.model.*
-import ch.awae.mycloud.module.bookkeping.pdf.*
 import ch.awae.mycloud.module.bookkeping.service.*
 import jakarta.transaction.*
 import org.springframework.http.*
@@ -25,7 +25,7 @@ class AccountLedgersService(
             .sortedBy { it.groupNumber }
             .flatMap { it.accounts.sortedBy { a -> a.accountNumber } }
 
-        val content = PdfDocument {
+        val content = Document {
 
             for (account in accounts) {
                 generateAccountLedger(this, book, account)
@@ -36,7 +36,7 @@ class AccountLedgersService(
         return documentStore.createDocument("ledgers.pdf", MediaType.APPLICATION_PDF, content, Duration.ofHours(1))
     }
 
-    fun generateAccountLedger(pdf: PdfDocument, book: Book, account: Account) {
+    fun generateAccountLedger(pdf: Document, book: Book, account: Account) {
 
         val transactions: List<AccountLedgerRenderer.TransactionRecord> =
             accountTransactionRepository.findByAccount(account)

@@ -44,6 +44,7 @@
         <!-- application service -->
         <module>gui</module>
         <module>application-service</module>
+        <module>lib-pdf</module>
     </modules>
 
     <dependencyManagement>
