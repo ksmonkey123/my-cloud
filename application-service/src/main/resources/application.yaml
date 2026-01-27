@@ -3,17 +3,13 @@ server:
 
 management:
   server:
-    port: 8081
+    port: 8180
   endpoint:
     health:
       probes:
         enabled: true
 
 spring:
-  config:
-    name: application
-    import: optional:configtree:/secrets/*/
-
   datasource:
     url: ${db.cloud.url}
     username: ${db.cloud.username}
@@ -70,10 +66,6 @@ docker:
 email:
   timer:
     send: "0 * * * * *"
-
-ytdl:
-  data-path: /data/ytdl/data
-  job-path: /data/ytdl/jobs
 
 documents:
   clean-timer:

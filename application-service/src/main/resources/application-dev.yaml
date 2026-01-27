@@ -13,7 +13,6 @@ auth:
   clean-timer:
     schedule: "0 */5 * * * *"
 
-
 canary:
   sender: "test@awae.ch"
   timer:
@@ -22,7 +21,3 @@ canary:
 docker:
   timer:
     dockerhub: "-"
-
-shedlock:
-  default:
-    min-lock: PT10S
