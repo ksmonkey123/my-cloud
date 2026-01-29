@@ -6,4 +6,5 @@ import org.springframework.context.annotation.*
 @Configuration
 class EmailModuleConfiguration : ModuleConfiguration(
     databaseSchemaName = "email",
+    roles = listOf(RoleConfig("email-api", listOf("linux-mail")))
 )
