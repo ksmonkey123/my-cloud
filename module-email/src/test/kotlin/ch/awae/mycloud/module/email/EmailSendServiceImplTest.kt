@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertNull
 import org.springframework.beans.factory.annotation.Autowired
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 class EmailSendServiceImplTest : ModuleTest() {
 
@@ -25,7 +27,7 @@ class EmailSendServiceImplTest : ModuleTest() {
         )
 
         // act
-        service.send(email)
+        assertTrue(service.send(email))
 
         // assert
         val emails = repository.findAll()
@@ -48,8 +50,8 @@ class EmailSendServiceImplTest : ModuleTest() {
         )
 
         // act
-        service.send(email)
-        service.send(email)
+        assertTrue(service.send(email))
+        assertTrue(service.send(email))
 
         // assert
         val emails = repository.findAll()
@@ -67,8 +69,8 @@ class EmailSendServiceImplTest : ModuleTest() {
         )
 
         // act
-        service.send(email)
-        service.send(email)
+        assertTrue(service.send(email))
+        assertFalse(service.send(email))
 
         // assert
         val emails = repository.findAll()

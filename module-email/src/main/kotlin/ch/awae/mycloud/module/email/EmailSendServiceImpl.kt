@@ -13,13 +13,13 @@ class EmailSendServiceImpl(val repo: EmailOutboxRepository) : EmailSendService {
 
     private val logger = createLogger()
 
-    override fun send(email: EmailMessage) {
+    override fun send(email: EmailMessage) : Boolean{
         val (bodyFormat, bodyContent) = extractBody(email.body)
 
         email.uid?.let {
             if (repo.existsByMessageUid(it)) {
                 logger.warn("email with uid {} already exists, skipping", email.uid)
-                return
+                return false
             }
         }
 
@@ -34,6 +34,7 @@ class EmailSendServiceImpl(val repo: EmailOutboxRepository) : EmailSendService {
         )
 
         logger.info("email recorded for sending: {}", stored)
+        return true
     }
 
     private fun extractBody(body: EmailMessage.Body): Pair<EmailBodyFormat, String> {
