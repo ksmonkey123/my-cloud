@@ -12,16 +12,15 @@ db.cloud:
   password: postgres
 
 canary:
-  sender: "test@awae.ch"
   timer:
     web: "-"
 
 docker:
-  sender: "test@awae.ch"
   timer:
     dockerhub: "-"
 
 email:
+  sender: "test@awae.ch"
   timer:
     send: "-"
 

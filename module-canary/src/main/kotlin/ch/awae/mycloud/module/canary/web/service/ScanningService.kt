@@ -18,8 +18,6 @@ class ScanningService(
     private val http: RestTemplate,
     private val userInfoService: UserInfoService,
     private val emailSendService: EmailSendService,
-    @param:Value("\${canary.sender}")
-    private val sender: String,
 ) {
 
     private val logger = createLogger()
@@ -48,10 +46,9 @@ class ScanningService(
                 currentRecord.failedTests.fold("") { acc, s -> "$acc\n * $s" }
         emailSendService.send(
             EmailMessage(
-                sender = sender,
                 recipient = email,
                 subject = "website canary test failed(${currentRecord.result})",
-                body = MarkdownBody(message),
+                body = EmailMessage.MarkdownBody(message),
             )
         )
     }

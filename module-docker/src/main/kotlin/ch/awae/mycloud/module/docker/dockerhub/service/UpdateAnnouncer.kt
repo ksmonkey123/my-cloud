@@ -3,15 +3,12 @@ package ch.awae.mycloud.module.docker.dockerhub.service
 import ch.awae.mycloud.api.email.*
 import ch.awae.mycloud.module.docker.dockerhub.*
 import ch.awae.mycloud.module.docker.dockerhub.model.*
-import org.springframework.beans.factory.annotation.*
 import org.springframework.stereotype.*
 
 @Service
 class UpdateAnnouncer(
     private val dockerProperties: DockerhubProperties,
     private val emailSendService: EmailSendService,
-    @param:Value("\${docker.sender}")
-    private val sender: String,
 ) {
 
     fun announceUpdate(recipient: String, item: MonitoredEntry, oldTags: Set<String>, newTags: Set<String>) {
@@ -27,10 +24,9 @@ class UpdateAnnouncer(
 
         emailSendService.send(
             EmailMessage(
-                sender = sender,
                 recipient = recipient,
                 subject = "new docker image available for ${item.descriptor}",
-                body = MarkdownBody(message),
+                body = EmailMessage.MarkdownBody(message),
             )
         )
     }

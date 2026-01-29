@@ -1,9 +1,11 @@
 package ch.awae.mycloud.module.email
 
-import ch.awae.mycloud.api.email.*
-import ch.awae.mycloud.common.*
-import jakarta.transaction.*
-import org.springframework.stereotype.*
+import ch.awae.mycloud.api.email.EmailMessage
+import ch.awae.mycloud.api.email.EmailSendService
+import ch.awae.mycloud.common.createLogger
+import jakarta.transaction.Transactional
+import org.springframework.stereotype.Service
+import java.util.*
 
 @Transactional
 @Service
@@ -14,24 +16,31 @@ class EmailSendServiceImpl(val repo: EmailOutboxRepository) : EmailSendService {
     override fun send(email: EmailMessage) {
         val (bodyFormat, bodyContent) = extractBody(email.body)
 
+        email.uid?.let {
+            if (repo.existsByMessageUid(it)) {
+                logger.warn("email with uid {} already exists, skipping", email.uid)
+                return
+            }
+        }
+
         val stored = repo.save(
             EmailOutbox(
-                sender = email.sender,
                 recipient = email.recipient,
                 subject = email.subject,
                 bodyFormat = bodyFormat,
                 bodyContent = bodyContent,
+                messageUid = email.uid
             )
         )
 
         logger.info("email recorded for sending: {}", stored)
     }
 
-    private fun extractBody(body: EmailBody): Pair<EmailBodyFormat, String> {
+    private fun extractBody(body: EmailMessage.Body): Pair<EmailBodyFormat, String> {
         return when (body) {
-            is PlainBody -> Pair(EmailBodyFormat.TEXT, body.text)
-            is HtmlBody -> Pair(EmailBodyFormat.HTML, body.text)
-            is MarkdownBody -> Pair(EmailBodyFormat.MARKDOWN, body.text)
+            is EmailMessage.PlaintextBody -> Pair(EmailBodyFormat.TEXT, body.text)
+            is EmailMessage.HtmlBody -> Pair(EmailBodyFormat.HTML, body.text)
+            is EmailMessage.MarkdownBody -> Pair(EmailBodyFormat.MARKDOWN, body.text)
         }
     }
 

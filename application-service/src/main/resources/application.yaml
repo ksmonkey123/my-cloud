@@ -49,12 +49,10 @@ auth:
     schedule: "0 0 0 * * *"
 
 canary:
-  sender: "my@awae.ch"
   timer:
     web: "0 */15 * * * *"
 
 docker:
-  sender: "my@awae.ch"
   timer:
     dockerhub: "0 30 */6 * * *"
   dockerhub:
@@ -64,6 +62,7 @@ docker:
     password: ${dockerhub.password}
 
 email:
+  sender: "my@awae.ch"
   timer:
     send: "0 * * * * *"
 

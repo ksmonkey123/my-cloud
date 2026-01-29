@@ -1,16 +1,21 @@
 package ch.awae.mycloud.module.email
 
-import ch.awae.mycloud.common.*
-import com.mailjet.client.*
-import com.mailjet.client.transactional.*
-import jakarta.transaction.*
-import org.springframework.stereotype.*
+import ch.awae.mycloud.common.ResourceNotFoundException
+import ch.awae.mycloud.common.createLogger
+import com.mailjet.client.MailjetClient
+import com.mailjet.client.transactional.SendContact
+import com.mailjet.client.transactional.SendEmailsRequest
+import com.mailjet.client.transactional.TransactionalEmail
+import jakarta.transaction.Transactional
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.stereotype.Service
 
 @Service
 @Transactional
 class MailjetSender(
     val repo: EmailOutboxRepository,
-    val mailjetClient: MailjetClient
+    val mailjetClient: MailjetClient,
+    @param:Value("\${email.sender}") private val sender: String,
 ) {
 
     val log = createLogger()
@@ -22,7 +27,7 @@ class MailjetSender(
 
         val mail = TransactionalEmail.builder()
             .to(SendContact(email.recipient))
-            .from(SendContact(email.sender))
+            .from(SendContact(sender))
             .subject(email.subject)
             .let {
                 when (email.bodyFormat) {
