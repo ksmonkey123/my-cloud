@@ -13,7 +13,7 @@ import javax.sql.DataSource
 @Configuration
 @EnableSchedulerLock(
     defaultLockAtMostFor = "\${shedlock.default.max-lock:PT5M}",
-    defaultLockAtLeastFor = "\${shedlock.default.min-lock:PT30S}",
+    defaultLockAtLeastFor = "\${shedlock.default.min-lock:PT1S}",
 )
 class ShedlockConfiguration {
 

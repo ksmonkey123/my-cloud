@@ -11,7 +11,7 @@ class SendMailTimer(val repo: EmailOutboxRepository, val client: MailjetSender) 
 
     private val logger = createLogger()
 
-    @SchedulerLock(name = "email:sender", lockAtLeastFor = "5s")
+    @SchedulerLock(name = "email:sender")
     @Scheduled(cron = "\${email.timer.send}")
     fun sendMails() {
         val ids = repo.listToSend(100)
