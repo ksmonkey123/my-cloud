@@ -64,7 +64,7 @@ docker:
 email:
   sender: "my@awae.ch"
   timer:
-    send: "0 * * * * *"
+    send: "*/10 * * * * *"
 
 documents:
   clean-timer:
