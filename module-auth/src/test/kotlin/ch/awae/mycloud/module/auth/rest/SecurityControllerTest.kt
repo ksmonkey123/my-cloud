@@ -55,7 +55,6 @@ class SecurityControllerTest : ModuleWebTest() {
                             "a",
                             "b"
                           ],
-                          "token": "dummy-token",
                           "languageCode": "en"
                         }
                     """.trimIndent()
@@ -91,7 +90,6 @@ class SecurityControllerTest : ModuleWebTest() {
                             "a",
                             "b"
                           ],
-                          "token": "dummy-token",
                           "languageCode": "en"
                         }
                     """.trimIndent()

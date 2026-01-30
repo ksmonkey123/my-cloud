@@ -8,7 +8,6 @@ data class AuthInfoDto(
     val type: AuthType,
     val username: String,
     val authorities: List<String>,
-    val token: String,
     val languageCode: String,
     val email: String?,
 ) {
@@ -25,7 +24,6 @@ data class AuthInfoDto(
                     AuthType.USER,
                     authInfo.username,
                     authInfo.authorities.toList(),
-                    authInfo.token,
                     authInfo.language.code,
                     authInfo.email,
                 )
@@ -34,7 +32,6 @@ data class AuthInfoDto(
                     AuthType.API_KEY,
                     authInfo.username,
                     authInfo.authorities.toList(),
-                    authInfo.token,
                     authInfo.language.code,
                     authInfo.email,
                 )
