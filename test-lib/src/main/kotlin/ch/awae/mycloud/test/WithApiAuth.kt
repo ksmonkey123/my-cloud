@@ -24,6 +24,7 @@ annotation class WithApiAuth(
     val authorities: Array<String> = [],
     val language: Language = Language.ENGLISH,
     val token: String = "dummy-token",
+    val keyName: String = "dummy-key",
     @get:AliasFor(annotation = WithSecurityContext::class)
     val setupBefore: TestExecutionEvent = TestExecutionEvent.TEST_METHOD,
 )
@@ -39,6 +40,7 @@ class WithApiAuthSecurityContextactory : WithSecurityContextFactory<WithApiAuth>
             annotation.token,
             annotation.language,
             annotation.email.takeIf { it.isNotBlank() },
+            annotation.keyName
         ).toAuthentication()
         val context = _securityContextHolderStrategy.createEmptyContext()
         context.authentication = auth

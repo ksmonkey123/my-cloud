@@ -1,11 +1,14 @@
 package ch.awae.mycloud.config.security
 
+import ch.awae.mycloud.api.auth.ApiKeyUserAuthInfo
 import ch.awae.mycloud.api.auth.AuthService
-import jakarta.servlet.*
-import jakarta.servlet.http.*
-import org.springframework.security.core.context.*
-import org.springframework.stereotype.*
-import org.springframework.web.filter.*
+import ch.awae.mycloud.api.auth.BearerTokenUserAuthInfo
+import jakarta.servlet.FilterChain
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.stereotype.Component
+import org.springframework.web.filter.OncePerRequestFilter
 
 @Component
 class HttpAuthorizationTokenFilter(val authServiceClient: AuthService) : OncePerRequestFilter() {
@@ -18,6 +21,10 @@ class HttpAuthorizationTokenFilter(val authServiceClient: AuthService) : OncePer
         val auth = request.getHeader("Authorization")?.trim()?.let(authServiceClient::authenticateToken)
 
         if (auth != null) {
+            when (auth) {
+                is BearerTokenUserAuthInfo -> logger.info("authenticated user '${auth.username}' for ${request.method} ${request.requestURI}")
+                is ApiKeyUserAuthInfo -> logger.info("authenticated user '${auth.username}' by api key ${auth.keyName} for ${request.method} ${request.requestURI}")
+            }
             logger.info("authenticated user '${auth.username}' for ${request.method} ${request.requestURI}")
         } else if (!request.requestURI.startsWith("/actuator/")) {
             // do not log actuator endpoints

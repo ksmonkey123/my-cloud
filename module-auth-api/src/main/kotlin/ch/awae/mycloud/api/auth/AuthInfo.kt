@@ -52,4 +52,5 @@ data class ApiKeyUserAuthInfo(
     val token: String,
     override val language: Language,
     override val email: String?,
+    val keyName: String,
 ) : AuthInfo

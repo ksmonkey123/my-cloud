@@ -57,6 +57,7 @@ class AuthenticationService(
                 key.tokenString,
                 key.owner.language,
                 key.owner.email,
+                key.name,
             )
         }
     }
