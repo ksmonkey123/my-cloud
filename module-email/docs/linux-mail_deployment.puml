@@ -1,0 +1,26 @@
+@startuml
+
+node Host {
+    agent sendmail
+    file "/mails/"
+    process "process_mail.sh"
+
+    sendmail --> "/mails/"
+    "process_mail.sh" --> "/mails/"
+
+}
+
+node mycloud {
+    database "mycloud-db"
+    component "email-rest-api"
+    process "email-send-timer"
+    "email-rest-api" --> "mycloud-db"
+    "email-send-timer" --> "mycloud-db"
+}
+
+cloud mailjet
+
+"process_mail.sh" --> "email-rest-api"
+"email-send-timer" --> mailjet
+
+@enduml
