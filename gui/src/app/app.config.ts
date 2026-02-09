@@ -14,7 +14,6 @@ import {providePaginatorI18n} from "./common/paginator-i18n.provider";
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes, withHashLocation()),
-    provideAnimationsAsync(),
     provideHttpClient(withInterceptorsFromDi()),
     provideTokenInterceptor(),
     provideContentTypeInterceptor(),
