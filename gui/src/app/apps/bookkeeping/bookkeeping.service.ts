@@ -2,7 +2,6 @@ import {Injectable, OnDestroy, signal} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {ToastrService} from "ngx-toastr";
 import {BehaviorSubject, Subject, takeUntil} from "rxjs";
-import Big from "big.js";
 import {TranslocoService} from "@jsverse/transloco";
 import {toDateString} from "../../utils";
 import {BookSummary} from "./model/bookSummary";
@@ -64,7 +63,7 @@ export class BookkeepingService implements OnDestroy {
                       description: account.description,
                       accountType: account.accountType,
                       locked: account.locked,
-                      balance: new Big(account.balance)
+                      balance: account.balance
                     }
                   })
                 }
@@ -228,14 +227,14 @@ export class BookkeepingService implements OnDestroy {
               tag: record.tag,
               text: record.text,
               description: record.description,
-              amount: new Big(record.amount),
+              amount: record.amount,
               credits: record.credits.map(i => ({
                 accountId: i.accountId,
-                amount: new Big(i.amount)
+                amount: i.amount
               })),
               debits: record.debits.map(i => ({
                 accountId: i.accountId,
-                amount: new Big(i.amount)
+                amount: i.amount
               }))
             }))
           })

@@ -30,9 +30,6 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "allowedCommonJsDependencies": [
-              "big.js"
-            ],
             "outputPath": {
               "base": "target/classes/static",
               "browser": ""

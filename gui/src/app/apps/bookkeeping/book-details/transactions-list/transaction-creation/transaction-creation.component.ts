@@ -14,7 +14,6 @@ import {MatDivider} from "@angular/material/divider";
 import {MatSelect} from "@angular/material/select";
 import {MatButton, MatMiniFabButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
-import Big from "big.js";
 import {TranslocoDirective, TranslocoPipe} from "@jsverse/transloco";
 import {AccountSummary, Book} from "../../../model/book";
 import {AccountTypeUtil} from "../../../model/accountType";
@@ -116,12 +115,12 @@ export class TransactionCreationComponent {
 
   onAmountChanged() {
     const creditSum = this.credits
-      .map(row => new Big(row.amount.value || 0))
-      .reduce((a, b) => a.plus(b))
+      .map(row => Number(row.amount.value || 0))
+      .reduce((a, b) => a + b)
     const debitSum = this.debits.filter((_, index) => index > 0)
-      .map(row => new Big(row.amount.value || 0))
-      .reduce((a, b) => a.plus(b), Big(0))
-    this.debits[0].amount.setValue(creditSum.minus(debitSum).toFixed(2))
+      .map(row => Number(row.amount.value || 0))
+      .reduce((a, b) => a + b, 0)
+    this.debits[0].amount.setValue((creditSum - debitSum).toFixed(2))
   }
 
   resetForm() {
@@ -137,10 +136,10 @@ export class TransactionCreationComponent {
       description: this.form.value.description || undefined,
       date: this.form.value.date!,
       credits: this.credits.map(row => {
-        return {accountId: row.account.value!.id, amount: new Big(row.amount.value!)}
+        return {accountId: row.account.value!.id, amount: Number(row.amount.value)}
       }),
       debits: this.debits.map(row => {
-        return {accountId: row.account.value!.id, amount: new Big(row.amount.value!)}
+        return {accountId: row.account.value!.id, amount: Number(row.amount.value!)}
       }),
     }).subscribe(id => {
       if (id > 0) {

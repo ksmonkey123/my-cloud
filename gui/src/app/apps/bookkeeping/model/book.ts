@@ -1,5 +1,4 @@
 import {BookSummary} from "./bookSummary";
-import Big from "big.js";
 import {AccountType} from "./accountType";
 
 export interface Book {
@@ -20,6 +19,6 @@ export interface AccountSummary {
   title: string,
   description?: string,
   accountType: AccountType,
-  balance: Big,
+  balance: number,
   locked: boolean,
 }
