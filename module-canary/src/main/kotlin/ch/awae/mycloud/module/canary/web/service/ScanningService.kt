@@ -1,23 +1,24 @@
 package ch.awae.mycloud.module.canary.web.service
 
-import ch.awae.mycloud.api.auth.*
-import ch.awae.mycloud.api.email.*
-import ch.awae.mycloud.common.*
+import ch.awae.mycloud.api.auth.UserInfoService
+import ch.awae.mycloud.api.email.EmailMessage
+import ch.awae.mycloud.api.email.EmailSendService
+import ch.awae.mycloud.common.createLogger
+import ch.awae.mycloud.module.canary.web.client.ScanResult
+import ch.awae.mycloud.module.canary.web.client.ScanningClient
 import ch.awae.mycloud.module.canary.web.model.*
-import org.springframework.beans.factory.annotation.*
-import org.springframework.data.repository.*
-import org.springframework.stereotype.*
-import org.springframework.transaction.annotation.*
-import org.springframework.web.client.*
+import org.springframework.data.repository.findByIdOrNull
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Transactional
 class ScanningService(
     private val monitoredSiteRepository: MonitoredSiteRepository,
     private val testRecordRepository: TestRecordRepository,
-    private val http: RestTemplate,
     private val userInfoService: UserInfoService,
     private val emailSendService: EmailSendService,
+    private val scanningClient: ScanningClient,
 ) {
 
     private val logger = createLogger()
@@ -58,22 +59,30 @@ class ScanningService(
     }
 
     private fun doScan(site: MonitoredSite): TestRecord {
-        val record = try {
-            val tests = site.tests.filterValues { it }.keys
-            logger.info("fetching site ${site.id}: '${site.siteUrl}' with tests $tests")
-            val response = http.getForObject(site.siteUrl, String::class.java)!!
-            val failedTests = tests.filter { !response.contains(it) }
+        val tests = site.tests.filterValues { it }.keys
+        val result = scanningClient.performScan(site.siteUrl, tests)
 
-            if (failedTests.isEmpty()) {
-                logger.info("all tests passed")
-                TestRecord(site, TestResult.SUCCESS, null, mutableListOf())
-            } else {
-                logger.warn("some tests failed: $failedTests")
-                TestRecord(site, TestResult.FAILURE, null, failedTests.toMutableList())
-            }
-        } catch (e: Throwable) {
-            logger.error("test error", e)
-            TestRecord(site, TestResult.ERROR, e.message ?: e.toString(), mutableListOf())
+        val record = when (result) {
+            is ScanResult.Success -> TestRecord(
+                site,
+                TestResult.SUCCESS,
+                null,
+                mutableListOf(),
+            )
+
+            is ScanResult.Error -> TestRecord(
+                site,
+                TestResult.ERROR,
+                result.throwable.message ?: result.throwable.toString(),
+                mutableListOf(),
+            )
+
+            is ScanResult.Failure -> TestRecord(
+                site,
+                TestResult.FAILURE,
+                null,
+                result.failedTests.toMutableList(),
+            )
         }
         return testRecordRepository.save(record)
     }
