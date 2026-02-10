@@ -1,14 +1,19 @@
 package ch.awae.mycloud.module.bookkeping.service.document
 
-import ch.awae.mycloud.api.documents.*
+import ch.awae.mycloud.api.auth.AuthInfo
+import ch.awae.mycloud.api.documents.DocumentIdentifier
+import ch.awae.mycloud.api.documents.DocumentSource
+import ch.awae.mycloud.api.documents.DocumentStore
 import ch.awae.mycloud.lib.pdf.Document
-import ch.awae.mycloud.module.bookkeping.dto.*
-import ch.awae.mycloud.module.bookkeping.model.*
-import ch.awae.mycloud.module.bookkeping.service.*
-import jakarta.transaction.*
-import org.springframework.http.*
-import org.springframework.stereotype.*
-import java.time.*
+import ch.awae.mycloud.module.bookkeping.dto.AccountId
+import ch.awae.mycloud.module.bookkeping.model.Account
+import ch.awae.mycloud.module.bookkeping.model.AccountTransactionRepository
+import ch.awae.mycloud.module.bookkeping.model.Book
+import ch.awae.mycloud.module.bookkeping.service.BookService
+import jakarta.transaction.Transactional
+import org.springframework.http.MediaType
+import org.springframework.stereotype.Service
+import java.time.Duration
 
 @Service
 @Transactional
@@ -33,7 +38,14 @@ class AccountLedgersService(
 
         }.toByteArray()
 
-        return documentStore.createDocument("ledgers.pdf", MediaType.APPLICATION_PDF, content, Duration.ofHours(1))
+        return documentStore.createDocument(
+            source = DocumentSource.BOOKKEEPING,
+            filename = "ledgers.pdf",
+            type = MediaType.APPLICATION_PDF,
+            content = content,
+            lifetime = Duration.ofHours(1),
+            username = AuthInfo.username,
+        )
     }
 
     fun generateAccountLedger(pdf: Document, book: Book, account: Account) {

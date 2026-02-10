@@ -1,16 +1,19 @@
 package ch.awae.mycloud.module.bookkeping.service.document
 
-import ch.awae.mycloud.api.documents.*
-import ch.awae.mycloud.common.*
+import ch.awae.mycloud.api.auth.AuthInfo
+import ch.awae.mycloud.api.documents.DocumentIdentifier
+import ch.awae.mycloud.api.documents.DocumentSource
+import ch.awae.mycloud.api.documents.DocumentStore
+import ch.awae.mycloud.common.InvalidRequestException
 import ch.awae.mycloud.lib.pdf.Document
-import ch.awae.mycloud.module.bookkeping.dto.*
+import ch.awae.mycloud.module.bookkeping.dto.AccountId
 import ch.awae.mycloud.module.bookkeping.model.*
-import ch.awae.mycloud.module.bookkeping.service.*
-import jakarta.transaction.*
-import org.springframework.http.*
-import org.springframework.stereotype.*
-import java.math.*
-import java.time.*
+import ch.awae.mycloud.module.bookkeping.service.BookService
+import jakarta.transaction.Transactional
+import org.springframework.http.MediaType
+import org.springframework.stereotype.Service
+import java.math.BigDecimal
+import java.time.Duration
 
 @Service
 @Transactional
@@ -39,7 +42,14 @@ class EarningsReportService(
             }
         }.toByteArray()
 
-        return documentStore.createDocument("report.pdf", MediaType.APPLICATION_PDF, content, Duration.ofHours(1))
+        return documentStore.createDocument(
+            source = DocumentSource.BOOKKEEPING,
+            filename = "report.pdf",
+            type = MediaType.APPLICATION_PDF,
+            content = content,
+            lifetime = Duration.ofHours(1),
+            username = AuthInfo.username,
+        )
     }
 
     fun generatePartialEarningsReport(bookId: Long, groupNumbers: List<Int>, title: String?): DocumentIdentifier {
@@ -61,7 +71,14 @@ class EarningsReportService(
             }
         }.toByteArray()
 
-        return documentStore.createDocument("partial_report.pdf", MediaType.APPLICATION_PDF, content, Duration.ofHours(1))
+        return documentStore.createDocument(
+            source = DocumentSource.BOOKKEEPING,
+            filename = "partial_report.pdf",
+            type = MediaType.APPLICATION_PDF,
+            content = content,
+            lifetime = Duration.ofHours(1),
+            username = AuthInfo.username,
+        )
     }
 
     fun generateInitialBalance(pdf: Document, book: Book) {
@@ -149,7 +166,7 @@ class EarningsReportService(
                 ?.sortedWith(
                     Comparator.comparing<AccountTagBalance, BigDecimal> { it.balance }
                         .let { if (account.accountType.invertedPresentation) it else it.reversed() }
-                        .thenComparing<String> { it.tag.takeUnless(String::isEmpty) ?: "}" }
+                        .thenComparing { it.tag.takeUnless(String::isEmpty) ?: "}" }
                 )
                 ?.map { tag ->
                     ReportRenderer.Item(

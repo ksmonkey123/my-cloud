@@ -1,13 +1,16 @@
 package ch.awae.mycloud.module.documents
 
+import ch.awae.mycloud.api.documents.DocumentIdentifier
+import ch.awae.mycloud.api.documents.DocumentSource
+import ch.awae.mycloud.api.documents.DocumentStore
 import ch.awae.mycloud.common.TokenGenerator
-import ch.awae.mycloud.api.documents.*
-import jakarta.transaction.*
-import net.javacrumbs.shedlock.spring.annotation.*
-import org.springframework.http.*
-import org.springframework.scheduling.annotation.*
-import org.springframework.stereotype.*
-import java.time.*
+import jakarta.transaction.Transactional
+import net.javacrumbs.shedlock.spring.annotation.SchedulerLock
+import org.springframework.http.MediaType
+import org.springframework.scheduling.annotation.Scheduled
+import org.springframework.stereotype.Service
+import java.time.Duration
+import java.time.LocalDateTime
 
 @Service
 @Transactional
@@ -16,14 +19,42 @@ class DocumentStoreImpl(
     private val tokenGenerator: TokenGenerator,
 ) : DocumentStore {
 
-    override fun createDocument(filename: String, type: MediaType, content: ByteArray, lifetime: Duration): DocumentIdentifier {
+    override fun createDocument(
+        source: DocumentSource,
+        filename: String,
+        type: MediaType,
+        content: ByteArray,
+        lifetime: Duration,
+        username: String?,
+    ): DocumentIdentifier {
+        return createDocument(
+            filename = filename,
+            type = type,
+            content = content,
+            validUntil = LocalDateTime.now().plus(lifetime),
+            source = source,
+            username = username,
+        )
+    }
+
+    override fun createDocument(
+        source: DocumentSource,
+        filename: String,
+        type: MediaType,
+        content: ByteArray,
+        validUntil: LocalDateTime,
+        username: String?,
+    ): DocumentIdentifier {
         val token = tokenGenerator.generate(16, TokenGenerator.EncoderType.URL)
         val document = DocumentEntity(
             token = token,
             filename = filename,
             type = type.toString(),
             content = content,
-            validUntil = LocalDateTime.now().plus(lifetime),
+            createdAt = LocalDateTime.now(),
+            validUntil = validUntil,
+            source = source,
+            username = username,
         )
         documentRepository.save(document)
 
