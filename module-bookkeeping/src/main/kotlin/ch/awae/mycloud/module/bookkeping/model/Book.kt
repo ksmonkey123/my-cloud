@@ -8,20 +8,21 @@ import org.springframework.data.jpa.repository.Query
 import java.time.*
 
 @Table(name = "book", schema = "bookkeeping")
-@Entity(name = "BK_Book")
+@Entity(name = "bookkeeping_Book")
 class Book(
-    @Column(updatable = false)
+    @Column(updatable = false, nullable = false)
     val username: String,
+    @Column(nullable = false)
     var title: String,
-    @Column(updatable = false)
+    @Column(updatable = false, nullable = false)
     val openingDate: LocalDate,
-    @Column(updatable = false)
+    @Column(updatable = false, nullable = false)
     val closingDate: LocalDate,
     var description: String?,
     var closed: Boolean,
 ) : IdBaseEntity() {
     @OneToMany(mappedBy = "book")
-    val accountGroups: Set<AccountGroup> = emptySet()
+    val accountGroups: MutableSet<AccountGroup> = mutableSetOf()
 
     override fun validate() {
         if (!closingDate.isAfter(openingDate)) {
@@ -33,10 +34,10 @@ class Book(
 
 interface BookRepository : JpaRepository<Book, Long> {
 
-    @Query("select b from BK_Book b where b.username = :username and not b.closed")
+    @Query("select b from bookkeeping_Book b where b.username = :username and not b.closed")
     fun findOpenByUsername(username: String): List<Book>
 
-    @Query("select b from BK_Book b where b.username = :username")
+    @Query("select b from bookkeeping_Book b where b.username = :username")
     fun findAllByUsername(username: String): List<Book>
 
     fun findByIdAndUsername(id: Long, username: String): Book?

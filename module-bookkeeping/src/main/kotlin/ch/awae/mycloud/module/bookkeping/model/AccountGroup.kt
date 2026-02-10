@@ -6,12 +6,13 @@ import jakarta.validation.*
 import org.springframework.data.jpa.repository.*
 
 @Table(name = "account_group", schema = "bookkeeping")
-@Entity(name = "BK_AccountGroup")
+@Entity(name = "bookkeeping_AccountGroup")
 class AccountGroup(
-    @ManyToOne @JoinColumn(updatable = false)
+    @ManyToOne @JoinColumn(updatable = false, nullable = false)
     val book: Book,
-    @Column(updatable = false)
+    @Column(updatable = false, nullable = false)
     val groupNumber: Int,
+    @Column(nullable = false)
     var title: String,
     var locked: Boolean,
 ) : IdBaseEntity() {

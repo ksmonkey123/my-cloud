@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query
 import java.math.*
 
 @Immutable
-@Entity(name = "BK_AccountTagBalance")
+@Entity(name = "bookkeeping_AccountTagBalance")
 @Table(name = "v_account_tag_balance", schema = "bookkeeping")
 @IdClass(AccountTagBalancePK::class)
 class AccountTagBalance(
@@ -24,7 +24,7 @@ data class AccountTagBalancePK(val accountId: Long, val tag: String)
 
 interface AccountTagBalanceRepository : JpaRepository<AccountTagBalance, AccountTagBalancePK> {
 
-    @Query("select t from BK_AccountTagBalance t where t.accountId = :accountId")
+    @Query("select t from bookkeeping_AccountTagBalance t where t.accountId = :accountId")
     fun findByAccountId(accountId: Long): List<AccountTagBalance>
 
 }

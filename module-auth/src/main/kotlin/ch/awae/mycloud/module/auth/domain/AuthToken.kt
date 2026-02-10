@@ -8,13 +8,14 @@ import org.springframework.data.jpa.repository.Query
 import java.time.*
 
 @Table(name = "auth_token", schema = "auth")
-@Entity
+@Entity(name = "auth_AuthToken")
 class AuthToken private constructor(
-    @Column(updatable = false, unique = true)
+    @Column(updatable = false, unique = true, nullable = false)
     val tokenString: String,
     @ManyToOne
-    @JoinColumn(name = "account_id", updatable = false)
+    @JoinColumn(updatable = false, nullable = false)
     val account: Account,
+    @Column(updatable = false, nullable = false)
     val validUntil: LocalDateTime,
 ) : IdBaseEntity() {
 
@@ -30,11 +31,11 @@ class AuthToken private constructor(
 interface AuthTokenRepository : JpaRepository<AuthToken, Long> {
 
     @Modifying(flushAutomatically = true)
-    @Query("delete from AuthToken where tokenString = :tokenString")
+    @Query("delete from auth_AuthToken where tokenString = :tokenString")
     fun deleteByTokenString(tokenString: String)
 
     @Modifying(flushAutomatically = true)
-    @Query("delete from AuthToken where validUntil < current_timestamp")
+    @Query("delete from auth_AuthToken where validUntil < current_timestamp")
     fun deleteExpiredTokens()
 
 }

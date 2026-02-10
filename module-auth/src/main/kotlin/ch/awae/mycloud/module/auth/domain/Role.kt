@@ -6,9 +6,9 @@ import org.springframework.data.jpa.repository.*
 import org.springframework.data.jpa.repository.Query
 
 @Table(name = "role", schema = "auth")
-@Entity
+@Entity(name = "auth_Role")
 class Role(
-    @Column(updatable = false, unique = true)
+    @Column(updatable = false, unique = true, nullable = false)
     val name: String,
     @Convert(converter = AuthoritiesConverter::class)
     var authorities: Set<String>,
@@ -26,7 +26,7 @@ class Role(
 
 interface RoleRepository : JpaRepository<Role, Long> {
 
-    @Query("select r from Role r where r.name in :names")
+    @Query("select r from auth_Role r where r.name in :names")
     fun findRolesByName(names: List<String>): List<Role>
 
 }

@@ -6,15 +6,15 @@ import jakarta.persistence.*
 import org.springframework.data.jpa.repository.*
 
 @Table(name = "link", schema = "shortener")
-@Entity
+@Entity(name = "shortener_ShortLink")
 class ShortLink(
     @Id
     @Column(updatable = false)
     val id: String,
     @JsonIgnore
-    @Column(updatable = false)
+    @Column(updatable = false, nullable = false)
     val username: String,
-    @Column(updatable = false)
+    @Column(updatable = false, nullable = false)
     val targetUrl: String,
 ) : BaseEntity()
 

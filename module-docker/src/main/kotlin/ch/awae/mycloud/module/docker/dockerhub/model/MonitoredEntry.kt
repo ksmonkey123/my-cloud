@@ -5,19 +5,20 @@ import jakarta.persistence.*
 import org.springframework.data.jpa.repository.*
 import org.springframework.data.jpa.repository.Query
 
-@Entity
+@Entity(name = "docker_MonitoredEntry")
 @Table(name = "docker_monitored_entry", schema = "docker")
 class MonitoredEntry(
-    @Column(updatable = false)
+    @Column(updatable = false, nullable = false)
     val owner: String,
     @Column(updatable = false)
     val namespace: String?,
-    @Column(updatable = false)
+    @Column(updatable = false, nullable = false)
     val repository: String,
-    @Column(updatable = false)
+    @Column(updatable = false, nullable = false)
     val tag: String,
-    @Column(updatable = false)
+    @Column(updatable = false, nullable = false)
     val tagChangesOnly: Boolean,
+    @Column(updatable = false, nullable = false)
     val enabled: Boolean,
 ) : IdBaseEntity() {
 
@@ -34,10 +35,10 @@ class MonitoredEntry(
 
 interface MonitoredEntryRepository : JpaRepository<MonitoredEntry, Long> {
 
-    @Query("select me.id from MonitoredEntry me where me.enabled")
+    @Query("select me.id from docker_MonitoredEntry me where me.enabled")
     fun listIdsOfEnabled(): List<Long>
 
-    @Query("select me from MonitoredEntry me where me.namespace = :namespace and me.repository = :repository and me.tag = :tag")
+    @Query("select me from docker_MonitoredEntry me where me.namespace = :namespace and me.repository = :repository and me.tag = :tag")
     fun findByIdentifier(namespace: String?, repository: String, tag: String): MonitoredEntry?
 
 }

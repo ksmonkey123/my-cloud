@@ -10,15 +10,16 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.*
 
 @Table(name = "account", schema = "bookkeeping")
-@Entity(name = "BK_Account")
+@Entity(name = "bookkeeping_Account")
 class Account(
-    @Column(updatable = false)
+    @Column(updatable = false, nullable = false)
     val accountNumber: Int,
-    @ManyToOne @JoinColumn(updatable = false)
+    @ManyToOne @JoinColumn(updatable = false, nullable = false)
     val accountGroup: AccountGroup,
-    @Column(updatable = false)
+    @Column(updatable = false, nullable = false)
     @Convert(converter = AccountTypeConverter::class)
     val accountType: AccountType,
+    @Column(nullable = false)
     var title: String,
     var description: String?,
     var locked: Boolean,
@@ -39,13 +40,13 @@ class Account(
 
 interface AccountRepository : JpaRepository<Account, Long> {
 
-    @Query("select a from BK_Account a where a.accountGroup.book = :book order by a.accountGroup.groupNumber asc, a.accountNumber asc")
+    @Query("select a from bookkeeping_Account a where a.accountGroup.book = :book order by a.accountGroup.groupNumber asc, a.accountNumber asc")
     fun listAllOfBook(book: Book): List<Account>
 
-    @Query("select a from BK_Account  a where a.accountGroup = :group and a.accountNumber = :accountNumber")
+    @Query("select a from bookkeeping_Account  a where a.accountGroup = :group and a.accountNumber = :accountNumber")
     fun findByGroupAndAccountNumber(group: AccountGroup, accountNumber: Int): Account?
 
-    @Query("select a from BK_Account  a where a.accountNumber = :accountNumber and a.accountGroup.groupNumber = :groupNumber and a.accountGroup.book = :book")
+    @Query("select a from bookkeeping_Account  a where a.accountNumber = :accountNumber and a.accountGroup.groupNumber = :groupNumber and a.accountGroup.book = :book")
     fun findByIdentifier(book: Book, groupNumber: Int, accountNumber: Int): Account?
 
 }

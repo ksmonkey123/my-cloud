@@ -9,7 +9,7 @@ import java.math.*
 import java.time.*
 
 @Immutable
-@Entity(name = "BK_AccountTransaction")
+@Entity(name = "bookkeeping_AccountTransaction")
 @Table(name = "v_account_transaction", schema = "bookkeeping")
 @IdClass(AccountTransactionPK::class)
 class AccountTransaction(
@@ -31,7 +31,7 @@ data class AccountTransactionPK(val recordId: Long, val accountId: Long)
 
 interface AccountTransactionRepository : JpaRepository<AccountTransaction, AccountTransactionPK> {
 
-    @Query("select t from BK_AccountTransaction t where t.account = :account order by t.bookingDate asc, t.recordId asc")
+    @Query("select t from bookkeeping_AccountTransaction t where t.account = :account order by t.bookingDate asc, t.recordId asc")
     fun findByAccount(account: Account): List<AccountTransaction>
 
 }

@@ -3,6 +3,7 @@ package ch.awae.mycloud.module.bookkeping.model
 import ch.awae.mycloud.common.db.*
 import jakarta.persistence.*
 import jakarta.validation.*
+import jakarta.validation.constraints.Null
 import org.springframework.data.domain.*
 import org.springframework.data.jpa.repository.*
 import org.springframework.data.jpa.repository.Query
@@ -10,13 +11,15 @@ import java.math.*
 import java.time.*
 
 @Table(name = "booking_record", schema = "bookkeeping")
-@Entity(name = "BK_BookingRecord")
+@Entity(name = "bookkeeping_BookingRecord")
 class BookingRecord(
-    @ManyToOne @JoinColumn(updatable = false)
+    @ManyToOne @JoinColumn(updatable = false, nullable = false)
     val book: Book,
     val localId: Long,
+    @Column(nullable = false)
     var bookingText: String,
     var description: String?,
+    @Column(nullable = false)
     val bookingDate: LocalDate,
     var tag: String?,
 ) : IdBaseEntity() {
@@ -27,8 +30,8 @@ class BookingRecord(
         name = "booking_movement",
         joinColumns = [JoinColumn(name = "booking_record_id")]
     )
-    @MapKeyJoinColumn(name = "account_id")
-    @Column(name = "amount")
+    @MapKeyJoinColumn(name = "account_id", nullable = false)
+    @Column(name = "amount", nullable = false)
     val movements: MutableMap<Account, BigDecimal> = mutableMapOf()
 
     override fun validate() {
@@ -58,18 +61,18 @@ class BookingRecord(
 
 interface BookingRecordRepository : JpaRepository<BookingRecord, Long> {
 
-    @Query("select r from BK_BookingRecord r where r.book = :book order by r.bookingDate desc, r.localId desc")
+    @Query("select r from bookkeeping_BookingRecord r where r.book = :book order by r.bookingDate desc, r.localId desc")
     fun listAllInBook(book: Book, pageable: Pageable): Page<BookingRecord>
 
     fun findByLocalIdAndBook(id: Long, book: Book): BookingRecord?
 
-    @Query("select r from BK_BookingRecord r where r.book = :book order by r.bookingDate asc, r.localId asc limit 1")
+    @Query("select r from bookkeeping_BookingRecord r where r.book = :book order by r.bookingDate asc, r.localId asc limit 1")
     fun findFirstInBook(book: Book): BookingRecord?
 
-    @Query("select max(r.localId) from BK_BookingRecord r where r.book = :book")
+    @Query("select max(r.localId) from bookkeeping_BookingRecord r where r.book = :book")
     fun findMaxLocalId(book: Book): Long?
 
-    @Query("select distinct r.tag from BK_BookingRecord r where r.book = :book and r.tag is not null order by r.tag asc")
+    @Query("select distinct r.tag from bookkeeping_BookingRecord r where r.book = :book and r.tag is not null order by r.tag asc")
     fun listTags(book: Book): List<String>
 
 }

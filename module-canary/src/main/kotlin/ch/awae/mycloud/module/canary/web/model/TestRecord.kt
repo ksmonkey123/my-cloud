@@ -6,27 +6,28 @@ import org.springframework.data.jpa.repository.*
 import org.springframework.data.jpa.repository.Query
 import java.time.*
 
-@Entity
+@Entity(name = "canary_TestRecord")
 @Table(name = "web_test_record", schema = "canary")
 class TestRecord(
     @ManyToOne
-    @JoinColumn(updatable = false)
+    @JoinColumn(updatable = false, nullable = false)
     val site: MonitoredSite,
     @Enumerated(EnumType.STRING)
-    @Column(updatable = false)
+    @Column(updatable = false, nullable = false)
     val result: TestResult,
     @Column(updatable = false)
     val errorMessage: String?,
     @ElementCollection
-    @CollectionTable(schema = "canary", name = "web_failed_test", joinColumns = [JoinColumn(name = "record_id")])
-    @Column(name = "test_string")
+    @CollectionTable(schema = "canary", name = "web_failed_test", joinColumns = [JoinColumn(name = "record_id", nullable = false)])
+    @Column(name = "test_string", nullable = false)
     val failedTests: MutableList<String>,
+    @Column(updatable = false, nullable = false)
     val recordedAt: LocalDateTime = LocalDateTime.now(),
 ) : IdBaseEntity()
 
 interface TestRecordRepository : JpaRepository<TestRecord, Long> {
 
-    @Query("select record from TestRecord record where record.site = :site order by record.recordedAt desc limit 1")
+    @Query("select record from canary_TestRecord record where record.site = :site order by record.recordedAt desc limit 1")
     fun findLastRecordBySite(site: MonitoredSite) : TestRecord?
 
 }

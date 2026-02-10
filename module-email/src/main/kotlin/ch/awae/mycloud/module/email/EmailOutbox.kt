@@ -6,21 +6,21 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import java.time.LocalDateTime
 
-@Entity
+@Entity(name = "email_EmailOutbox")
 @Table(schema = "email", name = "outbox")
 class EmailOutbox(
-    @Column(updatable = false)
+    @Column(updatable = false, nullable = false)
     val recipient: String,
-    @Column(updatable = false)
+    @Column(updatable = false, nullable = false)
     val subject: String,
-    @Column(updatable = false)
+    @Column(updatable = false, nullable = false)
     val bodyContent: String,
-    @Column(updatable = false)
+    @Column(updatable = false, nullable = false)
     @Enumerated(EnumType.STRING)
     val bodyFormat: EmailBodyFormat,
-    @Column(updatable = false)
+    @Column(updatable = false, nullable = false)
     val createdAt: LocalDateTime = LocalDateTime.now(),
-    @Column(updatable = false, unique = true)
+    @Column(updatable = false, unique = true, nullable = true)
     val messageUid: String? = null,
 ) : IdBaseEntity() {
     override fun toString(): String {
@@ -45,10 +45,10 @@ enum class EmailBodyFormat {
 }
 
 interface EmailOutboxRepository : JpaRepository<EmailOutbox, Long> {
-    @Query("select e from EmailOutbox e where e.id = :id and not e.sent")
+    @Query("select e from email_EmailOutbox e where e.id = :id and not e.sent")
     fun findToSend(id: Long): EmailOutbox?
 
-    @Query("select e.id from EmailOutbox e where not e.sent order by e.createdAt asc limit :count")
+    @Query("select e.id from email_EmailOutbox e where not e.sent order by e.createdAt asc limit :count")
     fun listToSend(count: Int): List<Long>
 
     fun existsByMessageUid(messageUid: String): Boolean

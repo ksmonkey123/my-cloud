@@ -63,7 +63,7 @@ class SecurityServiceTest : AuthModuleTest() {
         securityService.logout("yH/Q7WKAW1xb6yVnW1rovIG6nbj+GxEbcWWrKJavLIU")
 
         val count = entityManager.createQuery(
-            "select count(t) from AuthToken t where t.tokenString = :tokenString",
+            "select count(t) from auth_AuthToken t where t.tokenString = :tokenString",
             Long::class.java
         )
             .setParameter("tokenString", "yH/Q7WKAW1xb6yVnW1rovIG6nbj+GxEbcWWrKJavLIU")
