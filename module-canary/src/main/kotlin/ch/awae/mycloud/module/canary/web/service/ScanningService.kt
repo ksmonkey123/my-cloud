@@ -3,7 +3,7 @@ package ch.awae.mycloud.module.canary.web.service
 import ch.awae.mycloud.api.auth.UserInfoService
 import ch.awae.mycloud.api.email.EmailMessage
 import ch.awae.mycloud.api.email.EmailSendService
-import ch.awae.mycloud.common.createLogger
+import ch.awae.mycloud.common.util.createLogger
 import ch.awae.mycloud.module.canary.web.client.ScanResult
 import ch.awae.mycloud.module.canary.web.client.ScanningClient
 import ch.awae.mycloud.module.canary.web.model.*

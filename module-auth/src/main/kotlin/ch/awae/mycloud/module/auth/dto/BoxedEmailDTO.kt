@@ -1,10 +1,10 @@
 package ch.awae.mycloud.module.auth.dto
 
-import ch.awae.mycloud.common.Boxed
 import jakarta.validation.constraints.Email
+import java.util.*
 
 data class BoxedEmailDTO(@field:Email val value: String?) {
 
-    fun asBoxed() = Boxed(value)
+    fun asOptional(): Optional<String> = Optional.ofNullable(value)
 
 }

@@ -1,7 +1,7 @@
 package ch.awae.mycloud.module.email
 
 import ch.awae.mycloud.common.ResourceNotFoundException
-import ch.awae.mycloud.common.createLogger
+import ch.awae.mycloud.common.util.createLogger
 import com.mailjet.client.MailjetClient
 import com.mailjet.client.transactional.SendContact
 import com.mailjet.client.transactional.SendEmailsRequest

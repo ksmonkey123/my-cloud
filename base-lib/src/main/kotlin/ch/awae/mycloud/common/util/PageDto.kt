@@ -1,4 +1,4 @@
-package ch.awae.mycloud.common
+package ch.awae.mycloud.common.util
 
 data class PageDto<T>(
     val items: List<T>,

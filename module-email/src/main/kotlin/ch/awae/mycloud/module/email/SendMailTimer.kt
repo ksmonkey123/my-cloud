@@ -1,10 +1,9 @@
 package ch.awae.mycloud.module.email
 
-import ch.awae.mycloud.common.*
+import ch.awae.mycloud.common.util.createLogger
 import net.javacrumbs.shedlock.spring.annotation.*
 import org.springframework.scheduling.annotation.*
 import org.springframework.stereotype.*
-import java.time.Duration
 
 @Controller
 class SendMailTimer(val repo: EmailOutboxRepository, val client: MailjetSender) {

@@ -52,7 +52,7 @@ class UserManagementController(
             admin = request.admin,
             enabled = request.enabled,
             language = request.languageCode?.let { Language.fromCode(it) },
-            email = request.email?.asBoxed(),
+            email = request.email?.asOptional(),
         )
     }
 

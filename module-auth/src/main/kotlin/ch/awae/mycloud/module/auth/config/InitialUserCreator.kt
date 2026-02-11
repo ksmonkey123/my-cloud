@@ -1,7 +1,7 @@
 package ch.awae.mycloud.module.auth.config
 
 import ch.awae.mycloud.api.auth.*
-import ch.awae.mycloud.common.*
+import ch.awae.mycloud.common.util.createLogger
 import ch.awae.mycloud.module.auth.domain.*
 import jakarta.transaction.*
 import org.springframework.boot.*

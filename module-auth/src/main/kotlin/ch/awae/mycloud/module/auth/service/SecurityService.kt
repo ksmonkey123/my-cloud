@@ -1,7 +1,7 @@
 package ch.awae.mycloud.module.auth.service
 
 import ch.awae.mycloud.common.TokenGenerator
-import ch.awae.mycloud.common.*
+import ch.awae.mycloud.common.util.createLogger
 import ch.awae.mycloud.module.auth.domain.*
 import ch.awae.mycloud.module.auth.exception.BadLoginException
 import jakarta.transaction.*

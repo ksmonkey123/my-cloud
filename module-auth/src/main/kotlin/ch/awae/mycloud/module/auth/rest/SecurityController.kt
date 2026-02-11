@@ -2,7 +2,7 @@ package ch.awae.mycloud.module.auth.rest
 
 import ch.awae.mycloud.api.auth.AuthInfo
 import ch.awae.mycloud.api.auth.BearerTokenUserAuthInfo
-import ch.awae.mycloud.common.createLogger
+import ch.awae.mycloud.common.util.createLogger
 import ch.awae.mycloud.module.auth.domain.TokenRetentionPolicy
 import ch.awae.mycloud.module.auth.dto.AuthInfoDto
 import ch.awae.mycloud.module.auth.service.SecurityService

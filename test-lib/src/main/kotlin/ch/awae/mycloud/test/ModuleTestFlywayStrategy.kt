@@ -1,6 +1,7 @@
 package ch.awae.mycloud.test
 
 import ch.awae.mycloud.common.*
+import ch.awae.mycloud.common.util.createLogger
 import org.flywaydb.core.*
 import org.springframework.boot.flyway.autoconfigure.FlywayMigrationStrategy
 import org.springframework.context.annotation.*

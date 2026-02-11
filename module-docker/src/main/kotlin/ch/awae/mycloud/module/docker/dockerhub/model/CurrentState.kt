@@ -1,6 +1,6 @@
 package ch.awae.mycloud.module.docker.dockerhub.model
 
-import ch.awae.mycloud.common.equalByField
+import ch.awae.mycloud.common.util.equalByField
 import jakarta.persistence.*
 import jakarta.persistence.Table
 import org.hibernate.annotations.*

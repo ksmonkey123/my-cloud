@@ -1,6 +1,7 @@
 package ch.awae.mycloud.module.bookkeping.service
 
 import ch.awae.mycloud.common.*
+import ch.awae.mycloud.common.util.PageDto
 import ch.awae.mycloud.module.bookkeping.dto.*
 import ch.awae.mycloud.module.bookkeping.model.*
 import org.springframework.data.domain.*

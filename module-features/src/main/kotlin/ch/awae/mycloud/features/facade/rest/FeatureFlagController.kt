@@ -1,6 +1,7 @@
 package ch.awae.mycloud.features.facade.rest
 
 import ch.awae.mycloud.common.*
+import ch.awae.mycloud.common.util.UpdateResult
 import ch.awae.mycloud.features.model.*
 import ch.awae.mycloud.features.service.*
 import org.springframework.beans.factory.annotation.*

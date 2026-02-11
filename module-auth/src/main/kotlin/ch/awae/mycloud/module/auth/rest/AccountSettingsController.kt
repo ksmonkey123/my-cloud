@@ -28,7 +28,7 @@ class AccountSettingsController(
         accountService.editAccount(
             username = AuthInfo.username,
             language = request.languageCode?.let { Language.fromCode(it) },
-            email = request.email?.asBoxed(),
+            email = request.email?.asOptional(),
         )
     }
 

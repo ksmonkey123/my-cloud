@@ -1,6 +1,6 @@
 package ch.awae.mycloud.config
 
-import ch.awae.mycloud.common.createLogger
+import ch.awae.mycloud.common.util.createLogger
 import net.javacrumbs.shedlock.core.LockProvider
 import net.javacrumbs.shedlock.provider.jdbctemplate.JdbcTemplateLockProvider
 import net.javacrumbs.shedlock.spring.annotation.EnableSchedulerLock

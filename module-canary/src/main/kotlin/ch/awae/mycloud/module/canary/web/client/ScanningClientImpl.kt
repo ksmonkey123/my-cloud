@@ -1,6 +1,6 @@
 package ch.awae.mycloud.module.canary.web.client
 
-import ch.awae.mycloud.common.createLogger
+import ch.awae.mycloud.common.util.createLogger
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.client.getForObject

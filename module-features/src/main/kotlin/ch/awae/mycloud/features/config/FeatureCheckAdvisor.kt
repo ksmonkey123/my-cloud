@@ -1,7 +1,7 @@
 package ch.awae.mycloud.features.config
 
 import ch.awae.mycloud.api.features.*
-import ch.awae.mycloud.common.*
+import ch.awae.mycloud.common.util.createLogger
 import org.aopalliance.aop.*
 import org.aopalliance.intercept.*
 import org.springframework.aop.*

@@ -1,6 +1,6 @@
 package ch.awae.mycloud.module.bookkeping.dto
 
-import ch.awae.mycloud.common.PageDto
+import ch.awae.mycloud.common.util.PageDto
 import java.math.*
 import java.time.*
 

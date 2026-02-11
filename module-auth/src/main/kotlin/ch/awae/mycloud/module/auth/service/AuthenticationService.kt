@@ -4,7 +4,7 @@ import ch.awae.mycloud.api.auth.ApiKeyUserAuthInfo
 import ch.awae.mycloud.api.auth.AuthInfo
 import ch.awae.mycloud.api.auth.AuthService
 import ch.awae.mycloud.api.auth.BearerTokenUserAuthInfo
-import ch.awae.mycloud.common.createLogger
+import ch.awae.mycloud.common.util.createLogger
 import ch.awae.mycloud.module.auth.domain.AccountRepository
 import ch.awae.mycloud.module.auth.domain.ApiKeyRepository
 import ch.awae.mycloud.module.auth.domain.AuthoritiesMapper

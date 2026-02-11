@@ -1,5 +1,6 @@
 package ch.awae.mycloud.common.db
 
+import ch.awae.mycloud.common.util.equalByField
 import jakarta.persistence.*
 
 @MappedSuperclass

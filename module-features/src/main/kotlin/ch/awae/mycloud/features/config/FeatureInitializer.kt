@@ -1,6 +1,7 @@
 package ch.awae.mycloud.features.config
 
 import ch.awae.mycloud.common.*
+import ch.awae.mycloud.common.util.createLogger
 import ch.awae.mycloud.features.model.FeatureFlag
 import ch.awae.mycloud.features.model.FeatureFlagRepository
 import org.springframework.beans.factory.annotation.*

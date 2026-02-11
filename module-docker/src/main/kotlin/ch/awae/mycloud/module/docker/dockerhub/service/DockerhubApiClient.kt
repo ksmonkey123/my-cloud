@@ -1,7 +1,7 @@
 package ch.awae.mycloud.module.docker.dockerhub.service
 
-import ch.awae.mycloud.common.ExpiringInstance
-import ch.awae.mycloud.common.createLogger
+import ch.awae.mycloud.common.util.ExpiringInstance
+import ch.awae.mycloud.common.util.createLogger
 import ch.awae.mycloud.module.docker.dockerhub.DockerhubProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.github.benmanes.caffeine.cache.Caffeine

@@ -11,6 +11,8 @@ import org.hibernate.validator.constraints.*
 import org.springframework.security.crypto.password.*
 import org.springframework.stereotype.*
 import org.springframework.validation.annotation.*
+import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 @Service
 @Validated
@@ -68,7 +70,7 @@ class AccountService(
         admin: Boolean? = null,
         enabled: Boolean? = null,
         language: Language? = null,
-        email: Boxed<String?>? = null,
+        email: Optional<String>? = null,
     ): AccountSummaryDto {
         val account = getAccount(username)
 
@@ -76,7 +78,7 @@ class AccountService(
         if (enabled != null) account.enabled = enabled
         if (admin != null) account.admin = admin
         if (language != null) account.language = language
-        if (email != null) account.email = email.value
+        if (email != null) account.email = email.getOrNull()
 
         return AccountSummaryDto(account)
     }

@@ -1,7 +1,7 @@
 package ch.awae.mycloud
 
 import ch.awae.mycloud.common.ModuleConfiguration
-import ch.awae.mycloud.common.createLogger
+import ch.awae.mycloud.common.util.createLogger
 import org.flywaydb.core.Flyway
 import org.springframework.boot.flyway.autoconfigure.FlywayMigrationStrategy
 import org.springframework.stereotype.Component
