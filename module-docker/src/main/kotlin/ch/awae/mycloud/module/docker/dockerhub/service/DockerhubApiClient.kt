@@ -1,27 +1,21 @@
 package ch.awae.mycloud.module.docker.dockerhub.service
 
-import ch.awae.mycloud.common.util.ExpiringInstance
 import ch.awae.mycloud.common.util.createLogger
-import ch.awae.mycloud.module.docker.dockerhub.DockerhubProperties
-import com.fasterxml.jackson.annotation.JsonProperty
+import ch.awae.mycloud.module.docker.dockerhub.client.DockerhubRestClient
 import com.github.benmanes.caffeine.cache.Caffeine
 import com.github.benmanes.caffeine.cache.LoadingCache
-import org.springframework.boot.restclient.RestTemplateBuilder
 import org.springframework.stereotype.Repository
-import org.springframework.web.client.RestTemplate
 import java.time.Duration
-import kotlin.time.Duration.Companion.minutes
 
 private typealias ResourceID = Pair<String?, String>
 private typealias ResourceState = Map<String, List<Tag>>
 
 @Repository
-class DockerhubApiClient(private val dockerProperties: DockerhubProperties) {
+class DockerhubApiClient(
+    private val dockerhubRestClient: DockerhubRestClient,
+) {
 
     private val logger = createLogger()
-
-    private val http = ExpiringInstance(9.minutes, ::buildRestTemplate)
-    private val apiUrl = dockerProperties.apiUrl
 
     private val cache: LoadingCache<ResourceID, ResourceState> = Caffeine.newBuilder()
         .expireAfterWrite(Duration.ofMinutes(10))
@@ -32,50 +26,18 @@ class DockerhubApiClient(private val dockerProperties: DockerhubProperties) {
     }
 
     private fun doGetTagList(namespace: String?, repository: String): Map<String, List<Tag>> {
-        logger.debug("loading tags for ${namespace ?: "_"}/$repository")
-        val rawTags =
-            fetchTags("$apiUrl/namespaces/${namespace ?: "library"}/repositories/${repository}/tags?page_size=100")
-        val tags = rawTags.filter { it.digest != null }.map { Tag(it.name, it.digest!!) }
-        val digests = tags.groupBy { it.digest }
-        logger.debug("found ${digests.size} digests in ${tags.size} processable tags (${rawTags.size} tags in total)")
+        logger.debug("loading tags for {}/{}", namespace ?: "_", repository)
+
+        val digests = dockerhubRestClient
+            .fetchTags(namespace, repository)
+            .filter { it.digest != null }
+            .map { Tag(it.name, it.digest!!) }
+            .groupBy { it.digest }
+
+        logger.debug("found {} digests", digests.size)
         return digests
     }
 
-    private tailrec fun fetchTags(
-        url: String?,
-        previousResults: Set<TagListResult> = emptySet(),
-        invocationCounter: Int = 1,
-    ): Set<TagListResult> {
-        if (url == null) {
-            return previousResults
-        }
-
-        val response = http().getForObject(url, TagListResponse::class.java)!!
-        return fetchTags(response.next, previousResults + response.results, invocationCounter + 1)
-    }
-
-    private fun buildRestTemplate(): RestTemplate {
-        logger.info("creating restTemplate for dockerhub API")
-        val httpBuilder = RestTemplateBuilder().defaultHeader("Content-Type", "application/json")
-
-        // initial request to get an auth token
-        val request = mapOf(
-            "identifier" to dockerProperties.username,
-            "secret" to dockerProperties.password
-        )
-        val token = httpBuilder.build()
-            .postForObject("$apiUrl/auth/token", request, LoginResponse::class.java)?.accessToken
-            ?: throw kotlin.IllegalStateException("missing auth token for dockerhub")
-
-        logger.info("successfully logged into dockerhub")
-
-        // attach auth token to template by default
-        return httpBuilder.defaultHeader("Authorization", "JWT $token").build()
-    }
 }
 
 data class Tag(val tag: String, val digest: String)
-
-private data class TagListResponse(val next: String?, val results: List<TagListResult>)
-private data class TagListResult(val name: String, val digest: String?)
-private data class LoginResponse(@param:JsonProperty("access_token") val accessToken: String)
