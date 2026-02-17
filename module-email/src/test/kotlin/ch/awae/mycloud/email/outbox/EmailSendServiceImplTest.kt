@@ -1,4 +1,4 @@
-package ch.awae.mycloud.module.email
+package ch.awae.mycloud.email.outbox
 
 import ch.awae.mycloud.email.EmailMessage
 import ch.awae.mycloud.test.ModuleTest

@@ -1,4 +1,4 @@
-package ch.awae.mycloud.module.email
+package ch.awae.mycloud.email.outbox
 
 import ch.awae.mycloud.common.db.IdBaseEntity
 import jakarta.persistence.*

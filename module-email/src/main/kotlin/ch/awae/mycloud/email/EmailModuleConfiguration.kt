@@ -1,4 +1,4 @@
-package ch.awae.mycloud.module.email
+package ch.awae.mycloud.email
 
 import ch.awae.mycloud.common.*
 import org.springframework.context.annotation.*

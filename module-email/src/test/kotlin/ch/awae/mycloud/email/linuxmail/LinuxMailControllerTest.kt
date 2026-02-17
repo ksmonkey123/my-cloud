@@ -1,4 +1,4 @@
-package ch.awae.mycloud.module.email.linuxmail
+package ch.awae.mycloud.email.linuxmail
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

@@ -1,6 +1,7 @@
-package ch.awae.mycloud.module.email
+package ch.awae.mycloud.email.mailjet
 
 import ch.awae.mycloud.common.util.createLogger
+import ch.awae.mycloud.email.outbox.EmailOutboxRepository
 import net.javacrumbs.shedlock.spring.annotation.*
 import org.springframework.scheduling.annotation.*
 import org.springframework.stereotype.*

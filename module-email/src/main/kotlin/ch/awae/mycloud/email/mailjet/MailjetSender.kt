@@ -1,7 +1,9 @@
-package ch.awae.mycloud.module.email
+package ch.awae.mycloud.email.mailjet
 
 import ch.awae.mycloud.common.ResourceNotFoundException
 import ch.awae.mycloud.common.util.createLogger
+import ch.awae.mycloud.email.outbox.EmailBodyFormat
+import ch.awae.mycloud.email.outbox.EmailOutboxRepository
 import com.mailjet.client.MailjetClient
 import com.mailjet.client.transactional.SendContact
 import com.mailjet.client.transactional.SendEmailsRequest
