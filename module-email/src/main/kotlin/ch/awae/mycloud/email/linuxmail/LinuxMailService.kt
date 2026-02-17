@@ -1,5 +1,6 @@
 package ch.awae.mycloud.email.linuxmail
 
+import ch.awae.mycloud.email.EmailMessage
 import ch.awae.mycloud.email.EmailSendService
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
