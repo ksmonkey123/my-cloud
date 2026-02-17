@@ -1,6 +1,6 @@
 package ch.awae.mycloud.module.docker.dockerhub.model
 
-import ch.awae.mycloud.common.util.equalByField
+import ch.awae.mycloud.common.util.equalByValue
 import jakarta.persistence.*
 import jakarta.persistence.Table
 import org.hibernate.annotations.*
@@ -21,6 +21,6 @@ class CurrentState(
     @Column(updatable = false, nullable = false)
     val recordedAt: LocalDateTime,
 ) {
-    override fun equals(other: Any?): Boolean = equalByField(other, CurrentState::monitoredEntry)
+    override fun equals(other: Any?): Boolean = equalByValue(other, CurrentState::monitoredEntry)
     override fun hashCode(): Int = monitoredEntry.hashCode()
 }

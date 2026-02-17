@@ -1,6 +1,6 @@
 package ch.awae.mycloud.common.db
 
-import ch.awae.mycloud.common.util.equalByField
+import ch.awae.mycloud.common.util.equalByValue
 import jakarta.persistence.*
 
 /**
@@ -21,7 +21,7 @@ abstract class IdBaseEntity : BaseEntity() {
     @SequenceGenerator(name = "GEN_SEQ_GEN", sequenceName = "HIBERNATE_SEQ", allocationSize = 1)
     val id: Long = 0
 
-    override fun equals(other: Any?) = equalByField(other, IdBaseEntity::id)
+    override fun equals(other: Any?) = equalByValue(other, IdBaseEntity::id)
 
     override fun hashCode() = id.hashCode()
 
