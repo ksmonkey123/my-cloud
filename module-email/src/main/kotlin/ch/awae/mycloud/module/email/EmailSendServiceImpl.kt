@@ -1,7 +1,7 @@
 package ch.awae.mycloud.module.email
 
-import ch.awae.mycloud.api.email.EmailMessage
-import ch.awae.mycloud.api.email.EmailSendService
+import ch.awae.mycloud.email.EmailMessage
+import ch.awae.mycloud.email.EmailSendService
 import ch.awae.mycloud.common.util.createLogger
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service

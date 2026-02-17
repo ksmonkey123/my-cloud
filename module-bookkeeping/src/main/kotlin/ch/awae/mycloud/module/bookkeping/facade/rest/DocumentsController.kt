@@ -1,6 +1,6 @@
 package ch.awae.mycloud.module.bookkeping.facade.rest
 
-import ch.awae.mycloud.api.documents.*
+import ch.awae.mycloud.documents.DocumentIdentifier
 import ch.awae.mycloud.module.bookkeping.service.document.*
 import ch.awae.mycloud.module.bookkeping.service.export.*
 import org.springframework.web.bind.annotation.*

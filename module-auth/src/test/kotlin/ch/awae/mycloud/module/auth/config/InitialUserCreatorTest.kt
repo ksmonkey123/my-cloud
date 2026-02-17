@@ -1,6 +1,6 @@
 package ch.awae.mycloud.module.auth.config
 
-import ch.awae.mycloud.api.auth.*
+import ch.awae.mycloud.auth.Language
 import ch.awae.mycloud.module.auth.*
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Test

@@ -1,6 +1,6 @@
 package ch.awae.mycloud.module.auth.service
 
-import ch.awae.mycloud.api.auth.*
+import ch.awae.mycloud.auth.Language
 import ch.awae.mycloud.common.*
 import ch.awae.mycloud.module.auth.domain.*
 import ch.awae.mycloud.module.auth.dto.*

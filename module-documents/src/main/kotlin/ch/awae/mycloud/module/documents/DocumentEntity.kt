@@ -1,6 +1,6 @@
 package ch.awae.mycloud.module.documents
 
-import ch.awae.mycloud.api.documents.DocumentSource
+import ch.awae.mycloud.documents.DocumentSource
 import ch.awae.mycloud.common.db.IdBaseEntity
 import jakarta.persistence.*
 import org.springframework.data.jpa.repository.JpaRepository

@@ -1,6 +1,7 @@
 package ch.awae.mycloud.module.docker.dockerhub.service
 
-import ch.awae.mycloud.api.email.*
+import ch.awae.mycloud.email.EmailMessage
+import ch.awae.mycloud.email.EmailSendService
 import ch.awae.mycloud.module.docker.dockerhub.*
 import ch.awae.mycloud.module.docker.dockerhub.model.*
 import org.springframework.stereotype.*

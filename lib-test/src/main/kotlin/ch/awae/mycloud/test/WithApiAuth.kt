@@ -1,8 +1,7 @@
 package ch.awae.mycloud.test
 
-import ch.awae.mycloud.api.auth.ApiKeyUserAuthInfo
-import ch.awae.mycloud.api.auth.BearerTokenUserAuthInfo
-import ch.awae.mycloud.api.auth.Language
+import ch.awae.mycloud.auth.api.ApiKeyUserAuthInfo
+import ch.awae.mycloud.auth.api.Language
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.annotation.AliasFor
 import org.springframework.security.core.context.SecurityContext

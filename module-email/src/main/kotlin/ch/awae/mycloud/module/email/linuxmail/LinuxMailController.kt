@@ -1,6 +1,6 @@
 package ch.awae.mycloud.module.email.linuxmail
 
-import ch.awae.mycloud.api.auth.AuthInfo
+import ch.awae.mycloud.auth.AuthInfo
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus

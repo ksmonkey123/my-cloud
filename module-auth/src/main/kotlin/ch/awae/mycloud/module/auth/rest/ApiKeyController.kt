@@ -1,6 +1,6 @@
 package ch.awae.mycloud.module.auth.rest
 
-import ch.awae.mycloud.api.auth.*
+import ch.awae.mycloud.auth.AuthInfo
 import ch.awae.mycloud.module.auth.dto.*
 import ch.awae.mycloud.module.auth.service.*
 import jakarta.validation.*

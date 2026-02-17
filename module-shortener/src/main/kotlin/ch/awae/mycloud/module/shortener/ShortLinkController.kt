@@ -1,6 +1,6 @@
 package ch.awae.mycloud.module.shortener
 
-import ch.awae.mycloud.api.auth.*
+import ch.awae.mycloud.auth.AuthInfo
 import org.springframework.http.*
 import org.springframework.security.access.prepost.*
 import org.springframework.web.bind.annotation.*

@@ -9,7 +9,7 @@
         <version>2.2-SNAPSHOT</version>
     </parent>
 
-    <artifactId>lib-testing</artifactId>
+    <artifactId>lib-test</artifactId>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -59,7 +59,7 @@
         </dependency>
         <dependency>
             <groupId>ch.awae.mycloud</groupId>
-            <artifactId>common-lib</artifactId>
+            <artifactId>lib-common</artifactId>
             <version>2.2-SNAPSHOT</version>
         </dependency>
         <dependency>

@@ -1,6 +1,6 @@
 package ch.awae.mycloud.module.auth.domain
 
-import ch.awae.mycloud.api.auth.Language
+import ch.awae.mycloud.auth.Language
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

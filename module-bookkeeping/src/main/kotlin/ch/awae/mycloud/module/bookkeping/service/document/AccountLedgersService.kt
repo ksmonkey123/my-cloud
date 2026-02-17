@@ -1,9 +1,9 @@
 package ch.awae.mycloud.module.bookkeping.service.document
 
-import ch.awae.mycloud.api.auth.AuthInfo
-import ch.awae.mycloud.api.documents.DocumentIdentifier
-import ch.awae.mycloud.api.documents.DocumentSource
-import ch.awae.mycloud.api.documents.DocumentStore
+import ch.awae.mycloud.auth.AuthInfo
+import ch.awae.mycloud.documents.DocumentIdentifier
+import ch.awae.mycloud.documents.DocumentSource
+import ch.awae.mycloud.documents.DocumentStore
 import ch.awae.mycloud.pdf.Document
 import ch.awae.mycloud.module.bookkeping.dto.AccountId
 import ch.awae.mycloud.module.bookkeping.model.Account

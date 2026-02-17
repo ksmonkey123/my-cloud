@@ -1,9 +1,9 @@
 package ch.awae.mycloud.module.auth.service
 
-import ch.awae.mycloud.api.auth.ApiKeyUserAuthInfo
-import ch.awae.mycloud.api.auth.AuthInfo
-import ch.awae.mycloud.api.auth.AuthService
-import ch.awae.mycloud.api.auth.BearerTokenUserAuthInfo
+import ch.awae.mycloud.auth.ApiKeyUserAuthInfo
+import ch.awae.mycloud.auth.AuthInfo
+import ch.awae.mycloud.auth.AuthService
+import ch.awae.mycloud.auth.BearerTokenUserAuthInfo
 import ch.awae.mycloud.common.util.createLogger
 import ch.awae.mycloud.module.auth.domain.AccountRepository
 import ch.awae.mycloud.module.auth.domain.ApiKeyRepository

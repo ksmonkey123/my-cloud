@@ -1,6 +1,7 @@
 package ch.awae.mycloud.features.config
 
-import ch.awae.mycloud.api.features.*
+import ch.awae.mycloud.features.FeatureCheck
+import ch.awae.mycloud.features.FeatureDisabledException
 import ch.awae.mycloud.test.*
 import org.junit.jupiter.api.*
 import org.springframework.beans.factory.annotation.*

@@ -1,7 +1,9 @@
 package ch.awae.mycloud.features.config
 
-import ch.awae.mycloud.api.features.*
 import ch.awae.mycloud.common.util.createLogger
+import ch.awae.mycloud.features.FeatureCheck
+import ch.awae.mycloud.features.FeatureDisabledException
+import ch.awae.mycloud.features.FeatureFlagService
 import org.aopalliance.aop.*
 import org.aopalliance.intercept.*
 import org.springframework.aop.*

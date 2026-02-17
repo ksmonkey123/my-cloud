@@ -1,6 +1,7 @@
 package ch.awae.mycloud.module.auth.dto
 
-import ch.awae.mycloud.api.auth.*
+import ch.awae.mycloud.auth.Language
+import ch.awae.mycloud.auth.UserInfo
 
 data class UserInfoDto(
     override val username: String,

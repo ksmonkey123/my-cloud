@@ -1,6 +1,6 @@
 package ch.awae.mycloud.module.docker.dockerhub.service
 
-import ch.awae.mycloud.api.auth.*
+import ch.awae.mycloud.auth.UserInfoService
 import ch.awae.mycloud.common.*
 import ch.awae.mycloud.common.util.createLogger
 import ch.awae.mycloud.module.docker.dockerhub.model.*

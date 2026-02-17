@@ -15,17 +15,17 @@
     <dependencies>
         <dependency>
             <groupId>ch.awae.mycloud</groupId>
-            <artifactId>module-auth-api</artifactId>
+            <artifactId>api-auth</artifactId>
             <version>2.2-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>ch.awae.mycloud</groupId>
-            <artifactId>module-documents-api</artifactId>
+            <artifactId>api-documents</artifactId>
             <version>2.2-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>ch.awae.mycloud</groupId>
-            <artifactId>common-lib</artifactId>
+            <artifactId>lib-common</artifactId>
             <version>2.2-SNAPSHOT</version>
         </dependency>
         <dependency>

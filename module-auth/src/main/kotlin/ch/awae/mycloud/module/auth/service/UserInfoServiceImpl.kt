@@ -1,6 +1,7 @@
 package ch.awae.mycloud.module.auth.service
 
-import ch.awae.mycloud.api.auth.*
+import ch.awae.mycloud.auth.UserInfo
+import ch.awae.mycloud.auth.UserInfoService
 import ch.awae.mycloud.module.auth.domain.*
 import ch.awae.mycloud.module.auth.dto.*
 import jakarta.transaction.*

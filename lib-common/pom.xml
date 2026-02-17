@@ -9,7 +9,7 @@
         <version>2.2-SNAPSHOT</version>
     </parent>
 
-    <artifactId>common-lib</artifactId>
+    <artifactId>lib-common</artifactId>
     <version>2.2-SNAPSHOT</version>
 
 </project>

@@ -1,8 +1,8 @@
 package ch.awae.mycloud.module.auth.dto
 
-import ch.awae.mycloud.api.auth.ApiKeyUserAuthInfo
-import ch.awae.mycloud.api.auth.AuthInfo
-import ch.awae.mycloud.api.auth.BearerTokenUserAuthInfo
+import ch.awae.mycloud.auth.ApiKeyUserAuthInfo
+import ch.awae.mycloud.auth.AuthInfo
+import ch.awae.mycloud.auth.BearerTokenUserAuthInfo
 
 data class AuthInfoDto(
     val type: AuthType,

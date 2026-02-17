@@ -1,6 +1,6 @@
 package ch.awae.mycloud.module.email
 
-import ch.awae.mycloud.api.email.EmailMessage
+import ch.awae.mycloud.email.EmailMessage
 import ch.awae.mycloud.test.ModuleTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertNull

@@ -1,8 +1,8 @@
 package ch.awae.mycloud.module.documents
 
-import ch.awae.mycloud.api.documents.DocumentIdentifier
-import ch.awae.mycloud.api.documents.DocumentSource
-import ch.awae.mycloud.api.documents.DocumentStore
+import ch.awae.mycloud.documents.DocumentIdentifier
+import ch.awae.mycloud.documents.DocumentSource
+import ch.awae.mycloud.documents.DocumentStore
 import ch.awae.mycloud.common.TokenGenerator
 import jakarta.transaction.Transactional
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock
