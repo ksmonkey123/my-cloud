@@ -35,7 +35,7 @@
         <!-- Base Libs -->
         <dependency>
             <groupId>ch.awae.mycloud</groupId>
-            <artifactId>base-lib</artifactId>
+            <artifactId>common-lib</artifactId>
             <version>2.2-SNAPSHOT</version>
         </dependency>
         <!-- Auth-Module API is required for the integration with the spring security stack -->
@@ -95,7 +95,7 @@
         </dependency>
         <dependency>
             <groupId>ch.awae.mycloud</groupId>
-            <artifactId>test-lib</artifactId>
+            <artifactId>lib-testing</artifactId>
             <version>2.2-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>

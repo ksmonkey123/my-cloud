@@ -20,7 +20,7 @@
         </dependency>
         <dependency>
             <groupId>ch.awae.mycloud</groupId>
-            <artifactId>base-lib</artifactId>
+            <artifactId>common-lib</artifactId>
             <version>2.2-SNAPSHOT</version>
         </dependency>
     </dependencies>
