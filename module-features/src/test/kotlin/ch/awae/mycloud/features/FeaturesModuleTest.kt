@@ -1,6 +1,5 @@
 package ch.awae.mycloud.features
 
-import ch.awae.mycloud.api.features.*
 import ch.awae.mycloud.features.config.FeatureInitializer
 import ch.awae.mycloud.features.model.FeatureFlagRepository
 import ch.awae.mycloud.features.service.FeatureFlagServiceImpl

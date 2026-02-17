@@ -1,6 +1,5 @@
 package ch.awae.mycloud.module.shortener
 
-import ch.awae.mycloud.api.auth.*
 import ch.awae.mycloud.common.*
 import jakarta.transaction.*
 import jakarta.validation.*
@@ -20,7 +19,7 @@ class ShortLinkService(private val repo: ShortLinkRepository) {
     private val base64Encoder = Base64.getUrlEncoder()
 
     private fun getUnusedShortLink(): String {
-        for (i in 1..LINK_GENERATION_ATTEMPTS) {
+        repeat(LINK_GENERATION_ATTEMPTS) {
             // 8 random chars = 6 bytes encoded base 64.
             val randomString = base64Encoder.encodeToString(Random.nextBytes(6))
             // test if string is already used
