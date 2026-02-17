@@ -1,4 +1,4 @@
-package ch.awae.mycloud.lib.pdf
+package ch.awae.mycloud.pdf
 
 private const val MM_PER_INCH = 25.4f
 private const val POINTS_PER_INCH = 72f

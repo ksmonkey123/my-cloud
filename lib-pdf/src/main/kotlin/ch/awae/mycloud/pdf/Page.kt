@@ -1,4 +1,4 @@
-package ch.awae.mycloud.lib.pdf
+package ch.awae.mycloud.pdf
 
 import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.pdmodel.PDPage

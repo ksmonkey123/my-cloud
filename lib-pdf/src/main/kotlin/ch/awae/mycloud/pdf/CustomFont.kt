@@ -1,4 +1,4 @@
-package ch.awae.mycloud.lib.pdf
+package ch.awae.mycloud.pdf
 
 import java.io.InputStream
 

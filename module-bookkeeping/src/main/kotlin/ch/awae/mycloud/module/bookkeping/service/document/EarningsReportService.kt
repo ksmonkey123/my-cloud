@@ -5,7 +5,7 @@ import ch.awae.mycloud.api.documents.DocumentIdentifier
 import ch.awae.mycloud.api.documents.DocumentSource
 import ch.awae.mycloud.api.documents.DocumentStore
 import ch.awae.mycloud.common.InvalidRequestException
-import ch.awae.mycloud.lib.pdf.Document
+import ch.awae.mycloud.pdf.Document
 import ch.awae.mycloud.module.bookkeping.dto.AccountId
 import ch.awae.mycloud.module.bookkeping.model.*
 import ch.awae.mycloud.module.bookkeping.service.BookService

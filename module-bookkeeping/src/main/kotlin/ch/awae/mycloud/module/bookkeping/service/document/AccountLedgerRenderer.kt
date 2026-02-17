@@ -1,7 +1,7 @@
 package ch.awae.mycloud.module.bookkeping.service.document
 
-import ch.awae.mycloud.lib.pdf.Document
-import ch.awae.mycloud.lib.pdf.StandardFont.*
+import ch.awae.mycloud.pdf.Document
+import ch.awae.mycloud.pdf.StandardFont.*
 import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime

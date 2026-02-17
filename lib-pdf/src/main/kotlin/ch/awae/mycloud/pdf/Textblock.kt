@@ -1,4 +1,4 @@
-package ch.awae.mycloud.lib.pdf
+package ch.awae.mycloud.pdf
 
 class Textblock(text: String, val font: SizedFont, lineWidth: Float = 170f) {
     val lines: List<String>
