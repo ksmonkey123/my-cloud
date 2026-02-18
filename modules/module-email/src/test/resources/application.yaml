@@ -1,0 +1,6 @@
+mailjet:
+  api-key-public: "dummy"
+  api-key-secret: "dummy"
+
+email:
+  sender: "sender@example.org"

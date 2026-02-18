@@ -25,27 +25,15 @@
     </properties>
 
     <modules>
+        <module>apis</module>
+        <module>modules</module>
         <!-- base lib -->
         <module>lib-common</module>
         <module>lib-test</module>
         <module>lib-pdf</module>
-        <!-- module APIs -->
-        <module>api-auth</module>
-        <module>api-documents</module>
-        <module>api-email</module>
-        <module>api-features</module>
-        <!-- business modules -->
-        <module>module-auth</module>
-        <module>module-bookkeeping</module>
-        <module>module-canary</module>
-        <module>module-docker</module>
-        <module>module-documents</module>
-        <module>module-email</module>
-        <module>module-features</module>
-        <module>module-shortener</module>
         <!-- application service -->
-        <module>service-frontend</module>
-        <module>service-backend</module>
+        <module>angular-frontend</module>
+        <module>application-service</module>
     </modules>
 
     <dependencyManagement>
