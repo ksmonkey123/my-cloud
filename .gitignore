@@ -1,3 +1,4 @@
 /.idea/
 /*/target/
+/*/*/target/
 /prod_secret.yaml
