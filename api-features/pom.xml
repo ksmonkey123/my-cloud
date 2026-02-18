@@ -6,10 +6,10 @@
     <parent>
         <groupId>ch.awae.mycloud</groupId>
         <artifactId>project-repo</artifactId>
-        <version>2.2-SNAPSHOT</version>
+        <version>2.3-SNAPSHOT</version>
     </parent>
 
     <artifactId>api-features</artifactId>
-    <version>2.2-SNAPSHOT</version>
+    <version>2.3-SNAPSHOT</version>
 
 </project>
