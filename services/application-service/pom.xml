@@ -6,11 +6,11 @@
     <parent>
         <groupId>ch.awae.mycloud</groupId>
         <artifactId>services</artifactId>
-        <version>2.3-SNAPSHOT</version>
+        <version>3.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>application-service</artifactId>
-    <version>2.3-SNAPSHOT</version>
+    <version>3.0-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
@@ -30,73 +30,73 @@
         <dependency>
             <groupId>ch.awae.mycloud</groupId>
             <artifactId>angular-frontend</artifactId>
-            <version>2.3-SNAPSHOT</version>
+            <version>3.0-SNAPSHOT</version>
         </dependency>
         <!-- Base Libs -->
         <dependency>
             <groupId>ch.awae.mycloud</groupId>
             <artifactId>lib-common</artifactId>
-            <version>2.3-SNAPSHOT</version>
+            <version>3.0-SNAPSHOT</version>
         </dependency>
         <!-- Auth-Module API is required for the integration with the spring security stack -->
         <dependency>
             <groupId>ch.awae.mycloud</groupId>
             <artifactId>api-auth</artifactId>
-            <version>2.3-SNAPSHOT</version>
+            <version>3.0-SNAPSHOT</version>
         </dependency>
         <!-- Modules -->
         <dependency>
             <groupId>ch.awae.mycloud</groupId>
             <artifactId>module-auth</artifactId>
-            <version>2.3-SNAPSHOT</version>
+            <version>3.0-SNAPSHOT</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>ch.awae.mycloud</groupId>
             <artifactId>module-email</artifactId>
-            <version>2.3-SNAPSHOT</version>
+            <version>3.0-SNAPSHOT</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>ch.awae.mycloud</groupId>
             <artifactId>module-shortener</artifactId>
-            <version>2.3-SNAPSHOT</version>
+            <version>3.0-SNAPSHOT</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>ch.awae.mycloud</groupId>
             <artifactId>module-canary</artifactId>
-            <version>2.3-SNAPSHOT</version>
+            <version>3.0-SNAPSHOT</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>ch.awae.mycloud</groupId>
             <artifactId>module-docker</artifactId>
-            <version>2.3-SNAPSHOT</version>
+            <version>3.0-SNAPSHOT</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>ch.awae.mycloud</groupId>
             <artifactId>module-bookkeeping</artifactId>
-            <version>2.3-SNAPSHOT</version>
+            <version>3.0-SNAPSHOT</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>ch.awae.mycloud</groupId>
             <artifactId>module-documents</artifactId>
-            <version>2.3-SNAPSHOT</version>
+            <version>3.0-SNAPSHOT</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>ch.awae.mycloud</groupId>
             <artifactId>module-features</artifactId>
-            <version>2.3-SNAPSHOT</version>
+            <version>3.0-SNAPSHOT</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>ch.awae.mycloud</groupId>
             <artifactId>lib-test</artifactId>
-            <version>2.3-SNAPSHOT</version>
+            <version>3.0-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

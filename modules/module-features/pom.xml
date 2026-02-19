@@ -6,27 +6,27 @@
     <parent>
         <groupId>ch.awae.mycloud</groupId>
         <artifactId>modules</artifactId>
-        <version>2.3-SNAPSHOT</version>
+        <version>3.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>module-features</artifactId>
-    <version>2.3-SNAPSHOT</version>
+    <version>3.0-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
             <groupId>ch.awae.mycloud</groupId>
             <artifactId>api-features</artifactId>
-            <version>2.3-SNAPSHOT</version>
+            <version>3.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>ch.awae.mycloud</groupId>
             <artifactId>lib-common</artifactId>
-            <version>2.3-SNAPSHOT</version>
+            <version>3.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>ch.awae.mycloud</groupId>
             <artifactId>lib-test</artifactId>
-            <version>2.3-SNAPSHOT</version>
+            <version>3.0-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

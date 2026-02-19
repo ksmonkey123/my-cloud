@@ -6,7 +6,7 @@
     <parent>
         <groupId>ch.awae.mycloud</groupId>
         <artifactId>libs</artifactId>
-        <version>2.3-SNAPSHOT</version>
+        <version>3.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>lib-test</artifactId>
@@ -21,7 +21,7 @@
         <dependency>
             <groupId>ch.awae.mycloud</groupId>
             <artifactId>api-auth</artifactId>
-            <version>2.3-SNAPSHOT</version>
+            <version>3.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -60,7 +60,7 @@
         <dependency>
             <groupId>ch.awae.mycloud</groupId>
             <artifactId>lib-common</artifactId>
-            <version>2.3-SNAPSHOT</version>
+            <version>3.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
