@@ -20,8 +20,8 @@ class DocumentEntity(
     @Column(updatable = false, nullable = false)
     @Enumerated(EnumType.STRING)
     val source: DocumentSource,
-    @Column(updatable = false)
-    val username: String?,
+    @Column(updatable = false, nullable = false)
+    val username: String,
     @Column(updatable = false, nullable = false)
     val createdAt: LocalDateTime,
     @Column(updatable = false, nullable = false)

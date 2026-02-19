@@ -12,7 +12,7 @@ interface DocumentStore {
         type: MediaType,
         content: ByteArray,
         validUntil: LocalDateTime,
-        username: String? = null,
+        username: String,
     ): DocumentIdentifier
 
     fun createDocument(
@@ -21,7 +21,7 @@ interface DocumentStore {
         type: MediaType,
         content: ByteArray,
         lifetime: Duration,
-        username: String? = null,
+        username: String,
     ): DocumentIdentifier
 
 }

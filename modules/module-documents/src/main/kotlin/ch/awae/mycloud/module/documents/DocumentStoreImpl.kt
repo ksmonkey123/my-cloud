@@ -25,7 +25,7 @@ class DocumentStoreImpl(
         type: MediaType,
         content: ByteArray,
         lifetime: Duration,
-        username: String?,
+        username: String,
     ): DocumentIdentifier {
         return createDocument(
             filename = filename,
@@ -43,7 +43,7 @@ class DocumentStoreImpl(
         type: MediaType,
         content: ByteArray,
         validUntil: LocalDateTime,
-        username: String?,
+        username: String,
     ): DocumentIdentifier {
         val token = tokenGenerator.generate(16, TokenGenerator.EncoderType.URL)
         val document = DocumentEntity(

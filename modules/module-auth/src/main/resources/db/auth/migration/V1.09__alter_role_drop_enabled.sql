@@ -1,1 +1,0 @@
-alter table role drop column enabled;
