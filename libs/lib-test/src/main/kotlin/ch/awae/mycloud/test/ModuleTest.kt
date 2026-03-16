@@ -5,6 +5,7 @@ import org.junit.jupiter.api.TestInstance
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.jdbc.SqlConfig
 import org.springframework.test.web.servlet.MockMvc
@@ -21,5 +22,8 @@ abstract class ModuleTest {
 
     @Autowired
     lateinit var entityManager: EntityManager
+
+    @Autowired
+    lateinit var sql: NamedParameterJdbcTemplate
 
 }

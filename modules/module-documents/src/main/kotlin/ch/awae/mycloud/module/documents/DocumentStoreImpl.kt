@@ -25,19 +25,17 @@ class DocumentStoreImpl(
         validUntil: LocalDateTime,
         username: String,
     ): DocumentIdentifier {
-        val document = Document(
+        val document = DocumentData(
             id = GUID.generateV7(),
             filename = filename,
-            type = type.toString(),
+            type = type,
             content = content,
-            createdAt = LocalDateTime.now(),
             validUntil = validUntil,
             source = source,
-            username = username,
         )
-        documentRepository.save(document)
+        documentRepository.create(document, username)
 
-        return DocumentIdentifier("/documents/${document.id.toShortString()}", type.toString())
+        return DocumentIdentifier(document.id.toShortString(), type.toString())
     }
 
     @SchedulerLock(name = "documents:expired-documents-cleaner")

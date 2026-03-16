@@ -2,7 +2,6 @@ package ch.awae.mycloud.module.documents
 
 import ch.awae.mycloud.common.util.GUID
 import org.springframework.http.HttpHeaders
-import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -17,11 +16,11 @@ class DocumentsRestController(
     fun getDocument(
         @PathVariable id: String,
     ): ResponseEntity<Any> {
-        val document = documentRepository.findValidById(GUID.decodeShortString(id))
+        val document = documentRepository.findValid(GUID.decodeShortString(id))
             ?: return ResponseEntity.notFound().build()
 
         return ResponseEntity.ok()
-            .contentType(MediaType.valueOf(document.type))
+            .contentType(document.type)
             .contentLength(document.content.size.toLong())
             .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=${document.filename}")
             .body(document.content)
