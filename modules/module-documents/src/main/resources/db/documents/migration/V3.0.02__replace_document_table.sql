@@ -12,8 +12,6 @@ create table document
     created_at  timestamp   not null,
     valid_until timestamp   not null,
     content     bytea       not null,
-    -- management fields
-    version     int         not null default 0,
     -- constraints
     constraint pk_document primary key (id),
     constraint ck_document_source check (source in ('BOOKKEEPING'))
