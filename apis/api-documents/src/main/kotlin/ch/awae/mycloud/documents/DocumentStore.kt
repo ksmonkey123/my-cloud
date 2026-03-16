@@ -1,35 +1,11 @@
 package ch.awae.mycloud.documents
 
-import org.springframework.http.MediaType
-import java.time.Duration
-import java.time.LocalDateTime
-
 interface DocumentStore {
 
     fun createDocument(
-        source: DocumentSource,
-        filename: String,
-        type: MediaType,
-        content: ByteArray,
-        validUntil: LocalDateTime,
+        document: DocumentData,
         username: String,
     ): DocumentIdentifier
-
-    fun createDocument(
-        source: DocumentSource,
-        filename: String,
-        type: MediaType,
-        content: ByteArray,
-        lifetime: Duration,
-        username: String,
-    ): DocumentIdentifier = createDocument(
-        filename = filename,
-        type = type,
-        content = content,
-        validUntil = LocalDateTime.now().plus(lifetime),
-        source = source,
-        username = username,
-    )
 
 }
 

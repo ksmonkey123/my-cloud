@@ -1,6 +1,7 @@
 package ch.awae.mycloud.module.bookkeping.service.export
 
 import ch.awae.mycloud.auth.AuthInfo
+import ch.awae.mycloud.documents.DocumentData
 import ch.awae.mycloud.documents.DocumentIdentifier
 import ch.awae.mycloud.documents.DocumentSource
 import ch.awae.mycloud.documents.DocumentStore
@@ -49,11 +50,13 @@ class BookingRecordExportService(
         }.toByteArray()
 
         return documentStore.createDocument(
-            source = DocumentSource.BOOKKEEPING,
-            filename = "export.xlsx",
-            type = MediaType.APPLICATION_OCTET_STREAM,
-            content = content,
-            lifetime = Duration.ofHours(1),
+            DocumentData(
+                source = DocumentSource.BOOKKEEPING,
+                filename = "export.xlsx",
+                type = MediaType.APPLICATION_OCTET_STREAM,
+                content = content,
+                lifetime = Duration.ofHours(1),
+            ),
             username = AuthInfo.username,
         )
     }

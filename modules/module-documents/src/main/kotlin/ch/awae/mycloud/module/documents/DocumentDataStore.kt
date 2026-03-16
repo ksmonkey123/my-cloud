@@ -1,24 +1,30 @@
-package ch.awae.mycloud.module.documents.jdbc
+package ch.awae.mycloud.module.documents
 
 import ch.awae.mycloud.common.util.GUID
+import ch.awae.mycloud.documents.DocumentData
+import ch.awae.mycloud.documents.DocumentIdentifier
 import ch.awae.mycloud.documents.DocumentSource
-import ch.awae.mycloud.module.documents.DocumentData
-import ch.awae.mycloud.module.documents.DocumentRepository
+import ch.awae.mycloud.documents.DocumentStore
+import jakarta.transaction.Transactional
+import net.javacrumbs.shedlock.spring.annotation.SchedulerLock
 import org.springframework.http.MediaType
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
-import org.springframework.stereotype.Repository
+import org.springframework.scheduling.annotation.Scheduled
+import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
-@Repository
-class DocumentRepositoryJdbcImpl(private val sql: NamedParameterJdbcTemplate) : DocumentRepository {
+@Transactional
+@Service
+class DocumentDataStore(private val sql: NamedParameterJdbcTemplate) : DocumentStore {
 
-    override fun create(document: DocumentData, username: String) {
+    override fun createDocument(document: DocumentData, username: String): DocumentIdentifier {
+        val id = GUID.generateV7()
         sql.update(
             """
             insert into documents.document (id, username, source, filename, type, created_at, valid_until, content)
             values (:id, :username, :source, :filename, :type, :created_at, :valid_until, :content)
             """.trimIndent(), mapOf(
-                "id" to document.id.uuid,
+                "id" to id.uuid,
                 "username" to username,
                 "source" to document.source.name,
                 "filename" to document.filename,
@@ -28,15 +34,15 @@ class DocumentRepositoryJdbcImpl(private val sql: NamedParameterJdbcTemplate) : 
                 "content" to document.content,
             )
         )
+        return DocumentIdentifier(id.toShortString(), document.type.toString())
     }
 
-    override fun findValid(id: GUID): DocumentData? {
+    fun retrieveByLink(link: String): DocumentData? {
         return sql.query(
             "select source, filename, type, valid_until, content from documents.document where id = :id and valid_until > current_timestamp",
-            mapOf("id" to id.uuid)
+            mapOf("id" to GUID.decodeShortString(link).uuid)
         ) { rs, _ ->
             DocumentData(
-                id = id,
                 source = DocumentSource.valueOf(rs.getString("source")),
                 type = MediaType.valueOf(rs.getString("type")),
                 filename = rs.getString("filename"),
@@ -46,7 +52,9 @@ class DocumentRepositoryJdbcImpl(private val sql: NamedParameterJdbcTemplate) : 
         }.singleOrNull()
     }
 
-    override fun deleteExpired() {
+    @SchedulerLock(name = "documents:expired-documents-cleaner")
+    @Scheduled(cron = "\${documents.clean-timer.schedule}")
+    fun deleteExpired() {
         sql.update(
             "delete from documents.document where valid_until < current_timestamp",
             emptyMap<String, Any>()

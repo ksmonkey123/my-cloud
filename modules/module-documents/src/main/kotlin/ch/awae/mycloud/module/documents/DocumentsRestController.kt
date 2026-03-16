@@ -1,6 +1,5 @@
 package ch.awae.mycloud.module.documents
 
-import ch.awae.mycloud.common.util.GUID
 import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -9,14 +8,14 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class DocumentsRestController(
-    private val documentRepository: DocumentRepository,
+    private val documentRepository: DocumentDataStore,
 ) {
 
-    @GetMapping("/documents/{id}")
+    @GetMapping("/documents/{link}")
     fun getDocument(
-        @PathVariable id: String,
+        @PathVariable link: String,
     ): ResponseEntity<Any> {
-        val document = documentRepository.findValid(GUID.decodeShortString(id))
+        val document = documentRepository.retrieveByLink(link)
             ?: return ResponseEntity.notFound().build()
 
         return ResponseEntity.ok()

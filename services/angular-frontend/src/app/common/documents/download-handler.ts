@@ -1,5 +1,5 @@
 export interface DocumentIdentifier {
-  id: string,
+  link: string,
   mimeType: string,
 }
 
@@ -15,7 +15,7 @@ const renderableTypes = new Set([
 ]);
 
 export function handleDownload(id: DocumentIdentifier) {
-  const url = '/documents/' + id.id;
+  const url = '/documents/' + id.link;
   setTimeout(() => {
     if (renderableTypes.has(id.mimeType)) {
       // renderable document

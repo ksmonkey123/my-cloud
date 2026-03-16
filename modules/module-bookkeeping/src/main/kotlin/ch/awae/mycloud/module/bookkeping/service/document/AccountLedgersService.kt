@@ -1,15 +1,16 @@
 package ch.awae.mycloud.module.bookkeping.service.document
 
 import ch.awae.mycloud.auth.AuthInfo
+import ch.awae.mycloud.documents.DocumentData
 import ch.awae.mycloud.documents.DocumentIdentifier
 import ch.awae.mycloud.documents.DocumentSource
 import ch.awae.mycloud.documents.DocumentStore
-import ch.awae.mycloud.pdf.Document
 import ch.awae.mycloud.module.bookkeping.dto.AccountId
 import ch.awae.mycloud.module.bookkeping.model.Account
 import ch.awae.mycloud.module.bookkeping.model.AccountTransactionRepository
 import ch.awae.mycloud.module.bookkeping.model.Book
 import ch.awae.mycloud.module.bookkeping.service.BookService
+import ch.awae.mycloud.pdf.Document
 import jakarta.transaction.Transactional
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Service
@@ -39,11 +40,13 @@ class AccountLedgersService(
         }.toByteArray()
 
         return documentStore.createDocument(
-            source = DocumentSource.BOOKKEEPING,
-            filename = "ledgers.pdf",
-            type = MediaType.APPLICATION_PDF,
-            content = content,
-            lifetime = Duration.ofHours(1),
+            DocumentData(
+                source = DocumentSource.BOOKKEEPING,
+                filename = "ledgers.pdf",
+                type = MediaType.APPLICATION_PDF,
+                content = content,
+                lifetime = Duration.ofHours(1),
+            ),
             username = AuthInfo.username,
         )
     }
