@@ -36,7 +36,6 @@ class UserManagementController(
         return accountService.createAccount(
             username,
             request.password,
-            request.admin,
             Language.fromCode(request.languageCode)
         )
     }
@@ -78,7 +77,6 @@ class UserManagementController(
 
     data class CreateUserRequest(
         @field:ValidPasswordFormat val password: String,
-        val admin: Boolean,
         val languageCode: String,
     )
 

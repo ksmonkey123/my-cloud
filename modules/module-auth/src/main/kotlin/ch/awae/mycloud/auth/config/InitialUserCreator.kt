@@ -1,13 +1,13 @@
 package ch.awae.mycloud.auth.config
 
 import ch.awae.mycloud.auth.Language
+import ch.awae.mycloud.auth.domain.Account
 import ch.awae.mycloud.common.util.createLogger
-import ch.awae.mycloud.auth.domain.*
-import jakarta.transaction.*
-import org.springframework.boot.*
-import org.springframework.core.annotation.*
-import org.springframework.security.crypto.password.*
-import org.springframework.stereotype.*
+import jakarta.transaction.Transactional
+import org.springframework.boot.CommandLineRunner
+import org.springframework.core.annotation.Order
+import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.stereotype.Component
 
 @Component
 @Order(1)
@@ -25,7 +25,7 @@ class InitialUserCreator(
         if (adminCount == 0L) {
             logger.warn("no administrator found. creating default 'admin'")
             accountRepository.save(
-                _root_ide_package_.ch.awae.mycloud.auth.domain.Account(
+                Account(
                     username = "admin",
                     password = passwordEncoder.encode("admin")!!,
                     admin = true,

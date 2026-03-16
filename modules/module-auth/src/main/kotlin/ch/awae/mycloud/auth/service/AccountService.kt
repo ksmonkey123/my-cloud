@@ -39,7 +39,6 @@ class AccountService(
     fun createAccount(
         @Length(min = 5) username: String,
         @ValidPasswordFormat password: String,
-        admin: Boolean,
         language: Language,
     ): AccountSummaryDto {
         if (accountRepository.existsByUsername(username))
@@ -50,7 +49,7 @@ class AccountService(
             password = passwordEncoder.encode(password)!!,
             email = null,
             enabled = true,
-            admin = admin,
+            admin = false,
             language = language,
         )
 

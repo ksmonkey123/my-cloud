@@ -1,42 +1,31 @@
 package ch.awae.mycloud.module.documents
 
 import ch.awae.mycloud.documents.DocumentSource
-import ch.awae.mycloud.common.db.IdBaseEntity
-import jakarta.persistence.*
-import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.data.jpa.repository.Modifying
-import org.springframework.data.jpa.repository.Query
 import java.time.LocalDateTime
+import java.util.*
 
-@Entity(name = "documents_Document")
-@Table(schema = "documents", name = "document")
-class DocumentEntity(
-    @Column(updatable = false, nullable = false)
+data class Document(
+    val id: UUID,
     val type: String,
-    @Column(updatable = false, nullable = false)
     val filename: String,
-    @Column(updatable = false, unique = true, nullable = false)
-    val token: String,
-    @Column(updatable = false, nullable = false)
-    @Enumerated(EnumType.STRING)
     val source: DocumentSource,
-    @Column(updatable = false, nullable = false)
     val username: String,
-    @Column(updatable = false, nullable = false)
     val createdAt: LocalDateTime,
-    @Column(updatable = false, nullable = false)
     val validUntil: LocalDateTime,
-    @Column(updatable = false, nullable = false)
     val content: ByteArray,
-) : IdBaseEntity()
+) {
 
-interface DocumentRepository : JpaRepository<DocumentEntity, Long> {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
 
-    @Modifying(flushAutomatically = true)
-    @Query("delete from documents_Document where validUntil < current_timestamp")
-    fun deleteExpired()
+        other as Document
 
-    @Query("select d from documents_Document d where d.token = :token and d.validUntil >= current_timestamp")
-    fun findValidByToken(token: String): DocumentEntity?
+        return id == other.id
+    }
 
+    override fun hashCode(): Int {
+        return id.hashCode()
+    }
 }
+
