@@ -22,7 +22,14 @@ interface DocumentStore {
         content: ByteArray,
         lifetime: Duration,
         username: String,
-    ): DocumentIdentifier
+    ): DocumentIdentifier = createDocument(
+        filename = filename,
+        type = type,
+        content = content,
+        validUntil = LocalDateTime.now().plus(lifetime),
+        source = source,
+        username = username,
+    )
 
 }
 

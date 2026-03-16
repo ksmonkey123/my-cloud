@@ -1,12 +1,12 @@
 package ch.awae.mycloud.module.documents
 
+import ch.awae.mycloud.common.util.GUID
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
-import java.util.*
 
 @RestController
 class DocumentsRestController(
@@ -17,7 +17,7 @@ class DocumentsRestController(
     fun getDocument(
         @PathVariable id: String,
     ): ResponseEntity<Any> {
-        val document = documentRepository.findValidById(UUID.fromString(id))
+        val document = documentRepository.findValidById(GUID.decodeShortString(id))
             ?: return ResponseEntity.notFound().build()
 
         return ResponseEntity.ok()

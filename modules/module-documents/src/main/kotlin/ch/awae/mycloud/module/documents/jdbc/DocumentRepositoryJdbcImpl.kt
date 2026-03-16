@@ -1,5 +1,6 @@
 package ch.awae.mycloud.module.documents.jdbc
 
+import ch.awae.mycloud.common.util.GUID
 import ch.awae.mycloud.documents.DocumentSource
 import ch.awae.mycloud.module.documents.Document
 import ch.awae.mycloud.module.documents.DocumentRepository
@@ -16,7 +17,7 @@ class DocumentRepositoryJdbcImpl(private val jdbcTemplate: NamedParameterJdbcTem
             insert into documents.document (id, username, source, filename, type, created_at, valid_until, content)
             values (:id, :username, :source, :filename, :type, :created_at, :valid_until, :content)
             """.trimIndent(), mapOf(
-                "id" to document.id,
+                "id" to document.id.uuid,
                 "username" to document.username,
                 "source" to document.source.name,
                 "filename" to document.filename,
@@ -28,13 +29,13 @@ class DocumentRepositoryJdbcImpl(private val jdbcTemplate: NamedParameterJdbcTem
         )
     }
 
-    override fun findValidById(id: UUID): Document? {
+    override fun findValidById(id: GUID): Document? {
         return jdbcTemplate.query(
             "select * from documents.document where id = :id and valid_until > current_timestamp",
-            mapOf("id" to id)
+            mapOf("id" to id.uuid)
         ) { rs, _ ->
             Document(
-                id = rs.getObject("id", UUID::class.java),
+                id = GUID(rs.getObject("id", UUID::class.java)),
                 type = rs.getString("type"),
                 filename = rs.getString("filename"),
                 source = DocumentSource.valueOf(rs.getString("source")),

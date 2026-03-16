@@ -4,13 +4,11 @@ import ch.awae.mycloud.common.util.GUID
 import ch.awae.mycloud.documents.DocumentIdentifier
 import ch.awae.mycloud.documents.DocumentSource
 import ch.awae.mycloud.documents.DocumentStore
-import ch.awae.mycloud.module.documents.DocumentRepository
 import jakarta.transaction.Transactional
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock
 import org.springframework.http.MediaType
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
-import java.time.Duration
 import java.time.LocalDateTime
 
 @Service
@@ -18,24 +16,6 @@ import java.time.LocalDateTime
 class DocumentStoreImpl(
     private val documentRepository: DocumentRepository,
 ) : DocumentStore {
-
-    override fun createDocument(
-        source: DocumentSource,
-        filename: String,
-        type: MediaType,
-        content: ByteArray,
-        lifetime: Duration,
-        username: String,
-    ): DocumentIdentifier {
-        return createDocument(
-            filename = filename,
-            type = type,
-            content = content,
-            validUntil = LocalDateTime.now().plus(lifetime),
-            source = source,
-            username = username,
-        )
-    }
 
     override fun createDocument(
         source: DocumentSource,
@@ -57,7 +37,7 @@ class DocumentStoreImpl(
         )
         documentRepository.save(document)
 
-        return DocumentIdentifier("/documents/${document.id}", type.toString())
+        return DocumentIdentifier("/documents/${document.id.toShortString()}", type.toString())
     }
 
     @SchedulerLock(name = "documents:expired-documents-cleaner")

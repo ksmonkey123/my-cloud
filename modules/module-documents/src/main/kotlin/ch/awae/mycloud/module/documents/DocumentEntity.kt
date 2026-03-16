@@ -1,11 +1,11 @@
 package ch.awae.mycloud.module.documents
 
+import ch.awae.mycloud.common.util.GUID
 import ch.awae.mycloud.documents.DocumentSource
 import java.time.LocalDateTime
-import java.util.*
 
 data class Document(
-    val id: UUID,
+    val id: GUID,
     val type: String,
     val filename: String,
     val source: DocumentSource,

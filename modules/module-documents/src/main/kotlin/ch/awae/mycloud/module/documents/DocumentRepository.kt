@@ -1,9 +1,9 @@
 package ch.awae.mycloud.module.documents
 
-import java.util.*
+import ch.awae.mycloud.common.util.GUID
 
 interface DocumentRepository {
     fun save(document: Document)
     fun deleteExpired()
-    fun findValidById(id: UUID): Document?
+    fun findValidById(id: GUID): Document?
 }
