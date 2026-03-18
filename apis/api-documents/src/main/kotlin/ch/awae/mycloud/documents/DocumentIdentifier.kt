@@ -1,3 +1,5 @@
 package ch.awae.mycloud.documents
 
-data class DocumentIdentifier(val link: String, val mimeType: String)
+import java.util.UUID
+
+data class DocumentIdentifier(val id: UUID, val mimeType: String)

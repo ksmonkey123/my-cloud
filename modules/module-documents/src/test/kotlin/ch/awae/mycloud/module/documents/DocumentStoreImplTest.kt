@@ -1,12 +1,13 @@
 package ch.awae.mycloud.module.documents
 
-import ch.awae.mycloud.common.util.GUID
 import ch.awae.mycloud.documents.DocumentData
 import ch.awae.mycloud.documents.DocumentSource
 import ch.awae.mycloud.test.ModuleTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertNotNull
 import org.junit.jupiter.api.assertNull
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.EnumSource
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import java.time.LocalDateTime
@@ -19,13 +20,14 @@ class DocumentStoreImplTest : ModuleTest() {
     @Autowired
     lateinit var documentDataStore: DocumentDataStore
 
-    @Test
-    fun `document is stored`() {
+    @ParameterizedTest
+    @EnumSource(DocumentSource::class)
+    fun `document can be stored`(source: DocumentSource) {
         // arrange
         val expiration = LocalDateTime.now().plusHours(1).truncatedTo(ChronoUnit.MICROS)
         val data = "this is a test file".toByteArray()
         val document = DocumentData(
-            DocumentSource.BOOKKEEPING,
+            source,
             "testFile.txt",
             MediaType.TEXT_PLAIN,
             expiration,
@@ -34,7 +36,7 @@ class DocumentStoreImplTest : ModuleTest() {
 
         // act
         val id = documentDataStore.createDocument(document, "dummy")
-        val retrieved = documentDataStore.retrieveByLink(id.link)
+        val retrieved = documentDataStore.retrieveById(id.id)
 
         // assert
         assertNotNull(retrieved)
@@ -60,7 +62,7 @@ class DocumentStoreImplTest : ModuleTest() {
 
         // act
         val id = documentDataStore.createDocument(document, "dummy")
-        val retrieved = documentDataStore.retrieveByLink(id.link)
+        val retrieved = documentDataStore.retrieveById(id.id)
 
         // assert
         assertNull(retrieved)
@@ -78,13 +80,12 @@ class DocumentStoreImplTest : ModuleTest() {
         )
 
         val identifier = documentDataStore.createDocument(document, "dummy")
-        val uuid = GUID.decodeShortString(identifier.link).uuid
 
         assertEquals(
             1,
             sql.queryForObject(
                 "select count(*) from documents.document where id = :id",
-                mapOf("id" to uuid),
+                mapOf("id" to identifier.id),
                 Long::class.java
             )
         )
@@ -97,7 +98,7 @@ class DocumentStoreImplTest : ModuleTest() {
             0,
             sql.queryForObject(
                 "select count(*) from documents.document where id = :id",
-                mapOf("id" to uuid),
+                mapOf("id" to identifier.id),
                 Long::class.java
             )
         )
@@ -116,13 +117,12 @@ class DocumentStoreImplTest : ModuleTest() {
         )
 
         val identifier = documentDataStore.createDocument(document, "dummy")
-        val uuid = GUID.decodeShortString(identifier.link).uuid
 
         assertEquals(
             1,
             sql.queryForObject(
                 "select count(*) from documents.document where id = :id",
-                mapOf("id" to uuid),
+                mapOf("id" to identifier.id),
                 Long::class.java
             )
         )
@@ -135,7 +135,7 @@ class DocumentStoreImplTest : ModuleTest() {
             1,
             sql.queryForObject(
                 "select count(*) from documents.document where id = :id",
-                mapOf("id" to uuid),
+                mapOf("id" to identifier.id),
                 Long::class.java
             )
         )

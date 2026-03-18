@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
+import java.util.UUID
 
 @Transactional
 @Service
@@ -24,7 +25,7 @@ class DocumentDataStore(private val sql: NamedParameterJdbcTemplate) : DocumentS
             insert into documents.document (id, username, source, filename, type, created_at, valid_until, content)
             values (:id, :username, :source, :filename, :type, :created_at, :valid_until, :content)
             """.trimIndent(), mapOf(
-                "id" to id.uuid,
+                "id" to id,
                 "username" to username,
                 "source" to document.source.name,
                 "filename" to document.filename,
@@ -34,13 +35,13 @@ class DocumentDataStore(private val sql: NamedParameterJdbcTemplate) : DocumentS
                 "content" to document.content,
             )
         )
-        return DocumentIdentifier(id.toShortString(), document.type.toString())
+        return DocumentIdentifier(id, document.type.toString())
     }
 
-    fun retrieveByLink(link: String): DocumentData? {
+    fun retrieveById(id: UUID): DocumentData? {
         return sql.query(
             "select source, filename, type, valid_until, content from documents.document where id = :id and valid_until > current_timestamp",
-            mapOf("id" to GUID.decodeShortString(link).uuid)
+            mapOf("id" to id)
         ) { rs, _ ->
             DocumentData(
                 source = DocumentSource.valueOf(rs.getString("source")),
