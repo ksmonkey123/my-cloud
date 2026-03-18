@@ -1,12 +1,9 @@
 package ch.awae.mycloud.features.facade.rest
 
-import ch.awae.mycloud.common.*
-import ch.awae.mycloud.common.util.UpdateResult
-import ch.awae.mycloud.features.model.*
-import ch.awae.mycloud.features.service.*
-import org.springframework.beans.factory.annotation.*
-import org.springframework.http.*
-import org.springframework.security.access.prepost.*
+import ch.awae.mycloud.features.service.FeatureFlagServiceImpl
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.http.HttpStatus
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -20,23 +17,17 @@ class FeatureFlagController(
     fun listFeatures(@RequestParam(required = false) active: Boolean?): FeatureListTO {
         return FeatureListTO(
             enabledByDefault,
-            service.listAll(active).map {
-                FeatureTO(it.id, it.enabled)
+            service.listAll(active).map { (id, enabled) ->
+                FeatureTO(id, enabled)
             }
         )
     }
 
     @PreAuthorize("hasAuthority('admin')")
     @PutMapping("/{id}")
-    fun editFeature(@PathVariable id: String, @RequestBody request: FeatureUpdateRequest): ResponseEntity<FeatureTO> {
-        val result = service.update(id, request.enabled)
-
-        val response = FeatureTO(result.value)
-
-        return when (result) {
-            is UpdateResult.Created -> ResponseEntity(response, HttpStatus.CREATED)
-            is UpdateResult.Updated -> ResponseEntity(response, HttpStatus.OK)
-        }
+    fun editFeature(@PathVariable id: String, @RequestBody request: FeatureUpdateRequest): FeatureTO {
+        service.update(id, request.enabled)
+        return FeatureTO(id, request.enabled)
     }
 
     @PreAuthorize("hasAuthority('admin')")
@@ -48,8 +39,6 @@ class FeatureFlagController(
 
     data class FeatureUpdateRequest(val enabled: Boolean)
     data class FeatureListTO(val defaultState: Boolean, val features: List<FeatureTO>)
-    data class FeatureTO(val id: String, val enabled: Boolean) {
-        constructor(feature: FeatureFlag) : this(feature.id, feature.enabled)
-    }
+    data class FeatureTO(val id: String, val enabled: Boolean)
 
 }

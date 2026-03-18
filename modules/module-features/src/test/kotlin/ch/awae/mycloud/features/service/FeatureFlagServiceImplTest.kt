@@ -1,25 +1,30 @@
 package ch.awae.mycloud.features.service
 
-import ch.awae.mycloud.features.*
-import jakarta.validation.*
+import ch.awae.mycloud.features.FeaturesModuleTest
+import jakarta.validation.ConstraintViolationException
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import org.springframework.data.repository.*
-import org.springframework.test.context.*
-import org.springframework.test.context.jdbc.*
-import kotlin.test.*
+import org.springframework.test.context.ActiveProfiles
+import org.springframework.test.context.jdbc.Sql
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 class FeatureFlagServiceImplTest : FeaturesModuleTest() {
 
     @Test
     @Sql(scripts = ["/clear_features.sql"])
-    fun testMissingFeatureFlag() {
-        assertEquals(2, featureFlagRepository.count())
+    fun `reading missing flag creates it`() {
+        // precondition
+        assertEquals(2, featureFlagRepository.list().size)
+
+        // act
         assertFalse(featureFlagService.isEnabled("test"))
-        assertEquals(3, featureFlagRepository.count())
-        val entity = featureFlagRepository.findByIdOrNull("test")
-        assertNotNull(entity)
-        assertFalse(entity.enabled)
+
+        // assert
+        val features = featureFlagRepository.list().toMap()
+        assertEquals(3, features.size)
+        assertEquals(false, features.get("test"))
     }
 
     @Test
@@ -47,13 +52,11 @@ class FeatureFlagServiceImplTest : FeaturesModuleTest() {
     @Test
     @Sql(scripts = ["/clear_features.sql"])
     fun testFetchAll() {
-        val result = featureFlagService.listAll(null)
+        val result = featureFlagService.listAll(null).toMap()
 
         assertEquals(2, result.size)
-        assertEquals("active", result[0].id)
-        assertEquals(true, result[0].enabled)
-        assertEquals("inactive", result[1].id)
-        assertEquals(false, result[1].enabled)
+        assertEquals(true, result.get("active"))
+        assertEquals(false, result.get("inactive"))
     }
 
     @Test
@@ -62,8 +65,7 @@ class FeatureFlagServiceImplTest : FeaturesModuleTest() {
         val result = featureFlagService.listAll(true)
 
         assertEquals(1, result.size)
-        assertEquals("active", result[0].id)
-        assertEquals(true, result[0].enabled)
+        assertEquals(Pair("active", true), result[0])
     }
 
     @Test
@@ -72,8 +74,7 @@ class FeatureFlagServiceImplTest : FeaturesModuleTest() {
         val result = featureFlagService.listAll(false)
 
         assertEquals(1, result.size)
-        assertEquals("inactive", result[0].id)
-        assertEquals(false, result[0].enabled)
+        assertEquals(Pair("inactive", false), result[0])
     }
 
 }
@@ -81,15 +82,18 @@ class FeatureFlagServiceImplTest : FeaturesModuleTest() {
 @ActiveProfiles("default-true")
 class FeatureFlagServiceImplDefaultTrueTest : FeaturesModuleTest() {
 
-
     @Test
     @Sql(scripts = ["/clear_features.sql"])
-    fun testMissingFeatureFlag() {
-        assertEquals(2, featureFlagRepository.count())
+    fun `reading missing flag creates it`() {
+        // precondition
+        assertEquals(2, featureFlagRepository.list().size)
+
+        // act
         assertTrue(featureFlagService.isEnabled("test"))
-        assertEquals(3, featureFlagRepository.count())
-        val entity = featureFlagRepository.findByIdOrNull("test")
-        assertNotNull(entity)
-        assertTrue(entity.enabled)
+
+        // assert
+        val features = featureFlagRepository.list().toMap()
+        assertEquals(3, features.size)
+        assertEquals(true, features.get("test"))
     }
 }

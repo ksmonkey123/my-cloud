@@ -1,12 +1,11 @@
 package ch.awae.mycloud.features.config
 
-import ch.awae.mycloud.common.*
+import ch.awae.mycloud.common.ModuleConfiguration
 import ch.awae.mycloud.common.util.createLogger
-import ch.awae.mycloud.features.model.FeatureFlag
 import ch.awae.mycloud.features.model.FeatureFlagRepository
-import org.springframework.beans.factory.annotation.*
-import org.springframework.boot.*
-import org.springframework.stereotype.*
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.boot.CommandLineRunner
+import org.springframework.stereotype.Component
 
 @Component
 class FeatureInitializer(
@@ -22,7 +21,7 @@ class FeatureInitializer(
         for (module in modules) {
             for (feature in module.features) {
                 if (!repo.existsById(feature)) {
-                    repo.save(FeatureFlag(feature, initialFeatureState))
+                    repo.setState(feature, initialFeatureState)
                     log.info("created new feature {}", feature)
                 }
             }
