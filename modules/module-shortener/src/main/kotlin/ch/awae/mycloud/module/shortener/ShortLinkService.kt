@@ -1,11 +1,11 @@
 package ch.awae.mycloud.module.shortener
 
-import ch.awae.mycloud.common.*
-import jakarta.transaction.*
-import jakarta.validation.*
-import org.hibernate.validator.constraints.*
-import org.springframework.stereotype.*
-import org.springframework.validation.annotation.*
+import ch.awae.mycloud.common.ResourceNotFoundException
+import jakarta.transaction.Transactional
+import jakarta.validation.Valid
+import org.hibernate.validator.constraints.URL
+import org.springframework.stereotype.Service
+import org.springframework.validation.annotation.Validated
 import java.util.*
 import kotlin.random.Random
 
@@ -30,25 +30,26 @@ class ShortLinkService(private val repo: ShortLinkRepository) {
         throw RuntimeException("failed to obtain free short link within $LINK_GENERATION_ATTEMPTS attempts")
     }
 
-    fun listShortLinks(username: String): List<ShortLinkDTO> = repo.findByUsername(username).map(
-        ::ShortLinkDTO
-    )
+    fun listShortLinks(username: String): List<ShortLink> = repo.findByUsername(username)
 
-    fun createShortLink(@Valid @URL targetUrl: String, username: String): ShortLinkDTO {
-        return ShortLinkDTO(
-            repo.save(
-                ShortLink(
-                    getUnusedShortLink(),
-                    username,
-                    targetUrl
-                )
-            )
+    fun createShortLink(@Valid @URL targetUrl: String, username: String): ShortLink {
+        val link = ShortLink(
+            getUnusedShortLink(),
+            targetUrl,
+            username,
         )
+
+        repo.save(link)
+
+        return link
     }
 
     fun deleteShortLink(id: String, username: String) {
-        val link = repo.findByIdAndUsername(id, username) ?: throw ResourceNotFoundException("/links/$id")
-        repo.delete(link)
+        val deleted = repo.deleteByIdAndUsername(id, username)
+
+        if (!deleted) {
+            throw ResourceNotFoundException("/links/$id")
+        }
     }
 
 }

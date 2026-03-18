@@ -21,8 +21,8 @@ class ShortLinkControllerTest : ModuleWebTest() {
         every {
             shortLinkService.listShortLinks("user")
         } returns listOf(
-            ShortLinkDTO("aaaa", "http://example.org/a"),
-            ShortLinkDTO("bbbb", "http://example.org/b")
+            ShortLink("aaaa", "http://example.org/a", "dummy"),
+            ShortLink("bbbb", "http://example.org/b", "dummy"),
         )
 
         mvc.get("/rest/shortener/links").andExpect {

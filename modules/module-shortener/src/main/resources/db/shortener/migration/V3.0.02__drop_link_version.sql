@@ -1,0 +1,1 @@
+alter table link drop column version;

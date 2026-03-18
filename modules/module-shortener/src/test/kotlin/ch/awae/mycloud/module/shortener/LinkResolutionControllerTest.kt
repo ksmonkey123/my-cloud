@@ -17,7 +17,7 @@ class LinkResolutionControllerTest : ModuleWebTest() {
 
     @Test
     fun `invalid link returns 404`() {
-        every { repo.findById("invalid") } returns Optional.empty()
+        every { repo.findById("invalid") } returns null
 
         mvc.get("/s/invalid")
             .andExpect { status { isNotFound() } }
@@ -25,7 +25,7 @@ class LinkResolutionControllerTest : ModuleWebTest() {
 
     @Test
     fun `valid link redirects`() {
-        every { repo.findById("valid") } returns Optional.of(ShortLink("valid", "dummy", "http://example.com"))
+        every { repo.findById("valid") } returns ShortLink("valid", "http://example.com", "dummy")
 
         mvc.get("/s/valid")
             .andExpect {
