@@ -1,10 +1,10 @@
-import {ClassProvider, Injectable, OnDestroy, OnInit} from "@angular/core";
+import {ClassProvider, Injectable} from "@angular/core";
 import {MatPaginatorIntl} from "@angular/material/paginator";
-import {Subject, Subscription} from "rxjs";
+import {Subject} from "rxjs";
 import {TranslocoService} from "@jsverse/transloco";
 
 @Injectable()
-export class PaginatorI18n implements MatPaginatorIntl, OnDestroy, OnInit {
+export class PaginatorI18n implements MatPaginatorIntl {
   changes = new Subject<void>();
 
   firstPageLabel: string = "?first-page?"
@@ -13,10 +13,12 @@ export class PaginatorI18n implements MatPaginatorIntl, OnDestroy, OnInit {
   nextPageLabel = "?next-page?";
   previousPageLabel = "?previous-page?";
 
-  private langChangeSub: Subscription | undefined;
-
   constructor(private readonly translate: TranslocoService) {
     this.calculateLabels()
+
+    this.translate.langChanges$.subscribe((_) => {
+      this.calculateLabels()
+    })
   }
 
   private calculateLabels() {
@@ -36,16 +38,6 @@ export class PaginatorI18n implements MatPaginatorIntl, OnDestroy, OnInit {
     const amountPages = Math.ceil(length / pageSize);
 
     return this.translate.translate("paginator.current-page", {current: page + 1, size: amountPages})
-  }
-
-  ngOnInit() {
-    this.langChangeSub = this.translate.langChanges$.subscribe((newLang) => {
-      this.calculateLabels()
-    })
-  }
-
-  ngOnDestroy() {
-    this.langChangeSub?.unsubscribe()
   }
 }
 

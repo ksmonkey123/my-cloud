@@ -1,4 +1,4 @@
-import {Component, computed} from '@angular/core';
+import {AfterViewInit, Component, computed} from '@angular/core';
 import {MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle} from "@angular/material/expansion";
 import {MatIcon} from "@angular/material/icon";
 import {AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
@@ -34,7 +34,7 @@ import {mapChangeSet, patchState} from "../../../common/base/base-local-data-cha
   templateUrl: './api-key-creation.component.html',
   styleUrl: './api-key-creation.component.scss',
 })
-export class ApiKeyCreationComponent extends BaseDataComponent<string[]> {
+export class ApiKeyCreationComponent extends BaseDataComponent<string[]> implements AfterViewInit {
 
   form = new FormGroup(
     {
@@ -61,8 +61,7 @@ export class ApiKeyCreationComponent extends BaseDataComponent<string[]> {
     super();
   }
 
-  override ngAfterViewInit() {
-    super.ngAfterViewInit();
+  ngAfterViewInit() {
     this.loadData(this.service.list().pipe(map(keys => keys.map(k => k.name))))
 
     this.service.localDataChanges$.pipe(

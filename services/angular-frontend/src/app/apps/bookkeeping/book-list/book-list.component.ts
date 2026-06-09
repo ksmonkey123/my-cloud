@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {AfterViewInit, Component} from '@angular/core';
 import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from "@angular/material/card";
 import {MatIcon} from "@angular/material/icon";
 import {RouterLink} from "@angular/router";
@@ -33,7 +33,7 @@ import {takeUntil} from "rxjs";
   templateUrl: './book-list.component.html',
   styleUrl: './book-list.component.scss'
 })
-export class BookListComponent extends BaseDataComponent<BookSummary[]> {
+export class BookListComponent extends BaseDataComponent<BookSummary[]> implements AfterViewInit {
 
   public componentStateService = new ComponentStateService<BookListComponentState>("bookkeeping-book-list")
 
@@ -51,9 +51,7 @@ export class BookListComponent extends BaseDataComponent<BookSummary[]> {
     this.service.patchRequestState({closed: event.checked})
   }
 
-  override ngAfterViewInit() {
-    super.ngAfterViewInit();
-
+  ngAfterViewInit() {
     this.service.requestState$.pipe(takeUntil(this.unsubscribe$)).subscribe(state => {
         this.includeClosed = state?.closed ?? false;
         this.loadData(this.service.fetchBookList(state?.closed ?? false))

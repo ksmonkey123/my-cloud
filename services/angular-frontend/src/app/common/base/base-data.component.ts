@@ -2,11 +2,8 @@ import {AfterViewInit, Component, EventEmitter, OnDestroy, Output, signal} from 
 import {interval, Observable, Subject, Subscription, take, takeUntil} from "rxjs";
 import {ErrorUtils} from "../error.utils";
 
-@Component({
-    template: '',
-    standalone: false
-})
-export abstract class BaseDataComponent<T> implements AfterViewInit, OnDestroy {
+@Component({template: ''})
+export abstract class BaseDataComponent<T> implements OnDestroy {
 
   protected readonly processingState = signal(ProcessingState.INITIAL)
   protected readonly data = signal<T | undefined>(undefined)
@@ -17,10 +14,6 @@ export abstract class BaseDataComponent<T> implements AfterViewInit, OnDestroy {
 
   @Output()
   processingStateChange = new EventEmitter<ProcessingState>();
-
-  ngAfterViewInit() {
-    // empty placeholder. overridable by subclasses
-  }
 
   ngOnDestroy() {
     this.unsubscribe$.next();

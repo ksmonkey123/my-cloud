@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {BaseDataComponent} from "../../../common/base/base-data.component";
 import {ApiKey, ApiKeyManagementService} from "../api-key-management.service";
 import {
@@ -58,7 +58,7 @@ import {DatePipe} from "@angular/common";
   templateUrl: './api-key-list.component.html',
   styleUrl: './api-key-list.component.scss',
 })
-export class ApiKeyListComponent extends BaseDataComponent<ApiKey[]> {
+export class ApiKeyListComponent extends BaseDataComponent<ApiKey[]> implements AfterViewInit {
 
   expandedKeyNames: string[] = [];
 
@@ -72,8 +72,7 @@ export class ApiKeyListComponent extends BaseDataComponent<ApiKey[]> {
     super();
   }
 
-  override ngAfterViewInit() {
-    super.ngAfterViewInit();
+  ngAfterViewInit() {
     this.loadData(this.service.list());
 
     this.service.localDataChanges$

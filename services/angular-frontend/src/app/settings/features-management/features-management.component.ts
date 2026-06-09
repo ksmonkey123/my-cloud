@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {AfterViewInit, Component} from '@angular/core';
 import {BaseDataComponent} from "../../common/base/base-data.component";
 import {Feature} from "../../common/features.service";
 import {FeaturesManagementService} from "./features-management.service";
@@ -47,7 +47,7 @@ import {FeatureCreatePopup} from "./feature-create-popup/feature-create-popup.di
   templateUrl: './features-management.component.html',
   styleUrl: './features-management.component.scss'
 })
-export class FeaturesManagementComponent extends BaseDataComponent<Feature[]> {
+export class FeaturesManagementComponent extends BaseDataComponent<Feature[]> implements AfterViewInit {
 
   displayedColumns = ['id', 'enabled', 'delete']
 
@@ -60,8 +60,7 @@ export class FeaturesManagementComponent extends BaseDataComponent<Feature[]> {
     super();
   }
 
-  override ngAfterViewInit() {
-    super.ngAfterViewInit();
+  ngAfterViewInit() {
     this.refresh()
   }
 

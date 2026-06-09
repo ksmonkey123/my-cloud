@@ -55,20 +55,20 @@ class DockerhubScanService(
 
             // find the watched tag in the result set
             val referenceTag = tags.values.flatten().find { it.tag == entry.tag }
-                ?: throw kotlin.IllegalArgumentException("unable to find watched tag ${entry.tag} in tag for ${entry.descriptor}")
+                ?: throw IllegalArgumentException("unable to find watched tag ${entry.tag} in tag for ${entry.descriptor}")
                     .also {
                     logger.warn(it.message)
                 }
 
             // find all tags with the same digest as the reference tag
-            val relevantTags = tags[referenceTag.digest]!!.map { it.tag }
+            val relevantTags = tags.getValue(referenceTag.digest).map { it.tag }
 
             logger.debug("identified {} relevant tags: {}", relevantTags.size, relevantTags)
 
             return TagSet(referenceTag.digest, relevantTags.toSet())
         } catch (e: Exception) {
             logger.warn("unable to load tag list for ${entry.descriptor}", e)
-            throw kotlin.IllegalArgumentException("unable to load tag list for ${entry.descriptor}")
+            throw IllegalArgumentException("unable to load tag list for ${entry.descriptor}")
         }
     }
 

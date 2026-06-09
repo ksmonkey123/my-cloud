@@ -55,7 +55,7 @@ class DockerhubRestClient(
             "secret" to dockerhubProperties.password,
         )
         val token = httpBuilder.build().postForObject<LoginResponse>("$apiUrl/auth/token", request)?.accessToken
-            ?: throw kotlin.IllegalStateException("missing auth token for dockerhub")
+            ?: throw IllegalStateException("missing auth token for dockerhub")
 
         logger.debug("successfully logged into dockerhub")
 
