@@ -37,7 +37,7 @@ export class LinkEditPopupDialog {
   })
 
   constructor(public dialogRef: MatDialogRef<LinkEditPopupDialog>,
-              private formBuilder: FormBuilder
+              private readonly formBuilder: FormBuilder
   ) {
   }
 

@@ -53,12 +53,12 @@ export class ShortenerComponent {
 
   public list$
 
-  constructor(private service: ShortenerService,
-              private clipboard: Clipboard,
-              private snackbar: MatSnackBar,
-              private modal: SimpleModalService,
-              private dialog: MatDialog,
-              private transloco: TranslocoService) {
+  constructor(private readonly service: ShortenerService,
+              private readonly clipboard: Clipboard,
+              private readonly snackbar: MatSnackBar,
+              private readonly modal: SimpleModalService,
+              private readonly dialog: MatDialog,
+              private readonly transloco: TranslocoService) {
     service.loadList()
     this.list$ = service.linkList$
   }

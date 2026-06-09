@@ -6,7 +6,7 @@ import {map} from "rxjs";
 @Injectable()
 export class FeaturesManagementService {
 
-  constructor(private http: HttpClient) {
+  constructor(private readonly http: HttpClient) {
   }
 
   fetchList() {

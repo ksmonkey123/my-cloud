@@ -26,7 +26,7 @@ abstract class BaseEntity {
      * It is recommended to include a `super`-call when overriding the default implementation.
      */
     @PreUpdate
-    open fun preUpdate() {
+    fun preUpdate() {
         validate()
     }
 
@@ -37,7 +37,7 @@ abstract class BaseEntity {
      * It is recommended to include a `super`-call when overriding the default implementation.
      */
     @PrePersist
-    open fun prePersist() {
+    fun prePersist() {
         validate()
     }
 
@@ -47,7 +47,7 @@ abstract class BaseEntity {
      * The default implementation does nothing.
      * This function can be overridden to add invariants that should be validated before persisting an entity.
      */
-    open fun validate() {
+    fun validate() {
         // by default: no validation
     }
 

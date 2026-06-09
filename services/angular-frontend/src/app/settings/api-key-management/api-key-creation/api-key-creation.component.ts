@@ -51,12 +51,12 @@ export class ApiKeyCreationComponent extends BaseDataComponent<string[]> {
   }
 
   availableAuthorities = computed(() => {
-    return (this.authService.authInfo()?.authorities || []).filter(a => a !== "user" && a !== "admin").sort()
+    return (this.authService.authInfo()?.authorities || []).filter(a => a !== "user" && a !== "admin").sort((a, b) => a.localeCompare(b))
   })
 
-  constructor(private authService: AuthService,
-              private service: ApiKeyManagementService,
-              private toastr: ToastrService
+  constructor(private readonly authService: AuthService,
+              private readonly service: ApiKeyManagementService,
+              private readonly toastr: ToastrService
   ) {
     super();
   }

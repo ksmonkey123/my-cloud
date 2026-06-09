@@ -37,7 +37,7 @@ export class FeatureCreatePopup {
   form = this.formBuilder.group({id: '', enabled: false})
 
   constructor(public dialogRef: MatDialogRef<FeatureCreatePopup>,
-              private formBuilder: FormBuilder,
+              private readonly formBuilder: FormBuilder,
   ) {
 
   }

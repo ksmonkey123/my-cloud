@@ -19,6 +19,7 @@ export abstract class BaseDataComponent<T> implements AfterViewInit, OnDestroy {
   processingStateChange = new EventEmitter<ProcessingState>();
 
   ngAfterViewInit() {
+    // empty placeholder. overridable by subclasses
   }
 
   ngOnDestroy() {

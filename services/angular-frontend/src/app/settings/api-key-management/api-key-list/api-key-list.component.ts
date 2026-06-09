@@ -63,11 +63,11 @@ export class ApiKeyListComponent extends BaseDataComponent<ApiKey[]> {
   expandedKeyNames: string[] = [];
 
   constructor(
-    private service: ApiKeyManagementService,
-    private modal: SimpleModalService,
-    private toast: ToastrService,
-    private clipboard: Clipboard,
-    private snackbar: MatSnackBar,
+    private readonly service: ApiKeyManagementService,
+    private readonly modal: SimpleModalService,
+    private readonly toast: ToastrService,
+    private readonly clipboard: Clipboard,
+    private readonly snackbar: MatSnackBar,
   ) {
     super();
   }
@@ -95,10 +95,10 @@ export class ApiKeyListComponent extends BaseDataComponent<ApiKey[]> {
   }
 
   toggle(key: ApiKey) {
-    if (!this.isExpanded(key)) {
-      this.expandedKeyNames.push(key.name);
-    } else {
+    if (this.isExpanded(key)) {
       this.expandedKeyNames = this.expandedKeyNames.filter(k => k !== key.name);
+    } else {
+      this.expandedKeyNames.push(key.name);
     }
   }
 

@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {UserManagementService} from "../user-management.service";
-import { AsyncPipe } from "@angular/common";
+import {AsyncPipe} from "@angular/common";
 import {ActivatedRoute, RouterLink} from "@angular/router";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
@@ -39,7 +39,7 @@ import {LanguageCode, languages} from "../../../common/language.model";
     TranslocoDirective,
     MatSelect,
     MatOption
-],
+  ],
   templateUrl: './user-details.component.html',
   styleUrl: './user-details.component.scss'
 })
@@ -54,10 +54,10 @@ export class UserDetailsComponent {
   })
 
   constructor(
-    private svc: UserManagementService,
-    private formBuilder: FormBuilder,
+    private readonly svc: UserManagementService,
+    private readonly formBuilder: FormBuilder,
+    public readonly auth: AuthService,
     route: ActivatedRoute,
-    public auth: AuthService,
   ) {
     this.svc.loadRoleList()
     this.userDetails$ = svc.userDetails$
@@ -79,7 +79,7 @@ export class UserDetailsComponent {
 
   toggleEnabled() {
     const user = this.userDetails$.value!
-    this.svc.setBasicsForUser(user.username, !user.enabled, undefined)
+    this.svc.setBasicsForUser(user.username, !user.enabled)
   }
 
   resetPassword() {

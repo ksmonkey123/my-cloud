@@ -8,15 +8,17 @@ import {LanguageCode} from "../../common/language.model";
 @Injectable()
 export class UserManagementService implements OnDestroy {
 
-  constructor(private http: HttpClient, private toastr: ToastrService, private translation: TranslocoService) {
+  constructor(
+    private readonly http: HttpClient,
+    private readonly toastr: ToastrService,
+    private readonly translation: TranslocoService) {
   }
 
   public roleList$ = new BehaviorSubject<Role[]>([])
   public accountList$ = new BehaviorSubject<Account[]>([])
   public userDetails$ = new BehaviorSubject<AccountDetails | undefined>(undefined)
 
-
-  private closer$ = new Subject<void>()
+  private readonly closer$ = new Subject<void>()
 
   ngOnDestroy() {
     this.closer$.next()
@@ -29,7 +31,7 @@ export class UserManagementService implements OnDestroy {
   loadRoleList() {
     this.http.get<Role[]>('/rest/auth/roles')
       .pipe(takeUntil(this.closer$))
-      .subscribe((r) => this.roleList$.next(r.sort((a, b) => a.name.localeCompare(b.name))))
+      .subscribe((r) => this.roleList$.next(r.toSorted((a, b) => a.name.localeCompare(b.name))))
   }
 
   loadList() {

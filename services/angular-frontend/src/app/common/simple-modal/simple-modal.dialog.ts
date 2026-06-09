@@ -9,10 +9,10 @@ import {
   MatDialogTitle
 } from "@angular/material/dialog";
 import {ModalConfig} from "./simple-modal.service";
-import {TranslocoDirective, TranslocoPipe} from "@jsverse/transloco";
+import {TranslocoPipe} from "@jsverse/transloco";
 
 @Component({
-    selector: 'app-simple-modal',
+  selector: 'app-simple-modal',
   imports: [
     MatButton,
     MatDialogActions,
@@ -21,18 +21,14 @@ import {TranslocoDirective, TranslocoPipe} from "@jsverse/transloco";
     MatDialogClose,
     TranslocoPipe
   ],
-    templateUrl: './simple-modal.dialog.html',
-    styleUrl: './simple-modal.dialog.scss'
+  templateUrl: './simple-modal.dialog.html',
+  styleUrl: './simple-modal.dialog.scss'
 })
 export class SimpleModalDialog {
 
   constructor(public dialogRef: MatDialogRef<SimpleModalDialog>,
               @Inject(MAT_DIALOG_DATA) public config: ModalConfig) {
 
-  }
-
-  onCancel() {
-    this.dialogRef.close()
   }
 
   protected readonly confirm = confirm;

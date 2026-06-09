@@ -40,7 +40,7 @@ export class AddUserPopupDialog {
 
   constructor(
     public dialogRef: MatDialogRef<AddUserPopupDialog>,
-    private formBuilder: FormBuilder
+    private readonly formBuilder: FormBuilder
   ) {
   }
 

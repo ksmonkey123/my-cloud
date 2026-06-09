@@ -27,14 +27,9 @@ class EmailOutbox(
         return "EmailOutbox(id=$id, bodyFormat=$bodyFormat, recipient='$recipient', subject='$subject', bodyContent=[${bodyContent.length} chars], createdAt=$createdAt, messageUid=$messageUid)"
     }
 
-    var sent: Boolean = false
-        private set
-
     var sentAt: LocalDateTime? = null
-        private set
 
     fun markAsSent() {
-        sent = true
         sentAt = LocalDateTime.now()
     }
 
@@ -45,10 +40,10 @@ enum class EmailBodyFormat {
 }
 
 interface EmailOutboxRepository : JpaRepository<EmailOutbox, Long> {
-    @Query("select e from email_EmailOutbox e where e.id = :id and not e.sent")
+    @Query("select e from email_EmailOutbox e where e.id = :id and e.sentAt is null")
     fun findToSend(id: Long): EmailOutbox?
 
-    @Query("select e.id from email_EmailOutbox e where not e.sent order by e.createdAt asc limit :count")
+    @Query("select e.id from email_EmailOutbox e where e.sentAt is null order by e.createdAt asc limit :count")
     fun listToSend(count: Int): List<Long>
 
     fun existsByMessageUid(messageUid: String): Boolean

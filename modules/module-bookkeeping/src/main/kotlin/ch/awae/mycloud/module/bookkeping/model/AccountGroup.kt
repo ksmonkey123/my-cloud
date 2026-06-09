@@ -24,7 +24,7 @@ class AccountGroup(
     }
 
     @OneToMany(mappedBy = "accountGroup", orphanRemoval = true)
-    val accounts: List<Account> = emptyList()
+    val accounts: MutableList<Account> = mutableListOf()
 
 }
 

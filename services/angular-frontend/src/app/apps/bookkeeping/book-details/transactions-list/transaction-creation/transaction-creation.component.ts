@@ -67,7 +67,7 @@ export class TransactionCreationComponent {
   filteredOptions = signal<string[]>([])
   changeEvent = toSignal(this.form.controls.tag.valueChanges.pipe(startWith('')))
 
-  constructor(private service: BookkeepingService) {
+  constructor(private readonly service: BookkeepingService) {
     effect(() => {
       this.filteredOptions.set(
         this.updateFilter(
@@ -84,10 +84,10 @@ export class TransactionCreationComponent {
     return options.filter(option => option.toLowerCase().includes(filterValue));
   }
 
-  private createAccountRow(disabled: Boolean = false): AccountRow {
+  private createAccountRow(disabled: boolean = false): AccountRow {
     let row = {
       account: new FormControl(null),
-      amount: new FormControl("0", Validators.pattern(/^[0-9]+(\.[0-9]{1,2})?$/))
+      amount: new FormControl("0", Validators.pattern(/^\d+(\.\d{1,2})?$/))
     }
     if (disabled) {
       row.amount.disable()
@@ -116,7 +116,7 @@ export class TransactionCreationComponent {
   onAmountChanged() {
     const creditSum = this.credits
       .map(row => Number(row.amount.value || 0))
-      .reduce((a, b) => a + b)
+      .reduce((a, b) => a + b, 0)
     const debitSum = this.debits.filter((_, index) => index > 0)
       .map(row => Number(row.amount.value || 0))
       .reduce((a, b) => a + b, 0)

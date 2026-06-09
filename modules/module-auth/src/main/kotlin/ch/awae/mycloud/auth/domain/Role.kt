@@ -13,16 +13,7 @@ class Role(
     @Convert(converter = AuthoritiesConverter::class)
     var authorities: Set<String>,
     var description: String? = null,
-) : IdBaseEntity() {
-    @ManyToMany
-    @JoinTable(
-        schema = "auth",
-        name = "account_role",
-        joinColumns = [JoinColumn(name = "role_id")],
-        inverseJoinColumns = [JoinColumn(name = "account_id")]
-    )
-    val accounts: MutableSet<Account> = mutableSetOf()
-}
+) : IdBaseEntity()
 
 interface RoleRepository : JpaRepository<Role, Long> {
 

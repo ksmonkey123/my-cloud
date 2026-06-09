@@ -12,8 +12,8 @@ import org.springframework.stereotype.*
 @Order(2)
 class ModuleRoleInitializer(
     val moduleConfigurations: List<ModuleConfiguration>,
-    val roleRepository: ch.awae.mycloud.auth.domain.RoleRepository,
-    val accountRepository: ch.awae.mycloud.auth.domain.AccountRepository,
+    val roleRepository: RoleRepository,
+    val accountRepository: AccountRepository,
 ) : CommandLineRunner {
 
     private val log = createLogger()
@@ -32,12 +32,16 @@ class ModuleRoleInitializer(
         val addedRoles = mutableListOf<Role>()
 
         for ((required, existing) in joinedLists) {
-            if (required != null && existing == null) {
-                addedRoles += addRole(required)
-            } else if (required != null && existing != null) {
-                updateRole(existing, required)
-            } else if (existing != null) {
-                roleRepository.delete(existing)
+            when {
+                required != null && existing == null -> {
+                    addedRoles += addRole(required)
+                }
+                required != null && existing != null -> {
+                    updateRole(existing, required)
+                }
+                existing != null -> {
+                    roleRepository.delete(existing)
+                }
             }
         }
 

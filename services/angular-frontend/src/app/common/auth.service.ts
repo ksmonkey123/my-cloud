@@ -28,9 +28,11 @@ export class AuthService implements OnDestroy {
 
   public readonly authInfo = signal<AuthInfo | undefined>(undefined);
 
-  private closer$ = new Subject<void>()
+  private readonly closer$ = new Subject<void>()
 
-  constructor(private http: HttpClient, private translation: TranslocoService) {
+  constructor(
+    private readonly http: HttpClient,
+    private readonly translation: TranslocoService) {
   }
 
   hasToken() {

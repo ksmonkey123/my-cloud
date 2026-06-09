@@ -51,11 +51,11 @@ export class FeaturesManagementComponent extends BaseDataComponent<Feature[]> {
 
   displayedColumns = ['id', 'enabled', 'delete']
 
-  constructor(private service: FeaturesManagementService,
-              private toastr: ToastrService,
-              private transloco: TranslocoService,
-              private modal: SimpleModalService,
-              private dialog: MatDialog,
+  constructor(private readonly service: FeaturesManagementService,
+              private readonly toastr: ToastrService,
+              private readonly transloco: TranslocoService,
+              private readonly modal: SimpleModalService,
+              private readonly dialog: MatDialog,
   ) {
     super();
   }

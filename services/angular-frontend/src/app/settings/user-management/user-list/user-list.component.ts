@@ -58,13 +58,13 @@ export class UserListComponent implements OnInit {
   displayedColumns = ['admin', 'username', 'email', 'enabled']
   list$
 
-  constructor(public svc: UserManagementService,
-              public auth: AuthService,
-              public router: Router,
-              public route: ActivatedRoute,
-              private toastr: ToastrService,
-              private translation: TranslocoService,
-              private dialog: MatDialog) {
+  constructor(private readonly svc: UserManagementService,
+              public readonly auth: AuthService,
+              private readonly router: Router,
+              private readonly route: ActivatedRoute,
+              private readonly toastr: ToastrService,
+              private readonly translation: TranslocoService,
+              private readonly dialog: MatDialog) {
     this.list$ = svc.accountList$
   }
 

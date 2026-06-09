@@ -7,7 +7,7 @@ import {BookSummary} from "../model/bookSummary";
 @Injectable()
 export class BookListService extends BaseRequestStateService<BookListRequestState, BookSummary[]> {
 
-  constructor(private http: HttpClient) {
+  constructor(private readonly http: HttpClient) {
     super();
   }
 

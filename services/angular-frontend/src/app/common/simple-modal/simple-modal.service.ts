@@ -8,7 +8,7 @@ import {map} from "rxjs";
 })
 export class SimpleModalService {
 
-  constructor(private dialog: MatDialog) {
+  constructor(private readonly dialog: MatDialog) {
   }
 
   confirm(title: string, content ?: string) {

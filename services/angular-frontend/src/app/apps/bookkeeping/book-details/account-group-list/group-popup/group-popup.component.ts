@@ -47,15 +47,15 @@ export class GroupPopupComponent {
     public dialogRef: MatDialogRef<GroupPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public config: GroupDialogConfig,
   ) {
-    if (config.data != null) {
+    if (config.data == null) {
+      this.createMode = true
+    } else {
       this.createMode = false
       this.form.setValue({
         number: config.data.number,
         title: config.data.title,
       })
       this.form.controls.number.disable()
-    } else {
-      this.createMode = true
     }
   }
 

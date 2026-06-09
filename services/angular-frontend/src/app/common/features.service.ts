@@ -1,16 +1,15 @@
-import {computed, inject, Injectable, OnDestroy, Signal, signal} from "@angular/core";
+import {computed, Injectable, OnDestroy, Signal, signal} from "@angular/core";
 import {Subject, takeUntil} from "rxjs";
 import {HttpClient} from "@angular/common/http";
-import {CanActivateFn} from "@angular/router";
 
 @Injectable({providedIn: 'root'})
 export class FeaturesService implements OnDestroy {
 
-  private featureState = signal<FeatureState>({defaultState: false, features: {}})
+  private readonly featureState = signal<FeatureState>({defaultState: false, features: {}})
 
-  private closer$ = new Subject<void>()
+  private readonly closer$ = new Subject<void>()
 
-  constructor(private http: HttpClient) {
+  constructor(private readonly http: HttpClient) {
   }
 
   /**
@@ -31,11 +30,11 @@ export class FeaturesService implements OnDestroy {
       })
   }
 
-  private tests = new Map<string, Signal<boolean>>()
+  private readonly tests = new Map<string, Signal<boolean>>()
 
   test(id: string): Signal<boolean> {
     if (this.tests.has(id)) {
-      return this.tests.get(id)!!
+      return this.tests.get(id)!
     }
 
     const result = computed(() => {

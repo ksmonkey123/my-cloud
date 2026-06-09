@@ -30,10 +30,10 @@ import {MatCheckbox} from "@angular/material/checkbox";
 export class LoginComponent implements OnInit {
 
   constructor(
-    private formBuilder: FormBuilder,
-    private authService: AuthService,
-    private router: Router,
-    private route: ActivatedRoute,
+    private readonly formBuilder: FormBuilder,
+    private readonly authService: AuthService,
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
   ) {
   }
 

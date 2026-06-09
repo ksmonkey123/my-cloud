@@ -1,13 +1,12 @@
 package ch.awae.mycloud.module.bookkeping.model
 
-import ch.awae.mycloud.common.db.*
-import ch.awae.mycloud.module.bookkeping.dto.*
-import ch.awae.mycloud.module.bookkeping.model.converter.*
+import ch.awae.mycloud.common.db.IdBaseEntity
+import ch.awae.mycloud.module.bookkeping.dto.AccountId
+import ch.awae.mycloud.module.bookkeping.model.converter.AccountTypeConverter
 import jakarta.persistence.*
-import jakarta.validation.*
-import org.springframework.data.jpa.repository.*
+import jakarta.validation.ValidationException
+import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
-import org.springframework.stereotype.*
 
 @Table(name = "account", schema = "bookkeeping")
 @Entity(name = "bookkeeping_Account")

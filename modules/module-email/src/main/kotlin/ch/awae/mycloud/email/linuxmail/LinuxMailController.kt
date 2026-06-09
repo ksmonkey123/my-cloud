@@ -40,14 +40,10 @@ class LinuxMailController(private val linuxMailService: LinuxMailService) {
         val buffer = ByteArray(expectedSize.toInt())
 
         val read = stream.readNBytes(buffer, 0, buffer.size)
-        if (read != buffer.size) {
-            throw IllegalStateException("Expected $expectedSize bytes, but got $read bytes")
-        }
 
+        check(read == buffer.size) { "Expected $expectedSize bytes, but got $read bytes" }
         // verify stream really done
-        if (stream.read() != -1) {
-            throw IllegalStateException("Stream larger than expected")
-        }
+        check(stream.read() == -1) { "Stream larger than expected" }
 
         return buffer
     }

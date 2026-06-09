@@ -28,7 +28,7 @@ import {TranslocoPipe} from "@jsverse/transloco";
 })
 export class NavbarComponent {
 
-  constructor(public auth: AuthService, private router: Router) {
+  constructor(public auth: AuthService, private readonly router: Router) {
   }
 
   onLogout() {

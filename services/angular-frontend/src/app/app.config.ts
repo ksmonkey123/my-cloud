@@ -2,7 +2,6 @@ import {ApplicationConfig, isDevMode} from '@angular/core';
 import {provideRouter, withHashLocation} from '@angular/router';
 
 import {routes} from './app.routes';
-import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {provideHttpClient, withInterceptorsFromDi} from "@angular/common/http";
 import {provideTokenInterceptor} from "./common/token.interceptor";
 import {provideContentTypeInterceptor} from "./common/contenttype.interceptor";

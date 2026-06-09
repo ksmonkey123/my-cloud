@@ -67,7 +67,7 @@
     <tr mat-header-row *matHeaderRowDef="['name', 'createdAt', 'expand']"></tr>
     <tr mat-row *matRowDef="let key; columns: ['name', 'createdAt', 'expand']"
         class="element-row" [class.element-row-expanded]="isExpanded(key)"
-        (click)="toggle(key)"></tr>
+        (click)="toggle(key)">
     <tr mat-row *matRowDef="let key; columns : ['expanded']" class="details-row"></tr>
   </table>
 </mat-expansion-panel>

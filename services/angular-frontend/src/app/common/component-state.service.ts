@@ -6,9 +6,9 @@ import {StateUtils} from "./state.utils";
 export class ComponentStateService<T> {
 
   private static readonly COMPONENT_STATE_STORAGE_KEY_EXTENSION = '_COMP_STATE'
-  private static channelBags = new Map<string, ChannelBag>;
+  private static readonly channelBags = new Map<string, ChannelBag>;
 
-  private businessKey: string;
+  private readonly businessKey: string;
 
   public readonly state$: BehaviorSubject<T | undefined>;
   public readonly state: Signal<T | undefined>;

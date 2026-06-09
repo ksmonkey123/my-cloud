@@ -15,7 +15,7 @@ export class PaginatorI18n implements MatPaginatorIntl, OnDestroy, OnInit {
 
   private langChangeSub: Subscription | undefined;
 
-  constructor(private translate: TranslocoService) {
+  constructor(private readonly translate: TranslocoService) {
     this.calculateLabels()
   }
 

@@ -7,7 +7,7 @@ import {LanguageCode} from "./common/language.model";
 
 @Injectable({providedIn: 'root'})
 export class TranslocoHttpLoader implements TranslocoLoader {
-  private http = inject(HttpClient);
+  private readonly http = inject(HttpClient);
 
   getTranslation(lang: LanguageCode) {
     return this.http.get<Translation>(`/assets/i18n/${lang}.json?v=${checksums[lang]}`);

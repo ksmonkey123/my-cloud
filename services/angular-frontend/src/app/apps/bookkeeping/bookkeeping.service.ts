@@ -14,7 +14,10 @@ import {DocumentIdentifier, handleDownload} from "../../common/documents/downloa
 export class BookkeepingService implements OnDestroy {
 
 
-  constructor(private http: HttpClient, private toastr: ToastrService, private translation: TranslocoService) {
+  constructor(
+    private readonly http: HttpClient,
+    private readonly toastr: ToastrService,
+    private readonly translation: TranslocoService) {
   }
 
   public book$ = new BehaviorSubject<Book | null>(null)
@@ -22,7 +25,7 @@ export class BookkeepingService implements OnDestroy {
   public tags$ = signal<string[]>([])
   public exportInProgress$ = new BehaviorSubject<boolean>(false)
 
-  private closer$ = new Subject<void>()
+  private readonly closer$ = new Subject<void>()
 
   ngOnDestroy() {
     this.closer$.next()
@@ -190,7 +193,7 @@ export class BookkeepingService implements OnDestroy {
       })
   }
 
-  deleteAccount(bookId: number, accountId: String) {
+  deleteAccount(bookId: number, accountId: string) {
     this.http.delete<any>('/rest/bookkeeping/books/' + bookId + '/accounts/' + accountId)
       .pipe(takeUntil(this.closer$))
       .subscribe({
@@ -204,7 +207,7 @@ export class BookkeepingService implements OnDestroy {
       })
   }
 
-  private bookingPageState = {
+  private readonly bookingPageState = {
     bookId: 0,
     pageSize: 10,
     pageNo: 0

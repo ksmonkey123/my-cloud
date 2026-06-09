@@ -1,14 +1,7 @@
 package ch.awae.mycloud.module.bookkeping.dto
 
-import ch.awae.mycloud.common.util.PageDto
-import java.math.*
-import java.time.*
-
-data class AccountLedgerDto(
-    val account: AccountSummaryDto,
-    val transactions: PageDto<LedgerTransactionDto>,
-    val finalBalance: BigDecimal,
-)
+import java.math.BigDecimal
+import java.time.LocalDate
 
 data class LedgerTransactionDto(
     val id: Long,

@@ -8,9 +8,10 @@ import java.math.*
 @Entity(name = "bookkeeping_AccountBalance")
 @Table(name = "v_account_balance", schema = "bookkeeping")
 @Immutable
-data class AccountBalance(
+class AccountBalance(
     @Id
     @OneToOne
     val account: Account,
     val balance: BigDecimal,
 )
+

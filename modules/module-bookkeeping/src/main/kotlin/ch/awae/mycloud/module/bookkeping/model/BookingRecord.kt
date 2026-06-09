@@ -1,14 +1,14 @@
 package ch.awae.mycloud.module.bookkeping.model
 
-import ch.awae.mycloud.common.db.*
+import ch.awae.mycloud.common.db.IdBaseEntity
 import jakarta.persistence.*
-import jakarta.validation.*
-import jakarta.validation.constraints.Null
-import org.springframework.data.domain.*
-import org.springframework.data.jpa.repository.*
+import jakarta.validation.ValidationException
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
-import java.math.*
-import java.time.*
+import java.math.BigDecimal
+import java.time.LocalDate
 
 @Table(name = "booking_record", schema = "bookkeeping")
 @Entity(name = "bookkeeping_BookingRecord")

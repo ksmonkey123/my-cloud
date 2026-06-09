@@ -18,16 +18,16 @@ class ScanningClientImpl(
             val response = http.getForObject<String>(url)!!
             val failedTests = tests.filter { !response.contains(it) }
 
-            if (failedTests.isEmpty()) {
+            return if (failedTests.isEmpty()) {
                 logger.info("all tests passed")
-                return ScanResult.Success
+                ScanResult.Success
             } else {
                 logger.warn("some tests failed: $failedTests")
-                return ScanResult.Failure(failedTests.toSet())
+                ScanResult.Failure(failedTests.toSet())
             }
         } catch (e: Throwable) {
             logger.error("test error", e)
-            return ScanResult.Error(e);
+            return ScanResult.Error(e)
         }
     }
 

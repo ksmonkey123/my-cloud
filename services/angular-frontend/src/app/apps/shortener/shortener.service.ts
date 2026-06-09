@@ -7,11 +7,14 @@ import {TranslocoService} from "@jsverse/transloco";
 @Injectable()
 export class ShortenerService implements OnDestroy {
 
-  constructor(private http: HttpClient, private toastr: ToastrService, private translation: TranslocoService) {
+  constructor(
+    private readonly http: HttpClient,
+    private readonly toastr: ToastrService,
+    private readonly translation: TranslocoService) {
   }
 
   public linkList$ = new BehaviorSubject<Link[]>([])
-  private closer$ = new Subject<void>()
+  private readonly closer$ = new Subject<void>()
 
   ngOnDestroy() {
     this.closer$.next()

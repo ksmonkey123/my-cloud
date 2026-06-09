@@ -39,9 +39,9 @@ export class AccountGroupListComponent {
   @Input() public book!: Book
 
   public constructor(
-    private service: BookkeepingService,
-    private dialog: MatDialog,
-    private modal: SimpleModalService,
+    private readonly service: BookkeepingService,
+    private readonly dialog: MatDialog,
+    private readonly modal: SimpleModalService,
   ) {
   }
 

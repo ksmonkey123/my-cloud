@@ -33,10 +33,10 @@ export class TransactionDetailsComponent {
   @Input() accounts !: { [id: string]: AccountSummary }
 
   constructor(
-    private modal: SimpleModalService,
-    private service: BookkeepingService,
-    private dialog: MatDialog,
-    private translation: TranslocoService
+    private readonly modal: SimpleModalService,
+    private readonly service: BookkeepingService,
+    private readonly dialog: MatDialog,
+    private readonly translation: TranslocoService
   ) {
   }
 

@@ -27,7 +27,7 @@ export function handleDownload(id: DocumentIdentifier) {
       a.download = "";
       document.body.appendChild(a);
       a.click();
-      document.body.removeChild(a);
+      a.remove();
     }
   })
 }

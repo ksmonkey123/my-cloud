@@ -6,9 +6,9 @@ import {BaseLocalDataChangeService} from "../../common/base/base-local-data-chan
 @Injectable()
 export class ApiKeyManagementService extends BaseLocalDataChangeService<ApiKey> implements OnDestroy {
 
-  private closer$ = new Subject<void>()
+  private readonly closer$ = new Subject<void>()
 
-  constructor(private http: HttpClient) {
+  constructor(private readonly http: HttpClient) {
     super()
   }
 

@@ -1,4 +1,4 @@
-import {Component, effect, OnDestroy, OnInit} from '@angular/core';
+import {Component, effect} from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -48,7 +48,10 @@ import {trimmedNonEmptyString} from "../../utils";
 })
 export class AccountSettingsComponent {
 
-  constructor(protected authService: AuthService, private toastr: ToastrService, private transloco: TranslocoService) {
+  constructor(
+    protected authService: AuthService,
+    private readonly toastr: ToastrService,
+    private readonly transloco: TranslocoService) {
     effect(() => {
       this.emailForm.controls.email.setValue(this.authService.authInfo()?.email ?? null);
     })
@@ -58,10 +61,10 @@ export class AccountSettingsComponent {
     'oldPassword': new FormControl(null, [Validators.required]),
     'newPassword': new FormControl(null, [Validators.required]),
     'confirmPassword': new FormControl(null, [Validators.required, (control: AbstractControl): ValidationErrors | null => {
-      if (control.value !== this.pwForm?.value.newPassword) {
-        return {badConfirm: true}
-      } else {
+      if (control.value === this.pwForm?.value.newPassword) {
         return null
+      } else {
+        return {badConfirm: true}
       }
     }]),
   })

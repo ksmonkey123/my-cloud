@@ -15,10 +15,10 @@
 <div>
   <table>
     <tr>
-      <th class="header-row">&nbsp;</th>
-      <th class="header-row">{{ "bookkeeping.transactions.account" | transloco }}</th>
-      <th class="header-row amount">{{ "bookkeeping.transactions.credit" | transloco }}</th>
-      <th class="header-row amount">{{ "bookkeeping.transactions.debit" | transloco }}</th>
+      <th scope="row" class="header-row">&nbsp;</th>
+      <th scope="row" class="header-row">{{ "bookkeeping.transactions.account" | transloco }}</th>
+      <th scope="row" class="header-row amount">{{ "bookkeeping.transactions.credit" | transloco }}</th>
+      <th scope="row" class="header-row amount">{{ "bookkeeping.transactions.debit" | transloco }}</th>
     </tr>
     @for (credit of booking.credits; track credit.accountId) {
       <tr class="body-row">
@@ -45,11 +45,11 @@
       </tr>
     }
     <tr>
-      <th colspan="2" class="footer-row">
+      <th colspan="2" class="footer-row" scope="colgroup">
         &nbsp;
       </th>
-      <th class="amount-total footer-row">{{ MoneyUtil.formatForDisplay(booking.amount) }}</th>
-      <th class="amount-total footer-row">{{ MoneyUtil.formatForDisplay(booking.amount) }}</th>
+      <th class="amount-total footer-row" scope="col">{{ MoneyUtil.formatForDisplay(booking.amount) }}</th>
+      <th class="amount-total footer-row" scope="col">{{ MoneyUtil.formatForDisplay(booking.amount) }}</th>
     </tr>
   </table>
   <div class="button-row">

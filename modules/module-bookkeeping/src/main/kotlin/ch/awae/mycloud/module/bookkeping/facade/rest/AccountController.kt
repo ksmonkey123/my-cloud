@@ -10,10 +10,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/rest/bookkeeping/books/{bookId}/accounts")
 @PreAuthorize("hasAuthority('bookkeeping')")
-class AccountController(
-    private val service: BookService,
-    private val recordService: BookingRecordService,
-    ) {
+class AccountController(private val service: BookService) {
 
     @GetMapping
     fun listAccounts(@PathVariable bookId: Long): List<AccountSummaryDto> {

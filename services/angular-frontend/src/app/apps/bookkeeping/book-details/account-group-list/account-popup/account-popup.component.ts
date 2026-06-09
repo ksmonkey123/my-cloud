@@ -62,7 +62,9 @@ export class AccountPopupComponent {
     public dialogRef: MatDialogRef<AccountPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public config: AccountDialogConfig,
   ) {
-    if (config.data != null) {
+    if (config.data == null) {
+      this.createMode = true
+    } else {
       this.createMode = false
       this.form.setValue({
         title: config.data.title,
@@ -72,13 +74,11 @@ export class AccountPopupComponent {
       })
       this.form.controls.type.disable()
       this.form.controls.number.disable()
-    } else {
-      this.createMode = true
     }
   }
 
   private static extractNumberFromId(id: string): number {
-    return parseInt(id.split('.')[1])
+    return Number.parseInt(id.split('.')[1])
   }
 
   private static buildId(groupNumber: number, accountId: number): string {

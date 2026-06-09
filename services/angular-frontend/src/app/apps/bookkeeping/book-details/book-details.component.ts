@@ -81,14 +81,14 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
 
   selectedTabIndex = new FormControl(0)
 
-  private bookSubscription
-  private exportSubscription
+  private readonly bookSubscription
+  private readonly exportSubscription
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private service: BookkeepingService,
-    private dialog: MatDialog,
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
+    private readonly service: BookkeepingService,
+    private readonly dialog: MatDialog,
   ) {
     this.bookSubscription = this.service.book$.subscribe((b) => {
       this.book = b
@@ -140,17 +140,13 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   }
 
   saveBookEdit() {
-    if (this.book != null) {
-      // edit mode
-      this.service.editBook(this.book.id, this.form.value.title!!, this.form.value.description || null, this.form.value.closed!!)
-      this.edit_mode = false
-    } else {
+    if (this.book == null) {
       // create mode
       this.service.createBook({
-        title: this.form.value.title!!,
+        title: this.form.value.title!,
         description: this.form.value.description || undefined,
-        openingDate: toDateString(this.form.value.start!!),
-        closingDate: toDateString(this.form.value.end!!),
+        openingDate: toDateString(this.form.value.start!),
+        closingDate: toDateString(this.form.value.end!),
       }).subscribe(
         (id) => {
           if (id > 0) {
@@ -159,15 +155,19 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
           }
         }
       )
+    } else {
+      // edit mode
+      this.service.editBook(this.book.id, this.form.value.title!, this.form.value.description || null, this.form.value.closed!)
+      this.edit_mode = false
     }
   }
 
   onReportBundle() {
-    this.service.exportEarningsReport(this.book!!.id, null)
+    this.service.exportEarningsReport(this.book!.id, null)
   }
 
   onAccountLedgerExport() {
-    this.service.exportAccountLedgers(this.book!!.id)
+    this.service.exportAccountLedgers(this.book!.id)
   }
 
   onPartialReport() {

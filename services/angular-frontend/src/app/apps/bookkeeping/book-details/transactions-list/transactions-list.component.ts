@@ -74,7 +74,7 @@ export class TransactionsListComponent implements OnDestroy {
   accountsSubscription
 
   constructor(
-    private service: BookkeepingService,
+    private readonly service: BookkeepingService,
   ) {
     this.bookSubscription = this.service.book$.subscribe((b) => {
       this.book = b
