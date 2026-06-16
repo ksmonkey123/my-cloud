@@ -18,7 +18,7 @@ import {TranslocoPipe} from "@jsverse/transloco";
 import {AccountType, AccountTypeUtil} from "../../../model/accountType";
 
 @Component({
-    selector: 'app-account-popup',
+  selector: 'app-account-popup',
   imports: [
     MatDialogContent,
     MatFormField,
@@ -34,8 +34,8 @@ import {AccountType, AccountTypeUtil} from "../../../model/accountType";
     MatIcon,
     TranslocoPipe,
   ],
-    templateUrl: './account-popup.component.html',
-    styleUrl: './account-popup.component.scss'
+  templateUrl: './account-popup.component.html',
+  styleUrl: './account-popup.component.scss'
 })
 export class AccountPopupComponent {
   createMode: boolean = false
@@ -69,7 +69,7 @@ export class AccountPopupComponent {
       this.form.setValue({
         title: config.data.title,
         description: config.data.description || null,
-        type: config.data.type,
+        type: config.data.accountType,
         number: AccountPopupComponent.extractNumberFromId(config.data.id)
       })
       this.form.controls.type.disable()
@@ -85,7 +85,7 @@ export class AccountPopupComponent {
     return groupNumber + '.' + accountId.toString().padStart(3, '0')
   }
 
-  collectData(): AccountDialogResult | undefined {
+  collectData(): AccountDialogData | undefined {
     if (!this.form.valid)
       return undefined
 
@@ -94,12 +94,11 @@ export class AccountPopupComponent {
         id: AccountPopupComponent.buildId(this.config.groupNumber, this.form.value.number!),
         title: this.form.value.title!,
         description: this.form.value.description || undefined,
-        type: this.form.value.type!
+        accountType: this.form.value.type!
       }
     } else {
       return {
-        id: this.config.data!.id,
-        type: this.config.data!.type,
+        ...this.config.data!,
         title: this.form.value.title!,
         description: this.form.value.description || undefined,
       }
@@ -110,27 +109,20 @@ export class AccountPopupComponent {
     dialog: MatDialog,
     config: AccountDialogConfig
   ) {
-    return dialog.open<AccountPopupComponent, AccountDialogConfig, AccountDialogResult>(AccountPopupComponent, {data: config})
+    return dialog.open<AccountPopupComponent, AccountDialogConfig, AccountDialogData>(AccountPopupComponent, {data: config})
   }
 
-
-  protected readonly AccountType = AccountType;
   protected readonly AccountTypeUtil = AccountTypeUtil;
 }
 
 export interface AccountDialogConfig {
-  groupNumber: number,
-  data?: {
-    id: string,
-    title: string,
-    description?: string,
-    type: AccountType,
-  }
+  groupNumber: number
+  data?: AccountDialogData
 }
 
-export interface AccountDialogResult {
-  id: string,
-  title: string,
-  description?: string,
-  type: AccountType,
+export interface AccountDialogData {
+  id: string
+  title: string
+  description?: string
+  accountType: AccountType
 }

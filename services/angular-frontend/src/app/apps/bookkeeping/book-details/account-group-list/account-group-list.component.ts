@@ -19,7 +19,7 @@ import {AccountTypeUtil} from "../../model/accountType";
 import {MoneyUtil} from "../../model/moneyUtil";
 
 @Component({
-    selector: 'app-account-group-list',
+  selector: 'app-account-group-list',
   imports: [
     MatAccordion,
     MatExpansionPanel,
@@ -31,8 +31,8 @@ import {MoneyUtil} from "../../model/moneyUtil";
     TranslocoPipe,
 
   ],
-    templateUrl: './account-group-list.component.html',
-    styleUrl: './account-group-list.component.scss'
+  templateUrl: './account-group-list.component.html',
+  styleUrl: './account-group-list.component.scss'
 })
 export class AccountGroupListComponent {
 
@@ -48,15 +48,10 @@ export class AccountGroupListComponent {
   accountPopup(group: AccountGroup, account ?: AccountSummary) {
     const dialogRef = AccountPopupComponent.open(this.dialog, {
       groupNumber: group.groupNumber,
-      data: account ? {
-        title : account.title,
-        description : account.description,
-        type : account.accountType,
-        id: account.id
-      } : undefined,
+      data: account,
     })
     dialogRef.afterClosed().subscribe((result) => {
-      this.service.saveAccount(this.book.id, result!.id, result!.title, result!.description, result!.type, false)
+      this.service.saveAccount(this.book.id, result!.id, result!.title, result!.description, result!.accountType, false)
     })
   }
 

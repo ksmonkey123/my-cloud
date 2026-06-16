@@ -9,6 +9,7 @@ data class AccountSummaryDto(
     val description: String?,
     val accountType: AccountType,
     val balance: BigDecimal,
+    val hasTransactions: Boolean,
     val locked: Boolean,
 ) {
     constructor(account: Account) : this(
@@ -17,6 +18,7 @@ data class AccountSummaryDto(
         description = account.description,
         accountType = account.accountType,
         balance = account.balance?.balance ?: BigDecimal.ZERO,
+        hasTransactions = account.balance != null,
         locked = account.locked
     )
 }

@@ -1,9 +1,11 @@
 package ch.awae.mycloud.module.bookkeping.model
 
-import jakarta.persistence.*
+import jakarta.persistence.Entity
+import jakarta.persistence.Id
+import jakarta.persistence.OneToOne
 import jakarta.persistence.Table
-import org.hibernate.annotations.*
-import java.math.*
+import org.hibernate.annotations.Immutable
+import java.math.BigDecimal
 
 @Entity(name = "bookkeeping_AccountBalance")
 @Table(name = "v_account_balance", schema = "bookkeeping")
@@ -14,4 +16,3 @@ class AccountBalance(
     val account: Account,
     val balance: BigDecimal,
 )
-

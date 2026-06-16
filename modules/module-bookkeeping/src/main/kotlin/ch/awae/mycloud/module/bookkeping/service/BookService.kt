@@ -1,13 +1,16 @@
 package ch.awae.mycloud.module.bookkeping.service
 
+import ch.awae.mycloud.auth.AuthInfo
 import ch.awae.mycloud.common.InvalidRequestException
 import ch.awae.mycloud.common.ResourceNotFoundException
-import ch.awae.mycloud.auth.AuthInfo
 import ch.awae.mycloud.module.bookkeping.dto.*
-import ch.awae.mycloud.module.bookkeping.facade.rest.*
+import ch.awae.mycloud.module.bookkeping.facade.rest.CreateBookRequest
+import ch.awae.mycloud.module.bookkeping.facade.rest.EditBookRequest
+import ch.awae.mycloud.module.bookkeping.facade.rest.PersistAccountRequest
+import ch.awae.mycloud.module.bookkeping.facade.rest.PersistGroupRequest
 import ch.awae.mycloud.module.bookkeping.model.*
-import org.springframework.stereotype.*
-import org.springframework.transaction.annotation.*
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Transactional
@@ -90,8 +93,10 @@ class BookService(
         if (accountGroup.locked) {
             throw InvalidRequestException("/books/$bookId/groups/$groupId is locked")
         }
+        if (accountGroup.accounts.any { it.balance != null }) {
+            throw InvalidRequestException("/books/$bookId/groups/$groupId contains an account with transactions")
+        }
 
-        // TODO verify no account in group has any booking records
         groupRepository.delete(accountGroup)
     }
 
@@ -152,8 +157,10 @@ class BookService(
         if (account.locked) {
             throw InvalidRequestException("/books/$bookId/accounts/$accountId is locked")
         }
+        if (account.balance != null) {
+            throw InvalidRequestException("/books/$bookId/accounts/$accountId has transactions")
+        }
 
-        // TODO verify account has no bookings
         accountRepository.delete(account)
     }
 

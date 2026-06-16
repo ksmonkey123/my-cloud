@@ -77,12 +77,12 @@ export class GroupPopupComponent {
 
 export interface GroupDialogConfig {
   data?: {
-    number: number,
-    title: string,
+    number: number
+    title: string
   }
 }
 
 export interface GroupDialogResult {
-  number: number,
-  title: string,
+  number: number
+  title: string
 }

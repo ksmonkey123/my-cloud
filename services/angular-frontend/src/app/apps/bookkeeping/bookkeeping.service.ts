@@ -36,12 +36,9 @@ export class BookkeepingService implements OnDestroy {
 
   private mapBookSummaryDto(dto: BookSummaryDto): BookSummary {
     return {
-      id: dto.id,
-      title: dto.title,
-      description: dto.description,
+      ...dto,
       openingDate: new Date(dto.openingDate),
       closingDate: new Date(dto.closingDate),
-      closed: dto.closed,
     }
   }
 
@@ -52,23 +49,12 @@ export class BookkeepingService implements OnDestroy {
         (dto) => {
           this.book$.next(
             {
-              id: dto.id,
+              ...dto,
               summary: this.mapBookSummaryDto(dto.summary),
-              groups: dto.groups.map(group => {
+              groups: dto.groups.map((group) => {
                 return {
-                  title: group.title,
-                  groupNumber: group.groupNumber,
-                  locked: group.locked,
-                  accounts: group.accounts.map(account => {
-                    return {
-                      id: account.id,
-                      title: account.title,
-                      description: account.description,
-                      accountType: account.accountType,
-                      locked: account.locked,
-                      balance: account.balance
-                    }
-                  })
+                  ...group,
+                  hasTransactions: group.accounts.some(account => account.hasTransactions)
                 }
               })
             }
@@ -99,8 +85,8 @@ export class BookkeepingService implements OnDestroy {
     this.doExport('/rest/bookkeeping/books/' + bookId + '/documents/export', {})
   }
 
-  exportEarningsReport(bookId: number, config: {title: string, groupNumber: number[]} | null) {
-    this.doExport('/rest/bookkeeping/books/' + bookId + '/documents/report', { params: config })
+  exportEarningsReport(bookId: number, config: { title: string, groupNumber: number[] } | null) {
+    this.doExport('/rest/bookkeeping/books/' + bookId + '/documents/report', {params: config})
   }
 
   exportAccountLedgers(bookId: number) {
@@ -225,20 +211,8 @@ export class BookkeepingService implements OnDestroy {
           this.bookingPage$.next({
             totalElements: page.totalElements,
             items: page.items.map(record => ({
-              id: record.id,
+              ...record,
               date: new Date(record.bookingDate),
-              tag: record.tag,
-              text: record.text,
-              description: record.description,
-              amount: record.amount,
-              credits: record.credits.map(i => ({
-                accountId: i.accountId,
-                amount: i.amount
-              })),
-              debits: record.debits.map(i => ({
-                accountId: i.accountId,
-                amount: i.amount
-              }))
             }))
           })
         }
@@ -333,19 +307,19 @@ export class BookkeepingService implements OnDestroy {
 }
 
 export interface CreateBookRequest {
-  title: string,
-  description?: string,
-  openingDate: string,
-  closingDate: string,
+  title: string
+  description?: string
+  openingDate: string
+  closingDate: string
 }
 
 interface BookSummaryDto {
-  id: number,
-  title: string,
-  description?: string,
-  openingDate: string,
-  closingDate: string,
-  closed: boolean,
+  id: number
+  title: string
+  description?: string
+  openingDate: string
+  closingDate: string
+  closed: boolean
 }
 
 interface BookDto {
@@ -355,61 +329,62 @@ interface BookDto {
 }
 
 interface AccountGroupDto {
-  groupNumber: number,
-  title: string,
-  locked: boolean,
+  groupNumber: number
+  title: string
+  locked: boolean
   accounts: AccountSummaryDto[]
 }
 
 interface AccountSummaryDto {
-  id: string,
-  title: string,
-  description?: string,
-  accountType: AccountType,
-  locked: boolean,
+  id: string
+  title: string
+  description?: string
+  accountType: AccountType
+  locked: boolean
   balance: any
+  hasTransactions: boolean
 }
 
 interface BookingPageDto {
-  items: BookingRecordDto[],
-  totalElements: number,
+  items: BookingRecordDto[]
+  totalElements: number
 }
 
 interface BookingRecordDto {
-  id: number,
-  bookingDate: Date,
-  tag?: string,
-  text: string,
-  description?: string,
-  amount: any,
-  credits: BookingMovementDto[],
-  debits: BookingMovementDto[],
+  id: number
+  bookingDate: Date
+  tag?: string
+  text: string
+  description?: string
+  amount: any
+  credits: BookingMovementDto[]
+  debits: BookingMovementDto[]
 }
 
 interface CreateBookingRecordDto {
-  bookingDate: string,
-  tag?: string,
-  text: string,
-  description?: string,
-  credits: BookingMovementDto[],
-  debits: BookingMovementDto[],
+  bookingDate: string
+  tag?: string
+  text: string
+  description?: string
+  credits: BookingMovementDto[]
+  debits: BookingMovementDto[]
 }
 
 interface BookingMovementDto {
-  accountId: string,
-  amount: any,
+  accountId: string
+  amount: any
 }
 
 export interface BookingPage {
-  items: BookingRecord[],
-  totalElements: number,
+  items: BookingRecord[]
+  totalElements: number
 }
 
 export interface CreateBookingRecord {
-  date: Date,
-  tag?: string,
-  text: string,
-  description?: string,
-  credits: BookingMovement[],
-  debits: BookingMovement[],
+  date: Date
+  tag?: string
+  text: string
+  description?: string
+  credits: BookingMovement[]
+  debits: BookingMovement[]
 }

@@ -28,12 +28,9 @@ export class BookListService extends BaseRequestStateService<BookListRequestStat
 
   private mapBookSummaryDto(dto: BookSummaryDto): BookSummary {
     return {
-      id: dto.id,
-      title: dto.title,
-      description: dto.description,
+      ...dto,
       openingDate: new Date(dto.openingDate),
       closingDate: new Date(dto.closingDate),
-      closed: dto.closed,
     }
   }
 
@@ -44,11 +41,11 @@ export interface BookListRequestState {
 }
 
 interface BookSummaryDto {
-  id: number,
-  title: string,
-  description?: string,
-  openingDate: string,
-  closingDate: string,
-  closed: boolean,
+  id: number
+  title: string
+  description?: string
+  openingDate: string
+  closingDate: string
+  closed: boolean
 }
 
