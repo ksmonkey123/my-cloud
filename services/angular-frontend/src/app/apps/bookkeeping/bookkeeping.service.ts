@@ -250,11 +250,13 @@ export class BookkeepingService implements OnDestroy {
       .pipe(takeUntil(this.closer$))
       .subscribe({
         next: (_) => {
+          this.loadBook(book.id)
           this.reloadBookings()
           result.next(1)
         },
         error: error => {
           this.toastr.error(error?.error?.message, this.translation.translate("bookkeeping.transactions.create-failure"))
+          this.loadBook(book.id)
           this.reloadBookings()
           result.next(-1)
         }
@@ -296,10 +298,12 @@ export class BookkeepingService implements OnDestroy {
       .subscribe({
         next: (_) => {
           this.toastr.success("Record Deleted", "Record " + booking.id + " was successfully deleted")
+          this.loadBook(book.id)
           this.reloadBookings()
         },
         error: error => {
           this.toastr.error(error?.error?.message, this.translation.translate("bookkeeping.transactions.delete-failure", {id: booking.id}))
+          this.loadBook(book.id)
           this.reloadBookings()
         }
       })
