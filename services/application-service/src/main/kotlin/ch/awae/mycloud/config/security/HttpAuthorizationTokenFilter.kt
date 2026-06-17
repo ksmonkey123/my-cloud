@@ -3,6 +3,7 @@ package ch.awae.mycloud.config.security
 import ch.awae.mycloud.auth.ApiKeyUserAuthInfo
 import ch.awae.mycloud.auth.AuthService
 import ch.awae.mycloud.auth.BearerTokenUserAuthInfo
+import ch.awae.mycloud.auth.RequestContext
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -18,7 +19,9 @@ class HttpAuthorizationTokenFilter(val authServiceClient: AuthService) : OncePer
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
-        val auth = request.getHeader("Authorization")?.trim()?.let(authServiceClient::authenticateToken)
+        val auth = request.getHeader("Authorization")?.trim()?.let {
+            authServiceClient.authenticateToken(it, RequestContext(request.method, request.requestURI))
+        }
 
         if (auth != null) {
             when (auth) {

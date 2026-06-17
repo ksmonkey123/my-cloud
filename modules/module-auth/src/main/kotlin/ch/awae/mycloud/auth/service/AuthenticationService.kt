@@ -4,6 +4,7 @@ import ch.awae.mycloud.auth.ApiKeyUserAuthInfo
 import ch.awae.mycloud.auth.AuthInfo
 import ch.awae.mycloud.auth.AuthService
 import ch.awae.mycloud.auth.BearerTokenUserAuthInfo
+import ch.awae.mycloud.auth.RequestContext
 import ch.awae.mycloud.common.util.createLogger
 import ch.awae.mycloud.auth.domain.AccountRepository
 import ch.awae.mycloud.auth.domain.ApiKeyRepository
@@ -20,7 +21,7 @@ class AuthenticationService(
 
     private val log = createLogger()
 
-    override fun authenticateToken(tokenString: String): AuthInfo? {
+    override fun authenticateToken(tokenString: String, context: RequestContext): AuthInfo? {
         return if (tokenString.startsWith("Bearer ")) {
             authenticateBearerToken(tokenString.substring(7))
         } else if (tokenString.startsWith("Key ")) {
