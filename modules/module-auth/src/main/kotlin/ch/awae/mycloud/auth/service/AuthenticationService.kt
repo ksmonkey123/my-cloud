@@ -21,7 +21,7 @@ class AuthenticationService(
 
     private val log = createLogger()
 
-    override fun authenticateToken(tokenString: String, context: RequestContext): AuthInfo? {
+    override fun authenticateToken(tokenString: String, context: RequestContext?): AuthInfo? {
         return if (tokenString.startsWith("Bearer ")) {
             authenticateBearerToken(tokenString.substring(7))
         } else if (tokenString.startsWith("Key ")) {
