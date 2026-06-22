@@ -60,9 +60,7 @@ class ScanningService(
 
     private fun doScan(site: MonitoredSite): TestRecord {
         val tests = site.tests.filterValues { it }.keys
-        val result = scanningClient.performScan(site.siteUrl, tests)
-
-        val record = when (result) {
+        val record = when (val result = scanningClient.performScan(site.siteUrl, tests)) {
             is ScanResult.Success -> TestRecord(
                 site,
                 TestResult.SUCCESS,

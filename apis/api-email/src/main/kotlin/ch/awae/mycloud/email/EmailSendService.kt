@@ -1,5 +1,6 @@
 package ch.awae.mycloud.email
 
+@Suppress("kotlin:S6517")
 interface EmailSendService {
     /**
      * Registers an email message for sending.

@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.*
 /**
  * Service that allows the querying of feature flags.
  */
+@Suppress("kotlin:S6517")
 interface FeatureFlagService {
 
     /**

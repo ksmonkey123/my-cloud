@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, OnDestroy, Output, signal} from "@angular/core";
+import {Component, EventEmitter, OnDestroy, Output, signal} from "@angular/core";
 import {interval, Observable, Subject, Subscription, take, takeUntil} from "rxjs";
 import {ErrorUtils} from "../error.utils";
 
