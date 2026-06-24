@@ -1,31 +1,29 @@
 package ch.awae.mycloud.auth.service
 
-import ch.awae.mycloud.auth.ApiKeyUserAuthInfo
-import ch.awae.mycloud.auth.AuthInfo
-import ch.awae.mycloud.auth.AuthService
-import ch.awae.mycloud.auth.BearerTokenUserAuthInfo
-import ch.awae.mycloud.auth.RequestContext
-import ch.awae.mycloud.common.util.createLogger
-import ch.awae.mycloud.auth.domain.AccountRepository
+import ch.awae.mycloud.auth.*
+import ch.awae.mycloud.auth.audit.AuditLog
 import ch.awae.mycloud.auth.domain.ApiKeyRepository
+import ch.awae.mycloud.auth.domain.AuthTokenRepository
 import ch.awae.mycloud.auth.domain.AuthoritiesMapper
+import ch.awae.mycloud.common.util.createLogger
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
 @Service
 @Transactional
 class AuthenticationService(
-    private val accountRepository: AccountRepository,
+    private val authTokenRepository: AuthTokenRepository,
     private val apiKeyRepository: ApiKeyRepository,
+    private val auditLog: AuditLog,
 ) : AuthService {
 
     private val log = createLogger()
 
     override fun authenticateToken(tokenString: String, context: RequestContext?): AuthInfo? {
         return if (tokenString.startsWith("Bearer ")) {
-            authenticateBearerToken(tokenString.substring(7))
+            authenticateBearerToken(tokenString.substring(7), context)
         } else if (tokenString.startsWith("Key ")) {
-            authenticateApiToken(tokenString.substring(4))
+            authenticateApiToken(tokenString.substring(4), context)
         } else {
             val firstSpace = tokenString.indexOf(' ')
             if (firstSpace == -1) {
@@ -38,20 +36,26 @@ class AuthenticationService(
         }
     }
 
-    private fun authenticateBearerToken(tokenString: String): BearerTokenUserAuthInfo? {
-        return accountRepository.findActiveByValidTokenString(tokenString)?.let { account ->
+    private fun authenticateBearerToken(tokenString: String, context: RequestContext?): BearerTokenUserAuthInfo? {
+        return authTokenRepository.findByValidTokenStringForActiveAccount(tokenString)?.let { token ->
+            if (context != null) {
+                auditLog.recordAccess(token.account.id, context, tokenId = token.id)
+            }
             BearerTokenUserAuthInfo(
-                account.username,
-                AuthoritiesMapper.getAuthorities(account),
-                tokenString,
-                account.language,
-                account.email,
+                token.account.username,
+                AuthoritiesMapper.getAuthorities(token.account),
+                token.tokenString,
+                token.account.language,
+                token.account.email,
             )
         }
     }
 
-    private fun authenticateApiToken(tokenString: String): ApiKeyUserAuthInfo? {
+    private fun authenticateApiToken(tokenString: String, context: RequestContext?): ApiKeyUserAuthInfo? {
         return apiKeyRepository.findActiveByTokenString(tokenString)?.let { key ->
+            if (context != null) {
+                auditLog.recordAccess(key.owner.id, context, keyId = key.id)
+            }
             ApiKeyUserAuthInfo(
                 key.owner.username,
                 AuthoritiesMapper.getAuthorities(key),

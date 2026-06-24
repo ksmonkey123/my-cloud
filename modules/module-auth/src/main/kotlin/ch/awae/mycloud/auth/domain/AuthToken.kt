@@ -38,4 +38,7 @@ interface AuthTokenRepository : JpaRepository<AuthToken, Long> {
     @Query("delete from auth_AuthToken where validUntil < current_timestamp")
     fun deleteExpiredTokens()
 
+    @Query("select t from auth_AuthToken t where t.tokenString = :tokenString and t.validUntil >= current_timestamp and t.account.enabled")
+    fun findByValidTokenStringForActiveAccount(tokenString: String): AuthToken?
+
 }

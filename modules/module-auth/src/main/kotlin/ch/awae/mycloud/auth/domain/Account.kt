@@ -42,9 +42,6 @@ interface AccountRepository : JpaRepository<Account, Long> {
     @Query("select a from auth_Account a where a.username = :username and a.enabled")
     fun findActiveByUsername(username: String): Account?
 
-    @Query("select t.account from auth_AuthToken t where t.tokenString = :tokenString and t.validUntil >= current_timestamp and t.account.enabled")
-    fun findActiveByValidTokenString(tokenString: String): Account?
-
     @Query("select a from auth_Account a order by a.username asc")
     fun listAll(): List<Account>
 

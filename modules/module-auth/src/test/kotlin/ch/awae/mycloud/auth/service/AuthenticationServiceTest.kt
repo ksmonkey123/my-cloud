@@ -1,9 +1,11 @@
 package ch.awae.mycloud.auth.service
 
 import ch.awae.mycloud.auth.AuthModuleTest
+import ch.awae.mycloud.auth.RequestContext
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertNotNull
 import org.junit.jupiter.api.assertNull
+import org.springframework.jdbc.core.namedparam.EmptySqlParameterSource
 import org.springframework.test.context.jdbc.Sql
 import kotlin.test.assertEquals
 
@@ -12,9 +14,19 @@ class AuthenticationServiceTest : AuthModuleTest() {
     @Test
     @Sql(scripts = ["/testdata/clear_schema.sql", "/testdata/1000_setup_bearer_token_test.sql"])
     fun testAuthenticateValidToken() {
-        val info = authenticationService.authenticateToken("Bearer MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDE")
+        val info = authenticationService.authenticateToken(
+            "Bearer MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDE",
+            RequestContext("GET", "/dummy")
+        )
         assertNotNull(info)
         assertEquals("test-user-1000", info.username)
+        assertEquals(
+            1, sql.queryForObject(
+                "select count(*) from auth.audit_log where account_id = 1000 and token_id = 1001 and key_id is null and method = 'GET' and path = '/dummy'",
+                EmptySqlParameterSource.INSTANCE,
+                Int::class.java
+            )
+        )
     }
 
     @Test
@@ -41,8 +53,18 @@ class AuthenticationServiceTest : AuthModuleTest() {
     @Sql(scripts = ["/testdata/clear_schema.sql", "/testdata/1000_setup_bearer_token_test.sql"])
     fun testAuthenticateApiKey() {
         val info =
-            authenticationService.authenticateToken("Key -ER_dxeF4Pgj8EtA2iNQbpFUd305nLdwLF5GueWWuKJBf2oNErdjrCyXOg6gg6WA73GSY0Ai4qCxvKGs7EO7rw")
+            authenticationService.authenticateToken(
+                "Key -ER_dxeF4Pgj8EtA2iNQbpFUd305nLdwLF5GueWWuKJBf2oNErdjrCyXOg6gg6WA73GSY0Ai4qCxvKGs7EO7rw",
+                RequestContext("POST", "/test")
+            )
         assertNotNull(info)
+        assertEquals(
+            1, sql.queryForObject(
+                "select count(*) from auth.audit_log where account_id = 1000 and token_id is null and key_id = 1003 and method = 'POST' and path = '/test'",
+                EmptySqlParameterSource.INSTANCE,
+                Int::class.java
+            )
+        )
     }
 
     @Test
@@ -53,6 +75,8 @@ class AuthenticationServiceTest : AuthModuleTest() {
         assertNull(info)
     }
 
+    @Test
+    @Sql(scripts = ["/testdata/clear_schema.sql", "/testdata/1000_setup_bearer_token_test.sql"])
     fun testAuthenticateApiKeyInvalidToken() {
         val info =
             authenticationService.authenticateToken("Key -XR_dxeF4Pgj8EtA2iNQbpFUd305nLdwLF5GueWWuKJBf2oNErdjrCyXOg6gg6WA73GSY0Ai4qCxvKGs7EO7rw")
