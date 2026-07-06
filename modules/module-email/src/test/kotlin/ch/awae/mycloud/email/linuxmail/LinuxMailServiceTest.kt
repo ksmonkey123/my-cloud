@@ -15,6 +15,12 @@ class LinuxMailServiceTest {
         @Suppress("UNCHECKED_CAST") return method.invoke(linuxMailService, content) as Map<String, String>
     }
 
+    private fun callDecodeBody(content: String): String {
+        val method = LinuxMailService::class.java.getDeclaredMethod("decodeBody", String::class.java)
+        method.isAccessible = true
+        return method.invoke(linuxMailService, content) as String
+    }
+
     @Test
     fun `extractHeaders should extract all headers`() {
         val content = """
@@ -49,5 +55,23 @@ class LinuxMailServiceTest {
         val headers = callExtractHeaders(content)
         assertEquals("This is a very long subject line", headers["SUBJECT"])
         assertEquals("line 1 line 2", headers["X-LONG-HEADER"])
+    }
+
+    @Test
+    fun `decodeBody should replace =3D with =`() {
+        val content = "This is an =3D equals sign"
+        assertEquals("This is an = equals sign", callDecodeBody(content))
+    }
+
+    @Test
+    fun `decodeBody should remove soft line breaks`() {
+        val content = "This is a long line that=\r\ncontinues on next line and =\ncontinues here."
+        assertEquals("This is a long line thatcontinues on next line and continues here.", callDecodeBody(content))
+    }
+
+    @Test
+    fun `decodeBody should handle combined cases`() {
+        val content = "Some =3D text with a =\r\nsoft break."
+        assertEquals("Some = text with a soft break.", callDecodeBody(content))
     }
 }
