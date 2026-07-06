@@ -1,6 +1,7 @@
 package ch.awae.mycloud.email.linuxmail
 
 import io.mockk.mockk
+import jakarta.mail.internet.MimeUtility
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
@@ -15,10 +16,10 @@ class LinuxMailServiceTest {
         @Suppress("UNCHECKED_CAST") return method.invoke(linuxMailService, content) as Map<String, String>
     }
 
-    private fun callDecodeBody(content: String): String {
-        val method = LinuxMailService::class.java.getDeclaredMethod("decodeBody", String::class.java)
+    private fun callDecodeBody(format: String?, content: String): String {
+        val method = LinuxMailService::class.java.getDeclaredMethod("decodeBody", String::class.java, String::class.java)
         method.isAccessible = true
-        return method.invoke(linuxMailService, content) as String
+        return method.invoke(linuxMailService, format, content) as String
     }
 
     @Test
@@ -60,18 +61,30 @@ class LinuxMailServiceTest {
     @Test
     fun `decodeBody should replace =3D with =`() {
         val content = "This is an =3D equals sign"
-        assertEquals("This is an = equals sign", callDecodeBody(content))
+        assertEquals("This is an = equals sign", callDecodeBody("quoted-printable", content))
     }
 
     @Test
     fun `decodeBody should remove soft line breaks`() {
-        val content = "This is a long line that=\r\ncontinues on next line and =\ncontinues here."
-        assertEquals("This is a long line thatcontinues on next line and continues here.", callDecodeBody(content))
+        val content = "This is a long line that=\r\n continues on next line and =\ncontinues here."
+        assertEquals("This is a long line that continues on next line and continues here.", callDecodeBody("quoted-printable", content))
     }
 
     @Test
     fun `decodeBody should handle combined cases`() {
         val content = "Some =3D text with a =\r\nsoft break."
-        assertEquals("Some = text with a soft break.", callDecodeBody(content))
+        assertEquals("Some = text with a soft break.", callDecodeBody("quoted-printable", content))
+    }
+
+    @Test
+    fun `decodeBody should handle special characters`() {
+        val content = "Umlaut: =C3=A4, Euro: =E2=82=AC"
+        assertEquals("Umlaut: ä, Euro: €", callDecodeBody("quoted-printable", content))
+    }
+
+    @Test
+    fun `decodeBody should return content as is for other encodings`() {
+        val content = "This should not be decoded =3D"
+        assertEquals(content, callDecodeBody("base64", content))
     }
 }

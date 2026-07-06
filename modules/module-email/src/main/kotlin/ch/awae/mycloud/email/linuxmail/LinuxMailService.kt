@@ -2,6 +2,7 @@ package ch.awae.mycloud.email.linuxmail
 
 import ch.awae.mycloud.email.EmailMessage
 import ch.awae.mycloud.email.EmailSendService
+import jakarta.mail.internet.MimeUtility
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
@@ -16,16 +17,18 @@ class LinuxMailService(private val sendService: EmailSendService) {
             EmailMessage(
                 subject = headers["SUBJECT"] ?: "LINUX NOTIFICATION",
                 recipient = recipient,
-                body = EmailMessage.PlaintextBody(decodeBody(content)),
+                body = EmailMessage.PlaintextBody(decodeBody(headers["CONTENT-TRANSFER-ENCODING"], content)),
                 uid = headers["MESSAGE-ID"],
             )
         )
     }
 
-    private fun decodeBody(content: String): String {
-        return content.replace("=\r\n", "")
-            .replace("=\n", "")
-            .replace("=3D", "=")
+    private fun decodeBody(format: String?, content: String): String {
+        if (format != "quoted-printable") {
+            return content
+        }
+
+        return MimeUtility.decode(content.byteInputStream(), "quoted-printable").bufferedReader().use { it.readText() }
     }
 
     private fun extractHeaders(content: String): Map<String, String> {
