@@ -16,10 +16,16 @@ class LinuxMailService(private val sendService: EmailSendService) {
             EmailMessage(
                 subject = headers["SUBJECT"] ?: "LINUX NOTIFICATION",
                 recipient = recipient,
-                body = EmailMessage.PlaintextBody(content),
+                body = EmailMessage.PlaintextBody(decodeBody(content)),
                 uid = headers["MESSAGE-ID"],
             )
         )
+    }
+
+    private fun decodeBody(content: String): String {
+        return content.replace("=\r\n", "")
+            .replace("=\n", "")
+            .replace("=3D", "=")
     }
 
     private fun extractHeaders(content: String): Map<String, String> {

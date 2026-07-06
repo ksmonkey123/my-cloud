@@ -14,27 +14,27 @@ entity Book {
 
 entity AccountGroup {
 * id
-- parent_id
 # book_id
 ..
++ group_number
 + title
 }
 
 entity Account {
 * id
-# book_id
 # account_group_id
 ..
-+ title
++ account_number
 + account_type
-+ initial_balance
++ title
+  description
 }
 
 enum AccountType {
- * ASSET
- * LIABILITY
- * EXPENSE
- * INCOME
+  ASSET
+  LIABILITY
+  EXPENSE
+  INCOME
 }
 
 entity BookingRecord {
@@ -42,9 +42,8 @@ entity BookingRecord {
 # book_id
 ..
 + booking_text
-- description
-+ invoice_date
 + booking_date
+  description
 }
 
 entity BookingMovement {
@@ -54,9 +53,7 @@ entity BookingMovement {
 + amount
 }
 
-AccountGroup }o--|| AccountGroup
-AccountGroup }o--|| Book
-Book ||--o{ Account
+Book ||--o{ AccountGroup
 AccountGroup |o--o{ Account
 Book ||--o{ BookingRecord
 BookingRecord ||--{ "2..n" BookingMovement
