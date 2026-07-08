@@ -49,7 +49,8 @@ class DocumentsRestControllerTest : ModuleWebTest() {
                 status { isOk() }
                 content {
                     contentType(MediaType.TEXT_PLAIN)
-                    header { string(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=test.txt") }
+                    header { string(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=782c39ed-9b29-4b2e-9971-9cedf1ffc8b9_test.txt") }
+                    header { string(HttpHeaders.CACHE_CONTROL, "no-store") }
                     string("this is a test")
                 }
             }
