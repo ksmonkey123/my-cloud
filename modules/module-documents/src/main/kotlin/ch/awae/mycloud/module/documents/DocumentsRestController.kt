@@ -22,7 +22,8 @@ class DocumentsRestController(
         return ResponseEntity.ok()
             .contentType(document.type)
             .contentLength(document.content.size.toLong())
-            .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=${document.filename}")
+            .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=${id}_${document.filename}")
+            .header(HttpHeaders.CACHE_CONTROL, "no-store")
             .body(document.content)
     }
 
