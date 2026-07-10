@@ -34,10 +34,6 @@ class Account(
         }
     }
 
-    fun hasInvertedPresentation(): Boolean {
-        return accountType.invertedPresentation ?: ((balance?.balance ?: BigDecimal.ZERO) < BigDecimal.ZERO)
-    }
-
     fun toShortString() = AccountId.of(this).toString() + " (${accountType.shortString})"
 
 }

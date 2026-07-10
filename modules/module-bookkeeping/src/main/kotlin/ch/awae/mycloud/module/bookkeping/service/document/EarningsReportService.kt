@@ -101,8 +101,16 @@ class EarningsReportService(
                         .map { (account, balance) ->
                             ReportRenderer.Item(
                                 label = AccountId.of(account).toString() + " " + account.title,
-                                amount = balance.let { if (account.hasInvertedPresentation()) it.negate() else it },
-                                type = ReportRenderer.ItemType.getType(account.hasInvertedPresentation()),
+                                amount = balance.let {
+                                    when (account.accountType.invertedPresentation) {
+                                        true -> it.negate()
+                                        false -> it
+                                        else -> it.abs()
+                                    }
+                                },
+                                type = ReportRenderer.ItemType.getType(
+                                    account.accountType.invertedPresentation ?: (balance < BigDecimal.ZERO)
+                                ),
                                 tag = false,
                             )
                         },
@@ -139,9 +147,18 @@ class EarningsReportService(
                             ReportRenderer.Item(
                                 label = AccountId.of(account).toString() + " " + account.title,
                                 amount = account.balance?.balance
-                                    ?.let { if (account.hasInvertedPresentation()) it.negate() else it }
+                                    ?.let {
+                                        when (account.accountType.invertedPresentation) {
+                                            true -> it.negate()
+                                            false -> it
+                                            null -> it.abs()
+                                        }
+                                    }
                                     ?: BigDecimal.ZERO,
-                                type = ReportRenderer.ItemType.getType(account.hasInvertedPresentation()),
+                                type = ReportRenderer.ItemType.getType(
+                                    account.accountType.invertedPresentation
+                                        ?: ((account.balance?.balance ?: BigDecimal.ZERO) < BigDecimal.ZERO)
+                                ),
                                 tag = false,
                             )
                         },
@@ -170,14 +187,16 @@ class EarningsReportService(
                 .takeUnless { it.size == 1 && it[0].tag.isEmpty() }
                 ?.sortedWith(
                     Comparator.comparing<AccountTagBalance, BigDecimal> { it.balance }
-                        .let { if (account.hasInvertedPresentation()) it else it.reversed() }
+                        .let { if (account.accountType.invertedPresentation ?: false) it else it.reversed() }
                         .thenComparing { it.tag.takeUnless(String::isEmpty) ?: "}" }
                 )
                 ?.map { tag ->
                     ReportRenderer.Item(
                         label = tag.tag.takeUnless(String::isEmpty),
-                        amount = tag.balance.let { if (account.hasInvertedPresentation()) it.negate() else it },
-                        type = ReportRenderer.ItemType.getType(account.hasInvertedPresentation()),
+                        amount = tag.balance.let {
+                            if (account.accountType.invertedPresentation ?: false) it.negate() else it
+                        },
+                        type = ReportRenderer.ItemType.getType(account.accountType.invertedPresentation ?: false),
                         tag = true,
                     )
                 }
@@ -188,9 +207,9 @@ class EarningsReportService(
                 label = AccountId.of(account).toString() + " " + account.title,
                 valueOverride = ReportRenderer.Group.ValueOverride(
                     credit = (account.balance?.balance
-                        ?: BigDecimal.ZERO)?.takeIf { !account.hasInvertedPresentation() },
+                        ?: BigDecimal.ZERO)?.takeIf { !(account.accountType.invertedPresentation ?: false) },
                     debit = (account.balance?.balance?.negate()
-                        ?: BigDecimal.ZERO)?.takeIf { account.hasInvertedPresentation() },
+                        ?: BigDecimal.ZERO)?.takeIf { account.accountType.invertedPresentation ?: false },
                 ),
                 items = tags ?: emptyList(),
             )

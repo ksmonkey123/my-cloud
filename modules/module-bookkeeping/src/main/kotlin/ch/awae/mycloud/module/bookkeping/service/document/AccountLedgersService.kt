@@ -8,7 +8,6 @@ import ch.awae.mycloud.documents.DocumentStore
 import ch.awae.mycloud.module.bookkeping.dto.AccountId
 import ch.awae.mycloud.module.bookkeping.model.Account
 import ch.awae.mycloud.module.bookkeping.model.AccountTransactionRepository
-import ch.awae.mycloud.module.bookkeping.model.AccountType
 import ch.awae.mycloud.module.bookkeping.model.Book
 import ch.awae.mycloud.module.bookkeping.service.BookService
 import ch.awae.mycloud.pdf.Document
@@ -71,7 +70,7 @@ class AccountLedgersService(
             book.title,
             "${AccountId.of(account)} [${account.accountType.shortString}] ${account.title}",
             transactions,
-            account.accountType != AccountType.TRANSFER && account.hasInvertedPresentation()
+            account.accountType.invertedPresentation ?: false
         )
     }
 }
