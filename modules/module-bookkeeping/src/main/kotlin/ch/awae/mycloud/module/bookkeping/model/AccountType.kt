@@ -1,14 +1,12 @@
 package ch.awae.mycloud.module.bookkeping.model
 
-enum class AccountType(val shortString: String) {
-    ASSET("A"),
-    LIABILITY("P"),
-    EXPENSE("-"),
-    INCOME("+"),
+enum class AccountType(val shortString: String, val invertedPresentation: Boolean?) {
+    ASSET("A", false),
+    LIABILITY("P", true),
+    TRANSFER("X", null),
+    EXPENSE("-", false),
+    INCOME("+", true),
     ;
-
-    val invertedPresentation: Boolean
-        get() = this == LIABILITY || this == INCOME
 
     val earningsAccount: Boolean
         get() = this == EXPENSE || this == INCOME

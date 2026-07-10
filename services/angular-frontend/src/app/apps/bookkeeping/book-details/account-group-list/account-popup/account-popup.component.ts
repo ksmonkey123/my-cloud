@@ -44,7 +44,8 @@ export class AccountPopupComponent {
     AccountType.ASSET,
     AccountType.LIABILITY,
     AccountType.INCOME,
-    AccountType.EXPENSE
+    AccountType.EXPENSE,
+    AccountType.TRANSFER
   ]
 
   form = new FormGroup({

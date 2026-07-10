@@ -3,6 +3,7 @@ export enum AccountType {
   LIABILITY = "LIABILITY",
   EXPENSE = "EXPENSE",
   INCOME = "INCOME",
+  TRANSFER = "TRANSFER",
 }
 
 export class AccountTypeUtil {
@@ -16,6 +17,8 @@ export class AccountTypeUtil {
         return 'trending_up'
       case AccountType.EXPENSE:
         return 'trending_down'
+      case AccountType.TRANSFER:
+        return 'compare_arrows'
     }
   }
 }

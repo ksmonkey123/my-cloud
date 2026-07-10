@@ -35,6 +35,7 @@
       "EXPENSE": "Expense",
       "INCOME": "Income",
       "LIABILITY": "Liability",
+      "TRANSFER": "Claim or Liability",
       "label": "Account Type"
     },
     "book": {

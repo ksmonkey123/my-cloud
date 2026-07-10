@@ -136,7 +136,7 @@ class BookingRecordExportService(
 
         val sheet = workbook.createSheet(account.toShortString())
 
-        val inverted = account.accountType.invertedPresentation
+        val inverted = account.hasInvertedPresentation()
 
         sheet.createRow(0).also { row ->
             row.createCell(0).setCellValue("ID")

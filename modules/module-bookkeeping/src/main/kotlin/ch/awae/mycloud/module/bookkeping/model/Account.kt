@@ -7,6 +7,7 @@ import jakarta.persistence.*
 import jakarta.validation.ValidationException
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
+import java.math.BigDecimal
 
 @Table(name = "account", schema = "bookkeeping")
 @Entity(name = "bookkeeping_Account")
@@ -31,6 +32,10 @@ class Account(
         if (accountNumber !in 1..999) {
             throw ValidationException("Invalid account number")
         }
+    }
+
+    fun hasInvertedPresentation(): Boolean {
+        return accountType.invertedPresentation ?: ((balance?.balance ?: BigDecimal.ZERO) < BigDecimal.ZERO)
     }
 
     fun toShortString() = AccountId.of(this).toString() + " (${accountType.shortString})"

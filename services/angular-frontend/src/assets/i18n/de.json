@@ -35,6 +35,7 @@
       "EXPENSE": "Aufwand",
       "INCOME": "Ertrag",
       "LIABILITY": "Passiv",
+      "TRANSFER": "Forderung o. Verbindlichkeit",
       "label": "Kontotyp"
     },
     "book": {
