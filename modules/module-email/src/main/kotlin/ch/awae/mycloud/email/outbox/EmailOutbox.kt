@@ -33,6 +33,10 @@ class EmailOutbox(
         sentAt = LocalDateTime.now()
     }
 
+    override fun validate() {
+        require(subject.length <= 200) { "subject length may not exceed 200" }
+    }
+
 }
 
 enum class EmailBodyFormat {

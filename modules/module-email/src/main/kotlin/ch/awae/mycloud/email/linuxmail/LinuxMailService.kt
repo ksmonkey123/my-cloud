@@ -15,12 +15,20 @@ class LinuxMailService(private val sendService: EmailSendService) {
 
         sendService.send(
             EmailMessage(
-                subject = headers["SUBJECT"] ?: "LINUX NOTIFICATION",
+                subject = limitSubjectLength(headers["SUBJECT"] ?: "LINUX NOTIFICATION"),
                 recipient = recipient,
                 body = EmailMessage.PlaintextBody(decodeBody(headers["CONTENT-TRANSFER-ENCODING"], content)),
                 uid = headers["MESSAGE-ID"],
             )
         )
+    }
+
+    private fun limitSubjectLength(subject: String): String {
+        return if (subject.length <= 200) {
+            subject
+        } else {
+            subject.take(200 - 3) + "..."
+        }
     }
 
     private fun decodeBody(format: String?, content: String): String {
