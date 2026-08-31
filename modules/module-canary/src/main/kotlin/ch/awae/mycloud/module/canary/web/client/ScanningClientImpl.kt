@@ -14,19 +14,19 @@ class ScanningClientImpl(
 
     override fun performScan(url: String, tests: Set<String>): ScanResult {
         try {
-            logger.info("fetching site '${url}' for tests $tests")
+            logger.debug("fetching site '{}' for tests {}", url, tests)
             val response = http.getForObject<String>(url)!!
             val failedTests = tests.filter { !response.contains(it) }
 
             return if (failedTests.isEmpty()) {
-                logger.info("all tests passed")
+                logger.debug("all tests passed")
                 ScanResult.Success
             } else {
-                logger.warn("some tests failed: $failedTests")
+                logger.warn("canary: some tests failed for site $url: $failedTests")
                 ScanResult.Failure(failedTests.toSet())
             }
         } catch (e: Throwable) {
-            logger.error("test error", e)
+            logger.error("canary: scan error for site $url", e)
             return ScanResult.Error(e)
         }
     }

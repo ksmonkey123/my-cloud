@@ -55,7 +55,16 @@ class ScanningService(
     }
 
     fun sendResolved(email: String, lastRecord: TestRecord) {
-        // TODO: resolution message
+        val message = "Website scan resolved!\n\n" +
+                "URL: <${lastRecord.site.siteUrl}>\nText:" +
+                lastRecord.failedTests.fold("") { acc, s -> "$acc\n * $s" }
+        emailSendService.send(
+            EmailMessage(
+                recipient = email,
+                subject = "website canary test resolved",
+                body = EmailMessage.MarkdownBody(message),
+            )
+        )
     }
 
     private fun doScan(site: MonitoredSite): TestRecord {

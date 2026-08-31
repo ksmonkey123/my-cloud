@@ -18,7 +18,7 @@ class DockerhubScanTimer(
     @Scheduled(cron = "\${docker.timer.dockerhub}")
     fun performScan() {
         val ids = monitoredEntryRepository.listIdsOfEnabled()
-        logger.info("found ${ids.size} entries to process")
+        logger.debug("found ${ids.size} entries to process")
 
         if (ids.isNotEmpty()) {
             for (id in ids) {

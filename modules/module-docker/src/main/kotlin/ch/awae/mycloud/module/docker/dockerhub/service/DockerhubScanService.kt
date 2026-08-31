@@ -31,11 +31,11 @@ class DockerhubScanService(
 
         if (lastTagSet == null || newTagSet != lastTagSet) {
             if (entry.tagChangesOnly && (newTagSet.tags == lastTagSet?.tags)) {
-                logger.info("\"${entry.descriptor}\" tags unchanged, only requesting tag changes")
+                logger.debug("dockerhub: \"${entry.descriptor}\" tags unchanged, only requesting tag changes")
                 return
             }
             // mismatch found, process update
-            logger.info("\"${entry.descriptor}\" relevant changes detected")
+            logger.info("dockerhub: relevant changes detected for \"${entry.descriptor}\"")
 
             val email = userInfoService.getUserInfo(entry.owner)?.email
             if (email != null) {
@@ -44,7 +44,7 @@ class DockerhubScanService(
 
             entryStateRepository.save(EntryState(entry, newTagSet.digest, newTagSet.tags.toList()))
         } else {
-            logger.info("\"${entry.descriptor}\" unchanged")
+            logger.debug("dockerhub: \"${entry.descriptor}\" unchanged")
             return
         }
     }
@@ -57,7 +57,7 @@ class DockerhubScanService(
             val referenceTag = tags.values.flatten().find { it.tag == entry.tag }
                 ?: throw IllegalArgumentException("unable to find watched tag ${entry.tag} in tag for ${entry.descriptor}")
                     .also {
-                    logger.warn(it.message)
+                        logger.warn(it.message)
                 }
 
             // find all tags with the same digest as the reference tag
