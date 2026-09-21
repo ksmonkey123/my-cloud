@@ -15,4 +15,14 @@ class AccountBalance(
     @OneToOne
     val account: Account,
     val balance: BigDecimal,
-)
+) {
+
+    final override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null) return false
+        if (other !is AccountBalance) return false
+        return account == other.account
+    }
+
+    final override fun hashCode(): Int = account.hashCode()
+}
