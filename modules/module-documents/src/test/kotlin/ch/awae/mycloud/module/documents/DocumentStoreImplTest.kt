@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
+import java.util.*
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 
@@ -68,6 +69,9 @@ class DocumentStoreImplTest : ModuleTest() {
         assertNull(retrieved)
     }
 
+    private fun count(id: UUID) = db.sql("select count(*) from documents.document where id = :id").param("id", id)
+        .query(Long::class.java).single()
+
     @Test
     fun `cleanup removes old documents`() {
         // arrange
@@ -81,28 +85,13 @@ class DocumentStoreImplTest : ModuleTest() {
 
         val identifier = documentDataStore.createDocument(document, "dummy")
 
-        assertEquals(
-            1,
-            sql.queryForObject(
-                "select count(*) from documents.document where id = :id",
-                mapOf("id" to identifier.id),
-                Long::class.java
-            )
-        )
+        assertEquals(1, count(identifier.id))
 
         // act
         documentDataStore.deleteExpired()
 
         // assert
-        assertEquals(
-            0,
-            sql.queryForObject(
-                "select count(*) from documents.document where id = :id",
-                mapOf("id" to identifier.id),
-                Long::class.java
-            )
-        )
-
+        assertEquals(0, count(identifier.id))
     }
 
     @Test
@@ -118,28 +107,13 @@ class DocumentStoreImplTest : ModuleTest() {
 
         val identifier = documentDataStore.createDocument(document, "dummy")
 
-        assertEquals(
-            1,
-            sql.queryForObject(
-                "select count(*) from documents.document where id = :id",
-                mapOf("id" to identifier.id),
-                Long::class.java
-            )
-        )
+        assertEquals(1, count(identifier.id))
 
         // act
         documentDataStore.deleteExpired()
 
         // assert
-        assertEquals(
-            1,
-            sql.queryForObject(
-                "select count(*) from documents.document where id = :id",
-                mapOf("id" to identifier.id),
-                Long::class.java
-            )
-        )
-
+        assertEquals(1, count(identifier.id))
     }
 
 

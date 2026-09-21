@@ -5,7 +5,6 @@ import ch.awae.mycloud.auth.RequestContext
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertNotNull
 import org.junit.jupiter.api.assertNull
-import org.springframework.jdbc.core.namedparam.EmptySqlParameterSource
 import org.springframework.test.context.jdbc.Sql
 import kotlin.test.assertEquals
 
@@ -21,11 +20,10 @@ class AuthenticationServiceTest : AuthModuleTest() {
         assertNotNull(info)
         assertEquals("test-user-1000", info.username)
         assertEquals(
-            1, sql.queryForObject(
-                "select count(*) from auth.audit_log where account_id = 1000 and token_id = 1001 and key_id is null and method = 'GET' and path = '/dummy'",
-                EmptySqlParameterSource.INSTANCE,
-                Int::class.java
-            )
+            1,
+            db.sql("select count(*) from auth.audit_log where account_id = 1000 and token_id = 1001 and key_id is null and method = 'GET' and path = '/dummy'")
+                .query(Int::class.java)
+                .single()
         )
     }
 
@@ -59,11 +57,9 @@ class AuthenticationServiceTest : AuthModuleTest() {
             )
         assertNotNull(info)
         assertEquals(
-            1, sql.queryForObject(
-                "select count(*) from auth.audit_log where account_id = 1000 and token_id is null and key_id = 1003 and method = 'POST' and path = '/test'",
-                EmptySqlParameterSource.INSTANCE,
-                Int::class.java
-            )
+            1,
+            db.sql("select count(*) from auth.audit_log where account_id = 1000 and token_id is null and key_id = 1003 and method = 'POST' and path = '/test'")
+                .query(Int::class.java).single()
         )
     }
 
