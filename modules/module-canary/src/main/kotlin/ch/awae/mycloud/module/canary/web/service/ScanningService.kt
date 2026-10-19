@@ -1,15 +1,17 @@
 package ch.awae.mycloud.module.canary.web.service
 
 import ch.awae.mycloud.auth.UserInfoService
+import ch.awae.mycloud.common.util.createLogger
 import ch.awae.mycloud.email.EmailMessage
 import ch.awae.mycloud.email.EmailSendService
-import ch.awae.mycloud.common.util.createLogger
 import ch.awae.mycloud.module.canary.web.client.ScanResult
 import ch.awae.mycloud.module.canary.web.client.ScanningClient
 import ch.awae.mycloud.module.canary.web.model.*
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+
+private const val FAILURE_THRESHOLD = 2
 
 @Service
 @Transactional
@@ -26,38 +28,46 @@ class ScanningService(
     fun scan(id: Long) {
         val site = monitoredSiteRepository.findByIdOrNull(id) ?: return
         val lastRecord = testRecordRepository.findLastRecordBySite(site)
-        val scanRecord = doScan(site)
+        val scanRecord = doScan(site, lastRecord?.consecutiveFailures ?: 0)
 
         val email = userInfoService.getUserInfo(site.owner)?.email ?: return
 
-        if (lastRecord?.result != TestResult.SUCCESS && scanRecord.result != TestResult.SUCCESS) {
-            // at least 2 failures in series -> alert
-            logger.warn("sequential failures for $id")
-            sendFailure(email, lastRecord, scanRecord)
-        } else if (lastRecord != null && lastRecord.result != TestResult.SUCCESS) {
-            // previous error resolved
-            logger.info("previous failure resolved for $id")
-            sendResolved(email, lastRecord)
+        when (scanRecord.result) {
+            TestResult.FAILURE, TestResult.ERROR -> {
+                if (scanRecord.consecutiveFailures >= FAILURE_THRESHOLD) {
+                    // at least 2 failures in series -> alert
+                    logger.warn("sequential failures for $id")
+                    sendFailure(email, scanRecord)
+                }
+            }
+
+            TestResult.SUCCESS -> {
+                if (lastRecord != null && lastRecord.consecutiveFailures >= FAILURE_THRESHOLD) {
+                    // previous error resolved
+                    logger.info("previous failure(s) resolved for $id")
+                    sendResolved(email, lastRecord)
+                }
+            }
         }
     }
 
-    fun sendFailure(email: String, lastRecord: TestRecord?, currentRecord: TestRecord) {
+    fun sendFailure(email: String, testRecord: TestRecord) {
         val message = "Website scan failed!\n\n" +
-                "URL: <${currentRecord.site.siteUrl}>\nText:" +
-                currentRecord.failedTests.fold("") { acc, s -> "$acc\n * $s" }
+                "URL: <${testRecord.site.siteUrl}>\nText:" +
+                testRecord.failedTests.fold("") { acc, s -> "$acc\n * $s" }
         emailSendService.send(
             EmailMessage(
                 recipient = email,
-                subject = "website canary test failed(${currentRecord.result})",
+                subject = "website canary test failed(${testRecord.result})",
                 body = EmailMessage.MarkdownBody(message),
             )
         )
     }
 
-    fun sendResolved(email: String, lastRecord: TestRecord) {
+    fun sendResolved(email: String, previousTestRecord: TestRecord) {
         val message = "Website scan resolved!\n\n" +
-                "URL: <${lastRecord.site.siteUrl}>\nText:" +
-                lastRecord.failedTests.fold("") { acc, s -> "$acc\n * $s" }
+                "URL: <${previousTestRecord.site.siteUrl}>\nText:" +
+                previousTestRecord.failedTests.fold("") { acc, s -> "$acc\n * $s" }
         emailSendService.send(
             EmailMessage(
                 recipient = email,
@@ -67,7 +77,7 @@ class ScanningService(
         )
     }
 
-    private fun doScan(site: MonitoredSite): TestRecord {
+    private fun doScan(site: MonitoredSite, previousFailuresCount: Int): TestRecord {
         val tests = site.tests.filterValues { it }.keys
         val record = when (val result = scanningClient.performScan(site.siteUrl, tests)) {
             is ScanResult.Success -> TestRecord(
@@ -75,6 +85,7 @@ class ScanningService(
                 TestResult.SUCCESS,
                 null,
                 mutableListOf(),
+                0,
             )
 
             is ScanResult.Error -> TestRecord(
@@ -82,6 +93,7 @@ class ScanningService(
                 TestResult.ERROR,
                 result.throwable.message ?: result.throwable.toString(),
                 mutableListOf(),
+                previousFailuresCount + 1,
             )
 
             is ScanResult.Failure -> TestRecord(
@@ -89,6 +101,7 @@ class ScanningService(
                 TestResult.FAILURE,
                 null,
                 result.failedTests.toMutableList(),
+                previousFailuresCount + 1,
             )
         }
         return testRecordRepository.save(record)

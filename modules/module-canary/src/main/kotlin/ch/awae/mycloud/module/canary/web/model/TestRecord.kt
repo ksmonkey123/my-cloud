@@ -21,6 +21,7 @@ class TestRecord(
     @CollectionTable(schema = "canary", name = "web_failed_test", joinColumns = [JoinColumn(name = "record_id", nullable = false)])
     @Column(name = "test_string", nullable = false)
     val failedTests: MutableList<String>,
+    val consecutiveFailures: Int,
     @Column(updatable = false, nullable = false)
     val recordedAt: LocalDateTime = LocalDateTime.now(),
 ) : IdBaseEntity()
