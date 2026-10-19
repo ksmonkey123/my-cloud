@@ -49,6 +49,7 @@ auth:
     schedule: "0 0 0 * * *"
 
 canary:
+  consecutive-failure-threshold: 2
   timer:
     web: "0 */15 * * * *"
 

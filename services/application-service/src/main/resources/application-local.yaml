@@ -5,6 +5,7 @@ spring:
 logging:
   level:
     org.springframework.jdbc.core: DEBUG
+    ch.awae.mycloud.*: DEBUG
 
 db.cloud:
   url: jdbc:postgresql://localhost:21004/postgres
@@ -13,7 +14,7 @@ db.cloud:
 
 canary:
   timer:
-    web: "-"
+    web: "*/30 * * * * *"
 
 docker:
   timer:

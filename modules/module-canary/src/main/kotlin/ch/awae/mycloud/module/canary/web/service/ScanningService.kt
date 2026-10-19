@@ -7,11 +7,10 @@ import ch.awae.mycloud.email.EmailSendService
 import ch.awae.mycloud.module.canary.web.client.ScanResult
 import ch.awae.mycloud.module.canary.web.client.ScanningClient
 import ch.awae.mycloud.module.canary.web.model.*
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-
-private const val FAILURE_THRESHOLD = 2
 
 @Service
 @Transactional
@@ -21,6 +20,8 @@ class ScanningService(
     private val userInfoService: UserInfoService,
     private val emailSendService: EmailSendService,
     private val scanningClient: ScanningClient,
+    @param:Value("\${canary.consecutive-failure-threshold}")
+    private val consecutiveFailureThreshold: Int,
 ) {
 
     private val logger = createLogger()
@@ -30,11 +31,13 @@ class ScanningService(
         val lastRecord = testRecordRepository.findLastRecordBySite(site)
         val scanRecord = doScan(site, lastRecord?.consecutiveFailures ?: 0)
 
+        logger.debug("scan result for {}: {}", site.siteUrl, scanRecord.result)
+
         val email = userInfoService.getUserInfo(site.owner)?.email ?: return
 
         when (scanRecord.result) {
             TestResult.FAILURE, TestResult.ERROR -> {
-                if (scanRecord.consecutiveFailures >= FAILURE_THRESHOLD) {
+                if (scanRecord.consecutiveFailures >= consecutiveFailureThreshold) {
                     // at least 2 failures in series -> alert
                     logger.warn("sequential failures for $id")
                     sendFailure(email, scanRecord)
@@ -42,7 +45,7 @@ class ScanningService(
             }
 
             TestResult.SUCCESS -> {
-                if (lastRecord != null && lastRecord.consecutiveFailures >= FAILURE_THRESHOLD) {
+                if (lastRecord != null && lastRecord.consecutiveFailures >= consecutiveFailureThreshold) {
                     // previous error resolved
                     logger.info("previous failure(s) resolved for $id")
                     sendResolved(email, lastRecord)
