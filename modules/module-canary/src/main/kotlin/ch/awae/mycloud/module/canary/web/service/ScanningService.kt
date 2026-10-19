@@ -26,6 +26,10 @@ class ScanningService(
 
     private val logger = createLogger()
 
+    init {
+        logger.info("canary: consecutive failure threshold: $consecutiveFailureThreshold")
+    }
+
     fun scan(id: Long) {
         val site = monitoredSiteRepository.findByIdOrNull(id) ?: return
         val lastRecord = testRecordRepository.findLastRecordBySite(site)
