@@ -26,7 +26,7 @@ class HttpAuthorizationTokenFilter(val authServiceClient: AuthService) : OncePer
         if (auth != null) {
             when (auth) {
                 is BearerTokenUserAuthInfo -> logger.info("authenticated user '${auth.username}' for ${request.method} ${request.requestURI}")
-                is ApiKeyUserAuthInfo -> logger.info("authenticated user '${auth.username}' by api key ${auth.keyName} for ${request.method} ${request.requestURI}")
+                is ApiKeyUserAuthInfo -> logger.info("authenticated user '${auth.username}' by api key '${auth.keyName}' for ${request.method} ${request.requestURI}")
             }
         } else if (!request.requestURI.startsWith("/actuator/")) {
             // do not log actuator endpoints
