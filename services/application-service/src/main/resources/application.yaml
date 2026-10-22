@@ -35,6 +35,9 @@ spring:
     error:
       include-message: always
 
+logging:
+  config: classpath:logback.xml
+
 mycloud:
   security:
     public-endpoints:
