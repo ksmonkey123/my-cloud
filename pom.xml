@@ -24,10 +24,23 @@
     </properties>
 
     <modules>
-        <module>libs</module>
-        <module>apis</module>
-        <module>modules</module>
-        <module>services</module>
+        <module>libs/lib-test</module>
+        <module>libs/lib-common</module>
+        <module>libs/lib-pdf</module>
+        <module>apis/api-auth</module>
+        <module>apis/api-documents</module>
+        <module>apis/api-email</module>
+        <module>apis/api-features</module>
+        <module>modules/module-auth</module>
+        <module>modules/module-bookkeeping</module>
+        <module>modules/module-canary</module>
+        <module>modules/module-docker</module>
+        <module>modules/module-documents</module>
+        <module>modules/module-email</module>
+        <module>modules/module-features</module>
+        <module>modules/module-shortener</module>
+        <module>services/angular-frontend</module>
+        <module>services/application-service</module>
     </modules>
 
     <dependencyManagement>
