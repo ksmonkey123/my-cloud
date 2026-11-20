@@ -10,14 +10,14 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.6</version>
+        <version>4.1.2</version>
     </parent>
 
     <properties>
         <java.version>25</java.version>
-        <kotlin.version>2.4.0</kotlin.version>
-        <shedlock.version>7.7.0</shedlock.version>
-        <mockk.version>1.14.11</mockk.version>
+        <kotlin.version>2.4.21</kotlin.version>
+        <shedlock.version>7.11.0</shedlock.version>
+        <mockk.version>1.14.12</mockk.version>
         <final.jar.name>${project.artifactId}-${project.version}</final.jar.name>
         <docker.buildArg.JAR_NAME>${final.jar.name}</docker.buildArg.JAR_NAME>
         <argLine/>
@@ -42,13 +42,13 @@
             <dependency>
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi-ooxml</artifactId>
-                <version>5.4.1</version>
+                <version>6.0.0</version>
             </dependency>
             <!-- Pdfbox -->
             <dependency>
                 <groupId>org.apache.pdfbox</groupId>
                 <artifactId>pdfbox</artifactId>
-                <version>3.0.6</version>
+                <version>3.0.8</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -99,7 +99,7 @@
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
-            <version>20250517</version>
+            <version>20260814</version>
         </dependency>
         <!-- Spring Basics -->
         <dependency>
